@@ -54,7 +54,7 @@
 }
 
 /* ── الاسم ────────────────────────────────────────────────────────── */
-:is(#hs,.pos) .hh-brand { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+:is(#hs,.pos) .hh-brand { display: flex; align-items: center; justify-content: flex-start; gap: 14px; }
 :is(#hs,.pos) .hh-brand strong { font-size: clamp(28px, 4.8vh, 44px); font-weight: 800; letter-spacing: 0; }
 :is(#hs,.pos) .hh-brand-icon {
     flex: 0 0 auto; display: grid; place-items: center;

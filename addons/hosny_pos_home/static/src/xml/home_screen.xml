@@ -5,8 +5,8 @@
         <div class="hh-home" dir="rtl">
             <div class="hh-stage">
                 <div class="hh-brand">
-                    <strong>مطعم حسني</strong>
                     <span class="hh-brand-icon"><i class="fa fa-cutlery" aria-hidden="true"/></span>
+                    <strong>مطعم حسني</strong>
                 </div>
 
                 <section class="hh-panel">
