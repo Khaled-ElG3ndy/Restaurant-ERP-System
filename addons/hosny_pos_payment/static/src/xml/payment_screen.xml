@@ -157,6 +157,12 @@
                     </button>
                     <div class="hp-rows">
                         <div class="hp-row"><span>قيمة الفاتورة</span><b t-esc="hpMoney(hpSummary.base)"/></div>
+                        <button t-foreach="hpFees" t-as="fee" t-key="fee.key" class="hp-row hp-fee"
+                                t-att-class="{ 'has-value': fee.amount }" t-on-click="() => this.hpEditFee(fee)"
+                                t-att-title="'اكتب ' + fee.label">
+                            <span><i class="fa fa-pencil" aria-hidden="true"/> <t t-esc="fee.label"/></span>
+                            <b t-esc="hpMoney(fee.amount)"/>
+                        </button>
                         <div class="hp-row"><span>الضريبة</span><b t-esc="hpMoney(hpSummary.tax)"/></div>
                         <div class="hp-row"><span>إجمالي الخصم</span><b t-esc="hpMoney(hpSummary.discount)"/></div>
                         <div t-if="hpSummary.tip" class="hp-row"><span>الإكرامية</span><b t-esc="hpMoney(hpSummary.tip)"/></div>

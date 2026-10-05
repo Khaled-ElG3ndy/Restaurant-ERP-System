@@ -12,6 +12,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
+import { NumberPopup } from "@point_of_sale/app/components/popups/number_popup/number_popup";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -21,6 +22,16 @@ export class HosnyReceiptPreview extends Component {
     static components = { Dialog, OrderReceipt };
     static props = { order: Object, close: Function };
 }
+
+/**
+ * رسوم تُكتب في ملخص الفاتورة. كل واحدة سطر على الطلب بمنتج خدمة خاص
+ * (hosny_pos_payment/data/fee_products.xml)، يُعرف هنا بمرجعه الداخلي.
+ */
+const FEES = [
+    { key: "service", code: "HOSNY_FEE_SERVICE", label: "الخدمات" },
+    { key: "delivery", code: "HOSNY_FEE_DELIVERY", label: "سعر التوصيل" },
+    { key: "driver", code: "HOSNY_FEE_DRIVER", label: "سعر تسليم السائق للمنطقة" },
+];
 
 /** فئات النقد: تضع المبلغ الذي سلّمه العميل في سطر الدفع المحدد. */
 const NOTES = [5, 10, 20, 50, 100, 200, 500];
@@ -38,15 +49,64 @@ patch(PaymentScreen.prototype, {
     },
 
     // ── ملخص الفاتورة ───────────────────────────────────────────────────
+    /** قيمة الفاتورة بلا ضريبة ولا رسوم — الرسوم لها صفوفها. */
     get hpSummary() {
         const order = this.currentOrder;
+        const feesBase = this.hpFees.reduce((sum, fee) => sum + (fee.line?.priceExcl || 0), 0);
         return {
-            base: order.priceExcl,
+            base: order.priceExcl - feesBase,
             tax: order.amountTaxes,
             discount: order.getTotalDiscount?.() || 0,
             tip: order.getTip?.() || 0,
             total: order.totalDue,
         };
+    },
+    get hpFees() {
+        const products = this.pos.models["product.product"].getAll();
+        const lines = this.currentOrder.lines;
+        return FEES.map((fee) => {
+            const product = products.find((p) => p.default_code === fee.code);
+            const line = product && lines.find((l) => l.product_id?.id === product.id);
+            return { ...fee, product, line, amount: line ? line.priceIncl : 0 };
+        });
+    },
+    /** يكتب الكاشير المبلغ؛ صفر يحذف السطر. السعر يُعامل كسعر أي صنف
+     * (بضريبة الشركة الافتراضية)، والصف يعرضه شاملاً الضريبة. */
+    async hpEditFee(fee) {
+        if (!fee.product) {
+            this.notification.add("منتج «" + fee.label + "» غير محمّل — حدّث الموديول ثم أعد تحميل نقطة البيع.", {
+                type: "warning",
+            });
+            return;
+        }
+        this.dialog.add(NumberPopup, {
+            title: fee.label,
+            startingValue: fee.line ? this.env.utils.formatCurrency(fee.line.price_unit, false) : "",
+            confirmButtonLabel: "حفظ",
+            getPayload: (value) => this.hpSetFee(fee, this.env.utils.parseValidFloat(String(value || 0))),
+        });
+    },
+    async hpSetFee(fee, price) {
+        const order = this.currentOrder;
+        const line = order.lines.find((l) => l.product_id?.id === fee.product.id);
+        if (!price || price <= 0) {
+            line?.delete();
+            return;
+        }
+        if (line) {
+            line.setUnitPrice(price);
+            return;
+        }
+        await this.pos.addLineToOrder(
+            {
+                product_id: fee.product,
+                product_tmpl_id: fee.product.product_tmpl_id,
+                price_unit: price,
+            },
+            order,
+            {},
+            false
+        );
     },
     get hpInvoiceNumber() {
         const order = this.currentOrder;

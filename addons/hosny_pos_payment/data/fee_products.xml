@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <!-- رسوم شاشة الدفع: خدمة بلا تصنيف نقطة بيع، فلا تصل للمطبخ أبداً.
+         الضريبة الافتراضية للشركة، والسعر يُكتب من شاشة الدفع لكل فاتورة. -->
+    <record id="product_fee_service" model="product.product">
+        <field name="name">الخدمات</field>
+        <field name="default_code">HOSNY_FEE_SERVICE</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="available_in_pos" eval="True"/>
+        <field name="list_price">0</field>
+    </record>
+    <record id="product_fee_delivery" model="product.product">
+        <field name="name">سعر التوصيل</field>
+        <field name="default_code">HOSNY_FEE_DELIVERY</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="available_in_pos" eval="True"/>
+        <field name="list_price">0</field>
+    </record>
+    <record id="product_fee_driver" model="product.product">
+        <field name="name">سعر تسليم السائق للمنطقة</field>
+        <field name="default_code">HOSNY_FEE_DRIVER</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="available_in_pos" eval="True"/>
+        <field name="list_price">0</field>
+    </record>
+</odoo>
