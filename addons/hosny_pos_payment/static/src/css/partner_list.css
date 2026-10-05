@@ -1,0 +1,203 @@
+/* =====================================================================
+   hosny_pos_payment — اختيار العميل بتقسيمة FERP
+   ---------------------------------------------------------------------
+   hp-cust-* classes only, so pos_modern_ui's partner-list styles do not
+   reach the new markup. The dialog shell (modal) keeps Odoo's; only its
+   size and padding are set here. rtlcss is installed: logical props.
+   ===================================================================== */
+
+.hp-cust-dialog {
+    --hc-navy-a: #2B5DA0;
+    --hc-navy-b: #17395F;
+    --hc-ink: #17395F;
+    --hc-text: #24374B;
+    --hc-muted: #687B90;
+    --hc-line: #DCE3ED;
+    --hc-soft: #F2F6FB;
+    --hc-mint-a: #2E9D6A;
+    --hc-mint-b: #0F7A49;
+    --hc-gold: #EFCB7E;
+    --hc-num: "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+    --hc-font: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    font-family: var(--hc-font);
+    border-radius: 20px !important;
+    overflow: hidden;
+}
+.hp-cust-dialog .modal-header {
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hc-navy-a), var(--hc-navy-b)) !important;
+    color: #FFFFFF !important;
+    border: 0 !important;
+}
+.hp-cust-dialog .modal-header .modal-title { color: #FFFFFF !important; font-weight: 800; font-size: 19px; }
+.hp-cust-dialog .modal-header .btn-close { filter: invert(1) grayscale(1) brightness(2); opacity: .85; }
+.hp-cust-dialog .modal-body.hp-cust-body { padding: 0 !important; background: #EEF2F8; }
+.hp-cust-dialog .modal-footer { background: #FFFFFF; border-top: 1px solid var(--hc-line); }
+
+.hp-cust { /*rtl:ignore*/direction: rtl; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; padding: 14px; min-block-size: 62vh; color: var(--hc-text); }
+.hp-cust * { box-sizing: border-box; }
+.hp-cust button { font-family: var(--hc-font); cursor: pointer; transition: filter .12s, background .12s, transform .12s; }
+.hp-cust button:active { transform: scale(.97); }
+.hp-cust button:disabled { opacity: .5; cursor: default; }
+
+/* ── البحث ── */
+.hp-cust-main { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hp-cust-hint {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    border-radius: 12px;
+    background: #EAF1FB; border: 1px solid #C9DAF0;
+    color: var(--hc-ink); font-size: 13.5px; font-weight: 700;
+}
+.hp-cust-hint .fa { color: var(--hc-navy-a); }
+.hp-cust-hint.is-on { background: #FFF4E0; border-color: #F1D9A4; color: #8A5A10; }
+.hp-cust-hint.is-on .fa { color: #D4891F; }
+.hp-cust-search { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.hp-cust-field {
+    display: flex; align-items: center; gap: 10px;
+    margin: 0;
+    min-block-size: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--hc-line); border-radius: 12px;
+    background: #FFFFFF;
+    transition: border-color .12s, box-shadow .12s;
+}
+.hp-cust-field:focus-within { border-color: var(--hc-navy-a); box-shadow: 0 0 0 3px rgba(43,93,160,.14); }
+.hp-cust-field.is-active { border-color: var(--hc-navy-a); background: #F7FAFE; }
+.hp-cust-field .fa { color: #8FA4BF; font-size: 16px; }
+.hp-cust-field input {
+    flex: 1 1 auto; min-width: 0; block-size: 44px;
+    border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important;
+    padding: 0 !important;
+    font-family: var(--hc-font); font-size: 15px; font-weight: 700; color: var(--hc-text);
+}
+/* the skin rings every focused input in green at id weight; the field itself shows focus here.
+   `:is(#hs, body)` carries id weight whether or not the dialog sits inside .pos. */
+:is(#hs, body) .hp-cust-dialog .hp-cust-field input,
+:is(#hs, body) .hp-cust-dialog .hp-cust-field input:focus {
+    border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important;
+}
+.hp-cust-tools { display: flex; align-items: center; gap: 8px; }
+.hp-cust-loading { margin-inline-start: auto; font-size: 13px; font-weight: 700; color: var(--hc-muted); }
+.hp-cust-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-block-size: 42px; padding: 0 18px;
+    border: 0; border-radius: 12px;
+    font-size: 14.5px; font-weight: 800; color: #FFFFFF;
+}
+.hp-cust-btn.is-new { /*rtl:ignore*/background: linear-gradient(135deg, var(--hc-mint-a), var(--hc-mint-b)); box-shadow: 0 8px 16px -10px rgba(15,122,73,.7); }
+.hp-cust-btn.is-edit { background: #FFFFFF; color: var(--hc-ink); border: 1px solid var(--hc-line); }
+.hp-cust-btn:hover:not(:disabled) { filter: brightness(1.06); }
+
+/* ── الجدول ── */
+.hp-cust-table-wrap {
+    flex: 1 1 auto;
+    border-radius: 16px; overflow: hidden;
+    background: #FFFFFF; border: 1px solid var(--hc-line);
+    box-shadow: 0 12px 26px -20px rgba(23,57,95,.45);
+}
+.hp-cust-table { inline-size: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; margin: 0; }
+.hp-cust-table thead th {
+    position: sticky; inset-block-start: 0; z-index: 1;
+    block-size: 42px; padding: 0 12px;
+    background: #F1F4F9; border-bottom: 2px solid var(--hc-navy-b);
+    color: var(--hc-ink); font-size: 13px; font-weight: 800; text-align: start; white-space: nowrap;
+}
+.hp-cust-table th.is-num, .hp-cust-table td.is-num { inline-size: 84px; }
+.hp-cust-table th.is-ops, .hp-cust-table td.is-ops { text-align: end; }
+.hp-cust-row td {
+    block-size: 52px; padding: 0 12px;
+    border-bottom: 1px solid #EDF1F6;
+    font-weight: 600; vertical-align: middle;
+    cursor: pointer;
+}
+.hp-cust-row:hover td { background: #F6F9FD; }
+.hp-cust-row.is-current td { background: #F3FAF6; }
+.hp-cust-row.is-picked td { background: #EAF1FB; }
+.hp-cust-row.is-picked td:first-child { box-shadow: inset -4px 0 0 var(--hc-navy-a); }
+.hp-cust-row td.is-num { font-family: var(--hc-num); color: var(--hc-muted); }
+.hp-cust-row td.is-num > span { margin-inline-start: 8px; }
+.hp-cust-expand {
+    inline-size: 26px; block-size: 26px; padding: 0;
+    border: 1px solid var(--hc-line); border-radius: 8px;
+    background: var(--hc-soft); color: var(--hc-navy-a);
+    font-size: 11px;
+}
+.hp-cust-name { display: flex; align-items: center; gap: 6px; font-weight: 800; color: var(--hc-ink); }
+.hp-cust-fav { color: #D4A23A; font-size: 12px; }
+.hp-cust-sub { display: block; font-size: 12px; color: var(--hc-muted); font-weight: 600; }
+.hp-cust-row td.is-phone { font-family: var(--hc-num); color: var(--hc-text); }
+.hp-cust-ops { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.hp-cust-op {
+    display: inline-flex; align-items: center; gap: 6px;
+    block-size: 34px; padding: 0 12px;
+    border: 1px solid var(--hc-line); border-radius: 9px;
+    background: #FFFFFF; color: var(--hc-ink);
+    font-size: 12.5px; font-weight: 800; white-space: nowrap;
+}
+.hp-cust-op.is-address { background: #E3F3EA; border-color: #BFE3CF; color: #168353; }
+.hp-cust-op.is-icon { inline-size: 34px; padding: 0; justify-content: center; color: #D4A23A; }
+.hp-cust-op.is-pick { background: var(--hc-navy-b); border-color: var(--hc-navy-b); color: #FFFFFF; }
+.hp-cust-detail td { padding: 0 12px 12px; background: #F8FAFD; border-bottom: 1px solid #EDF1F6; }
+.hp-cust-detail-grid {
+    display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr; gap: 8px;
+    padding: 10px 12px;
+    border-radius: 12px; background: #FFFFFF; border: 1px dashed #C9D6E6;
+}
+.hp-cust-detail-grid > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.hp-cust-detail-grid span { font-size: 12px; font-weight: 700; color: var(--hc-muted); }
+.hp-cust-detail-grid b { font-size: 13.5px; font-weight: 700; color: var(--hc-text); overflow-wrap: anywhere; }
+.hp-cust-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    padding: 50px 20px; font-size: 15px; font-weight: 700; color: var(--hc-muted);
+}
+.hp-cust-empty .fa { font-size: 32px; color: #B9C7D8; }
+
+/* ── العميل المحدد ── */
+.hp-cust-side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.hp-cust-card {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 14px;
+    border-radius: 16px; background: #FFFFFF; border: 1px solid var(--hc-line);
+    box-shadow: 0 12px 26px -20px rgba(23,57,95,.45);
+}
+.hp-cust-card-head { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 800; color: var(--hc-ink); margin-block-end: 2px; }
+.hp-cust-avatar {
+    display: grid; place-items: center; inline-size: 34px; block-size: 34px; border-radius: 10px;
+    color: var(--hc-gold);
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hc-navy-a), var(--hc-navy-b));
+}
+.hp-cust-avatar.is-gold { color: var(--hc-navy-b); background: var(--hc-gold); }
+.hp-cust-kv { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: var(--hc-soft); }
+.hp-cust-kv span { font-size: 12px; font-weight: 700; color: var(--hc-muted); }
+.hp-cust-kv b { font-size: 14.5px; font-weight: 800; color: var(--hc-text); overflow-wrap: anywhere; }
+.hp-cust-kv bdi { font-family: var(--hc-num); }
+.hp-cust-btn.is-orders { background: #FFFFFF; color: var(--hc-ink); border: 1px solid var(--hc-line); margin-block-start: 4px; }
+.hp-cust-none { padding: 18px 8px; text-align: center; font-size: 14px; font-weight: 700; color: var(--hc-muted); }
+.hp-cust-fav-chip {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--hc-line); border-radius: 10px;
+    background: #FFFFFF; color: var(--hc-text);
+    font-size: 13.5px; font-weight: 800; text-align: start;
+}
+.hp-cust-fav-chip small { font-family: var(--hc-num); font-size: 12px; color: var(--hc-muted); }
+.hp-cust-fav-chip.is-picked { border-color: var(--hc-navy-a); background: #EAF1FB; }
+
+/* ── الأزرار السفلية ── */
+.hp-cust-footer { display: flex; align-items: center; gap: 10px; inline-size: 100%; /*rtl:ignore*/direction: rtl; }
+.hp-cust-footer .hp-cust-btn { min-block-size: 48px; padding: 0 26px; font-family: var(--hc-font, "Cairo"); }
+.hp-cust-btn.is-confirm { /*rtl:ignore*/background: linear-gradient(135deg, var(--hc-mint-a), var(--hc-mint-b)); min-inline-size: 180px; }
+.hp-cust-btn.is-unselect { background: #FDF1F0; color: #C6342D; border: 1px solid #F2D2CF; }
+.hp-cust-btn.is-close { margin-inline-start: auto; background: #FFFFFF; color: var(--hc-ink); border: 1px solid var(--hc-line); }
+
+@media (max-width: 1100px) {
+    .hp-cust { grid-template-columns: minmax(0, 1fr); }
+    .hp-cust-side { flex-direction: row; flex-wrap: wrap; }
+    .hp-cust-side > .hp-cust-card { flex: 1 1 260px; }
+    .hp-cust-detail-grid { grid-template-columns: 1fr 1fr; }
+    .hp-cust-op.is-address span, .hp-cust-op.is-address { font-size: 12px; }
+}
+@media (max-width: 700px) {
+    .hp-cust-search { grid-template-columns: minmax(0, 1fr); }
+    .hp-cust-op.is-address { display: none; }
+}

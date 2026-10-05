@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Payment',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.3.0',
     'category': 'Point of Sale',
     'summary': 'شاشة الدفع بتقسيمة FERP: ملخص الفاتورة، الدفع، والإجراءات والأرقام',
     'description': """
@@ -22,10 +22,13 @@
 «تسديد الفواتير» بتقسيمة شاشة FERP: فلاتر (من/إلى تاريخ، النوع، الرقم، حالة
 الدفع، الطاولة) وجدول فواتير الفرع من الخادم، مع طباعة فورية وعرض وتسديد
 للمفتوحة وتصدير Excel.
+
+اختيار العميل بتقسيمة FERP وبالعربية فقط: بحث بالجوال/الاسم/الكود، جدول مرقّم
+يُفتح فيه عنوان العميل، ولوحة للعميل المحدد وطلباته والمفضلة.
 """,
     'author': 'Hosny',
     # hosny_pos_controls: شاشة «تسديد الفواتير» وزرّها منه، وهنا يُستبدل قالبها
-    'depends': ['point_of_sale', 'pos_restaurant', 'hosny_pos_skin', 'hosny_pos_controls'],
+    'depends': ['point_of_sale', 'pos_restaurant', 'hosny_pos_skin', 'pos_modern_ui', 'hosny_pos_controls'],
     'data': [
         'data/fee_products.xml',
     ],
@@ -37,6 +40,9 @@
             'hosny_pos_payment/static/src/js/invoices_screen.js',
             'hosny_pos_payment/static/src/xml/invoices_screen.xml',
             'hosny_pos_payment/static/src/css/invoices_screen.css',
+            'hosny_pos_payment/static/src/js/partner_list.js',
+            'hosny_pos_payment/static/src/xml/partner_list.xml',
+            'hosny_pos_payment/static/src/css/partner_list.css',
         ],
     },
     'installable': True,
