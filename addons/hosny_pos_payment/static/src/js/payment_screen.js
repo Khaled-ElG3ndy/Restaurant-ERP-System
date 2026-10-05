@@ -72,11 +72,33 @@ patch(PaymentScreen.prototype, {
     },
     /** يكتب الكاشير المبلغ؛ صفر يحذف السطر. السعر يُعامل كسعر أي صنف
      * (بضريبة الشركة الافتراضية)، والصف يعرضه شاملاً الضريبة. */
+    /** منتجات الرسوم لم تصل مع تحميل الجلسة: نطلبها من الخادم مرة واحدة. */
+    async hpLoadFeeProducts() {
+        try {
+            await this.pos.data.callRelated(
+                "product.template",
+                "load_product_from_pos",
+                [
+                    this.pos.config.id,
+                    [["product_variant_ids.default_code", "in", FEES.map((f) => f.code)]],
+                    0,
+                    0,
+                ]
+            );
+        } catch {
+            // بلا اتصال: يبقى التحذير أدناه
+        }
+    },
     async hpEditFee(fee) {
         if (!fee.product) {
-            this.notification.add("منتج «" + fee.label + "» غير محمّل — حدّث الموديول ثم أعد تحميل نقطة البيع.", {
-                type: "warning",
-            });
+            await this.hpLoadFeeProducts();
+            fee = this.hpFees.find((f) => f.key === fee.key);
+        }
+        if (!fee.product) {
+            this.notification.add(
+                "منتج «" + fee.label + "» غير موجود على السيرفر — شغّل تحديث موديول hosny_pos_payment (-u) ثم أعد تحميل نقطة البيع.",
+                { type: "warning" }
+            );
             return;
         }
         this.dialog.add(NumberPopup, {
