@@ -11,9 +11,10 @@
    Same palette as the home screen, on a light room:
      · room: pale blue-grey wash + the home screen's restaurant drawings
        in faint navy;
-     · floor pills: white, the active floor in the navy gradient;
-     · free table: white card, navy numeral, mint «متاحة» pill;
-     · occupied table: the home screen's navy tile gradient, white
+     · floor pills: white, the active floor in its floor's colour;
+     · free table: its floor's colour as a gradient, white numeral,
+       «متاحة» pill;
+     · occupied table: one maroon gradient on every floor, white
        numeral, the amount in gold, «مشغولة» and the kitchen timer as
        quiet pills along the bottom edge.
 
@@ -34,6 +35,40 @@ body:has(.pos),
     --hf-mint-ghost: #E3F3EA;
     --hf-gold: #EFCB7E;
     --hf-gold-deep: #C99A3E;
+}
+
+/* ── a colour per floor ──
+   The floor colours from hosny_pos_skin §26 (أرضي purple, علوي blue, سفري
+   pink, VIP turquoise; any other name a muted blue), each as a short
+   diagonal gradient around that hue like the home screen's tiles, and
+   one maroon for an occupied table on every floor. The tone is stamped
+   on `.floor-map` by pos_entry_selector; the tokens are set on the
+   whole screen (through :has) so the active floor pill can wear its
+   floor's colour too, and on the map itself as a fallback. */
+:is(#hs,.pos) .floor-screen,
+:is(#hs,.pos) .floor-map {
+    --hf-t-a: #85A3D0; --hf-t-b: #5A7DB4; --hf-t-glow: rgba(78,116,172,.55);
+}
+:is(#hs,.pos) .floor-screen:has(.floor-map[data-pos-floor-tone="ground"]),
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="ground"] {
+    --hf-t-a: #B95AE0; --hf-t-b: #8A22BA; --hf-t-glow: rgba(150,40,200,.55);
+}
+:is(#hs,.pos) .floor-screen:has(.floor-map[data-pos-floor-tone="upper"]),
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="upper"] {
+    --hf-t-a: #78AAEA; --hf-t-b: #4277C8; --hf-t-glow: rgba(66,119,200,.55);
+}
+:is(#hs,.pos) .floor-screen:has(.floor-map[data-pos-floor-tone="takeaway"]),
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="takeaway"] {
+    --hf-t-a: #F25A90; --hf-t-b: #C91C5B; --hf-t-glow: rgba(220,40,110,.55);
+}
+:is(#hs,.pos) .floor-screen:has(.floor-map[data-pos-floor-tone="vip"]),
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="vip"] {
+    --hf-t-a: #52C7F0; --hf-t-b: #1493C8; --hf-t-glow: rgba(20,150,200,.55);
+}
+body:has(.pos),
+.pos {
+    --hf-busy-a: #A83636;
+    --hf-busy-b: #6E1F1F;
 }
 
 /* ── the room ── */
@@ -71,13 +106,13 @@ body:has(.pos),
 }
 :is(#hs,.pos) .floor-screen .floor-selector .button-floor.active,
 :is(#hs,.pos) .floor-screen .floor-selector .btn-primary {
-    /*rtl:ignore*/background: linear-gradient(135deg, var(--hf-navy-a) 0%, var(--hf-navy-b) 100%) !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hf-t-a) 0%, var(--hf-t-b) 100%) !important;
     border-color: transparent !important;
     color: #FFFFFF !important;
-    box-shadow: inset 0 -3px 0 var(--hf-gold), 0 10px 20px -10px rgba(23,57,95,.6) !important;
+    box-shadow: inset 0 -3px 0 var(--hf-gold), 0 10px 20px -10px var(--hf-t-glow) !important;
 }
 
-/* ── the card: free ── */
+/* ── the card: free — in its floor's colour ── */
 :is(#hs,.pos) .floor-map .table.custom-floor-table,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table,
@@ -85,20 +120,22 @@ body:has(.pos),
 :is(#hs,.pos) .floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table:has(.order-count:not(.d-none)) {
-    /*rtl:ignore*/background: linear-gradient(160deg, #FFFFFF 0%, #F3F7FC 100%) !important;
-    border: 1px solid var(--hf-line) !important;
+    /*rtl:ignore*/background:
+        radial-gradient(120% 90% at 100% 0%, rgba(255,255,255,.22), transparent 55%),
+        linear-gradient(145deg, var(--hf-t-a) 0%, var(--hf-t-b) 100%) !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
     border-radius: 20px !important;
-    box-shadow: inset 0 1px 0 #FFFFFF, 0 12px 24px -16px rgba(23,57,95,.45) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 14px 26px -14px var(--hf-t-glow) !important;
 }
 :is(#hs,.pos) .floor-map .table.custom-floor-table:hover,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table:hover {
-    border-color: #C2D1E4 !important;
-    box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 30px -16px rgba(23,57,95,.5) !important;
-    filter: none !important;
+    border-color: rgba(255,255,255,.3) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 20px 32px -14px var(--hf-t-glow) !important;
+    filter: brightness(1.05) !important;
 }
 :is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-number,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .custom-floor-table-number {
-    color: var(--hf-ink) !important;
+    color: #FFFFFF !important;
     font-size: 38px !important;
     font-weight: 800 !important;
     text-shadow: none !important;
@@ -129,13 +166,13 @@ body:has(.pos),
     transform: none !important;
     padding: 5px 12px !important;
     border-radius: 999px !important;
-    background: var(--hf-mint-ghost) !important;
-    color: var(--hf-mint) !important;
+    background: rgba(255,255,255,.22) !important;
+    color: #FFFFFF !important;
     font-size: 12px !important;
     font-weight: 800 !important;
 }
 
-/* ── the card: occupied — the home screen's navy tile ── */
+/* ── the card: occupied — one maroon on every floor ── */
 :is(#hs,.pos) .floor-map .table.custom-floor-table.occupied,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table.occupied,
@@ -145,9 +182,9 @@ body:has(.pos),
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied:has(.order-count:not(.d-none)) {
     /*rtl:ignore*/background:
         radial-gradient(120% 90% at 100% 0%, rgba(255,255,255,.18), transparent 55%),
-        linear-gradient(145deg, var(--hf-navy-a) 0%, var(--hf-navy-b) 100%) !important;
+        linear-gradient(145deg, var(--hf-busy-a) 0%, var(--hf-busy-b) 100%) !important;
     border: 1px solid rgba(255,255,255,.14) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 26px -14px rgba(23,57,95,.7) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 26px -14px rgba(120,30,30,.7) !important;
 }
 :is(#hs,.pos) .floor-map .table.custom-floor-table.occupied .custom-floor-table-number,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied .custom-floor-table-number {
@@ -159,7 +196,7 @@ body:has(.pos),
     color: #FFFFFF !important;
 }
 
-/* the amount: gold on navy, its own row under the numeral */
+/* the amount: gold, its own row under the numeral */
 :is(#hs,.pos) .floor-map .table.custom-floor-table .table-amount-badge,
 :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .table-amount-badge {
     left: auto !important;
