@@ -120,8 +120,15 @@ export class HosnyHomeScreen extends Component {
     get branch() {
         return branchName(this.pos.config);
     }
+    /** نفس عنوان الفاتورة: عنوان الفرع، وإلا عنوان الشركة، وإلا اسم المدينة. */
     get branchAddress() {
-        return this.pos.config.hosny_receipt_address || "";
+        const config = this.pos.config;
+        const company = config.company_id || this.pos.company;
+        return (
+            config.hosny_receipt_address ||
+            [company?.street, company?.street2, company?.city].filter(Boolean).join(" ") ||
+            this.branch
+        );
     }
     /** 17:36 و 54 — الثواني تُعرض أخفت. */
     get time() {

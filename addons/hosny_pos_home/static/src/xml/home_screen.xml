@@ -23,8 +23,8 @@
                             <h2 class="hh-box-title"><i class="fa fa-map-marker" aria-hidden="true"/> نقطة البيع</h2>
                             <div class="hh-branch">
                                 <div class="hh-branch-copy">
-                                    <span><b>الفرع:</b> <t t-esc="branch"/></span>
-                                    <span t-if="branchAddress"><b>معلومات الفرع:</b> <t t-esc="branchAddress"/></span>
+                                    <span><b>الفرع:</b> <t t-esc="pos.config.name"/></span>
+                                    <span><b>معلومات الفرع:</b> <t t-esc="branchAddress"/></span>
                                 </div>
                                 <div class="hh-branch-logo"><img t-att-src="logo" alt=""/></div>
                             </div>
