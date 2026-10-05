@@ -1,0 +1,251 @@
+/* =====================================================================
+   hosny_pos_home — شاشة الطاولات بنفس لغة الشاشة الرئيسية، فاتحة
+   ---------------------------------------------------------------------
+   Loaded after hosny_pos_skin (a dependency), so these rules use the
+   skin's own selector shapes — `:is(#hs,.pos)` root, and the
+   `[data-pos-floor-tone]` / `:has(.order-count…)` forms where the skin
+   needed them — and win on order at equal weight. Core writes each
+   table's border/background INLINE, and Bootstrap utilities on the
+   badges carry !important, so every declaration here does too.
+
+   Same palette as the home screen, on a light room:
+     · room: pale blue-grey wash + the home screen's restaurant drawings
+       in faint navy;
+     · floor pills: white, the active floor in the navy gradient;
+     · free table: white card, navy numeral, mint «متاحة» pill;
+     · occupied table: the home screen's navy tile gradient, white
+       numeral, the amount in gold, «مشغولة» and the kitchen timer as
+       quiet pills along the bottom edge.
+
+   rtlcss is installed: positions are logical, and where a physical
+   property from an earlier module has to be cleared it is set to `auto`
+   BEFORE the logical one in the same block (they share a box side, so
+   the later declaration wins).
+   ===================================================================== */
+
+body:has(.pos),
+.pos {
+    --hf-navy-a: #2B5DA0;
+    --hf-navy-b: #17395F;
+    --hf-ink: #17395F;
+    --hf-muted: #687B90;
+    --hf-line: #DCE3ED;
+    --hf-mint: #168353;
+    --hf-mint-ghost: #E3F3EA;
+    --hf-gold: #EFCB7E;
+    --hf-gold-deep: #C99A3E;
+}
+
+/* ── the room ── */
+:is(#hs,.pos) .floor-screen,
+:is(#hs,.pos) .floor-map {
+    background-color: #EEF2F8 !important;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170' viewBox='0 0 170 170'%3E%3Cg fill='none' stroke='%2317395F' stroke-opacity='.07' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(18 16)'%3E%3Cpath d='M6 0v14M0 0v8a6 6 0 0 0 12 0V0M6 14v26M26 0c-5 4-6 14-6 20h6v20'/%3E%3C/g%3E%3Cg transform='translate(104 14)'%3E%3Cpath d='M8 30c-5 0-8-4-8-8 0-5 4-8 8-8 1-6 6-10 12-10s11 4 12 10c4 0 8 3 8 8 0 4-3 8-8 8zM10 30v10h20V30'/%3E%3C/g%3E%3Cg transform='translate(14 112)'%3E%3Cpath d='M0 30h46M5 30a18 18 0 0 1 36 0M23 12V8M19 8h8'/%3E%3C/g%3E%3Cg transform='translate(110 112)'%3E%3Cpath d='M0 8h26v14a10 10 0 0 1-10 10h-6A10 10 0 0 1 0 22zM26 12h4a6 6 0 0 1 0 12h-4M7 4c0-3 3-3 3-6M15 4c0-3 3-3 3-6'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(69 69)' fill='none' stroke='%23C99A3E' stroke-opacity='.22' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='M16 0l4.6 11.4L32 16l-11.4 4.6L16 32l-4.6-11.4L0 16l11.4-4.6z'/%3E%3Ccircle cx='16' cy='16' r='3'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(900px 520px at 85% 0%, rgba(43,93,160,.12), transparent 70%),
+        radial-gradient(700px 480px at 0% 100%, rgba(22,131,83,.08), transparent 70%),
+        linear-gradient(180deg, #F5F8FC 0%, #E6ECF5 100%) !important;
+    background-size: 170px 170px, auto, auto, auto !important;
+}
+
+/* ── the floor pills ── */
+:is(#hs,.pos) .floor-screen > .d-flex:first-child {
+    background: rgba(255,255,255,.88) !important;
+    border-bottom: 1px solid var(--hf-line) !important;
+    box-shadow: 0 6px 18px -12px rgba(23,57,95,.25) !important;
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+}
+:is(#hs,.pos) .floor-screen .floor-selector .button-floor,
+:is(#hs,.pos) .floor-screen .floor-selector button:not(.button-add) {
+    background: #FFFFFF !important;
+    border: 1px solid var(--hf-line) !important;
+    border-radius: 999px !important;
+    color: var(--hf-ink) !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 10px -8px rgba(23,57,95,.35) !important;
+}
+:is(#hs,.pos) .floor-screen .floor-selector .button-floor:hover {
+    background: #F2F6FC !important;
+    border-color: #C9D6E6 !important;
+}
+:is(#hs,.pos) .floor-screen .floor-selector .button-floor.active,
+:is(#hs,.pos) .floor-screen .floor-selector .btn-primary {
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hf-navy-a) 0%, var(--hf-navy-b) 100%) !important;
+    border-color: transparent !important;
+    color: #FFFFFF !important;
+    box-shadow: inset 0 -3px 0 var(--hf-gold), 0 10px 20px -10px rgba(23,57,95,.6) !important;
+}
+
+/* ── the card: free ── */
+:is(#hs,.pos) .floor-map .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table:has(.order-count:not(.d-none)) {
+    /*rtl:ignore*/background: linear-gradient(160deg, #FFFFFF 0%, #F3F7FC 100%) !important;
+    border: 1px solid var(--hf-line) !important;
+    border-radius: 20px !important;
+    box-shadow: inset 0 1px 0 #FFFFFF, 0 12px 24px -16px rgba(23,57,95,.45) !important;
+}
+:is(#hs,.pos) .floor-map .table.custom-floor-table:hover,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table:hover {
+    border-color: #C2D1E4 !important;
+    box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 30px -16px rgba(23,57,95,.5) !important;
+    filter: none !important;
+}
+:is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-number,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .custom-floor-table-number {
+    color: var(--hf-ink) !important;
+    font-size: 38px !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+/* the card's own `.table` class lets Bootstrap's table-cell background
+   (`.table > :not(caption) > * > *`) reach the numeral's wrappers */
+:is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-content,
+:is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-inner,
+:is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-number {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* the status light is redundant beside the status pill */
+:is(#hs,.pos) .floor-map .table.custom-floor-table .pos-floor-indicator,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .pos-floor-indicator {
+    display: none !important;
+}
+
+/* «متاحة» / «مشغولة» (text from pos_modern_ui): bottom, reading start */
+:is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-table .info::after,
+:is(#hs,.pos) .floor-screen .floor-table .info::after {
+    left: auto !important;
+    right: auto !important;
+    inset-inline-start: 14px !important;
+    bottom: 12px !important;
+    transform: none !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    background: var(--hf-mint-ghost) !important;
+    color: var(--hf-mint) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+/* ── the card: occupied — the home screen's navy tile ── */
+:is(#hs,.pos) .floor-map .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table.occupied,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied:has(.order-count:not(.d-none)) {
+    /*rtl:ignore*/background:
+        radial-gradient(120% 90% at 100% 0%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(145deg, var(--hf-navy-a) 0%, var(--hf-navy-b) 100%) !important;
+    border: 1px solid rgba(255,255,255,.14) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 26px -14px rgba(23,57,95,.7) !important;
+}
+:is(#hs,.pos) .floor-map .table.custom-floor-table.occupied .custom-floor-table-number,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table.occupied .custom-floor-table-number {
+    color: #FFFFFF !important;
+}
+:is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-table.occupied .info::after,
+:is(#hs,.pos) .floor-screen .floor-table.occupied .info::after {
+    background: rgba(255,255,255,.16) !important;
+    color: #FFFFFF !important;
+}
+
+/* the amount: gold on navy, its own row under the numeral */
+:is(#hs,.pos) .floor-map .table.custom-floor-table .table-amount-badge,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .table-amount-badge {
+    left: auto !important;
+    right: auto !important;
+    inset-inline-start: 14px !important;
+    inset-inline-end: auto !important;
+    top: auto !important;
+    bottom: 46px !important;
+    transform: none !important;
+    max-width: calc(100% - 28px) !important;
+    padding: 5px 11px !important;
+    background: rgba(239,203,126,.16) !important;
+    border: 1px solid rgba(239,203,126,.45) !important;
+    border-radius: 999px !important;
+    color: var(--hf-gold) !important;
+}
+:is(#hs,.pos) .floor-map .table.custom-floor-table .table-amount-badge .badge-value,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .table-amount-badge .badge-value,
+:is(#hs,.pos) .floor-map .table.custom-floor-table .table-amount-badge .badge-icon,
+:is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .table-amount-badge .badge-icon {
+    color: var(--hf-gold) !important;
+    font-size: 13px !important;
+}
+
+/* unsent-changes counter: gold pill in the corner opposite the numeral */
+:is(#hs,.pos) .floor-screen .floor-table .order-count {
+    left: auto !important;
+    right: auto !important;
+    inset-inline-end: 12px !important;
+    top: 12px !important;
+    min-width: 28px !important;
+    width: auto !important;
+    height: 28px !important;
+    padding: 0 8px !important;
+    border-radius: 999px !important;
+    border: 2px solid #FFFFFF !important;
+    background: var(--hf-gold) !important;
+    color: var(--hf-navy-b) !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 6px 12px -4px rgba(201,154,62,.6) !important;
+}
+
+/* kitchen timer (hosny_pos_send_order): bottom edge, opposite the status */
+:is(#hs,.pos) .floor-map .table .preparation-timer,
+:is(#hs,.pos) .floor-map .table.custom-floor-table .preparation-timer {
+    left: auto !important;
+    right: auto !important;
+    inset-inline-end: 12px !important;
+    top: auto !important;
+    bottom: 12px !important;
+    transform: none !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    padding: 0 10px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--hf-mint) !important;
+    color: #FFFFFF !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    text-shadow: none !important;
+    box-shadow: 0 6px 12px -6px rgba(22,131,83,.7) !important;
+    z-index: 5 !important;
+}
+:is(#hs,.pos) .floor-map .table .preparation-timer::before {
+    content: none !important;
+}
+
+/* a little more height, so number / amount / pills each get a row */
+:is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-map .table.custom-floor-table,
+:is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-map .table.custom-floor-table[style] {
+    height: 136px !important;
+}
+@media (max-width: 1180px) {
+    :is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-map .table.custom-floor-table,
+    :is(#hs,.pos) .floor-screen:not(:has(.edit-buttons)) .floor-map .table.custom-floor-table[style] {
+        height: 128px !important;
+    }
+    :is(#hs,.pos) .floor-map .table.custom-floor-table .custom-floor-table-number,
+    :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .custom-floor-table-number {
+        font-size: 30px !important;
+    }
+    :is(#hs,.pos) .floor-map .table.custom-floor-table .table-amount-badge,
+    :is(#hs,.pos) .floor-map[data-pos-floor-tone] .table.custom-floor-table .table-amount-badge {
+        bottom: 42px !important;
+    }
+}

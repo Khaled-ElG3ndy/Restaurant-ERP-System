@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Home',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'category': 'Point of Sale',
     'summary': 'الشاشة الرئيسية لنقطة البيع على طريقة FERP: الوقت، الفرع، المزامنة والأزرار',
     'description': """
@@ -9,6 +9,8 @@
 (الوقت والتاريخ، نقطة البيع والفرع، مزامنة السيرفر) وتحتها أزرار مربعة: المبيعات،
 الطاولات، الطلبات والفواتير، إيداع / سحب، تقرير الوردية، الإعدادات (للمدير)،
 إغلاق الوردية.
+
+وشاشة الطاولات بنفس الألوان على خلفية فاتحة (static/src/css/floor_screen.css).
 
 يعمل فقط مع «الكاشير أولاً» (pos_entry_selector) وبلا pos_hr. لا حقول مخزنة؛
 تقرير الوردية قراءة فقط من pos.session.hosny_home_summary.
@@ -23,6 +25,7 @@
             'hosny_pos_home/static/src/js/home_screen.js',
             'hosny_pos_home/static/src/xml/home_screen.xml',
             'hosny_pos_home/static/src/css/home_screen.css',
+            'hosny_pos_home/static/src/css/floor_screen.css',
         ],
     },
     'installable': True,
