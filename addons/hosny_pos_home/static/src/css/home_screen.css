@@ -1,5 +1,5 @@
 /* =====================================================================
-   hosny_pos_home — الشاشة الرئيسية
+   hosny_pos_home — الشاشة الرئيسية (على طريقة FERP)
    ---------------------------------------------------------------------
    The root is :is(#hs,.pos) like hosny_pos_skin, so every rule carries
    id-level weight over the class-based !important rules of the other POS
@@ -8,272 +8,209 @@
    immediately before it. The screen is always rtl (dir="rtl" in the
    markup), whichever bundle the till loads.
 
-   One entry point per action, nothing repeated (rtl, first column right):
-     header | restaurant ............ shift · cashier · clock |
-     body   | today's numbers / 3 big tiles / shift tools | last orders |
+   A patterned blue backdrop, the restaurant name above a dark panel:
+   three info boxes (time | point of sale | server sync) over a grid of
+   glossy square buttons, five to a row.
    ===================================================================== */
 
 :is(#hs,.pos) .hh-home {
-    --hh-bg-0: #0A1324;
-    --hh-bg-1: #0E1A30;
-    --hh-panel: #101C33;
-    --hh-card: #15233E;
-    --hh-card-2: #1B2C4C;
-    --hh-edge: rgba(255,255,255,.07);
-    --hh-edge-2: rgba(255,255,255,.12);
+    --hh-panel: #1B2452;
+    --hh-box: #232E63;
+    --hh-box-head: #18204A;
+    --hh-edge: rgba(255,255,255,.10);
     --hh-ink: #FFFFFF;
-    --hh-ink-2: #C7D2E4;
-    --hh-muted: #8495B2;
-    --hh-gold: #D8B25A;
+    --hh-ink-2: #D3DAF0;
+    --hh-muted: #9AA6CE;
+    --hh-gold: #F7C531;
     --hh-num: "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
     --hh-text: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
     --hh-ease: cubic-bezier(.22,.8,.3,1);
-    --hh-gap: clamp(10px, 1.2vw, 18px);
-    --hh-side: clamp(260px, 22vw, 360px);
 
     position: fixed;
     inset: 0;
     z-index: 1035;
     /*rtl:ignore*/direction: rtl;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: var(--hh-gap);
-    padding: clamp(10px, 1.8vh, 20px) clamp(12px, 1.6vw, 26px);
+    place-items: center;
+    padding: clamp(12px, 2.4vh, 28px) clamp(12px, 2vw, 32px);
     overflow: auto;
     color: var(--hh-ink);
     font-family: var(--hh-text);
-    background:
-        radial-gradient(900px 520px at 70% -20%, rgba(43,111,227,.14), transparent 65%),
-        linear-gradient(180deg, var(--hh-bg-1) 0%, var(--hh-bg-0) 100%);
+    background-color: #3A4793;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='.08' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 18v22M16 18v12a6 6 0 0 0 12 0V18M22 40v32'/%3E%3Cpath d='M44 18c-5 4-6 14-6 22h6v32'/%3E%3Cpath d='M70 70c-6 0-10-5-10-10 0-6 5-10 10-10 1-7 7-12 14-12s13 5 14 12c5 0 10 4 10 10 0 5-4 10-10 10z'/%3E%3Cpath d='M72 70v14h24V70'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(1200px 700px at 50% 40%, #4656A6 0%, #2E3976 100%);
+    background-size: 120px 120px, auto;
     isolation: isolate;
 }
 :is(#hs,.pos) .hh-home * { box-sizing: border-box; }
 :is(#hs,.pos) .hh-home h2 { margin: 0; }
 :is(#hs,.pos) .hh-home button { font-family: var(--hh-text); -webkit-tap-highlight-color: transparent; }
 
-/* ── الرأس ────────────────────────────────────────────────────────── */
-:is(#hs,.pos) .hh-head { display: flex; align-items: center; gap: var(--hh-gap); min-width: 0; }
-:is(#hs,.pos) .hh-brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-:is(#hs,.pos) .hh-crest {
-    flex: 0 0 auto;
-    inline-size: clamp(46px, 6.4vh, 60px); block-size: clamp(46px, 6.4vh, 60px);
-    border-radius: 50%;
-    padding: 2px;
-    background: #fff;
-    box-shadow: 0 0 0 2px var(--hh-gold), 0 8px 20px rgba(0,0,0,.4);
+:is(#hs,.pos) .hh-stage {
+    display: flex; flex-direction: column; gap: clamp(10px, 2vh, 20px);
+    inline-size: min(1180px, 100%);
 }
-:is(#hs,.pos) .hh-crest img { inline-size: 100%; block-size: 100%; object-fit: contain; border-radius: 50%; display: block; }
-:is(#hs,.pos) .hh-brand-copy { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
-:is(#hs,.pos) .hh-brand-copy strong { font-size: clamp(18px, 2.5vh, 22px); font-weight: 800; white-space: nowrap; }
-:is(#hs,.pos) .hh-brand-copy span { font-size: 13px; font-weight: 600; color: var(--hh-muted); white-space: nowrap; }
 
-:is(#hs,.pos) .hh-head-info { margin-inline-start: auto; display: flex; align-items: center; gap: clamp(10px, 1.6vw, 22px); min-width: 0; }
-:is(#hs,.pos) .hh-shift {
-    display: inline-flex; align-items: center; gap: 8px;
-    min-width: 0;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: var(--hh-card);
-    border: 1px solid var(--hh-edge-2);
-    font-size: 13px; white-space: nowrap;
-}
-:is(#hs,.pos) .hh-shift::before { content: ""; flex: 0 0 auto; inline-size: 9px; block-size: 9px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 0 3px rgba(74,222,128,.22); }
-:is(#hs,.pos) .hh-shift strong { font-weight: 800; }
-:is(#hs,.pos) .hh-shift span { font-weight: 600; color: var(--hh-muted); overflow: hidden; text-overflow: ellipsis; }
-:is(#hs,.pos) .hh-shift.is-offline { color: #FFB4BA; border-color: rgba(240,82,96,.45); background: rgba(240,82,96,.12); }
-:is(#hs,.pos) .hh-shift.is-offline::before { background: #F05260; box-shadow: 0 0 0 3px rgba(240,82,96,.25); }
-:is(#hs,.pos) .hh-cashier { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
-:is(#hs,.pos) .hh-cashier strong { font-size: 14px; font-weight: 700; color: var(--hh-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-inline-size: 180px; }
-:is(#hs,.pos) .hh-avatar {
+/* ── الاسم والشعار ────────────────────────────────────────────────── */
+:is(#hs,.pos) .hh-brand { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+:is(#hs,.pos) .hh-brand strong { font-size: clamp(28px, 5vh, 46px); font-weight: 800; letter-spacing: 0; text-shadow: 0 4px 14px rgba(0,0,0,.3); }
+:is(#hs,.pos) .hh-brand-icon {
     flex: 0 0 auto; display: grid; place-items: center;
-    inline-size: 40px; block-size: 40px; border-radius: 50%;
-    font-size: 17px; font-weight: 800; color: #fff;
-    background: linear-gradient(160deg, #3B4D6E, #24324D);
-    box-shadow: 0 0 0 2px rgba(255,255,255,.14);
-}
-:is(#hs,.pos) .hh-clock { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.1; padding-inline-start: clamp(10px, 1.6vw, 22px); border-inline-start: 1px solid var(--hh-edge-2); }
-:is(#hs,.pos) .hh-time { display: flex; align-items: baseline; gap: 5px; font-family: var(--hh-num); }
-:is(#hs,.pos) .hh-time-hm { /*rtl:ignore*/direction: ltr; font-size: clamp(26px, 4vh, 36px); font-weight: 700; font-variant-numeric: tabular-nums; }
-:is(#hs,.pos) .hh-time-ampm { font-family: var(--hh-text); font-size: 14px; font-weight: 700; color: var(--hh-ink-2); }
-:is(#hs,.pos) .hh-date { font-size: 12.5px; font-weight: 600; color: var(--hh-muted); white-space: nowrap; }
-
-/* ── الجسم ────────────────────────────────────────────────────────── */
-:is(#hs,.pos) .hh-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) var(--hh-side);
-    gap: var(--hh-gap);
-    min-block-size: 0;
-}
-:is(#hs,.pos) .hh-main {
-    display: grid;
-    grid-template-rows: auto minmax(160px, 1fr) auto;
-    gap: var(--hh-gap);
-    min-width: 0; min-block-size: 0;
+    inline-size: clamp(52px, 8vh, 72px); block-size: clamp(52px, 8vh, 72px);
+    border-radius: 16px;
+    font-size: clamp(26px, 4vh, 36px); color: #fff;
+    background: linear-gradient(180deg, #FF7A3D, #E2420E);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.3), 0 8px 22px rgba(0,0,0,.35);
 }
 
-/* أرقام اليوم: شريط واحد هادئ */
-:is(#hs,.pos) .hh-stats {
-    display: flex; align-items: stretch; flex-wrap: wrap;
+/* ── اللوحة ───────────────────────────────────────────────────────── */
+:is(#hs,.pos) .hh-panel {
+    display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 24px);
+    padding: clamp(14px, 2.2vh, 22px);
     border-radius: 16px;
     background: var(--hh-panel);
     border: 1px solid var(--hh-edge);
+    box-shadow: 0 24px 60px -20px rgba(8,12,40,.75);
 }
-:is(#hs,.pos) .hh-stat {
-    flex: 1 1 0;
-    display: flex; flex-direction: column; gap: 2px;
+:is(#hs,.pos) .hh-info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1.15fr);
+    gap: 12px;
+}
+:is(#hs,.pos) .hh-box {
+    display: flex; flex-direction: column;
     min-width: 0;
-    padding: clamp(10px, 1.6vh, 16px) clamp(14px, 1.6vw, 22px);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--hh-box);
+    border: 1px solid var(--hh-edge);
 }
-:is(#hs,.pos) .hh-stat + .hh-stat { border-inline-start: 1px solid var(--hh-edge); }
-:is(#hs,.pos) .hh-stat-label { font-size: 13px; font-weight: 700; color: var(--hh-muted); }
-:is(#hs,.pos) .hh-stat-value {
-    display: flex; align-items: center; gap: 10px;
-    font-family: var(--hh-num); font-weight: 700;
-    font-size: clamp(19px, 3vh, 26px); line-height: 1.25;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap; min-width: 0;
+:is(#hs,.pos) .hh-box-title {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 7px 12px;
+    background: var(--hh-box-head);
+    font-size: 14px; font-weight: 800; color: #fff;
 }
-:is(#hs,.pos) .hh-delta { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; }
-:is(#hs,.pos) .hh-delta.is-up { color: #4ADE80; background: rgba(74,222,128,.12); }
-:is(#hs,.pos) .hh-delta.is-down { color: #FF9AA3; background: rgba(240,82,96,.14); }
-:is(#hs,.pos) .hh-stats-warn { flex: 1 0 100%; padding: 0 22px 10px; font-size: 12px; font-weight: 700; color: #FF9AA3; }
+:is(#hs,.pos) .hh-box-title .fa-star { color: var(--hh-gold); }
+:is(#hs,.pos) .hh-net { padding: 1px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+:is(#hs,.pos) .hh-net.is-online { color: #4ADE80; background: rgba(74,222,128,.14); }
+:is(#hs,.pos) .hh-net.is-offline { color: #FCA5A5; background: rgba(240,82,96,.2); }
 
-/* الأزرار الرئيسية الثلاثة */
+:is(#hs,.pos) .hh-clock {
+    flex: 1 1 auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    padding: 12px;
+    font-family: var(--hh-num);
+    /*rtl:ignore*/direction: ltr;
+}
+:is(#hs,.pos) .hh-clock-time { font-size: clamp(30px, 5vh, 44px); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+:is(#hs,.pos) .hh-clock-date { font-size: clamp(15px, 2.2vh, 19px); font-weight: 600; color: var(--hh-ink-2); }
+
+:is(#hs,.pos) .hh-branch { flex: 1 1 auto; display: flex; align-items: center; gap: 12px; padding: 12px 14px; min-width: 0; }
+:is(#hs,.pos) .hh-branch-copy, :is(#hs,.pos) .hh-sync { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 auto; }
+:is(#hs,.pos) .hh-sync { padding: 12px 14px; justify-content: center; }
+:is(#hs,.pos) .hh-branch-copy span, :is(#hs,.pos) .hh-sync span {
+    font-size: 14px; font-weight: 600; color: var(--hh-ink-2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+:is(#hs,.pos) .hh-branch-copy b, :is(#hs,.pos) .hh-sync b { color: #fff; font-weight: 800; }
+:is(#hs,.pos) .hh-sync bdi { font-family: var(--hh-num); }
+:is(#hs,.pos) .hh-branch-logo {
+    flex: 0 0 auto;
+    inline-size: clamp(56px, 9vh, 80px); block-size: clamp(56px, 9vh, 80px);
+    border-radius: 12px; padding: 3px; background: #fff;
+}
+:is(#hs,.pos) .hh-branch-logo img { inline-size: 100%; block-size: 100%; object-fit: contain; display: block; }
+
+/* ── الأزرار ──────────────────────────────────────────────────────── */
 :is(#hs,.pos) .hh-tiles {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--hh-gap);
-    min-block-size: 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(12px, 1.6vw, 22px);
+    padding: 4px;
 }
 :is(#hs,.pos) .hh-tile {
-    --t-a: #3B8BFF; --t-b: #1D4ED8; --t-glow: rgba(59,130,246,.45);
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
-    gap: 4px;
-    min-width: 0; min-block-size: 0;
-    padding: clamp(16px, 2.6vh, 28px) clamp(16px, 1.8vw, 28px);
+    --t-a: #2F86F0; --t-b: #1859C9; --t-glow: rgba(47,134,240,.55);
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: clamp(6px, 1.2vh, 12px);
+    aspect-ratio: 1 / .82;
+    max-block-size: 22vh;
+    min-width: 0;
     margin: 0;
-    border: 0 !important; border-radius: 20px !important;
-    text-align: start;
+    padding: 10px;
+    border: 3px solid rgba(255,255,255,.38) !important;
+    border-radius: 12px !important;
     color: #fff !important;
-    overflow: hidden;
     cursor: pointer;
-    /*rtl:ignore*/background: linear-gradient(140deg, var(--t-a) 0%, var(--t-b) 100%) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 16px 30px -16px var(--t-glow) !important;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--t-a) 0%, var(--t-b) 100%) !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 10px 26px -8px var(--t-glow), inset 0 -4px 0 rgba(0,0,0,.15) !important;
     transition: transform .14s var(--hh-ease), filter .14s !important;
 }
+/* the glossy upper half */
+:is(#hs,.pos) .hh-tile::before {
+    content: ""; position: absolute; inset: 0 0 50% 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.06));
+}
 :is(#hs,.pos) .hh-tile:hover {
-    filter: brightness(1.06);
-    /*rtl:ignore*/background: linear-gradient(140deg, var(--t-a) 0%, var(--t-b) 100%) !important;
+    filter: brightness(1.08);
+    background: linear-gradient(180deg, var(--t-a) 0%, var(--t-b) 100%) !important;
 }
-:is(#hs,.pos) .hh-tile:active { transform: scale(.98); filter: brightness(.95); }
+:is(#hs,.pos) .hh-tile:active { transform: scale(.96); filter: brightness(.95); }
 :is(#hs,.pos) .hh-tile:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-:is(#hs,.pos) .hh-tile-icon {
+:is(#hs,.pos) .hh-tile-icon { position: relative; font-size: clamp(34px, 6vh, 54px); text-shadow: 0 3px 8px rgba(0,0,0,.25); }
+:is(#hs,.pos) .hh-tile-title { position: relative; font-size: clamp(15px, 2.4vh, 20px); font-weight: 800; line-height: 1.3; text-align: center; text-shadow: 0 2px 6px rgba(0,0,0,.25); }
+:is(#hs,.pos) .hh-tile-badge {
+    position: absolute; inset-block-start: 8px; inset-inline-end: 8px;
+    min-inline-size: 30px; block-size: 30px; padding: 0 8px;
     display: grid; place-items: center;
-    inline-size: clamp(52px, 8vh, 72px); block-size: clamp(52px, 8vh, 72px);
-    margin-block-end: auto;
-    border-radius: 18px;
-    font-size: clamp(24px, 3.8vh, 34px);
-    background: rgba(255,255,255,.2);
+    border-radius: 999px;
+    font-family: var(--hh-num); font-size: 14px; font-weight: 800;
+    color: #fff; background: #E11D48;
+    box-shadow: 0 0 0 3px #fff, 0 4px 10px rgba(0,0,0,.3);
 }
-:is(#hs,.pos) .hh-tile-title { font-size: clamp(20px, 3.2vh, 28px); font-weight: 800; line-height: 1.25; }
-:is(#hs,.pos) .hh-tile-sub { font-size: 14px; font-weight: 600; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-inline-size: 100%; }
-:is(#hs,.pos) .hh-tile-sell .hh-tile-icon { inline-size: clamp(64px, 11vh, 96px); block-size: clamp(64px, 11vh, 96px); border-radius: 24px; font-size: clamp(32px, 5.4vh, 48px); }
-:is(#hs,.pos) .hh-tile-sell .hh-tile-title { font-size: clamp(30px, 5.4vh, 48px); }
-:is(#hs,.pos) .hh-tile-sell .hh-tile-sub { font-size: 15px; }
 
-:is(#hs,.pos) .hh-tone-green  { --t-a: #34D07A; --t-b: #0F9D55; --t-glow: rgba(34,197,94,.55); --t-ink: #4ADE80; }
-:is(#hs,.pos) .hh-tone-blue   { --t-a: #3B8BFF; --t-b: #1D4ED8; --t-glow: rgba(59,130,246,.5); --t-ink: #60A5FA; }
-:is(#hs,.pos) .hh-tone-violet { --t-a: #8B6CFF; --t-b: #5B35E0; --t-glow: rgba(124,92,250,.5); --t-ink: #A78BFA; }
-:is(#hs,.pos) .hh-tone-amber  { --t-ink: #FBBF24; }
-:is(#hs,.pos) .hh-tone-purple { --t-ink: #C084FC; }
-:is(#hs,.pos) .hh-tone-red    { --t-ink: #F87171; }
-:is(#hs,.pos) .hh-tone-slate  { --t-ink: #CBD5E1; }
+:is(#hs,.pos) .hh-tone-green   { --t-a: #2BD45E; --t-b: #0E9F3A; --t-glow: rgba(34,197,94,.6); }
+:is(#hs,.pos) .hh-tone-magenta { --t-a: #E03ADF; --t-b: #A111A3; --t-glow: rgba(210,31,208,.55); }
+:is(#hs,.pos) .hh-tone-blue    { --t-a: #3A8EF5; --t-b: #1756C7; --t-glow: rgba(47,134,240,.55); }
+:is(#hs,.pos) .hh-tone-orange  { --t-a: #FF7A3D; --t-b: #E2420E; --t-glow: rgba(255,106,43,.55); }
+:is(#hs,.pos) .hh-tone-purple  { --t-a: #9550E6; --t-b: #6420B0; --t-glow: rgba(139,63,217,.55); }
+:is(#hs,.pos) .hh-tone-steel   { --t-a: #3F82DD; --t-b: #2155A6; --t-glow: rgba(58,123,213,.5); }
+:is(#hs,.pos) .hh-tone-red     { --t-a: #F25555; --t-b: #B91C1C; --t-glow: rgba(239,68,68,.55); }
 
-/* أدوات الوردية: صف واحد هادئ تحت الأزرار */
-:is(#hs,.pos) .hh-tools {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    gap: var(--hh-gap);
+/* ── التذييل ──────────────────────────────────────────────────────── */
+:is(#hs,.pos) .hh-foot {
+    align-self: center;
+    padding: 8px 22px;
+    border-radius: 999px;
+    background: #ECE6F8;
+    color: #5B3FA8;
+    font-size: 13.5px; font-weight: 700;
+    box-shadow: 0 8px 20px -10px rgba(0,0,0,.4);
+    text-align: center;
 }
-:is(#hs,.pos) .hh-tool {
-    display: flex; align-items: center; gap: 12px;
-    min-width: 0;
-    min-block-size: clamp(58px, 8.4vh, 76px);
-    margin: 0;
-    padding: 0 clamp(12px, 1.4vw, 20px);
-    border: 1px solid var(--hh-edge-2) !important; border-radius: 16px !important;
-    background: var(--hh-card) !important;
-    color: #fff !important;
-    box-shadow: none !important;
-    cursor: pointer;
-    transition: background .14s, transform .14s !important;
-}
-:is(#hs,.pos) .hh-tool:hover { background: var(--hh-card-2) !important; }
-:is(#hs,.pos) .hh-tool:active { transform: scale(.98); }
-:is(#hs,.pos) .hh-tool:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-:is(#hs,.pos) .hh-tool-icon {
-    flex: 0 0 auto; display: grid; place-items: center;
-    inline-size: 40px; block-size: 40px; border-radius: 12px;
-    font-size: 18px;
-    color: var(--t-ink);
-    background: color-mix(in srgb, var(--t-ink) 16%, transparent);
-}
-:is(#hs,.pos) .hh-tool-title { font-size: clamp(14px, 2vh, 16px); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* ── آخر الطلبات ──────────────────────────────────────────────────── */
-:is(#hs,.pos) .hh-recent {
-    display: flex; flex-direction: column; gap: 10px;
-    min-block-size: 0;
-    padding: 14px;
-    border-radius: 16px;
-    background: var(--hh-panel);
-    border: 1px solid var(--hh-edge);
-}
-:is(#hs,.pos) .hh-recent-title { font-size: 16px; font-weight: 800; padding: 2px 4px; }
-:is(#hs,.pos) .hh-orders { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; overflow: auto; min-block-size: 0; }
-:is(#hs,.pos) .hh-orders li {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 4px 10px;
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: var(--hh-card);
-}
-:is(#hs,.pos) .hh-order-main { display: flex; align-items: baseline; gap: 8px; min-width: 0; font-size: 13.5px; font-weight: 600; color: var(--hh-ink-2); white-space: nowrap; overflow: hidden; }
-:is(#hs,.pos) .hh-order-main b { font-family: var(--hh-num); font-weight: 700; color: #fff; }
-:is(#hs,.pos) .hh-order-amount { font-family: var(--hh-num); font-weight: 700; font-size: 15px; white-space: nowrap; }
-:is(#hs,.pos) .hh-order-state { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
-:is(#hs,.pos) .hh-order-state::before { content: ""; inline-size: 8px; block-size: 8px; border-radius: 50%; background: currentColor; }
-:is(#hs,.pos) .hh-order-state.is-green { color: #4ADE80; }
-:is(#hs,.pos) .hh-order-state.is-amber { color: #FBBF24; }
-:is(#hs,.pos) .hh-order-state.is-blue  { color: #60A5FA; }
-:is(#hs,.pos) .hh-order-time { font-family: var(--hh-num); font-size: 12px; font-weight: 600; color: var(--hh-muted); white-space: nowrap; }
-:is(#hs,.pos) .hh-empty { margin: auto; padding: 10px; font-size: 13px; color: var(--hh-muted); font-weight: 600; text-align: center; }
+:is(#hs,.pos) .hh-foot-warn { color: #B4232F; }
 
 /* ── شاشات أصغر ──────────────────────────────────────────────────── */
-@media (max-width: 1180px) {
-    :is(#hs,.pos) .hh-home { --hh-side: 250px; }
-    :is(#hs,.pos) .hh-cashier strong { display: none; }
-    :is(#hs,.pos) .hh-shift span { display: none; }
-    :is(#hs,.pos) .hh-tool { flex-direction: column; justify-content: center; gap: 4px; padding: 8px; }
-    :is(#hs,.pos) .hh-tool-icon { inline-size: 34px; block-size: 34px; font-size: 16px; }
-    :is(#hs,.pos) .hh-tool-title { font-size: 13px; }
+@media (max-width: 900px) {
+    :is(#hs,.pos) .hh-info { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    :is(#hs,.pos) .hh-box-clock { grid-column: span 2; }
+    :is(#hs,.pos) .hh-clock { flex-direction: row; gap: 16px; padding: 8px; }
 }
-/* phones and narrow tablets: one scrolling column */
 @media (max-width: 760px) {
-    :is(#hs,.pos) .hh-home { grid-template-rows: none; grid-auto-rows: auto; }
-    :is(#hs,.pos) .hh-head { flex-wrap: wrap; }
-    :is(#hs,.pos) .hh-body { grid-template-columns: minmax(0, 1fr); }
-    :is(#hs,.pos) .hh-main { grid-template-rows: none; }
-    :is(#hs,.pos) .hh-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 140px; }
-    :is(#hs,.pos) .hh-tile-sell { grid-column: span 2; }
-    :is(#hs,.pos) .hh-tools { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    :is(#hs,.pos) .hh-recent { max-block-size: 420px; }
+    :is(#hs,.pos) .hh-home { place-items: start center; }
+    :is(#hs,.pos) .hh-info { grid-template-columns: minmax(0, 1fr); }
+    :is(#hs,.pos) .hh-box-clock { grid-column: auto; }
+    :is(#hs,.pos) .hh-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    :is(#hs,.pos) .hh-tile { max-block-size: none; }
+}
+@media (max-width: 480px) {
+    :is(#hs,.pos) .hh-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
-    :is(#hs,.pos) .hh-tile, :is(#hs,.pos) .hh-tool { transition: none !important; }
+    :is(#hs,.pos) .hh-tile { transition: none !important; }
 }
 
 /* ── تقرير الوردية ────────────────────────────────────────────────── */
