@@ -19,6 +19,7 @@ import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { LoginScreen } from "@point_of_sale/app/screens/login_screen/login_screen";
 import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
 import { handleSaleDetails } from "@point_of_sale/app/components/navbar/sale_details_button/sale_details_button";
+import { deserializeDateTime } from "@web/core/l10n/dates";
 import { dineInFloors } from "@pos_entry_selector/js/entry_selector";
 
 const HOME = "HosnyHomeScreen";
@@ -36,6 +37,16 @@ function branchName(config) {
     }
     return name.replace("مطعم حسني", "").replace("-", "").trim() || name;
 }
+
+/** 9:05 ص — بأرقام لاتينية كبقية الشاشة. */
+function clock12(date) {
+    const h = date.getHours();
+    return `${pad(h % 12 || 12)}:${pad(date.getMinutes())} ${h < 12 ? "ص" : "م"}`;
+}
+
+/** حقول التاريخ تصل luxon أو نصاً. */
+const toDateTime = (value) =>
+    value ? (typeof value === "string" ? deserializeDateTime(value) : value) : null;
 
 function formatDate(date, locale, options) {
     try {
@@ -126,18 +137,10 @@ export class HosnyHomeScreen extends Component {
     get branch() {
         return branchName(this.pos.config);
     }
-    get branchInfo() {
-        const c = this.pos.config;
-        return {
-            address: c.hosny_receipt_address || "",
-            phone: c.hosny_receipt_phone || "",
-            vat: c.hosny_receipt_vat || "",
-        };
-    }
     get time() {
         const d = this.state.now;
         const h = d.getHours() % 12 || 12;
-        return { hm: `${pad(h)}:${pad(d.getMinutes())}`, s: pad(d.getSeconds()), ampm: d.getHours() < 12 ? "ص" : "م" };
+        return { hm: `${pad(h)}:${pad(d.getMinutes())}`, ampm: d.getHours() < 12 ? "ص" : "م" };
     }
     get weekday() {
         return formatDate(this.state.now, "ar-EG", { weekday: "long" });
@@ -162,8 +165,27 @@ export class HosnyHomeScreen extends Component {
     get cashierInitial() {
         return (this.cashierName.trim()[0] || "ح").toUpperCase();
     }
+    get isManager() {
+        return this.pos.cashier?._role === "manager";
+    }
+    get cashierRole() {
+        return this.isManager ? "مدير" : "كاشير";
+    }
     get online() {
         return !this.pos.data.network?.offline;
+    }
+    get shift() {
+        const s = this.summary;
+        const start = s.session_start ? new Date(s.session_start.replace(" ", "T")) : null;
+        const hour = start ? start.getHours() : this.state.now.getHours();
+        return {
+            name: s.session_name || this.pos.session.name,
+            label: hour >= 5 && hour < 15 ? "الوردية الصباحية" : "الوردية المسائية",
+            startText: start
+                ? `${formatDate(start, "ar-EG-u-nu-latn", { day: "numeric", month: "short" })} ${clock12(start)}`
+                : "",
+            since: start ? arabicSince(this.state.now - start) : "",
+        };
     }
 
     // ── الأرقام ─────────────────────────────────────────────────────────
@@ -181,10 +203,6 @@ export class HosnyHomeScreen extends Component {
         const pct = Math.round(((s.today_total - s.yesterday_total) / s.yesterday_total) * 100);
         return { pct: Math.abs(pct), up: pct >= 0 };
     }
-    get average() {
-        const s = this.summary;
-        return s.today_count ? s.today_total / s.today_count : 0;
-    }
     get openOrders() {
         return this.pos.getOpenOrders().filter((o) => !o.finalized && o.lines.length);
     }
@@ -196,18 +214,7 @@ export class HosnyHomeScreen extends Component {
         const count = all.filter((t) => busy.has(t.id)).length;
         return { busy: count, total: all.length, pct: all.length ? Math.round((count * 100) / all.length) : 0 };
     }
-    get shift() {
-        const s = this.summary;
-        const start = s.session_start ? new Date(s.session_start.replace(" ", "T")) : null;
-        return {
-            name: s.session_name || this.pos.session.name,
-            startText: start
-                ? `${formatDate(start, "ar-EG-u-nu-latn", { day: "numeric", month: "short" })} · ${pad(start.getHours())}:${pad(start.getMinutes())}`
-                : "",
-            since: start ? arabicSince(this.state.now - start) : "",
-        };
-    }
-    /** أعمدة المبيعات بالساعة: من أول ساعة فيها مبيعات (أو 8 ص) إلى الساعة الحالية. */
+    /** أعمدة صغيرة لمبيعات آخر ساعات اليوم حتى الساعة الحالية. */
     get hours() {
         const s = this.summary;
         const hourly = s.hourly || [];
@@ -215,87 +222,131 @@ export class HosnyHomeScreen extends Component {
             return [];
         }
         const now = s.current_hour ?? this.state.now.getHours();
-        const first = hourly.findIndex((v) => v);
-        const from = Math.max(0, Math.min(first === -1 ? 8 : first, now - 7, 8));
+        const from = Math.max(0, now - 7);
         const slice = hourly.slice(from, now + 1);
         const max = Math.max(...slice, 1);
         return slice.map((amount, i) => {
             const h = from + i;
             return {
                 h,
-                label: `${h % 12 || 12} ${h < 12 ? "ص" : "م"}`,
-                amount,
-                pct: amount ? Math.max(6, Math.round((amount / max) * 100)) : 0,
+                pct: amount ? Math.max(18, Math.round((amount / max) * 100)) : 12,
                 tip: `${pad(h)}:00 — ${this.fmt(amount)}`,
                 now: h === now,
             };
         });
     }
     get payments() {
-        const list = this.summary.payments || [];
-        const max = Math.max(...list.map((p) => p.amount), 1);
-        return list.map((p) => ({ ...p, pct: Math.max(3, Math.round((p.amount / max) * 100)) }));
+        return this.summary.payments || [];
+    }
+    get paymentsDetail() {
+        return this.payments.map((p) => `${p.name}: ${this.fmt(p.amount)}`).join("\n");
+    }
+    /** الطلبات المفتوحة على الجهاز ثم آخر المدفوعة اليوم، الأحدث أولاً. */
+    get recentOrders() {
+        const open = this.openOrders.map((o) => {
+            const date = toDateTime(o.date_order);
+            return {
+                key: `open-${o.uuid || o.id}`,
+                ref: o.tracking_number || o.name,
+                place: o.table_id ? `طاولة ${o.table_id.table_number}` : "سفري",
+                amount: o.priceIncl,
+                ts: date?.isValid ? date.toMillis() : Date.now(),
+                state: "قيد التنفيذ",
+                tone: "amber",
+            };
+        });
+        const done = (this.summary.last_orders || []).map((o, i) => ({
+            key: `done-${o.ref}-${i}`,
+            ref: o.ref,
+            place: o.place,
+            amount: o.amount,
+            ts: o.ts * 1000,
+            state: o.invoiced ? "مفوترة" : "مدفوعة",
+            tone: o.invoiced ? "blue" : "green",
+        }));
+        return [...open, ...done]
+            .sort((a, b) => b.ts - a.ts)
+            .slice(0, 6)
+            .map((o) => ({ ...o, time: clock12(new Date(o.ts)) }));
     }
 
     // ── الاختصارات ──────────────────────────────────────────────────────
-    get tiles() {
+    get actions() {
         const pos = this.pos;
-        const role = pos.cashier?._role;
-        const tiles = [
-            {
-                key: "tables",
-                tone: "blue",
+        const open = this.openOrders.length;
+        return {
+            home: { icon: "fa-home", title: "الرئيسية", run: () => {} },
+            orders: {
+                icon: "fa-file-text-o",
+                tone: "violet",
+                title: "الطلبات والفواتير",
+                navTitle: "الطلبات المفتوحة",
+                sub: "عرض الطلبات والفواتير",
+                badge: open,
+                run: () => pos.navigate("TicketScreen"),
+            },
+            sell: {
+                icon: "fa-shopping-cart",
+                tone: "green",
+                title: "المبيعات",
+                sub: "ابدأ البيع مباشرة",
+                run: () => this.startSelling(),
+            },
+            tables: {
                 icon: "fa-cutlery",
+                tone: "blue",
                 title: "الطاولات",
                 sub: `${this.tables.busy} مشغولة من ${this.tables.total}`,
                 run: () => this.openTables(),
             },
-            {
-                key: "orders",
-                tone: "violet",
-                icon: "fa-file-text-o",
-                title: "الطلبات والفواتير",
-                sub: `${this.openOrders.length} طلب مفتوح`,
-                run: () => pos.navigate("TicketScreen"),
-            },
-        ];
-        if (pos.showCashMoveButton && role !== "minimal") {
-            tiles.push({
-                key: "cash",
+            cash: pos.showCashMoveButton && pos.cashier?._role !== "minimal" && {
+                icon: "fa-money",
                 tone: "amber",
-                icon: "fa-exchange",
                 title: "إيداع / سحب",
-                sub: "حركة نقدية في الدرج",
+                sub: "حركات النقدية",
                 run: () => pos.cashMove(),
-            });
-        }
-        tiles.push({
-            key: "report",
-            tone: "magenta",
-            icon: "fa-bar-chart",
-            title: "تقرير الوردية",
-            sub: "المبيعات وطرق الدفع",
-            run: () => this.openReport(),
-        });
-        if (role === "manager") {
-            tiles.push({
-                key: "backend",
+            },
+            report: {
+                icon: "fa-bar-chart",
+                tone: "purple",
+                title: "تقرير الوردية",
+                sub: "المبيعات وطرق الدفع",
+                run: () => this.openReport(),
+            },
+            close: {
+                icon: "fa-power-off",
+                tone: "red",
+                title: "إغلاق الوردية",
+                sub: "الإغلاق اليومي",
+                run: () => pos.closeSession(),
+            },
+            backend: this.isManager && {
+                icon: "fa-cog",
                 tone: "slate",
-                icon: "fa-cogs",
                 title: "لوحة التحكم",
-                sub: "الإعدادات والتقارير الكاملة",
+                sub: "الإعدادات والتقارير",
                 run: () => pos.closePos(),
-            });
-        }
-        tiles.push({
-            key: "close",
-            tone: "red",
-            icon: "fa-power-off",
-            title: "إغلاق الوردية",
-            sub: "جرد الصندوق وإقفال الجلسة",
-            run: () => pos.closeSession(),
-        });
-        return tiles;
+            },
+        };
+    }
+    pick(keys) {
+        const actions = this.actions;
+        return keys.filter((key) => actions[key]).map((key) => ({ key, ...actions[key] }));
+    }
+    /** بترتيب القراءة من اليمين: الطاولات، المبيعات، الطلبات. */
+    get mainTiles() {
+        return this.pick(["tables", "sell", "orders"]);
+    }
+    get moreTiles() {
+        return this.pick(["backend", "close", "report", "cash"]);
+    }
+    get navItems() {
+        return this.pick(["home", "orders", "tables", "sell", "report", "cash", "close"]).map((item) => ({
+            ...item,
+            title: item.navTitle || item.title,
+            active: item.key === "home",
+            badge: item.key === "orders" ? item.badge : 0,
+        }));
     }
 
     startSelling() {

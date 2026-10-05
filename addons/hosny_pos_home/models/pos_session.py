@@ -73,7 +73,9 @@ class PosSession(models.Model):
             "last_orders": [{
                 "ref": o.tracking_number or o.pos_reference or o.name,
                 "time": pytz.utc.localize(o.date_order).astimezone(tz).strftime("%H:%M"),
+                "ts": pytz.utc.localize(o.date_order).timestamp(),
                 "amount": o.amount_total,
                 "place": place(o),
-            } for o in today[:5]],
+                "invoiced": o.state == "invoiced" or bool(o.account_move),
+            } for o in today[:6]],
         }
