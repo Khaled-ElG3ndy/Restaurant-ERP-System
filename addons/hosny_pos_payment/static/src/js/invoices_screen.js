@@ -9,7 +9,7 @@
  * العمليات تحمّل الطلب من الخادم بنفس طريقة شاشة الطلبات في أودو
  * (loadServerOrders)، إلا إن كان مفتوحاً على هذا الجهاز فيُستخدم كما هو.
  */
-import { onMounted, useState } from "@odoo/owl";
+import { onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { HosnyPaymentOrdersScreen } from "@hosny_pos_controls/js/payment_orders_screen";
@@ -58,8 +58,22 @@ patch(HosnyPaymentOrdersScreen.prototype, {
             loading: false,
             busyId: null,
             sort: { key: "date", desc: true },
+            page: 1,
+            pageSize: 10,
         });
-        onMounted(() => this.invSearch());
+        // صفحة الجدول = ما يتسع له مكانه بلا تمرير، ويُعاد حسابها مع تغيّر الحجم
+        this.invWrap = useRef("invWrap");
+        let observer;
+        onMounted(() => {
+            this.invSearch();
+            const el = this.invWrap.el;
+            if (el && window.ResizeObserver) {
+                observer = new ResizeObserver(() => this.invFitPage());
+                observer.observe(el);
+            }
+            this.invFitPage();
+        });
+        onWillUnmount(() => observer?.disconnect());
     },
 
     // ── الجلب ───────────────────────────────────────────────────────────
@@ -90,11 +104,56 @@ patch(HosnyPaymentOrdersScreen.prototype, {
             this.inv.tables = result.tables;
             this.inv.totalCount = result.total_count;
             this.inv.limit = result.limit;
+            this.inv.page = 1;
         } catch {
             this.pos.notification?.add("تعذّر جلب الفواتير — تأكد من الاتصال بالسيرفر.", { type: "warning" });
         } finally {
             this.inv.loading = false;
         }
+    },
+    /** كم صفاً يتسع بلا تمرير: ارتفاع المكان ناقص رأس الجدول ÷ ارتفاع الصف. */
+    invFitPage() {
+        const el = this.invWrap.el;
+        if (!el) {
+            return;
+        }
+        const head = el.querySelector("thead")?.offsetHeight || 44;
+        const row = el.querySelector("tbody tr")?.offsetHeight || 52;
+        const size = Math.max(3, Math.floor((el.clientHeight - head) / row));
+        if (size !== this.inv.pageSize) {
+            this.inv.pageSize = size;
+            this.inv.page = Math.min(this.inv.page, Math.max(1, Math.ceil(this.inv.rows.length / size)));
+        }
+    },
+    get invPageCount() {
+        return Math.max(1, Math.ceil(this.inv.rows.length / this.inv.pageSize));
+    },
+    get invPageRows() {
+        const start = (this.inv.page - 1) * this.inv.pageSize;
+        return this.invRows.slice(start, start + this.inv.pageSize);
+    },
+    get invPageRange() {
+        const total = this.inv.rows.length;
+        const start = total ? (this.inv.page - 1) * this.inv.pageSize + 1 : 0;
+        return { start, end: Math.min(total, this.inv.page * this.inv.pageSize), total };
+    },
+    /** أرقام الصفحات: الأولى والأخيرة وما حول الحالية، وبينها «…». */
+    get invPageButtons() {
+        const count = this.invPageCount;
+        const current = this.inv.page;
+        const pages = new Set([1, count, current - 1, current, current + 1]);
+        const list = [...pages].filter((p) => p >= 1 && p <= count).sort((a, b) => a - b);
+        const out = [];
+        list.forEach((p, i) => {
+            if (i && p - list[i - 1] > 1) {
+                out.push({ key: `gap-${p}`, gap: true });
+            }
+            out.push({ key: `p-${p}`, page: p });
+        });
+        return out;
+    },
+    invGoPage(page) {
+        this.inv.page = Math.min(Math.max(1, page), this.invPageCount);
     },
     invReset() {
         this.inv.filters = defaultFilters();
@@ -142,6 +201,7 @@ patch(HosnyPaymentOrdersScreen.prototype, {
     invSortBy(key) {
         const sort = this.inv.sort;
         this.inv.sort = { key, desc: sort.key === key ? !sort.desc : true };
+        this.inv.page = 1;
     },
     invSortIcon(key) {
         const sort = this.inv.sort;
