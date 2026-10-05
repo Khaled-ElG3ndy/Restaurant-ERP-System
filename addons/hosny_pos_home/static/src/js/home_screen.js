@@ -38,6 +38,17 @@ function branchName(config) {
     return name.replace("مطعم حسني", "").replace("-", "").trim() || name;
 }
 
+/**
+ * 1,240.50 SR — الرمز بعد الرقم أياً كان موضعه في إعدادات العملة. معزول
+ * باتجاه LTR (LRI … PDI) وإلا قلبته الشاشة العربية إلى SR 1,240.50.
+ */
+function money(component, amount) {
+    const pos = component.pos;
+    const symbol = pos.currency?.symbol ?? pos.config.currency_id?.symbol ?? "";
+    const number = component.env.utils.formatCurrency(amount || 0, false);
+    return symbol ? `\u2066${number}\u00a0${symbol}\u2069` : number;
+}
+
 /** 9:05 ص — بأرقام لاتينية كبقية الشاشة. */
 function clock12(date) {
     const h = date.getHours();
@@ -86,7 +97,7 @@ export class HosnyShiftReport extends Component {
         return Boolean(this.hardwareProxy.printer);
     }
     fmt(amount) {
-        return this.env.utils.formatCurrency(amount || 0);
+        return money(this, amount);
     }
     qty(value) {
         return Number.isInteger(value) ? value : Number(value || 0).toFixed(2);
@@ -190,7 +201,7 @@ export class HosnyHomeScreen extends Component {
 
     // ── الأرقام ─────────────────────────────────────────────────────────
     fmt(amount) {
-        return this.env.utils.formatCurrency(amount || 0);
+        return money(this, amount);
     }
     get summary() {
         return this.state.summary || {};

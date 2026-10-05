@@ -177,12 +177,6 @@
     padding-block-start: 10px;
     min-block-size: 0;
 }
-:is(#hs,.pos) .hh-nav-art {
-    position: absolute; inset-block-end: 40px; inset-inline-end: -46px;
-    inline-size: 170px; block-size: 170px;
-    opacity: .09; pointer-events: none;
-}
-:is(#hs,.pos) .hh-nav-art img { inline-size: 100%; block-size: 100%; object-fit: contain; filter: grayscale(1) brightness(2); }
 :is(#hs,.pos) .hh-nav-motto { padding-inline: 18px; font-size: 15px; font-weight: 700; color: var(--hh-gold); font-style: italic; }
 :is(#hs,.pos) .hh-nav-settings { min-block-size: 46px; }
 
@@ -390,15 +384,6 @@
 :is(#hs,.pos) .hh-banner-copy strong { font-size: clamp(17px, 2.6vh, 22px); font-weight: 800; color: #fff; }
 :is(#hs,.pos) .hh-banner-copy span { font-size: 13px; font-weight: 600; color: var(--hh-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 :is(#hs,.pos) .hh-banner-warn { position: relative; font-size: 12px; font-weight: 700; color: #FF9AA3; }
-:is(#hs,.pos) .hh-banner-art {
-    position: relative;
-    margin-inline-start: auto;
-    flex: 0 0 auto;
-    inline-size: clamp(54px, 8vh, 76px); block-size: clamp(54px, 8vh, 76px);
-    border-radius: 50%; padding: 2px; background: #fff;
-    box-shadow: 0 0 0 2px var(--hh-gold), 0 0 0 10px rgba(216,178,90,.10), 0 0 0 22px rgba(216,178,90,.05);
-}
-:is(#hs,.pos) .hh-banner-art img { inline-size: 100%; block-size: 100%; object-fit: contain; border-radius: 50%; display: block; }
 
 /* ── آخر الطلبات ──────────────────────────────────────────────────── */
 :is(#hs,.pos) .hh-recent {
@@ -461,7 +446,7 @@
     :is(#hs,.pos) .hh-nav-item { justify-content: center; padding: 0; }
     :is(#hs,.pos) .hh-nav-label { position: absolute; inset-block-start: 6px; inset-inline-end: 6px; font-size: 0; }
     :is(#hs,.pos) .hh-nav-badge { font-size: 10.5px; min-inline-size: 18px; block-size: 18px; padding: 0 4px; }
-    :is(#hs,.pos) .hh-nav-motto, :is(#hs,.pos) .hh-nav-art { display: none; }
+    :is(#hs,.pos) .hh-nav-motto { display: none; }
     :is(#hs,.pos) .hh-kpis { gap: 8px; }
     :is(#hs,.pos) .hh-kpi { grid-template-areas: "copy" "foot"; grid-template-columns: minmax(0, 1fr); padding: 10px; }
     :is(#hs,.pos) .hh-kpi-icon { display: none; }

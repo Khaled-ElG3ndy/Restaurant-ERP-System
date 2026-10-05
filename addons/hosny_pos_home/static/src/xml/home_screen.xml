@@ -156,7 +156,6 @@
                             <span><t t-esc="greeting"/>، <t t-esc="cashierName"/> — خدمة أسرع .. وتجربة أمتع</span>
                         </div>
                         <span class="hh-banner-warn" t-if="state.failed">تعذّر تحديث الأرقام — تُعرض آخر قيم</span>
-                        <div class="hh-banner-art" aria-hidden="true"><img t-att-src="logo" alt=""/></div>
                     </section>
                 </main>
 
@@ -174,7 +173,6 @@
                         </button>
                     </t>
                     <div class="hh-nav-foot">
-                        <div class="hh-nav-art" aria-hidden="true"><img t-att-src="logo" alt=""/></div>
                         <span class="hh-nav-motto">أكل طيّب .. مزاج أطيب</span>
                         <button t-if="isManager" class="hh-nav-item hh-nav-settings" t-on-click="() => pos.closePos()">
                             <span class="hh-nav-label">لوحة التحكم</span>
