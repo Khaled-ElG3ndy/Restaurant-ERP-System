@@ -13,14 +13,14 @@
                     <!-- الوقت | نقطة البيع | مزامنة السيرفر -->
                     <div class="hh-info">
                         <div class="hh-box hh-box-clock">
-                            <h2 class="hh-box-title"><i class="fa fa-star" aria-hidden="true"/> الوقت والتاريخ</h2>
+                            <h2 class="hh-box-title"><i class="fa fa-clock-o" aria-hidden="true"/> الوقت والتاريخ</h2>
                             <div class="hh-clock" t-att-title="hijri">
-                                <span class="hh-clock-time" t-esc="time"/>
+                                <span class="hh-clock-time"><t t-esc="time.hm"/><span class="hh-clock-sec">:<t t-esc="time.s"/></span></span>
                                 <span class="hh-clock-date" t-esc="date"/>
                             </div>
                         </div>
                         <div class="hh-box hh-box-branch">
-                            <h2 class="hh-box-title"><i class="fa fa-star" aria-hidden="true"/> نقطة البيع</h2>
+                            <h2 class="hh-box-title"><i class="fa fa-map-marker" aria-hidden="true"/> نقطة البيع</h2>
                             <div class="hh-branch">
                                 <div class="hh-branch-copy">
                                     <span><b>الفرع:</b> <t t-esc="pos.config.name"/></span>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="hh-box hh-box-sync">
                             <h2 class="hh-box-title">
-                                <i class="fa fa-star" aria-hidden="true"/> مزامنة السيرفر
+                                <i class="fa fa-refresh" aria-hidden="true"/> مزامنة السيرفر
                                 <span t-attf-class="hh-net {{ online ? 'is-online' : 'is-offline' }}"
                                       t-esc="online ? 'متصل' : 'غير متصل'"/>
                             </h2>
@@ -49,7 +49,7 @@
                                 t-attf-class="hh-tile hh-tone-{{ tile.tone }}"
                                 t-on-click="() => tile.run()">
                             <span class="hh-tile-badge" t-if="tile.badge" t-esc="tile.badge"/>
-                            <i t-attf-class="fa {{ tile.icon }} hh-tile-icon" aria-hidden="true"/>
+                            <span class="hh-tile-icon"><i t-attf-class="fa {{ tile.icon }}" aria-hidden="true"/></span>
                             <span class="hh-tile-title" t-esc="tile.title"/>
                         </button>
                     </div>

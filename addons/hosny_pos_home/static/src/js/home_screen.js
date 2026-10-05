@@ -123,10 +123,10 @@ export class HosnyHomeScreen extends Component {
     get branchAddress() {
         return this.pos.config.hosny_receipt_address || "";
     }
-    /** 17:36:54 */
+    /** 17:36 و 54 — الثواني تُعرض أخفت. */
     get time() {
         const d = this.state.now;
-        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+        return { hm: `${pad(d.getHours())}:${pad(d.getMinutes())}`, s: pad(d.getSeconds()) };
     }
     /** 05/10/2026 */
     get date() {
