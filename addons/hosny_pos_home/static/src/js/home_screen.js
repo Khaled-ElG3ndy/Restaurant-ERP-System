@@ -182,7 +182,7 @@ export class HosnyHomeScreen extends Component {
         }
         tiles.push({ key: "report", tone: "deep", icon: "fa-file-text", title: "تقرير الوردية", run: () => this.openReport() });
         if (this.isManager) {
-            tiles.push({ key: "backend", tone: "slate", icon: "fa-cogs", title: "الإعدادات", run: () => pos.closePos() });
+            tiles.push({ key: "backend", tone: "slate", icon: "fa-cogs", title: "الإعدادات", run: () => this.openSettings() });
         }
         tiles.push({ key: "close", tone: "red", icon: "fa-power-off", title: "إغلاق الوردية", run: () => pos.closeSession() });
         return tiles;
@@ -195,6 +195,13 @@ export class HosnyHomeScreen extends Component {
     openTables() {
         this.pos.currentFloor = dineInFloors(this.pos)[0] || this.pos.currentFloor;
         this.pos.navigate("FloorScreen");
+    }
+    /**
+     * إعدادات نقطة البيع في تبويب جديد، على نقطة البيع هذه (انظر
+     * views/pos_settings_action.xml)؛ الكاشير يبقى مفتوحاً في تبويبه.
+     */
+    openSettings() {
+        window.open(`/odoo/${this.pos.config.id}/action-hosny_pos_home.action_pos_settings_current`, "_blank");
     }
     async openReport() {
         await this.loadSummary();

@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Home',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Point of Sale',
     'summary': 'الشاشة الرئيسية لنقطة البيع على طريقة FERP: الوقت، الفرع، المزامنة والأزرار',
     'description': """
@@ -15,6 +15,9 @@
 """,
     'author': 'Hosny',
     'depends': ['point_of_sale', 'pos_restaurant', 'pos_entry_selector', 'hosny_pos_skin'],
+    'data': [
+        'views/pos_settings_action.xml',
+    ],
     'assets': {
         'point_of_sale._assets_pos': [
             'hosny_pos_home/static/src/js/home_screen.js',
