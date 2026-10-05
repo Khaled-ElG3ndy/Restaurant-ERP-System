@@ -18,6 +18,7 @@ import { usePos } from "@point_of_sale/app/hooks/pos_hook";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { LoginScreen } from "@point_of_sale/app/screens/login_screen/login_screen";
 import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
+import { FloorScreen } from "@pos_restaurant/app/screens/floor_screen/floor_screen";
 import { handleSaleDetails } from "@point_of_sale/app/components/navbar/sale_details_button/sale_details_button";
 import { dineInFloors } from "@pos_entry_selector/js/entry_selector";
 
@@ -273,5 +274,18 @@ patch(LoginScreen.prototype, {
 patch(Navbar.prototype, {
     get hosnyShowHomeButton() {
         return this.pos.hosnyHomeEnabled() && this.pos.router.state.current !== HOME;
+    },
+});
+
+/**
+ * طاولات «سفري …» وردية في أي دور (في دور VIP تجاورها الكبري والصغري و200
+ * بالتركوازي، كما في صور النظام السابق). انظر css/floor_screen.css.
+ */
+patch(FloorScreen.prototype, {
+    hosnyTableKind(table) {
+        const label = String(
+            table?.getName?.() || table?.table_number || table?.name || ""
+        ).trim();
+        return label.startsWith("سفري") ? "safari" : "";
     },
 });

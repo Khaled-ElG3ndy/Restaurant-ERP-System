@@ -103,6 +103,13 @@
         </Dialog>
     </t>
 
+    <!-- نوع الطاولة لألوان شاشة الطاولات (سفري وردي في أي دور) -->
+    <t t-name="hosny_pos_home.FloorScreen" t-inherit="pos_restaurant.FloorScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('floor-table')]" position="attributes">
+            <attribute name="t-att-data-hh-kind">hosnyTableKind(table)</attribute>
+        </xpath>
+    </t>
+
     <!-- زر «الرئيسية» في الشريط العلوي -->
     <t t-name="hosny_pos_home.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
         <xpath expr="//div[contains(@class, 'pos-rightheader')]" position="inside">
