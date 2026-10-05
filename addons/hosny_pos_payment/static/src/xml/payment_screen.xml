@@ -6,7 +6,7 @@
         الإجراءات والأرقام | الدفع | ملخص الفاتورة
     -->
     <t t-name="hosny_pos_payment.PaymentScreen">
-        <div class="hp-screen" dir="rtl">
+        <div class="hp-screen" t-att-class="{ 'is-fee-focus': hpState.fee }" dir="rtl">
 
             <!-- ── الإجراءات والأرقام ── -->
             <section class="hp-col hp-actions">
@@ -158,10 +158,11 @@
                     <div class="hp-rows">
                         <div class="hp-row"><span>قيمة الفاتورة</span><b t-esc="hpMoney(hpSummary.base)"/></div>
                         <button t-foreach="hpFees" t-as="fee" t-key="fee.key" class="hp-row hp-fee"
-                                t-att-class="{ 'has-value': fee.amount }" t-on-click="() => this.hpEditFee(fee)"
-                                t-att-title="'اكتب ' + fee.label">
-                            <span><i class="fa fa-pencil" aria-hidden="true"/> <t t-esc="fee.label"/></span>
-                            <b t-esc="hpMoney(fee.amount)"/>
+                                t-att-class="{ 'has-value': fee.amount, 'is-active': hpFeeActive(fee) }"
+                                t-on-click="() => this.hpToggleFee(fee)"
+                                t-att-title="hpFeeActive(fee) ? 'اكتب المبلغ من الكيبورد أو لوحة الأرقام — اضغط مرة أخرى للإنهاء' : 'اضغط ثم اكتب ' + fee.label">
+                            <span><i t-attf-class="fa {{ hpFeeActive(fee) ? 'fa-keyboard-o' : 'fa-pencil' }}" aria-hidden="true"/> <t t-esc="fee.label"/></span>
+                            <b t-esc="hpFeeDisplay(fee)"/>
                         </button>
                         <div class="hp-row"><span>الضريبة</span><b t-esc="hpMoney(hpSummary.tax)"/></div>
                         <div class="hp-row"><span>إجمالي الخصم</span><b t-esc="hpMoney(hpSummary.discount)"/></div>

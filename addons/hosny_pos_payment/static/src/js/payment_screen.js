@@ -6,13 +6,12 @@
  * التصديق — وكل ما رقّعته الموديولات الأخرى على الفئة كما هو؛ وما كانت تضيفه
  * إلى القالب القديم (ملاحظات الفاتورة، الكوبون) يُستدعى هنا إن وُجد.
  */
-import { Component } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { Dialog } from "@web/core/dialog/dialog";
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
-import { NumberPopup } from "@point_of_sale/app/components/popups/number_popup/number_popup";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -41,6 +40,11 @@ patch(PaymentScreen, {
 });
 
 patch(PaymentScreen.prototype, {
+    setup() {
+        super.setup(...arguments);
+        this.hpState = useState({ fee: null });
+    },
+
     /** 81.50 SR — الرمز بعد الرقم، معزول LTR داخل الشاشة العربية. */
     hpMoney(amount) {
         const symbol = this.pos.currency?.symbol ?? "";
@@ -89,7 +93,17 @@ patch(PaymentScreen.prototype, {
             // بلا اتصال: يبقى التحذير أدناه
         }
     },
-    async hpEditFee(fee) {
+    /**
+     * صف رسوم «نشط»: ما يُكتب بعده — من الكيبورد أو من لوحة الأرقام — يذهب
+     * إليه بدل سطر الدفع (مخزن الأرقام واحد، انظر updateSelectedPaymentline).
+     * الضغط على الصف نفسه مرة ثانية، أو على وسيلة/سطر دفع، يُنهي الكتابة فيه.
+     */
+    async hpToggleFee(fee) {
+        if (this.hpState.fee === fee.key) {
+            this.hpState.fee = null;
+            this.numberBuffer.reset();
+            return;
+        }
         if (!fee.product) {
             await this.hpLoadFeeProducts();
             fee = this.hpFees.find((f) => f.key === fee.key);
@@ -101,14 +115,35 @@ patch(PaymentScreen.prototype, {
             );
             return;
         }
-        this.dialog.add(NumberPopup, {
-            title: fee.label,
-            startingValue: fee.line ? this.env.utils.formatCurrency(fee.line.price_unit, false) : "",
-            confirmButtonLabel: "حفظ",
-            getPayload: (value) => this.hpSetFee(fee, this.env.utils.parseValidFloat(String(value || 0))),
-        });
+        this.hpState.fee = fee.key;
+        if (fee.line) {
+            // المبلغ الحالي في المخزن: رقم جديد يستبدله، والمسح يحذف آخر خانة
+            this.numberBuffer.set(String(fee.line.price_unit));
+            this.numberBuffer.isReset = false;
+        } else {
+            this.numberBuffer.reset();
+        }
     },
-    async hpSetFee(fee, price) {
+    hpFeeActive(fee) {
+        return this.hpState.fee === fee.key;
+    },
+    /** أثناء الكتابة يُعرض ما كُتب كما هو (مثل «15.»)، وإلا المبلغ شاملاً الضريبة. */
+    hpFeeDisplay(fee) {
+        if (this.hpFeeActive(fee)) {
+            const typed = this.numberBuffer.get();
+            return typed ? `\u2066${typed}\u2069` : "…";
+        }
+        return this.hpMoney(fee.amount);
+    },
+    /** الكتابة السريعة تُرسل قيمة مع كل ضغطة؛ تُطبَّق بالترتيب حتى لا يُنشأ
+     * السطر مرتين قبل أن ينتهي إنشاؤه أول مرة. */
+    hpSetFee(fee, price) {
+        this._hpFeeQueue = (this._hpFeeQueue || Promise.resolve())
+            .then(() => this._hpApplyFee(fee, price))
+            .catch(() => {});
+        return this._hpFeeQueue;
+    },
+    async _hpApplyFee(fee, price) {
         const order = this.currentOrder;
         const line = order.lines.find((l) => l.product_id?.id === fee.product.id);
         if (!price || price <= 0) {
@@ -129,6 +164,28 @@ patch(PaymentScreen.prototype, {
             {},
             false
         );
+    },
+    updateSelectedPaymentline(amount = false) {
+        const fee = this.hpState?.fee && this.hpFees.find((f) => f.key === this.hpState.fee);
+        if (fee?.product) {
+            const value =
+                amount !== false ? amount : this.numberBuffer.get() ? this.numberBuffer.getFloat() : 0;
+            this.hpSetFee(fee, value);
+            return;
+        }
+        return super.updateSelectedPaymentline(...arguments);
+    },
+    addNewPaymentLine() {
+        if (this.hpState) {
+            this.hpState.fee = null;
+        }
+        return super.addNewPaymentLine(...arguments);
+    },
+    selectPaymentLine() {
+        if (this.hpState) {
+            this.hpState.fee = null;
+        }
+        return super.selectPaymentLine(...arguments);
     },
     get hpInvoiceNumber() {
         const order = this.currentOrder;
@@ -249,6 +306,7 @@ patch(PaymentScreen.prototype, {
         return method ? await this.addNewPaymentLine(method) : false;
     },
     async hpTender(value) {
+        this.hpState.fee = null;
         if (!(await this.hpEnsureLine())) {
             return;
         }
@@ -257,6 +315,7 @@ patch(PaymentScreen.prototype, {
     },
     /** المبلغ المتبقي كاملاً في السطر المحدد. */
     async hpExact() {
+        this.hpState.fee = null;
         if (!(await this.hpEnsureLine())) {
             return;
         }
