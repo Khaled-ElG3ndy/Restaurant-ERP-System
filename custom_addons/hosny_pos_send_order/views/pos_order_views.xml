@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pos_pos_form_inherit_send_order_state" model="ir.ui.view">
+        <field name="name">pos.order.form.send.order.state</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="preparation_state"/>
+                <field name="preparation_sent_at"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

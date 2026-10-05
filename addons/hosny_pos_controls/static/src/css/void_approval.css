@@ -1,0 +1,40 @@
+/* نافذة اعتماد الإلغاء (void_approval.xml). rtlcss يقلب الملف: اتجاهات منطقية فقط. */
+:is(#hs,body:has(.pos)) .hosny-void { display: flex; flex-direction: column; gap: 10px; text-align: start; }
+:is(#hs,body:has(.pos)) .hosny-void-warning {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px;
+    background: #FFF1F0; border: 1px solid #F5B5AE; color: #8E1B10; font-weight: 700; font-size: 14px;
+}
+:is(#hs,body:has(.pos)) .hosny-void-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+:is(#hs,body:has(.pos)) .hosny-void-items li {
+    display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 10px;
+    background: #F5F8FC; border: 1px solid #DCE5F0;
+}
+:is(#hs,body:has(.pos)) .hosny-void-product { flex: 1 1 auto; font-weight: 800; color: #17395F; font-size: 15px; }
+:is(#hs,body:has(.pos)) .hosny-void-qty { color: #B42318; font-weight: 700; font-size: 14px; }
+:is(#hs,body:has(.pos)) .hosny-void-amount { color: #4A5D73; font-weight: 700; min-width: 80px; text-align: end; }
+:is(#hs,body:has(.pos)) .hosny-void-label { margin: 6px 0 0; font-weight: 800; color: #17395F; font-size: 15px; }
+:is(#hs,body:has(.pos)) .hosny-void-label small { font-weight: 600; color: #6B7C90; }
+:is(#hs,body:has(.pos)) .hosny-void-chips, :is(#hs,body:has(.pos)) .hosny-void-approvers { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
+:is(#hs,body:has(.pos)) .hosny-void-chip {
+    min-height: 38px !important; padding: 5px 14px !important; border-radius: 999px !important; border: 1px solid #B9C7D8 !important;
+    background: #fff !important; color: #17395F !important; font-weight: 700 !important; font-size: 14px !important;
+}
+:is(#hs,body:has(.pos)) .hosny-void-chip:hover { background: #EAF1FA !important; border-color: #2B5DA0 !important; }
+:is(#hs,body:has(.pos)) .hosny-void-reason { font-size: 17px; border-radius: 12px; }
+:is(#hs,body:has(.pos)) .hosny-void-approver {
+    display: inline-flex !important; align-items: center !important; gap: 8px !important; min-height: 46px !important; padding: 6px 16px !important;
+    border-radius: 12px !important; border: 1px solid #B9C7D8 !important; background: #fff !important; color: #17395F !important; font-weight: 800 !important; font-size: 15px !important;
+}
+:is(#hs,body:has(.pos)) .hosny-void-approver.is-selected { background: #17395F !important; border-color: #17395F !important; color: #fff !important; }
+:is(#hs,body:has(.pos)) .hosny-void-password { max-width: 320px; font-size: 18px; border-radius: 12px; letter-spacing: 2px; }
+:is(#hs,body:has(.pos)) .hosny-void-muted { color: #6B7C90; font-size: 14px; }
+:is(#hs,body:has(.pos)) .hosny-void-muted.is-empty { color: #8E1B10; font-weight: 700; }
+:is(#hs,body:has(.pos)) .hosny-void-error {
+    padding: 8px 12px; border-radius: 10px; background: #FEE4E2; color: #B42318; font-weight: 800; font-size: 14px;
+}
+:is(#hs,body:has(.pos)) .modal-content.hosny-void-content .hosny-void-submit {
+    background: #C0392B !important; border-color: #C0392B !important; color: #fff !important;
+}
+:is(#hs,body:has(.pos)) .modal-content.hosny-void-content .hosny-void-submit:disabled {
+    background: #E9B8B2 !important; border-color: #E9B8B2 !important; color: #fff !important; opacity: 1 !important;
+}

@@ -1,0 +1,4878 @@
+/* Hosny POS Controls CSS */
+.hosny-pin-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
+}
+
+/* === User override: target orderline layout: price left, item center, qty right === */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: grid !important;
+    grid-template-columns: 126px 1px minmax(0, 1fr) 58px !important;
+    grid-template-areas: "price separator item qty" !important;
+    gap: 20px !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    display: none !important;
+}
+
+.pos .product-screen .product-cart-qty {
+    display: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: separator !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+        grid-template-columns: 116px 1px minmax(0, 1fr) 52px !important;
+        grid-template-areas: "price separator item qty" !important;
+        gap: 12px !important;
+    }
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .info-list {
+        margin: 8px 72px 0 160px !important;
+    }
+}
+.hosny-pin-modal .modal-content {
+    background: #fff;
+    border-radius: 16px;
+    width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.hosny-pin-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    text-align: center;
+    padding: 24px 20px 16px;
+}
+.hosny-pin-icon { font-size: 36px; margin-bottom: 8px; }
+.hosny-pin-title { color: #C9A84C; font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+.hosny-pin-subtitle { color: #aaa; font-size: 12px; margin: 0; }
+.hosny-pin-body { padding: 20px; }
+.hosny-pin-field { margin-bottom: 16px; }
+.hosny-pin-field label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; }
+.hosny-pin-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background: #f9f9f9;
+}
+.hosny-pin-select:focus { border-color: #C9A84C; outline: none; }
+.hosny-pin-display {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+}
+.hosny-pin-dot { font-size: 20px; color: #ddd; transition: color 0.1s; }
+.hosny-pin-dot.filled { color: #1a1a2e; }
+.hosny-pin-numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+.hosny-pin-key {
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+.hosny-pin-key:hover { background: #e0e0e0; transform: scale(0.97); }
+.hosny-pin-key:active { transform: scale(0.93); }
+.hosny-pin-key.confirm { background: #C9A84C; color: #fff; }
+.hosny-pin-key.confirm:hover { background: #b8963d; }
+.hosny-pin-key.delete { background: #fee; color: #e74c3c; }
+.hosny-pin-error {
+    color: #e74c3c;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+    padding: 6px;
+    background: #fee;
+    border-radius: 6px;
+}
+.hosny-pin-footer {
+    padding: 12px 20px 20px;
+    text-align: center;
+}
+.hosny-btn-cancel {
+    padding: 10px 32px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+.hosny-btn-cancel:hover { border-color: #999; color: #333; }
+
+/* Product screen order panel */
+.pos .product-screen {
+    flex-direction: row-reverse !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel {
+    /* The same sand the product pane sits on, so the two halves of the
+       screen read as one surface rather than two tones meeting in a seam. */
+    --hosny-panel-bg: #e7dfd0;
+    /* Small controls sit a shade above the ground; large sheets take the
+       champagne of the cards. */
+    --hosny-panel-surface: #fdfaf2;
+    --hosny-panel-soft: #f6efe0;
+    --hosny-panel-border: rgba(130, 95, 40, 0.14);
+    --hosny-order-bg: rgba(250, 245, 235, 0.72);
+    --hosny-order-line: #fffdf8;
+    --hosny-order-line-border: rgba(130, 95, 40, 0.12);
+    /* The control surface, shared by every button in this panel. */
+    --hosny-ctl-bg: linear-gradient(180deg, #fdfaf3 0%, #f7f0e2 100%);
+    --hosny-ctl-bg-hover: linear-gradient(180deg, #fffdf7 0%, #faf4e8 100%);
+    --hosny-ctl-border: rgba(130, 95, 40, 0.16);
+    --hosny-ctl-border-hover: rgba(130, 95, 40, 0.30);
+    --hosny-ctl-shadow:
+        0 1px 2px rgba(70, 50, 20, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.62);
+    --hosny-ctl-ink: #4a443b;
+    /* The antique gold, identical to the price capsules on the cards. */
+    --hosny-gold-bg: linear-gradient(180deg, #cbae5c 0%, #b18f38 100%);
+    --hosny-gold-border: rgba(135, 100, 32, 0.32);
+    --hosny-gold-shadow:
+        0 2px 4px rgba(150, 110, 30, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30);
+    --hosny-panel-text: #172033;
+    --hosny-panel-muted: #5c6675;
+    --hosny-panel-gold: #d8b965;
+    --hosny-panel-gold-dark: #8b6b25;
+    flex: 0 0 clamp(520px, 32vw, 620px) !important;
+    width: clamp(520px, 32vw, 620px) !important;
+    max-width: 620px !important;
+    min-width: 520px !important;
+    margin: 0 !important;
+    padding: 8px 10px 10px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    color: var(--hosny-panel-text) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    flex: 0 0 auto !important;
+    gap: 12px;
+    direction: ltr;
+    padding: 0 0 8px;
+    min-height: 54px !important;
+    position: relative;
+    z-index: 1;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button {
+    height: 54px;
+    min-height: 54px;
+    max-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    border-radius: 999px !important;
+    background: var(--hosny-ctl-bg) !important;
+    color: var(--hosny-ctl-ink) !important;
+    font-size: 14px;
+    font-weight: 600 !important;
+    line-height: 1.1;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+    transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button:hover {
+    border-color: var(--hosny-ctl-border-hover) !important;
+    background: var(--hosny-ctl-bg-hover) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.is-active {
+    border-color: var(--hosny-gold-border) !important;
+    background: var(--hosny-gold-bg) !important;
+    color: #fffdf6 !important;
+    font-weight: 700 !important;
+    box-shadow: var(--hosny-gold-shadow) !important;
+    text-shadow: 0 1px 1px rgba(95, 68, 8, 0.28);
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button i,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button svg {
+    color: #9a8f7c !important;
+    fill: currentColor;
+    font-size: 15px;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.is-active i,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.is-active svg {
+    color: #fffdf6 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel > .d-flex.flex-column.flex-grow-1.overflow-hidden {
+    min-height: 0;
+    flex: 1 1 0 !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+    background: transparent !important;
+    overflow: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-container {
+    background: var(--hosny-order-bg) !important;
+    padding: 10px !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    align-content: flex-start !important;
+    place-content: flex-start !important;
+    gap: 12px !important;
+    border: 1px solid var(--hosny-order-line-border) !important;
+    box-shadow: none !important;
+    border-radius: 14px !important;
+    margin: 0 0 6px !important;
+    scroll-padding-top: 10px;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-container > .orderline:first-child {
+    margin-top: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline {
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+    margin: 0 !important;
+    padding: 6px 10px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    list-style: none !important;
+    direction: ltr !important;
+    border: 1px solid rgba(130, 95, 40, 0.12) !important;
+    border-radius: 14px !important;
+    background: var(--hosny-order-line) !important;
+    color: var(--hosny-panel-text) !important;
+    box-shadow: none !important;
+    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline:hover {
+    background: #fffaf2 !important;
+    border-color: rgba(130, 95, 40, 0.26) !important;
+    transform: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline.selected {
+    border-color: rgba(135, 100, 32, 0.32) !important;
+    background: #f6ecd4 !important;
+    box-shadow: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline.has-change::before {
+    left: 0 !important;
+    right: auto !important;
+    width: 4px !important;
+    background: var(--hosny-panel-gold) !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline > .d-flex {
+    width: 100% !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: grid !important;
+    grid-template-columns: 126px 1px minmax(0, 1fr) 58px !important;
+    grid-template-areas: "price separator item qty" !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 20px !important;
+    width: 100% !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    min-width: 126px !important;
+    max-width: 126px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: separator !important;
+    width: 1px !important;
+    height: 46px !important;
+    display: block !important;
+    background: rgba(216, 185, 101, 0.48) !important;
+    border-radius: 999px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    padding-inline-end: 0 !important;
+    color: #182235 !important;
+    font-size: 23px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name .text-wrap {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    min-width: 0 !important;
+    padding-top: 0 !important;
+    color: #1e2a3a !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 14px 16px !important;
+    border: 2px solid rgba(216, 185, 101, 0.34) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.96) !important;
+    color: #253044 !important;
+    font-size: 25px !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    line-height: 1.1 !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    align-self: center !important;
+    unicode-bidi: plaintext !important;
+    box-shadow: 0 2px 8px rgba(125, 92, 28, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: end !important;
+    border: 2px solid rgba(210, 162, 49, 0.42) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #fae39c 0%, #efc866 100%) !important;
+    color: #8a671d !important;
+    font-size: 23px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    direction: ltr !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 10px rgba(149, 106, 25, 0.14) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .info-list {
+    margin: 9px 132px 0 48px !important;
+    padding: 0 !important;
+    list-style: none !important;
+    color: #4d5868 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .info-list li {
+    margin-top: 3px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .info-list .price-per-unit {
+    color: #273346 !important;
+    font-weight: 800 !important;
+    direction: ltr !important;
+    text-align: right !important;
+    opacity: 0.86 !important;
+    display: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .customer-note,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .internal-note {
+    border-radius: 10px !important;
+    padding: 7px 10px !important;
+    background: rgba(255, 240, 207, 0.72) !important;
+    color: #5f471a !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    display: none !important;
+    grid-area: note !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    background: #f7f8fa !important;
+    border: 1px solid rgba(31, 41, 55, 0.06) !important;
+    color: #5b6472 !important;
+    box-shadow: 0 4px 10px rgba(31, 41, 55, 0.05) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button:hover,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button.has-note {
+    background: #fff1d4 !important;
+    border-color: rgba(216, 185, 101, 0.45) !important;
+    color: #253044 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-tax {
+    display: none !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .orderline {
+        height: 74px !important;
+        min-height: 74px !important;
+        max-height: 74px !important;
+        padding: 6px 8px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+        grid-template-columns: 116px 1px minmax(0, 1fr) 52px !important;
+        grid-template-areas: "price separator item qty" !important;
+        gap: 12px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+        min-width: 116px !important;
+        max-width: 116px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+        font-size: 20px !important;
+        padding: 12px 10px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+        font-size: 18px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+        width: 48px !important;
+        min-width: 48px !important;
+        height: 48px !important;
+        font-size: 20px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .info-list {
+        margin: 8px 64px 0 142px !important;
+    }
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-summary {
+    margin: 0 -8px !important;
+    padding: 7px 16px 9px !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: #3f4a5a !important;
+    direction: ltr !important;
+    flex: 0 0 auto !important;
+    flex-direction: column-reverse !important;
+    align-items: center !important;
+    box-shadow: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-summary .total {
+    color: #1f2d3d !important;
+    font-weight: 900 !important;
+    text-align: left !important;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-summary .fs-3 {
+    direction: ltr !important;
+    align-items: center !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .order-summary .fs-3 > span:first-child {
+    color: #3f4a5a !important;
+    text-align: right !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart {
+    min-height: 0;
+    gap: 12px !important;
+    color: #111827;
+    text-align: center;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart i {
+    width: 84px;
+    height: 84px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid rgba(130, 95, 40, 0.14);
+    background: linear-gradient(180deg, #fdfaf3 0%, #f4ecdc 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    color: #c0b096;
+    font-size: 34px;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart strong {
+    max-width: 320px;
+    color: #6b6153;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart .hosny-empty-cart-hint {
+    max-width: 300px;
+    margin-top: -6px !important;
+    color: #a79a84;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/*
+ * The "book this table" action comes from pos_restaurant as a bare
+ * `btn-secondary`, so it arrives with Bootstrap's grey. Given the same
+ * champagne surface as every other control, at a size worth pressing.
+ */
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart .btn {
+    min-height: 46px !important;
+    margin: 6px 0 0 !important;
+    padding: 0 22px !important;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    border-radius: 999px !important;
+    background: var(--hosny-ctl-bg) !important;
+    color: #7a5c17 !important;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-empty-cart .btn:hover {
+    border-color: var(--hosny-ctl-border-hover) !important;
+    background: var(--hosny-ctl-bg-hover) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .pads {
+    flex: 0 0 auto;
+    padding: 0 !important;
+    background: transparent !important;
+    border-top: 1px solid rgba(130, 95, 40, 0.12) !important;
+    min-height: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .subpads {
+    gap: 10px !important;
+    padding-top: 8px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open {
+    display: grid !important;
+    grid-template-columns: minmax(250px, 0.46fr) minmax(250px, 0.54fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "toggle numpad"
+        "footer numpad";
+    gap: 12px !important;
+    align-items: stretch;
+    padding: 10px 8px 8px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 8px 8px 6px !important;
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions > :not(.hosny-action-keep):not(.partial-transfer-button):not(.hosny-merge-button):not(.payment-orders-button) {
+    display: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .btn,
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .control-button {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    border-radius: 14px !important;
+    background: var(--hosny-ctl-bg) !important;
+    color: var(--hosny-ctl-ink) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+    transition: border-color 140ms ease, background-color 140ms ease !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .btn:hover,
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .control-button:hover {
+    border-color: var(--hosny-ctl-border-hover) !important;
+    background: var(--hosny-ctl-bg-hover) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions i {
+    color: #9a8f7c !important;
+    font-size: 14px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-new-invoice-button { order: 1 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-print-bill-button { order: 2 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-order-note-button { order: 3 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-split-button { order: 4 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-transfer-button { order: 5 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .partial-transfer-button { order: 6 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-merge-button { order: 7 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .hosny-refund-button { order: 8 !important; }
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .payment-orders-button { order: 9 !important; }
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-numpad-toggle {
+    min-height: 40px;
+    margin: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    border-radius: 14px !important;
+    background: var(--hosny-ctl-bg) !important;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+    color: #7a5c17 !important;
+    font-weight: 600 !important;
+    transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-numpad-toggle.is-open {
+    background: var(--hosny-gold-bg) !important;
+    border-color: var(--hosny-gold-border) !important;
+    box-shadow: var(--hosny-gold-shadow) !important;
+    color: #fffdf6 !important;
+    font-weight: 700 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-order-numpad {
+    display: grid !important;
+    margin: 0 8px !important;
+    border-radius: 14px !important;
+    background: rgba(250, 245, 235, 0.62) !important;
+    border: 1px solid rgba(130, 95, 40, 0.12) !important;
+    grid-template-columns: repeat(3, minmax(64px, 1fr)) !important;
+    gap: 18px 12px !important;
+    padding: 6px 8px !important;
+    align-content: start !important;
+    overflow: visible !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-order-numpad .numpad-button {
+    min-height: 54px !important;
+    background: var(--hosny-ctl-bg) !important;
+    color: #2b2723 !important;
+    border-radius: 14px !important;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-order-numpad .hosny-hidden-key {
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-order-numpad .numpad-button.active,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-order-numpad .numpad-button:active {
+    background: var(--hosny-gold-bg) !important;
+    border-color: var(--hosny-gold-border) !important;
+    color: #fffdf6 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 8px 4px;
+    direction: ltr;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-numpad-toggle {
+    grid-area: toggle;
+    width: 100%;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-order-numpad {
+    grid-area: numpad;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-footer-actions {
+    grid-area: footer;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 56px minmax(170px, 1fr);
+    gap: 10px;
+    padding: 0;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-action {
+    min-height: 54px;
+    margin: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid transparent !important;
+    border-radius: 14px !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    line-height: 1.1;
+    box-shadow: none;
+    transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-action:not(:disabled) {
+    background: var(--hosny-ctl-bg) !important;
+    color: var(--hosny-ctl-ink) !important;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    box-shadow: var(--hosny-ctl-shadow) !important;
+}
+
+/* Payment is the one filled button on the screen. */
+.pos .product-screen .leftpane.hosny-order-panel .hosny-pay-action {
+    min-height: 52px;
+    background: var(--hosny-ctl-bg) !important;
+    color: #b3a992 !important;
+    font-size: 20px !important;
+    border: 1px solid var(--hosny-ctl-border) !important;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-pay-action:not(:disabled) {
+    background: var(--hosny-gold-bg) !important;
+    color: #fffdf6 !important;
+    border-color: var(--hosny-gold-border) !important;
+    box-shadow: var(--hosny-gold-shadow) !important;
+    text-shadow: 0 1px 1px rgba(95, 68, 8, 0.28) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-pay-action:not(:disabled):hover {
+    background: linear-gradient(180deg, #d5b968 0%, #ba9840 100%) !important;
+    color: #fffdf6 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-pay-action i {
+    color: currentColor;
+    font-size: 23px;
+}
+
+/* Sending the order is the quieter sibling: outlined, gold only in the text. */
+.pos .product-screen .leftpane.hosny-order-panel .hosny-send-action:not(:disabled) {
+    background: var(--hosny-ctl-bg) !important;
+    border-color: rgba(135, 100, 32, 0.28) !important;
+    color: #7a5c17 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-send-action:not(:disabled):hover {
+    background: #fffdf6 !important;
+    border-color: rgba(135, 100, 32, 0.40) !important;
+    color: #6b5014 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-footer-action {
+    border-radius: 12px;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-pay-action {
+    min-height: 56px;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-send-action {
+    min-height: 170px;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 16px;
+}
+
+/*
+ * These have to carry the same selector weight as the live-state rules above
+ * (`.control-buttons.hosny-order-actions .btn`, `.hosny-pay-action`), or the
+ * disabled styling loses to them and an unavailable control renders exactly
+ * like an available one.
+ */
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .btn:disabled,
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .control-button:disabled,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions .hosny-footer-action:disabled,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions .hosny-pay-action:disabled,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions .hosny-send-action:disabled,
+.pos .product-screen .leftpane.hosny-order-panel button:disabled,
+.pos .product-screen .leftpane.hosny-order-panel .disabled {
+    /*
+     * Solid rather than translucent: a see-through disabled control sitting
+     * on a gradient reads as a rendering fault. This is a real surface, just
+     * a shade quieter than a live one.
+     */
+    opacity: 1 !important;
+    border-color: rgba(130, 95, 40, 0.13) !important;
+    background: #efe8db !important;
+    color: #a1957f !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    pointer-events: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions .btn:disabled i,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions .hosny-footer-action:disabled i,
+.pos .product-screen .leftpane.hosny-order-panel button:disabled i,
+.pos .product-screen .leftpane.hosny-order-panel .disabled i,
+.pos .product-screen .leftpane.hosny-order-panel button:disabled svg,
+.pos .product-screen .leftpane.hosny-order-panel .disabled svg {
+    color: #b6a992 !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 1024px) {
+    .pos .product-screen .leftpane.hosny-order-panel {
+        flex-basis: 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+    }
+}
+
+/* Product filters and in-row search */
+.pos .pos-topheader .status-buttons > .pos-search-bar,
+.pos .pos-topheader .status-buttons > .search,
+.pos .pos-topheader .status-buttons > .input-group:has(input[placeholder*="Search products"]) {
+    display: none !important;
+}
+
+.pos .product-screen .rightpane .category-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 3px !important;
+    padding: 10px 12px !important;
+    align-items: stretch !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid #e7edf4 !important;
+    border-radius: 0 0 14px 14px !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button {
+    flex: 0 0 154px !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e9ef !important;
+    background: #ffffff !important;
+    color: #142237 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button:hover,
+.pos .product-screen .rightpane .category-list .category-button.btn-primary,
+.pos .product-screen .rightpane .category-list .category-button.hosny-category-active {
+    border-color: rgba(216, 185, 101, 0.65) !important;
+    background: #fffaf0 !important;
+    color: #142237 !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button.hosny-category-active {
+    border-color: #d8b965 !important;
+    background: linear-gradient(180deg, #fff8df 0%, #fffdf7 100%) !important;
+    color: #8b6b25 !important;
+    box-shadow: inset 0 0 0 1px rgba(216, 185, 101, 0.28), 0 6px 14px rgba(139, 107, 37, 0.08) !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    flex: 0 0 min(320px, 32vw) !important;
+    margin-left: auto !important;
+    min-width: 0 !important;
+    position: sticky !important;
+    right: 0 !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: stretch !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box {
+    width: 100% !important;
+    height: 46px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0 14px !important;
+    border: 1px solid #e5e9ef !important;
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-icon {
+    grid-column: 1;
+    color: #98a2b3 !important;
+    font-size: 16px !important;
+}
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    width: 100% !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    color: #1f2d3d !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-align: right !important;
+    direction: rtl !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input::placeholder {
+    color: #98a2b3 !important;
+    opacity: 1 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-icon {
+    flex-shrink: 0;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-clear {
+    grid-column: 3;
+    width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    box-shadow: none !important;
+}
+
+/* ═══════════════════════════════════════
+   PAYMENT SCREEN
+   ═══════════════════════════════════════ */
+
+.payment-screen {
+    background: #edf2f8 !important;
+    font-family: "Cairo", "Tajawal", Arial, sans-serif;
+}
+
+.payment-screen .top-content {
+    background: rgba(255, 255, 255, 0.78) !important;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.14) !important;
+}
+
+.payment-screen .hosny-payment-topbar {
+    flex: 0 0 66px;
+    min-height: 66px;
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) auto minmax(120px, 1fr);
+    align-items: center;
+    gap: 16px;
+    padding: 0 14px;
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+}
+
+.payment-screen .hosny-payment-topbar h2 {
+    margin: 0;
+    color: #2d333b;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.payment-screen .hosny-payment-back {
+    justify-self: start;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px !important;
+    border: 1px solid #ece4d8 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    color: #4c5664 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+.payment-screen .main-content.hosny-payment-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch;
+    flex: 1 1 auto;
+    height: auto !important;
+    min-height: 0;
+    padding: 18px;
+    gap: 18px;
+    direction: ltr !important;
+    background: #edf2f8;
+}
+
+.payment-screen .payment-primary-panel {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    order: 1;
+}
+
+.payment-screen .payment-side-panel {
+    flex: 0 0 auto;
+    width: min(410px, 100%);
+    max-width: 410px;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    gap: 14px;
+    height: 100%;
+    direction: rtl;
+    order: 2;
+    overflow: hidden;
+}
+
+.payment-screen .payment-main-card,
+.payment-screen .payment-sidebar-card,
+.payment-screen .hosny-payment-status .payment-status-shell {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border: 1px solid rgba(199, 208, 222, 0.78) !important;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08) !important;
+}
+
+.payment-screen .payment-main-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    padding: 18px 18px 24px;
+    overflow: hidden;
+    direction: rtl;
+}
+
+.payment-screen .hosny-payment-status {
+    background: transparent !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.payment-screen .hosny-payment-status .payment-status-shell {
+    border-radius: 28px;
+    padding: 18px;
+    direction: rtl;
+}
+
+.payment-screen .payment-status-header {
+    margin-bottom: 14px;
+}
+
+.payment-screen .payment-status-heading {
+    min-width: 0;
+}
+
+.payment-screen .payment-status-count {
+    min-width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.18), rgba(240, 203, 110, 0.4));
+    color: #8f6b17;
+    font-size: 15px;
+    font-weight: 900;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.payment-screen .payment-status-eyebrow {
+    display: inline-flex;
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(201, 168, 76, 0.12);
+    color: #8f6b17;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.payment-screen .payment-status-heading h3 {
+    margin: 0;
+    color: #172033;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.payment-screen .payment-status-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.payment-screen .payment-status-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    min-height: 86px;
+    padding: 14px 16px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #f9fbfd 0%, #f1f5f9 100%);
+    border: 1px solid rgba(210, 220, 232, 0.88);
+    overflow: hidden;
+}
+
+.payment-screen .payment-status-card.is-wide {
+    grid-column: 1 / -1;
+}
+
+.payment-screen .payment-status-card.is-primary {
+    background: linear-gradient(135deg, #192742 0%, #33435f 68%, #676453 140%);
+    border-color: rgba(201, 168, 76, 0.28);
+    box-shadow: 0 18px 36px rgba(23, 32, 51, 0.18);
+    min-height: 112px;
+}
+
+.payment-screen .payment-status-card .metric-label {
+    color: #5d6b82;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.payment-screen .payment-status-card.is-primary .metric-label {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.payment-screen .payment-status-card .metric-value {
+    display: block;
+    align-items: baseline;
+    color: #172033;
+    direction: ltr;
+    unicode-bidi: plaintext;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 25px;
+    line-height: 1.15;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+}
+
+.payment-screen .payment-status-card.is-primary .metric-value {
+    color: #fff;
+    font-size: 37px;
+}
+
+.payment-screen .payment-methods-shell {
+    min-height: 0;
+}
+
+.payment-screen .hosny-payment-methods-container {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0;
+    min-height: 0;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 18px;
+    align-items: stretch;
+    direction: ltr;
+    height: 100%;
+    overflow: hidden !important;
+}
+
+.payment-screen .hosny-payment-methods-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    direction: rtl;
+    overflow: hidden;
+}
+
+.payment-screen .hosny-payment-methods-container .paymentmethods {
+    width: 100%;
+    gap: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0;
+}
+
+.payment-screen .hosny-payment-methods-container .paymentlines {
+    width: 100% !important;
+    min-width: 0;
+    align-self: stretch;
+}
+
+.payment-screen .hosny-payment-lines-pane {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+}
+
+.payment-screen .hosny-payment-methods-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.payment-screen .payment-main-card .hosny-payment-methods-container,
+.payment-screen .payment-main-card .paymentmethods,
+.payment-screen .payment-main-card .hosny-payment-lines {
+    width: 100%;
+}
+
+/* Ensure payment/order lines start from the top of their container and scroll if needed */
+.payment-screen .hosny-payment-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    overflow-y: auto !important;
+    min-height: 0;
+}
+
+.payment-screen .hosny-payment-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 6px 14px;
+    margin-bottom: 6px;
+    direction: rtl;
+}
+
+.payment-screen .hosny-payment-section-header.is-secondary {
+    margin-top: 10px;
+}
+
+.payment-screen .hosny-payment-section-header .section-eyebrow {
+    display: inline-flex;
+    margin-bottom: 6px;
+    color: #8f6b17;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.payment-screen .hosny-payment-section-header h4 {
+    margin: 0;
+    color: #172033;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.payment-screen .hosny-payment-section-header .section-badge {
+    min-width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(201, 168, 76, 0.14);
+    color: #8f6b17;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.payment-screen .paymentmethod {
+    min-height: 80px;
+    padding: 0 20px !important;
+    background: #fff !important;
+    border: 1px solid rgba(201, 209, 222, 0.88) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05) !important;
+    color: #172033 !important;
+}
+
+.payment-screen .paymentmethod:hover {
+    border-color: rgba(201, 168, 76, 0.65) !important;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.1), rgba(255, 255, 255, 0.98)) !important;
+    transform: translateY(-1px);
+}
+
+.payment-screen .hosny-payment-method-card {
+    position: relative;
+    min-height: 96px;
+    padding: 18px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px;
+    direction: rtl;
+    text-align: right;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.payment-screen .hosny-payment-method-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    border-radius: 22px 0 0 22px;
+    background: linear-gradient(180deg, rgba(201, 168, 76, 0.95), rgba(237, 215, 142, 0.65));
+}
+
+.payment-screen .hosny-payment-method-card.is-active {
+    background: linear-gradient(135deg, rgba(255, 248, 228, 0.98) 0%, rgba(251, 238, 193, 0.96) 100%) !important;
+    border-color: rgba(201, 168, 76, 0.58) !important;
+    box-shadow: 0 18px 36px rgba(201, 168, 76, 0.16) !important;
+}
+
+.payment-screen .hosny-payment-method-card.is-active::before {
+    background: linear-gradient(180deg, #c9a84c, #f0cb6e);
+}
+
+.payment-screen .hosny-payment-method-card .method-icon-badge {
+    width: 58px;
+    height: 58px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    font-size: 24px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
+}
+
+.payment-screen .hosny-payment-method-card .method-icon-svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.payment-screen .hosny-payment-method-card .method-icon-badge.is-cash {
+    background: linear-gradient(135deg, rgba(227, 249, 227, 0.98), rgba(190, 238, 195, 0.92));
+    color: #1a7f37;
+}
+
+.payment-screen .hosny-payment-method-card .method-icon-badge.is-bank {
+    background: linear-gradient(135deg, rgba(226, 236, 255, 0.98), rgba(193, 215, 255, 0.92));
+    color: #274c9c;
+}
+
+.payment-screen .hosny-payment-method-card .method-icon-badge.is-pay-later {
+    background: linear-gradient(135deg, rgba(255, 238, 218, 0.98), rgba(252, 210, 170, 0.92));
+    color: #a05810;
+}
+
+.payment-screen .hosny-payment-method-card.is-active .method-icon-badge {
+    background: rgba(255, 255, 255, 0.72);
+    color: #172033;
+    box-shadow: 0 10px 24px rgba(201, 168, 76, 0.18);
+}
+
+.payment-screen .payment-method-display {
+    gap: 14px;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.payment-screen .hosny-payment-method-card .method-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 0;
+}
+
+.payment-screen .hosny-payment-method-card .payment-name {
+    color: #172033;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.payment-screen .hosny-payment-method-card .method-meta {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.payment-screen .hosny-payment-method-card .method-action {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    background: rgba(23, 32, 51, 0.06);
+    color: #172033;
+    font-size: 24px;
+}
+
+.payment-screen .hosny-payment-method-card.is-active .method-action {
+    background: rgba(201, 168, 76, 0.16);
+    color: #8f6b17;
+}
+
+.payment-screen .hosny-payment-method-card.is-active .payment-name {
+    color: #172033 !important;
+}
+
+.payment-screen .hosny-payment-method-card.is-active .method-meta {
+    color: #6b7280 !important;
+}
+
+.payment-screen .payment-method-display .payment-method-icon {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.payment-screen .payment-method-display .payment-name {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.payment-screen .hosny-payment-lines {
+    flex: 1 1 auto;
+    border-radius: 24px;
+    padding: 14px;
+    background: #f8fafc !important;
+    border: 1px solid rgba(209, 217, 226, 0.85) !important;
+    box-shadow: none !important;
+    min-height: 0;
+    height: 100%;
+}
+
+.payment-screen .hosny-payment-lines .paymentline {
+    display: flex !important;
+    align-items: center !important;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgba(209, 217, 226, 0.85);
+    border-radius: 18px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.payment-screen .hosny-payment-lines .paymentline.selected {
+    background: linear-gradient(135deg, rgba(23, 32, 51, 0.96) 0%, rgba(47, 65, 95, 0.92) 100%) !important;
+    border-color: rgba(23, 32, 51, 0.18);
+}
+
+.payment-screen .hosny-payment-lines .paymentline.selected .payment-name,
+.payment-screen .hosny-payment-lines .paymentline.selected .payment-amount,
+.payment-screen .hosny-payment-lines .paymentline.selected .payment-infos {
+    color: #fff !important;
+}
+
+.payment-screen .hosny-payment-lines .payment-infos {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 18px !important;
+    gap: 16px;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    direction: rtl;
+}
+
+.payment-screen .hosny-payment-lines .payment-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    font-weight: 700;
+}
+
+.payment-screen .hosny-payment-lines .payment-amount {
+    flex: 0 0 auto;
+    min-width: max-content;
+    padding: 0 !important;
+    color: #172033;
+    direction: ltr;
+    unicode-bidi: plaintext;
+    font-size: 22px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.payment-screen .hosny-payment-lines .delete-button {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px 0 0 !important;
+    padding: 0 !important;
+    border-radius: 18px;
+    background: rgba(236, 96, 88, 0.14) !important;
+    color: #dd5b52 !important;
+}
+
+.payment-screen .hosny-payment-lines .delete-button i {
+    font-size: 27px !important;
+}
+
+.payment-screen .hosny-payment-lines .paymentline.selected .delete-button {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #fff !important;
+}
+
+.payment-screen .hosny-payment-lines .electronic_payment {
+    margin: 0 12px 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.04);
+}
+
+.payment-screen .payment-sidebar-card {
+    border-radius: 26px;
+    padding: 14px;
+    min-height: 0;
+}
+
+.payment-screen .payment-actions-card {
+    padding: 14px;
+}
+
+.payment-screen .payment-validate-card {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.payment-screen .payment-methods-footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 2px;
+}
+
+.payment-screen .payment-methods-footer .payment-validate-card {
+    max-width: 430px;
+}
+
+.payment-screen .hosny-payment-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px !important;
+}
+
+.payment-screen .hosny-payment-buttons > .button {
+    min-height: 64px !important;
+    padding: 12px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%) !important;
+    border: 1px solid rgba(201, 209, 222, 0.88) !important;
+    border-radius: 18px !important;
+    color: #172033 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05) !important;
+}
+
+.payment-screen .hosny-payment-buttons > .button.highlight {
+    background: linear-gradient(135deg, #c9a84c 0%, #f0cb6e 100%) !important;
+    border-color: rgba(201, 168, 76, 0.65) !important;
+    color: #172033 !important;
+}
+
+.payment-screen .payment-buttons .button i {
+    font-size: 15px !important;
+    margin: 0 !important;
+}
+
+.payment-screen .payment-numpad-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 16px;
+    overflow: hidden;
+}
+
+.payment-screen .payment-numpad-card .numpad {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(64px, 1fr);
+    gap: 8px;
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    align-content: stretch;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn {
+    min-height: 50px;
+    width: 80%;
+    border: 1px solid rgba(201, 209, 222, 0.9) !important;
+    border-radius: 18px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%) !important;
+    color: #172033 !important;
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06) !important;
+    padding: 0 !important;
+        display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-screen .payment-numpad-card .numpad > .col {
+    width: auto !important;
+    max-width: none !important;
+    flex: initial !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn.active,
+.payment-screen .payment-numpad-card .numpad .btn.border-primary {
+    background: linear-gradient(135deg, #172033 0%, #30415f 100%) !important;
+    border-color: #172033 !important;
+    color: #fff !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(4),
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(8),
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(12) {
+    background: linear-gradient(135deg, #dff6df 0%, #b8e6b8 100%) !important;
+    border-color: rgba(113, 187, 113, 0.45) !important;
+    color: #155724 !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(13) {
+    background: linear-gradient(135deg, #f6d369 0%, #d7ad3f 100%) !important;
+    border-color: rgba(201, 168, 76, 0.7) !important;
+    color: #5d4300 !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(15) {
+    background: linear-gradient(135deg, #f7e0d0 0%, #ebc3a8 100%) !important;
+    border-color: rgba(220, 165, 120, 0.6) !important;
+    color: #7a3f12 !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn:nth-child(16) {
+    background: linear-gradient(135deg, #ffd6d1 0%, #f4a8a2 100%) !important;
+    border-color: rgba(224, 107, 94, 0.5) !important;
+    color: #8d2318 !important;
+}
+
+.payment-screen .button.next.validation,
+.payment-screen .hosny-payment-validate {
+    min-height: 96px !important;
+    border-radius: 22px !important;
+    background: linear-gradient(135deg, #c9a84c 0%, #f0cb6e 100%) !important;
+    color: #172033 !important;
+    box-shadow: 0 18px 34px rgba(201, 168, 76, 0.28) !important;
+    margin-top: 0 !important;
+    flex: 0 0 auto !important;
+    width: min(430px, 100%) !important;
+    padding: 18px 20px !important;
+    border: 1px solid rgba(201, 168, 76, 0.55) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+
+.payment-screen .button.next.validation.disabled,
+.payment-screen .hosny-payment-validate.disabled {
+    opacity: 0.82;
+    box-shadow: none !important;
+    background: linear-gradient(180deg, #eef2f7 0%, #e3e8ef 100%) !important;
+    border-color: rgba(201, 209, 222, 0.95) !important;
+    color: #748095 !important;
+    pointer-events: none;
+}
+
+.payment-screen .hosny-payment-validate {
+    direction: rtl;
+    text-align: center;
+    gap: 14px;
+}
+
+.payment-screen .hosny-payment-validate .validate-copy {
+    gap: 6px;
+}
+
+.payment-screen .hosny-payment-validate .validate-eyebrow {
+    color: rgba(23, 32, 51, 0.68);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.payment-screen .button.next.validation.disabled .validate-eyebrow {
+    color: inherit;
+}
+
+.payment-screen .button.next.validation .pay-circle {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.32);
+    flex: 0 0 auto;
+}
+
+.payment-screen .button.next.validation .next_text {
+    font-size: 22px;
+    font-weight: 900;
+}
+
+@media screen and (max-width: 1200px) {
+    .payment-screen .main-content.hosny-payment-layout {
+        flex-direction: column !important;
+        overflow-y: auto !important;
+    }
+
+    .payment-screen .payment-side-panel {
+        grid-template-rows: auto auto auto;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .payment-screen .hosny-payment-methods-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .payment-screen .main-content.hosny-payment-layout {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .payment-screen .payment-status-shell,
+    .payment-screen .hosny-payment-methods-container,
+    .payment-screen .payment-sidebar-card,
+    .payment-screen .button.next.validation,
+    .payment-screen .hosny-payment-lines {
+        border-radius: 20px !important;
+    }
+
+    .payment-screen .payment-status-metrics,
+    .payment-screen .hosny-payment-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-screen .payment-methods-footer .payment-validate-card {
+        max-width: 100%;
+    }
+
+    .payment-screen .payment-status-card .metric-value {
+        font-size: 22px;
+    }
+
+    .payment-screen .payment-status-card.is-primary .metric-value {
+        font-size: 30px;
+    }
+
+    .payment-screen .payment-numpad-card .numpad .btn {
+        min-height: 60px;
+        font-size: 22px !important;
+    }
+}
+
+.payment-orders-screen .orders-list {
+    min-height: 250px;
+}
+
+/*
+ * The grid itself must stay right-to-left so the first action lands in the
+ * top-right corner. Without the directive rtlcss mirrors this to `ltr` when
+ * it builds the Arabic bundle and the whole row comes out back-to-front.
+ * The directive has to sit BEFORE the declaration — placed after the
+ * semicolon rtlcss ignores it and mirrors the value anyway.
+ */
+.product-screen .control-buttons {
+    /*rtl:ignore*/
+    direction: rtl !important;
+}
+
+.product-screen .control-buttons .control-button {
+    direction: ltr !important;
+}
+
+.product-screen .control-buttons .customer-button {
+    display: none !important;
+}
+
+.product-screen .control-buttons .payment-orders-button {
+    order: 6 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    min-height: 54px !important;
+    padding: 0 18px !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.product-screen .control-buttons .payment-orders-button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16) !important;
+}
+
+.product-screen .control-buttons .payment-orders-button i {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    color: inherit !important;
+    line-height: 1 !important;
+}
+
+/* ═══════════════════════════════════════
+   PAYMENT ORDERS SCREEN
+   ═══════════════════════════════════════ */
+
+.payment-orders-screen {
+    background:
+        radial-gradient(circle at top right, rgba(201, 168, 76, 0.18), transparent 24%),
+        linear-gradient(180deg, #f7f4ea 0%, #eef2f7 100%);
+    color: #172033;
+}
+
+.payment-orders-screen .payment-orders-shell {
+    padding: 16px;
+    gap: 14px;
+    min-height: 0;
+}
+
+/* ── Header ── */
+/*rtl:begin:ignore*/
+.payment-orders-screen .payment-orders-header {
+    background:
+        linear-gradient(135deg, rgba(16, 31, 54, 0.98) 0%, rgba(48, 61, 80, 0.96) 52%, rgba(173, 146, 72, 0.92) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 20px;
+    padding: 14px 16px 10px;
+    min-height: 210px;
+    box-shadow: 0 18px 55px rgba(19, 27, 45, 0.14);
+    backdrop-filter: blur(16px);
+    color: #fff;
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 78px 58px 18px;
+    row-gap: 10px;
+}
+
+.payment-orders-screen .payment-orders-header-top {
+    display: block;
+    min-height: 0;
+    height: 78px;
+    transform: translateY(-4px);
+}
+
+.payment-orders-screen .payment-orders-header-main {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    direction: ltr !important;
+    min-height: 0;
+    height: 78px;
+}
+
+.payment-orders-screen .payment-orders-header-side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+    direction: rtl !important;
+}
+
+.payment-orders-screen .payment-orders-title-block {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    text-align: right;
+    direction: rtl;
+    align-self: center;
+    justify-self: end;
+}
+
+.payment-orders-screen .payment-orders-title-block h2 {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+}
+
+/* ── Stats ── */
+.payment-orders-screen .payment-orders-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    direction: rtl !important;
+}
+
+.payment-orders-screen .payment-orders-stat {
+    width: 120px;
+    height: 70px;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.payment-orders-screen .payment-orders-stat .stat-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.payment-orders-screen .payment-orders-stat .stat-value {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+/* ═══════════════════════════════════════
+   UNIFIED BUTTON GROUP (Back + Refresh)
+   ═══════════════════════════════════════ */
+
+.payment-orders-screen .payment-orders-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 10px 12px;
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 10px 30px rgba(0,0,0,0.12);
+    direction: rtl !important;
+    box-sizing: border-box;
+}
+
+.payment-orders-screen .payment-orders-btn-group .btn-action {
+    width: 82px;
+    height: 58px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.16) 0%,
+            rgba(255,255,255,0.08) 100%
+        );
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        border-color .15s ease;
+
+    cursor: pointer;
+}
+
+.payment-orders-screen .payment-orders-btn-group .btn-action i {
+    font-size: 18px;
+}
+
+.payment-orders-screen .payment-orders-btn-group .btn-action:hover {
+    transform: translateY(-1px);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.22) 0%,
+            rgba(255,255,255,0.12) 100%
+        );
+
+    border-color: rgba(255,255,255,0.22);
+}
+
+.payment-orders-screen .payment-orders-btn-group .btn-action:active {
+    transform: scale(0.96);
+}
+
+.payment-orders-screen .payment-orders-btn-group .btn-action:disabled {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+
+/* spinning icon when refreshing */
+.payment-orders-screen .payment-orders-btn-group .btn-refresh .fa-spin {
+    animation: fa-spin 1s infinite linear;
+}
+
+/* hide the old standalone buttons so nothing duplicates */
+.payment-orders-screen .button.back,
+.payment-orders-screen .payment-orders-refresh {
+    display: none !important;
+}
+
+/* ── Toolbar (search + sort only now) ── */
+.payment-orders-screen .payment-orders-toolbar {
+    display: grid;
+    grid-template-columns: 171px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    margin-top: 0;
+    direction: ltr !important;
+}
+
+.payment-orders-screen .payment-orders-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    min-height: 58px;
+    padding: 0 16px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    direction: rtl !important;
+    box-sizing: border-box;
+}
+
+.payment-orders-screen .payment-orders-search i {
+    color: #8d6c19;
+    font-size: 16px;
+}
+
+.payment-orders-screen .payment-orders-search input {
+    flex: 1 1 auto;
+    border: 0;
+    background: transparent;
+    color: #172033;
+    font-size: 15px;
+    outline: none;
+    text-align: right;
+}
+
+.payment-orders-screen .payment-orders-search input::placeholder {
+    color: #92a0b5;
+}
+
+.payment-orders-screen .payment-orders-search .search-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(23, 32, 51, 0.07);
+    color: #5f6b80;
+    cursor: pointer;
+}
+
+.payment-orders-screen .payment-orders-sort {
+    display: flex;
+    align-items: center;
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+    min-width: 0;
+    direction: rtl !important;
+}
+
+.payment-orders-screen .payment-orders-sort select {
+    min-height: 52px;
+    width: 100%;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(23, 32, 51, 0.09);
+    background: #fff;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 700;
+    outline: none;
+}
+
+/* ── Status bar ── */
+.payment-orders-screen .payment-orders-statusbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    position: static;
+    margin-top: 0;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    direction: rtl;
+}
+/*rtl:end:ignore*/
+
+/* ── Orders list ── */
+.payment-orders-screen .orders-list {
+    padding: 0 8px 8px !important;
+    scroll-padding-top: 8px;
+}
+
+/* ── Empty state ── */
+.payment-orders-screen .payment-orders-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 320px;
+    padding: 32px;
+    text-align: center;
+    border: 1px dashed rgba(23, 32, 51, 0.14);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.72);
+    color: #516075;
+}
+
+.payment-orders-screen .payment-orders-empty-state .empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.18), rgba(23, 32, 51, 0.08));
+    color: #8d6c19;
+    font-size: 28px;
+}
+
+.payment-orders-screen .payment-orders-empty-state h3 {
+    margin: 0;
+    color: #172033;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.payment-orders-screen .payment-orders-empty-state p {
+    max-width: 420px;
+    font-size: 14px;
+}
+
+/* ── Order cards ── */
+.payment-orders-screen .order-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 16px;
+    padding: 20px 22px;
+    min-height: 132px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(23, 32, 51, 0.07);
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(18, 29, 47, 0.07);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.payment-orders-screen .order-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(201, 168, 76, 0.5);
+    background: #fff;
+    box-shadow: 0 20px 42px rgba(18, 29, 47, 0.11);
+}
+
+.payment-orders-screen .order-card-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: grid;
+    gap: 14px;
+}
+
+.payment-orders-screen .order-card-top {
+    display: grid;
+    grid-template-columns: minmax(280px, auto) minmax(0, 1fr);
+    align-items: center;
+    gap: 18px;
+    direction: ltr;
+}
+
+.payment-orders-screen .order-card-side {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    grid-column: 1;
+    justify-content: flex-start;
+    min-width: 0;
+}
+
+.payment-orders-screen .order-card-identity {
+    grid-column: 2;
+    min-width: 0;
+    direction: rtl;
+}
+
+.payment-orders-screen .order-card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    direction: rtl;
+}
+
+.payment-orders-screen .order-name {
+    color: #172033;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.payment-orders-screen .order-status-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    background: #f2f4f7;
+    color: #49566d;
+    border: 1px solid rgba(23, 32, 51, 0.08);
+}
+
+.payment-orders-screen .order-status-badge.is-unpaid {
+    background: #f2f4f7;
+    color: #49566d;
+}
+
+.payment-orders-screen .order-status-badge.is-partial {
+    background: #fff3cd;
+    color: #7a5a00;
+    border-color: rgba(201, 168, 76, 0.3);
+}
+
+.payment-orders-screen .order-card-totals {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 136px;
+    min-height: 64px;
+    padding: 10px 14px;
+    border-radius: 16px;
+    background: #f6f8fb;
+    border: 1px solid rgba(23, 32, 51, 0.05);
+    direction: rtl;
+}
+
+.payment-orders-screen .order-card-totals .totals-label {
+    color: #6f7b90;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.payment-orders-screen .order-card-totals strong {
+    color: #172033;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.payment-orders-screen .order-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    direction: rtl;
+    margin-top: 0;
+}
+
+.payment-orders-screen .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #f5f7fa;
+    border: 1px solid rgba(23, 32, 51, 0.06);
+    color: #415067;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.payment-orders-screen .meta-chip i {
+    color: #67758d;
+}
+
+.payment-orders-screen .order-card-actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: stretch;
+}
+
+.payment-orders-screen .order-card-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    min-width: 120px;
+    padding: 0 22px;
+    height: 56px;
+    border: 0 !important;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #c9a84c 0%, #e0bf67 48%, #f0d78e 100%) !important;
+    box-shadow: 0 18px 36px rgba(201, 168, 76, 0.34) !important;
+    font-size: 16px;
+    font-weight: 900;
+    color: #172033 !important;
+    letter-spacing: 0;
+}
+
+.payment-orders-screen .order-card-actions .btn span,
+.payment-orders-screen .order-card-actions .btn i {
+    color: #172033 !important;
+}
+
+.payment-orders-screen .order-card-actions .btn:hover {
+    background: linear-gradient(135deg, #d7b660 0%, #ecd285 100%) !important;
+    box-shadow: 0 22px 42px rgba(201, 168, 76, 0.42) !important;
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+
+@media (max-width: 992px) {
+    .payment-orders-screen .payment-orders-header {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .payment-orders-screen .payment-orders-header-top,
+    .payment-orders-screen .payment-orders-header-main,
+    .payment-orders-screen .payment-orders-header-side,
+    .payment-orders-screen .payment-orders-toolbar,
+    .payment-orders-screen .payment-orders-statusbar,
+    .payment-orders-screen .order-card,
+    .payment-orders-screen .order-card-top {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .payment-orders-screen .payment-orders-header-main,
+    .payment-orders-screen .payment-orders-header-side {
+        width: 100%;
+        height: auto;
+    }
+
+    .payment-orders-screen .payment-orders-stats {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .payment-orders-screen .payment-orders-stat {
+        flex: 1 1 120px;
+        width: auto;
+    }
+
+    .payment-orders-screen .payment-orders-btn-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .payment-orders-screen .payment-orders-btn-group .btn-action {
+        flex: 1;
+        width: auto;
+    }
+
+    .payment-orders-screen .payment-orders-search,
+    .payment-orders-screen .payment-orders-sort {
+        width: 100%;
+        flex: 1 1 auto;
+        grid-column: auto;
+    }
+
+    .payment-orders-screen .payment-orders-sort {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .payment-orders-screen .payment-orders-statusbar {
+        position: static;
+        align-items: flex-end;
+        margin-top: 0;
+    }
+
+    .payment-orders-screen .order-card-side {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .payment-orders-screen .order-card-totals {
+        min-width: 0;
+    }
+
+    .payment-orders-screen .order-card-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .payment-orders-screen .payment-orders-shell {
+        padding: 12px;
+    }
+
+    .payment-orders-screen .payment-orders-header {
+        padding: 14px;
+        border-radius: 22px;
+    }
+
+    .payment-orders-screen .payment-orders-title-block h2 {
+        font-size: 22px;
+    }
+
+    .payment-orders-screen .payment-orders-search {
+        min-height: 50px;
+    }
+
+    .payment-orders-screen .order-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .payment-orders-screen .order-name {
+        font-size: 18px;
+    }
+
+    .payment-orders-screen .payment-orders-btn-group .btn-action {
+        height: 44px;
+        padding: 0 14px;
+        font-size: 12px;
+    }
+}
+.pos .order-summary .subentry {
+    direction: rtl;
+    display: flex !important;
+    flex-direction: row-reverse;
+}
+
+.hosny-category-search-box input[type="search"]::-webkit-search-cancel-button,
+.hosny-category-search-box input[type="search"]::-webkit-search-decoration {
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+
+/* Keep product cards packed in one continuous grid, even when Odoo groups
+   search results by POS category into several .product-list containers. */
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)) !important;
+    grid-auto-rows: max-content !important;
+    align-content: start !important;
+    justify-content: start !important;
+    gap: 18px !important;
+    padding: 18px 20px 24px !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto > .product-list {
+    display: contents !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto > .product-list > .product {
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: start !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 992px) {
+    .pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        gap: 14px !important;
+        padding: 14px !important;
+    }
+}
+
+/* RTL alignment fixes for POS product and payment screens */
+.pos .pos-topheader {
+    direction: ltr !important; /*rtl:ignore*/
+    flex-direction: row !important;
+}
+
+.pos .pos-topheader .pos-branding {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    min-width: 92px !important;
+    justify-content: flex-start !important;
+}
+
+.pos .pos-topheader .pos-logo {
+    margin-left: 18px !important; /*rtl:ignore*/
+    margin-right: 0 !important; /*rtl:ignore*/
+}
+
+.pos .pos-topheader .pos-rightheader {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    direction: ltr !important; /*rtl:ignore*/
+}
+
+.pos .pos-topheader .pos-rightheader > .menu-button {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .status-buttons {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .pos-workplace-btn {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    direction: rtl !important; /*rtl:ignore*/
+    margin-inline-start: 4px !important;
+    margin-inline-end: 0 !important;
+}
+
+.pos .product-screen .rightpane .category-list {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    direction: ltr !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .rightpane .category-list > :not(.hosny-category-search) {
+    order: 1 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    margin-left: auto !important; /*rtl:ignore*/
+    margin-right: 0 !important; /*rtl:ignore*/
+    right: 0 !important; /*rtl:ignore*/
+    left: auto !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    direction: ltr !important; /*rtl:ignore*/
+    scrollbar-gutter: stable !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product * {
+    direction: rtl !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions {
+    width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    direction: rtl !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-action {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-footer-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: 1fr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-subpads.hosny-numpad-open .hosny-send-action {
+    min-height: 56px !important;
+    flex-direction: row !important;
+}
+
+.payment-screen .main-content.hosny-payment-layout {
+    direction: ltr !important; /*rtl:ignore*/
+    flex-direction: row !important;
+}
+
+.payment-screen .payment-primary-panel {
+    order: 1 !important;
+}
+
+.payment-screen .payment-side-panel {
+    order: 2 !important;
+    overflow-y: auto !important;
+    scrollbar-gutter: stable !important;
+}
+
+.payment-screen .hosny-payment-status,
+.payment-screen .hosny-payment-status .payment-status-shell,
+.payment-screen .payment-actions-card,
+.payment-screen .payment-numpad-card {
+    direction: rtl !important; /*rtl:ignore*/
+}
+
+.payment-screen .payment-numpad-card {
+    flex: 0 0 auto !important;
+    padding: 14px !important;
+}
+
+.payment-screen .payment-numpad-card .numpad {
+    direction: ltr !important; /*rtl:ignore*/
+    grid-auto-rows: 54px !important;
+    gap: 10px !important;
+    height: auto !important;
+    align-content: start !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn {
+    width: 100% !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    border-radius: 14px !important;
+    font-size: 22px !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .payment-screen .main-content.hosny-payment-layout {
+        flex-direction: column !important;
+    }
+
+    .payment-screen .payment-primary-panel,
+    .payment-screen .payment-side-panel {
+        order: initial !important;
+    }
+}
+
+/* POS popups */
+@keyframes hosnyPopupIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes hosnyPopupBackdropIn {
+    from {
+        background-color: rgba(17, 24, 39, 0);
+        backdrop-filter: blur(0);
+    }
+    to {
+        background-color: rgba(17, 24, 39, 0.58);
+        backdrop-filter: blur(3px);
+    }
+}
+
+.pos .o_dialog .modal.d-block {
+    background-color: rgba(17, 24, 39, 0.58) !important;
+    backdrop-filter: blur(3px);
+    animation: hosnyPopupBackdropIn 180ms ease-out both;
+}
+
+.pos .o_dialog .modal-dialog {
+    max-width: 820px !important;
+    width: calc(100vw - 32px);
+    animation: hosnyPopupIn 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pos .o_dialog .modal-dialog.modal-sm {
+    max-width: min(760px, calc(100vw - 32px)) !important;
+}
+
+.pos .o_dialog .modal-content {
+    direction: rtl !important;
+    text-align: right !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(226, 232, 240, 0.92) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.24), 0 10px 28px rgba(15, 23, 42, 0.12) !important;
+}
+
+.pos .o_dialog .modal-header {
+    min-height: 74px !important;
+    padding: 22px 26px 14px !important;
+    border-bottom: 0 !important;
+    background: #ffffff !important;
+    position: relative !important;
+    justify-content: flex-end !important;
+}
+
+.pos .o_dialog .modal-header::after {
+    content: "";
+    position: absolute;
+    left: 26px;
+    right: 26px;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(226, 232, 240, 0), rgba(203, 213, 225, 0.95), rgba(226, 232, 240, 0));
+}
+
+.pos .o_dialog .modal-title {
+    margin: 0 !important;
+    color: #111827 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+    text-align: right !important;
+    flex: 1 1 auto !important;
+}
+
+.pos .o_dialog .btn-close {
+    display: none !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 999px !important;
+    background-color: #ffffff !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04) !important;
+    opacity: 1 !important;
+    transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.pos .o_dialog .btn-close:hover {
+    background-color: #f8fafc !important;
+    border-color: rgba(203, 213, 225, 0.95) !important;
+    transform: scale(1.04);
+}
+
+.pos .o_dialog .modal-body {
+    padding: 18px 26px 26px !important;
+    background: #f7f9fc !important;
+}
+
+.pos .o_dialog .modal-footer {
+    padding: 20px 26px 24px !important;
+    border-top: 1px solid rgba(226, 232, 240, 0.72) !important;
+    background: #ffffff !important;
+}
+
+.pos .o_dialog .modal-footer > .d-flex {
+    gap: 12px !important;
+    direction: rtl !important;
+}
+
+.pos .o_dialog .modal-footer .btn,
+.pos .hosny-pos-popup .btn {
+    min-height: 58px !important;
+    border-radius: 14px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0 !important;
+    box-shadow: none !important;
+    transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.pos .o_dialog .modal-footer .btn:hover,
+.pos .hosny-pos-popup .btn:hover {
+    transform: translateY(-1px);
+}
+
+.pos .o_dialog .btn-primary {
+    border: 1px solid rgba(177, 139, 41, 0.55) !important;
+    background: linear-gradient(135deg, #d9ba56 0%, #b69334 100%) !important;
+    color: #111827 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 24px rgba(177, 139, 41, 0.18) !important;
+}
+
+.pos .o_dialog .btn-primary:hover {
+    background: linear-gradient(135deg, #e0c15f 0%, #bd9b3d 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 14px 26px rgba(177, 139, 41, 0.22) !important;
+}
+
+.pos .o_dialog .btn-primary.disabled,
+.pos .o_dialog .btn-primary:disabled {
+    opacity: 0.52 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.pos .o_dialog .btn-secondary {
+    border: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+    color: #334155 !important;
+}
+
+.pos .o_dialog .btn-secondary:hover {
+    border-color: #cbd5e1 !important;
+    background: #f1f5f9 !important;
+}
+
+.pos .hosny-number-popup .modal-body,
+.pos .modal-content.hosny-number-popup .modal-body {
+    gap: 18px !important;
+    background: #ffffff !important;
+}
+
+.pos .hosny-number-popup .subtitle,
+.pos .modal-content.hosny-number-popup .subtitle {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 2px 2px !important;
+    color: #64748b !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+}
+
+.pos .hosny-number-popup .input-symbol,
+.pos .modal-content.hosny-number-popup .input-symbol {
+    margin: 0 !important;
+}
+
+.pos .hosny-number-popup .popup-input,
+.pos .modal-content.hosny-number-popup .popup-input {
+    height: 48px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #dce3ec !important;
+    border-radius: 12px !important;
+    background: #fbfcfe !important;
+    color: #111827 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03) !important;
+}
+
+.pos .hosny-number-popup .popup-input .text-muted,
+.pos .modal-content.hosny-number-popup .popup-input .text-muted {
+    color: #94a3b8 !important;
+}
+
+.pos .hosny-number-popup .numpad,
+.pos .modal-content.hosny-number-popup .numpad {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    overflow: visible !important;
+}
+
+.pos .hosny-number-popup .numpad-button,
+.pos .modal-content.hosny-number-popup .numpad-button {
+    min-height: 60px !important;
+    padding: 0 !important;
+    border: 1px solid #dfe5ed !important;
+    border-radius: 14px !important;
+    background: #f8fafc !important;
+    color: #172033 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.pos .hosny-number-popup .numpad-button::after,
+.pos .modal-content.hosny-number-popup .numpad-button::after {
+    display: none !important;
+}
+
+.pos .hosny-number-popup .numpad-button:hover,
+.pos .modal-content.hosny-number-popup .numpad-button:hover {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px);
+}
+
+.pos .hosny-number-popup .numpad-button:active,
+.pos .modal-content.hosny-number-popup .numpad-button:active {
+    transform: translateY(0) scale(0.99);
+}
+
+.pos .hosny-number-popup .numpad-button.o_colorlist_item_numpad_color_1,
+.pos .modal-content.hosny-number-popup .numpad-button.o_colorlist_item_numpad_color_1 {
+    border-color: rgba(239, 68, 68, 0.55) !important;
+    background: #fff7f7 !important;
+    color: #991b1b !important;
+}
+
+.pos .hosny-number-popup .numpad-button.o_colorlist_item_numpad_color_6,
+.pos .modal-content.hosny-number-popup .numpad-button.o_colorlist_item_numpad_color_6 {
+    border-color: rgba(201, 168, 76, 0.46) !important;
+    background: #fffdf7 !important;
+}
+
+.pos .hosny-product-configurator-popup,
+.pos .product-configurator-popup {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.pos .hosny-product-configurator-popup .modal-body,
+.pos .modal-content.hosny-product-configurator-popup .modal-body,
+.pos .modal-content.product-configurator-popup .modal-body {
+    padding-top: 18px !important;
+    background: #f6f8fb !important;
+}
+
+.pos .hosny-product-configurator-popup .attribute,
+.pos .modal-content.hosny-product-configurator-popup .attribute,
+.pos .modal-content.product-configurator-popup .attribute {
+    margin-bottom: 16px !important;
+    padding: 18px !important;
+    border: 1px solid #e4ebf3 !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045) !important;
+}
+
+.pos .hosny-product-configurator-popup .attribute_name,
+.pos .modal-content.hosny-product-configurator-popup .attribute_name,
+.pos .modal-content.product-configurator-popup .attribute_name {
+    margin-bottom: 14px !important;
+    color: #172033 !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.pos .hosny-product-configurator-popup .attribute_name::before,
+.pos .modal-content.hosny-product-configurator-popup .attribute_name::before,
+.pos .modal-content.product-configurator-popup .attribute_name::before {
+    content: "";
+    width: 7px;
+    height: 22px;
+    border-radius: 999px;
+    background: #d1ad45;
+    flex: 0 0 auto;
+}
+
+.pos .hosny-product-configurator-popup .configurator_radio,
+.pos .hosny-product-configurator-popup .color_attribute_list,
+.pos .hosny-product-configurator-popup .d-flex.gap-2,
+.pos .hosny-product-configurator-popup .d-flex.gap-3,
+.pos .modal-content.product-configurator-popup .configurator_radio,
+.pos .modal-content.product-configurator-popup .color_attribute_list,
+.pos .modal-content.product-configurator-popup .d-flex.gap-2,
+.pos .modal-content.product-configurator-popup .d-flex.gap-3 {
+    justify-content: flex-end !important;
+}
+
+.pos .hosny-product-configurator-popup .configurator_radio > .d-flex,
+.pos .modal-content.product-configurator-popup .configurator_radio > .d-flex,
+.pos .hosny-product-configurator-popup .attribute > .d-flex.gap-2,
+.pos .hosny-product-configurator-popup .attribute > .d-flex.gap-3,
+.pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-2,
+.pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-3 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(142px, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+.pos .hosny-product-configurator-popup .attribute-name-cell,
+.pos .modal-content.product-configurator-popup .attribute-name-cell,
+.pos .hosny-product-configurator-popup .configurator_radio > .d-flex > div,
+.pos .modal-content.product-configurator-popup .configurator_radio > .d-flex > div {
+    margin: 0 !important;
+    min-width: 0 !important;
+}
+
+.pos .hosny-product-configurator-popup .form-check-input,
+.pos .modal-content.product-configurator-popup .form-check-input {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.pos .hosny-product-configurator-popup label:not(.configurator_color),
+.pos .modal-content.product-configurator-popup label:not(.configurator_color) {
+    min-height: 58px !important;
+    min-width: 142px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 13px 44px 13px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    position: relative !important;
+    border: 1px solid #dfe7f0 !important;
+    border-radius: 16px !important;
+    background: #f8fafc !important;
+    color: #1f2937 !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 2px 6px rgba(15, 23, 42, 0.035) !important;
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+.pos .hosny-product-configurator-popup label:not(.configurator_color)::before,
+.pos .modal-content.product-configurator-popup label:not(.configurator_color)::before {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    border: 2px solid #cbd5e1;
+    background: #ffffff;
+    transform: translateY(-50%);
+}
+
+.pos .hosny-product-configurator-popup label:not(.configurator_color)::after,
+.pos .modal-content.product-configurator-popup label:not(.configurator_color)::after {
+    content: "";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: transparent;
+    transform: translateY(-50%) scale(0.5);
+    transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.pos .hosny-product-configurator-popup label:not(.configurator_color):hover,
+.pos .modal-content.product-configurator-popup label:not(.configurator_color):hover {
+    transform: translateY(-2px);
+    border-color: #c9d4e2 !important;
+    background: #ffffff !important;
+    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08) !important;
+}
+
+.pos .hosny-product-configurator-popup input:checked + label,
+.pos .modal-content.product-configurator-popup input:checked + label,
+.pos .hosny-product-configurator-popup label.active:not(.configurator_color),
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color) {
+    border-color: rgba(209, 173, 69, 0.85) !important;
+    background: #fff8e5 !important;
+    color: #111827 !important;
+    box-shadow: 0 14px 28px rgba(177, 139, 41, 0.18), inset 0 0 0 1px rgba(209, 173, 69, 0.32) !important;
+}
+
+.pos .hosny-product-configurator-popup input:checked + label::before,
+.pos .modal-content.product-configurator-popup input:checked + label::before,
+.pos .hosny-product-configurator-popup label.active:not(.configurator_color)::before,
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color)::before {
+    border-color: #b69334;
+    background: #d1ad45;
+}
+
+.pos .hosny-product-configurator-popup input:checked + label::after,
+.pos .modal-content.product-configurator-popup input:checked + label::after,
+.pos .hosny-product-configurator-popup label.active:not(.configurator_color)::after,
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color)::after {
+    background: #ffffff;
+    transform: translateY(-50%) scale(1);
+}
+
+.pos .hosny-product-configurator-popup .text-muted,
+.pos .modal-content.product-configurator-popup .text-muted {
+    color: #94a3b8 !important;
+}
+
+.pos .hosny-product-configurator-popup .ptav-not-available,
+.pos .modal-content.product-configurator-popup .ptav-not-available,
+.pos .hosny-product-configurator-popup label:not(.configurator_color):has(.text-muted),
+.pos .modal-content.product-configurator-popup label:not(.configurator_color):has(.text-muted) {
+    opacity: 0.48 !important;
+    filter: grayscale(0.25);
+}
+
+.pos .hosny-product-configurator-popup .price-extra-cell .price_extra,
+.pos .modal-content.product-configurator-popup .price-extra-cell .price_extra {
+    padding: 4px 8px !important;
+    background: #eef2f7 !important;
+    color: #334155 !important;
+    border: 1px solid #dfe7f0 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+}
+
+.pos .hosny-product-configurator-popup .custom-value-cell,
+.pos .modal-content.product-configurator-popup .custom-value-cell {
+    flex: 1 1 100% !important;
+}
+
+.pos .hosny-product-configurator-popup .custom_value,
+.pos .modal-content.product-configurator-popup .custom_value,
+.pos .hosny-product-configurator-popup .configurator_select,
+.pos .modal-content.product-configurator-popup .configurator_select {
+    min-height: 52px !important;
+    border: 1px solid #dfe7f0 !important;
+    border-radius: 14px !important;
+    background-color: #ffffff !important;
+    color: #172033 !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+}
+
+.pos .hosny-product-configurator-popup .color_attribute_list,
+.pos .modal-content.product-configurator-popup .color_attribute_list {
+    list-style: none !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    margin: 0 !important;
+}
+
+.pos .hosny-product-configurator-popup .configurator_color,
+.pos .modal-content.product-configurator-popup .configurator_color {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+    padding: 0 !important;
+    display: block !important;
+    border-radius: 18px !important;
+    border-color: #dfe7f0 !important;
+    box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+.pos .hosny-product-configurator-popup .configurator_color::before,
+.pos .hosny-product-configurator-popup .configurator_color::after,
+.pos .modal-content.product-configurator-popup .configurator_color::before,
+.pos .modal-content.product-configurator-popup .configurator_color::after {
+    display: none !important;
+}
+
+.pos .hosny-product-configurator-popup .configurator_color.active,
+.pos .modal-content.product-configurator-popup .configurator_color.active {
+    border-color: #d1ad45 !important;
+    box-shadow: 0 0 0 4px rgba(209, 173, 69, 0.2), 0 12px 22px rgba(15, 23, 42, 0.12) !important;
+}
+
+@media (max-width: 768px) {
+    .pos .o_dialog .modal-dialog,
+    .pos .o_dialog .modal-dialog.modal-sm {
+        max-width: calc(100vw - 20px) !important;
+        margin: 10px auto !important;
+    }
+
+    .pos .o_dialog .modal-header,
+    .pos .o_dialog .modal-body,
+    .pos .o_dialog .modal-footer {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    .pos .hosny-number-popup .numpad,
+    .pos .modal-content.hosny-number-popup .numpad {
+        gap: 8px !important;
+    }
+}
+.mk_app_menu.dropdown-menu .o_app > a .mk_app_name,
+.o_navbar_apps_menu.show .dropdown-menu .o_app > a .mk_app_name,
+a.o-dropdown-item.dropdown-item.o_navigable.o_app > a .mk_app_name {
+    color: #0F172A !important;
+    font-weight: 900 !important;
+    font-size: 1.06rem !important;
+    line-height: 1.35 !important;
+    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.18) !important;
+}
+
+/* Final physical-position lock for the compiled RTL POS asset. */
+.pos .pos-topheader {
+    direction: rtl !important;
+    flex-direction: row !important;
+}
+
+.pos .pos-topheader .pos-branding {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    min-width: 92px !important;
+    justify-content: flex-start !important;
+}
+
+.pos .pos-topheader .pos-logo {
+    margin-right: 18px !important;
+    margin-left: 0 !important;
+}
+
+.pos .pos-topheader .pos-rightheader {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    direction: rtl !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .menu-button {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .status-buttons {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .pos-workplace-btn {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    direction: ltr !important;
+    margin-inline-start: 4px !important;
+    margin-inline-end: 0 !important;
+}
+
+.pos .product-screen .rightpane .category-list {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .rightpane .category-list > :not(.hosny-category-search) {
+    order: 1 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    direction: rtl !important;
+    scrollbar-gutter: stable !important;
+}
+
+/*
+ * Direction only. This used to also force `font-size: 18px` and
+ * `color: black` on every descendant of a card, which overrode the card's
+ * own type scale — the price could not be a different size or colour from
+ * the name, because a `*` rule with `!important` outranks both.
+ */
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product * {
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions {
+    width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-action {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.payment-screen .main-content.hosny-payment-layout {
+    direction: rtl !important;
+    flex-direction: row !important;
+}
+
+.payment-screen .payment-primary-panel {
+    order: 1 !important;
+}
+
+.payment-screen .payment-side-panel {
+    order: 2 !important;
+    overflow-y: auto !important;
+    scrollbar-gutter: stable !important;
+}
+
+.payment-screen .hosny-payment-status,
+.payment-screen .hosny-payment-status .payment-status-shell,
+.payment-screen .payment-actions-card,
+.payment-screen .payment-numpad-card {
+    direction: ltr !important;
+}
+
+.payment-screen .payment-numpad-card {
+    flex: 0 0 auto !important;
+    padding: 14px !important;
+}
+
+.payment-screen .payment-numpad-card .numpad {
+    direction: rtl !important;
+    grid-auto-rows: 54px !important;
+    gap: 10px !important;
+    height: auto !important;
+    align-content: start !important;
+}
+
+.payment-scr een .payment-numpad-card .numpad .btn {
+    width: 100% !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    border-radius: 14px !important;
+    font-size: 22px !important;
+}
+/* Reorder: [Qty + Name] on right → [Note icon + Price] on left */
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    grid-template-columns: minmax(0, auto) 38px minmax(0, 1fr) !important;
+    grid-template-areas: "item note left" !important;
+}
+
+/* Price block → left side */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: left !important;
+    justify-content: flex-end !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+/* Qty + Name → right side */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    flex-direction: row !important;
+    direction: rtl !important;
+    justify-content: flex-start !important;
+}
+
+/* Note button stays in the middle */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    grid-area: note !important;
+}
+
+/* Qty badge: keep it right after the name */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: -1 !important; /* pushes qty before name in RTL flow */
+}
+
+/* Info list margins: flip to match new layout */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .info-list {
+    margin: 9px 0 0 132px !important;
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr) !important;
+    grid-template-areas: "item note left" !important;
+}
+
+/* Price block → stretches to fill left column, aligns to left edge */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: left !important;
+    justify-content: flex-end !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+/* Qty + Name → stretches to fill right column, aligns to right edge */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    flex-direction: row !important;
+    direction: rtl !important;
+    justify-content: flex-start !important;
+    min-width: 0 !important;
+}
+
+/* Note button stays centered in the middle column */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    grid-area: note !important;
+    justify-self: center !important;
+}
+
+/* Qty badge sits first (rightmost) in RTL flow */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: -1 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Price pill fills its container */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: auto !important;
+    min-width: 90px !important;
+}
+
+/* ═══════════════════════════════════════
+   FINAL: Note icon sits beside price on the left
+   ═══════════════════════════════════════ */
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto) !important;
+    grid-template-areas: "item left" !important;
+}
+
+/* Left group: note + price together in a flex container */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: left !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+/* Move note button inside the left area using order */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    grid-area: unset !important;
+    order: -1 !important;
+    position: static !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Right section: name + qty */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    flex-direction: row !important;
+    direction: rtl !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-width: 0 !important;
+}
+
+/* Qty badge first on the right */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: -1 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Price pill */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: auto !important;
+    min-width: 90px !important;
+    flex-shrink: 0 !important;
+}
+
+/* ═══════════════════════════════════════
+   ORDERLINE FINAL LAYOUT
+   Right: [1] ريش ضانى  |  Left: [📝] [1.15 SR]
+   ═══════════════════════════════════════ */
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    direction: ltr !important;
+}
+
+/* Right section (name + qty) grows to fill space */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    direction: rtl !important;
+    min-width: 0 !important;
+    order: 3 !important;
+}
+
+/* Note button — sits just to the right of the price */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    flex: 0 0 auto !important;
+    order: 2 !important;
+    position: static !important;
+    margin: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+}
+
+/* Price — leftmost */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    order: 1 !important;
+    min-width: 90px !important;
+    max-width: none !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+/* Price pill */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: auto !important;
+    min-width: 90px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Qty badge — rightmost inside the item section */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: -1 !important;
+    flex-shrink: 0 !important;
+}
+/* ═══════════════════════════════════════
+   REVERSE: Price left, Note middle, Name+Qty right
+   ═══════════════════════════════════════ */
+
+/* Price — now order 1 (leftmost) */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    order: 1 !important;
+}
+
+/* Note button — order 2 (middle) */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    order: 2 !important;
+}
+
+/* Name + Qty — order 3 (rightmost) */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    order: 3 !important;
+    justify-content: flex-end !important;
+}
+
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    direction: ltr !important;
+    grid-template-columns: unset !important;
+    grid-template-areas: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    order: 1 !important;
+    min-width: 90px !important;
+    max-width: none !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    order: 2 !important;
+    position: static !important;
+    margin: 0 !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    direction: rtl !important;
+    min-width: 0 !important;
+    order: 3 !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: -1 !important;
+    flex-shrink: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: auto !important;
+    min-width: 90px !important;
+    flex-shrink: 0 !important;
+}
+
+
+/* ═══════════════════════════════════════
+   FIX: Qty + Name aligned to the right
+   ═══════════════════════════════════════ */
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    justify-content: flex-start !important;
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    order: 1 !important;
+    flex-shrink: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    order: 2 !important;
+}
+
+
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    direction: ltr !important;
+    grid-template-columns: unset !important;
+    grid-template-areas: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    flex: 0 0 auto !important;
+    order: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-width: 90px !important;
+    max-width: none !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    order: 2 !important;
+    position: static !important;
+    margin: 0 !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    flex: 1 1 auto !important;
+    order: 3 !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    direction: ltr !important;
+    min-width: 0 !important;
+    grid-area: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    text-align: right !important;
+    direction: rtl !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    flex: 0 0 auto !important;
+    order: unset !important;
+}
+
+/* Authoritative POS orderline layout.
+   Physical placement: price left, divider, RTL product name, quantity badge right. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline {
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+    padding: 6px 10px !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline > .d-flex,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: 128px 1px minmax(0, 1fr) 54px !important;
+    grid-template-areas: "price sep item qty" !important;
+    align-items: center !important;
+    gap: 22px !important;
+    direction: ltr !important;
+    text-align: initial !important;
+    position: static !important;
+    transform: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    width: 128px !important;
+    min-width: 128px !important;
+    max-width: 128px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    order: unset !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: sep !important;
+    width: 1px !important;
+    height: 50px !important;
+    display: block !important;
+    background: rgba(216, 185, 101, 0.55) !important;
+    border-radius: 99px !important;
+    position: static !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    min-width: 0 !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+    direction: rtl !important;
+    text-align: right !important;
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: block !important;
+    flex: 0 1 auto !important;
+    order: unset !important;
+    color: #1d2a3c !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    text-align: right !important;
+    direction: rtl !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name .text-wrap {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: end !important;
+    flex: none !important;
+    order: unset !important;
+    position: static !important;
+    transform: none !important;
+    border: 2px solid rgba(210, 162, 49, 0.44) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #fae39c 0%, #efc866 100%) !important;
+    color: #8a671d !important;
+    font-size: 23px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: 128px !important;
+    min-width: 128px !important;
+    max-width: 128px !important;
+    padding: 13px 14px !important;
+    border: 2px solid rgba(216, 185, 101, 0.36) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.98) !important;
+    color: #253044 !important;
+    font-size: 25px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-cart-qty {
+    display: none !important;
+}
+
+/* Absolute final lock: product qty/name at RIGHT, note icon + price at LEFT. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: block !important;
+    position: relative !important;
+    min-height: 44px !important;
+    width: 100% !important;
+    direction: ltr !important;
+    grid-template-columns: unset !important;
+    grid-template-areas: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    position: absolute !important;
+    left: 0 !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    grid-area: unset !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    position: absolute !important;
+    left: 46px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    min-width: 90px !important;
+    max-width: 140px !important;
+    grid-area: unset !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    position: absolute !important;
+    right: 0 !important;
+    left: 190px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    direction: rtl !important;
+    text-align: right !important;
+    grid-area: unset !important;
+    order: unset !important;
+}
+
+/* Physical lock: item text on the right, note and price on the left. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: block !important;
+    position: relative !important;
+    min-height: 44px !important;
+    width: 100% !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    position: absolute !important;
+    left: 0 !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    position: absolute !important;
+    left: 46px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    min-width: 90px !important;
+    max-width: 140px !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    position: absolute !important;
+    right: 0 !important;
+    left: 190px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    direction: rtl !important;
+    text-align: right !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    flex: 0 0 auto !important;
+    order: unset !important;
+}
+
+/* Final POS orderline placement:
+   left side: price, right side: quantity + product name. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    grid-template-areas: "price item" !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button {
+    display: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    justify-self: start !important;
+    order: unset !important;
+    min-width: 90px !important;
+    max-width: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    justify-self: stretch !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    direction: ltr !important;
+    text-align: right !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    flex: 0 0 auto !important;
+    order: unset !important;
+}
+
+/* TRUE FINAL LOCK: price left, separator, Arabic item, quantity right. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline {
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+    padding: 6px 10px !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline > .d-flex,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-columns: 128px 1px minmax(0, 1fr) 54px !important;
+    grid-template-areas: "price sep item qty" !important;
+    align-items: center !important;
+    gap: 22px !important;
+    direction: ltr !important;
+    text-align: initial !important;
+    position: static !important;
+    transform: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    width: 128px !important;
+    min-width: 128px !important;
+    max-width: 128px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    order: unset !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: sep !important;
+    width: 1px !important;
+    height: 50px !important;
+    display: block !important;
+    background: rgba(216, 185, 101, 0.55) !important;
+    border-radius: 99px !important;
+    position: static !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+    min-width: 0 !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
+    direction: rtl !important;
+    text-align: right !important;
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    order: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: block !important;
+    flex: 0 1 auto !important;
+    order: unset !important;
+    color: #1d2a3c !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    text-align: right !important;
+    direction: rtl !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name .text-wrap {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: unset !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: end !important;
+    flex: none !important;
+    order: unset !important;
+    position: static !important;
+    transform: none !important;
+    border: 2px solid rgba(210, 162, 49, 0.44) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #fae39c 0%, #efc866 100%) !important;
+    color: #8a671d !important;
+    font-size: 23px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: 128px !important;
+    min-width: 128px !important;
+    max-width: 128px !important;
+    padding: 13px 14px !important;
+    border: 2px solid rgba(216, 185, 101, 0.36) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.98) !important;
+    color: #253044 !important;
+    font-size: 25px !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-cart-qty {
+    display: none !important;
+}
+/* Keep both ProductScreen panes inside the viewport in every RTL/LTR layout. */
+.pos .product-screen {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+.pos .product-screen > .rightpane,
+.pos .product-screen > .leftpane,
+.pos .product-screen .leftpane.hosny-order-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.pos .product-screen > .rightpane {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    overflow-x: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel {
+    flex: 0 1 clamp(480px, 32vw, 600px) !important;
+    width: clamp(480px, 32vw, 600px) !important;
+    max-width: min(600px, 100%) !important;
+    overflow-x: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel > *,
+.pos .product-screen .leftpane.hosny-order-panel .order-container,
+.pos .product-screen .leftpane.hosny-order-panel .order-summary,
+.pos .product-screen .leftpane.hosny-order-panel .pads,
+.pos .product-screen .leftpane.hosny-order-panel .subpads {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 992px) {
+    .pos .product-screen .leftpane.hosny-order-panel {
+        flex-basis: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Payment orders: modern receipt-first cards. */
+.payment-orders-screen .orders-list {
+    padding: 2px 8px 18px !important;
+}
+
+.payment-orders-screen .order-card {
+    position: relative;
+    min-height: 0;
+    margin-bottom: 14px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(27, 39, 61, 0.09);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 28px rgba(18, 29, 47, 0.08);
+}
+
+.payment-orders-screen .order-card::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 5px;
+    background: linear-gradient(180deg, #e8c65f 0%, #a8862c 100%);
+}
+
+.payment-orders-screen .order-card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+}
+
+.payment-orders-screen .order-card-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 24px 16px;
+    direction: rtl;
+}
+
+.payment-orders-screen .order-card-identity {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    direction: rtl;
+}
+
+.payment-orders-screen .order-receipt-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #78859a;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.payment-orders-screen .order-receipt-label i {
+    color: #a8862c;
+    font-size: 14px;
+}
+
+.payment-orders-screen .order-card-name-row {
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.payment-orders-screen .order-name {
+    color: #172033;
+    font-size: clamp(22px, 1.65vw, 28px);
+    font-weight: 900;
+    line-height: 1.15;
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+
+.payment-orders-screen .order-card-side {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: minmax(144px, auto) minmax(150px, auto);
+    align-items: stretch;
+    gap: 12px;
+    direction: rtl;
+}
+
+.payment-orders-screen .order-card-totals {
+    min-width: 144px;
+    min-height: 72px;
+    padding: 11px 16px;
+    align-items: flex-start;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #f8fafc, #f1f4f8);
+    border: 1px solid #e5eaf1;
+}
+
+.payment-orders-screen .order-card-totals .totals-label {
+    font-size: 12px;
+}
+
+.payment-orders-screen .order-card-totals strong {
+    font-size: 23px;
+    line-height: 1.15;
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+
+.payment-orders-screen .order-card-actions .btn {
+    min-width: 150px;
+    height: 72px;
+    padding: 0 22px;
+    border-radius: 16px;
+    box-shadow: 0 12px 26px rgba(181, 143, 36, 0.25) !important;
+    font-size: 15px;
+}
+
+.payment-orders-screen .order-card-actions .btn i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.42);
+}
+
+.payment-orders-screen .order-card-meta {
+    gap: 8px;
+    padding: 13px 24px 15px;
+    border-top: 1px solid #edf0f4;
+    background: #fbfcfd;
+}
+
+.payment-orders-screen .meta-chip {
+    min-height: 34px;
+    padding: 0 11px;
+    border-color: #e5eaf0;
+    background: #fff;
+    font-size: 12px;
+}
+
+.payment-orders-screen .meta-chip .meta-label {
+    color: #7c889b;
+    font-weight: 700;
+}
+
+@media (max-width: 992px) {
+    .payment-orders-screen .order-card-top {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .payment-orders-screen .order-card-side {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .payment-orders-screen .order-card-top {
+        padding: 17px 17px 14px;
+    }
+
+    .payment-orders-screen .order-card-meta {
+        padding: 12px 17px 14px;
+    }
+
+    .payment-orders-screen .order-card-side {
+        grid-template-columns: 1fr;
+    }
+
+.payment-orders-screen .order-card-actions .btn,
+    .payment-orders-screen .order-card-totals {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* Final POS category strip sizing override */
+.pos .product-screen .rightpane .category-list .category-button {
+    flex: 0 0 85px !important;
+    width: 85px !important;
+    min-width: 85px !important;
+    max-width: 85px !important;
+    padding-inline: 8px !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button.hosny-category-active {
+    border-color: #d8b965 !important;
+    background: linear-gradient(180deg, #fff8df 0%, #fffdf7 100%) !important;
+    color: #8b6b25 !important;
+}
+
+/* Final orderline delete action. */
+.hosny-orderline-delete {
+    display: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    padding-left: 48px !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    right: auto !important;
+    z-index: 12 !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid rgba(190, 18, 60, 0.16) !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.88) !important;
+    color: #be123c !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    box-shadow: 0 5px 12px rgba(190, 18, 60, 0.08) !important;
+    cursor: pointer !important;
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:hover,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:focus-visible {
+    background: #fff1f2 !important;
+    border-color: rgba(190, 18, 60, 0.34) !important;
+    color: #9f1239 !important;
+    box-shadow: 0 7px 16px rgba(190, 18, 60, 0.13) !important;
+    transform: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:active {
+    background: #ffe4e6 !important;
+    transform: scale(0.97) !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete i {
+    color: inherit !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+        padding-left: 44px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+        width: 32px !important;
+        min-width: 32px !important;
+        height: 32px !important;
+    }
+}
+
+/* Absolute final orderline action layout: price | item | quantity | delete. */
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: grid !important;
+    grid-template-columns: 128px 1px minmax(0, 1fr) 54px 54px !important;
+    grid-template-areas: "price separator item qty delete" !important;
+    align-items: center !important;
+    gap: 18px !important;
+    width: 100% !important;
+    min-height: 64px !important;
+    padding-left: 0 !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: separator !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: item !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 54px !important;
+    min-width: 54px !important;
+    height: 54px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: end !important;
+    align-self: center !important;
+    border-radius: 16px !important;
+    line-height: 1 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+    cursor: pointer !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    grid-area: delete !important;
+    border: 2px solid #ffd6de !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    color: #dc143c !important;
+    font-size: 26px !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:hover,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:focus-visible {
+    background: #fff5f7 !important;
+    border-color: #ffbdca !important;
+    color: #c81035 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete i {
+    color: inherit !important;
+    font-size: 26px !important;
+    line-height: 1 !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+        grid-template-columns: 112px 1px minmax(0, 1fr) 48px 48px !important;
+        gap: 10px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+        width: 48px !important;
+        min-width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+/* Final responsive category/search strip on the POS product screen. */
+.pos .product-screen .rightpane .category-list {
+    --hosny-category-gap: clamp(6px, 0.7vw, 10px);
+    --hosny-category-height: clamp(40px, 4.4vh, 46px);
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: stretch !important;
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
+    gap: var(--hosny-category-gap) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-height: min(30vh, 178px) !important;
+    margin: 0 !important;
+    padding: clamp(8px, 1vw, 12px) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-radius: 0 0 12px 12px !important;
+    direction: ltr !important; /*rtl:ignore*/
+    scrollbar-gutter: stable !important;
+}
+
+.pos .product-screen .rightpane .category-list > :not(.hosny-category-search) {
+    order: 1 !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button {
+    flex: 1 1 clamp(112px, 11vw, 152px) !important;
+    width: auto !important;
+    min-width: 112px !important;
+    max-width: 168px !important;
+    height: var(--hosny-category-height) !important;
+    min-height: var(--hosny-category-height) !important;
+    max-height: var(--hosny-category-height) !important;
+    padding: 6px 12px !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button .line-clamp-3,
+.pos .product-screen .rightpane .category-list .category-button .line-clamp-3 span {
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 2 !important;
+    flex: 999 1 clamp(280px, 38vw, 440px) !important;
+    width: auto !important;
+    min-width: min(100%, 260px) !important;
+    max-width: 520px !important;
+    margin-left: auto !important; /*rtl:ignore*/
+    margin-right: 0 !important; /*rtl:ignore*/
+    position: static !important;
+    inset: auto !important;
+    display: flex !important;
+    align-items: stretch !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box {
+    height: var(--hosny-category-height) !important;
+    min-height: var(--hosny-category-height) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: 13px !important;
+    border-radius: 14px !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+@media (max-width: 1200px) {
+    .pos .product-screen .rightpane .category-list .category-button {
+        flex-basis: clamp(104px, 13vw, 138px) !important;
+        min-width: 104px !important;
+        max-width: 156px !important;
+        font-size: 12.5px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex-basis: clamp(250px, 42vw, 390px) !important;
+        min-width: min(100%, 240px) !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .pos .product-screen .rightpane .category-list {
+        max-height: min(34vh, 220px) !important;
+    }
+
+    .pos .product-screen .rightpane .category-list .category-button {
+        flex: 1 1 calc(33.333% - var(--hosny-category-gap)) !important;
+        min-width: 98px !important;
+        max-width: none !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex: 1 1 100% !important;
+        max-width: none !important;
+        margin-left: 0 !important; /*rtl:ignore*/
+    }
+}
+
+@media (max-width: 640px) {
+    .pos .product-screen .rightpane .category-list {
+        --hosny-category-height: 40px;
+        padding: 8px !important;
+    }
+
+    .pos .product-screen .rightpane .category-list .category-button {
+        flex-basis: calc(50% - var(--hosny-category-gap)) !important;
+        min-width: 0 !important;
+        padding-inline: 10px !important;
+        font-size: 12px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-box {
+        padding-inline: 11px !important;
+    }
+}

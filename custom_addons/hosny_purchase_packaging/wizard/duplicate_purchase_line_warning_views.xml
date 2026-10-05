@@ -1,0 +1,34 @@
+<odoo>
+    <record id="hosny_duplicate_purchase_line_warning_form" model="ir.ui.view">
+        <field name="name">hosny.duplicate.purchase.line.warning.form</field>
+        <field name="model">hosny.duplicate.purchase.line.warning</field>
+        <field name="arch" type="xml">
+            <form string="Duplicate Product Warning" class="o_hosny_duplicate_warning_form">
+                <field name="order_ids" invisible="1"/>
+                <field name="duplicate_line_ids" invisible="1"/>
+                <div class="alert alert-warning o_hosny_duplicate_warning_alert d-flex gap-3 align-items-start"
+                     role="alert">
+                    <i class="fa fa-exclamation-triangle fa-2x o_hosny_duplicate_warning_icon"
+                       aria-label="Warning"/>
+                    <div class="flex-grow-1">
+                        <h4 class="alert-heading mb-2">Warning: Duplicate Product</h4>
+                        <p class="mb-2">
+                            This is a warning only. The repeated product is allowed, every line will remain separate, and no lines will be merged.
+                        </p>
+                        <field name="warning_message"
+                               nolabel="1"
+                               readonly="1"
+                               class="o_hosny_duplicate_warning_message"/>
+                    </div>
+                </div>
+                <footer>
+                    <button name="action_continue"
+                            string="Skip Warning and Continue"
+                            type="object"
+                            class="btn-warning"/>
+                    <button string="Go Back" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

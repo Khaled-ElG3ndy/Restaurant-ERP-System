@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="vendor_bill_packaging_report" inherit_id="account.report_invoice_document">
+        <xpath expr="//td[@name='account_invoice_line_name']/span[@t-field='line.name']" position="after">
+            <div t-if="o.move_type in ('in_invoice', 'in_refund') and line.hosny_line_packaging_enabled"
+                 class="text-muted small">
+                <span t-field="line.hosny_line_packaging_summary"/>
+                <br/>
+                <span>الكمية الأساسية المفوترة:</span>
+                <span t-field="line.hosny_base_quantity" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+                <span t-field="line.product_id.uom_id"/>
+                <span class="mx-1">|</span>
+                <span>عدد التعبئات المكافئ:</span>
+                <span t-field="line.hosny_invoice_packaging_qty" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+            </div>
+            <div t-elif="o.move_type in ('in_invoice', 'in_refund') and line.hosny_purchase_packaging_id"
+                 class="text-muted small">
+                <span t-field="line.hosny_packaging_hierarchy"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

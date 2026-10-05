@@ -1,0 +1,48 @@
+/* Keep POS dialogs aligned with the Arabic POS interface. */
+.pos .o_dialog .modal-content {
+    direction: rtl;
+    text-align: right;
+}
+
+.pos .o_dialog .modal-header,
+.pos .o_dialog .modal-body,
+.pos .o_dialog .modal-footer {
+    direction: rtl;
+    text-align: right;
+}
+
+.pos .o_dialog .modal-title {
+    text-align: right;
+}
+
+.pos .o_dialog .modal-footer {
+    justify-content: flex-start !important;
+}
+
+.pos .o_dialog .modal-body .d-flex,
+.pos .o_dialog .modal-footer .d-flex {
+    direction: rtl;
+}
+
+.pos .o_dialog .form-check {
+    padding-left: 0;
+    padding-right: 1.5em;
+}
+
+.pos .o_dialog .form-check .form-check-input {
+    float: right;
+    margin-left: 0;
+    margin-right: -1.5em;
+}
+
+.pos .o_dialog .configurator_radio .d-flex,
+.pos .o_dialog .color_attribute_list {
+    justify-content: flex-start;
+}
+
+.pos .o_dialog input,
+.pos .o_dialog textarea,
+.pos .o_dialog select {
+    direction: rtl;
+    text-align: right;
+}

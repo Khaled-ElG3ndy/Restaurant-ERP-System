@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hosny_hr_salary_adjustment_manager,تعديلات الرواتب - مدير الموارد البشرية,model_hosny_hr_salary_adjustment,hr.group_hr_manager,1,1,1,1
+access_hosny_hr_salary_adjustment_payroll_user,تعديلات الرواتب - مسؤول الرواتب,model_hosny_hr_salary_adjustment,bi_hr_payroll.group_hr_payroll_user,1,0,0,0

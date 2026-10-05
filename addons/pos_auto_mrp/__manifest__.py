@@ -1,0 +1,30 @@
+{
+    "name": "POS Auto MRP",
+    "version": "19.0.11.4",
+    "summary": "Trace automatic manufacturing and safely unbuild completed Sales/POS returns",
+    "category": "Point of Sale",
+    "author": "Custom",
+    "license": "LGPL-3",
+    "depends": ["account", "point_of_sale", "mrp", "stock", "product", "sale_stock"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/account_move_views.xml",
+        "views/pos_config_views.xml",
+        "views/pos_mrp_source_profile_views.xml",
+        "views/product_template_views.xml",
+        "views/mrp_production_views.xml",
+        "views/mrp_unbuild_views.xml",
+        "views/stock_picking_views.xml",
+        "views/pos_order_views.xml",
+        "views/sale_order_views.xml",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "pos_auto_mrp/static/src/js/mrp_production_internal_link.js",
+            "pos_auto_mrp/static/src/xml/mrp_production_internal_link.xml",
+            "pos_auto_mrp/static/src/scss/sale_order_line_layout.scss",
+        ],
+    },
+    "installable": True,
+    "application": False,
+}

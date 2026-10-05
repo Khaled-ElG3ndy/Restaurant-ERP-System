@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        The pre-init hook adopts or creates these addresses first. Keeping the
+        empty records here marks their external IDs as module data without
+        overwriting any existing contact details.
+    -->
+    <record id="work_address_jeddah" model="res.partner" forcecreate="false"/>
+    <record id="work_address_madinah" model="res.partner" forcecreate="false"/>
+    <record id="work_address_riyadh" model="res.partner">
+        <field name="name">Riyadh Branch</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="parent_id" ref="base.main_partner"/>
+        <field name="type">other</field>
+    </record>
+
+    <record id="work_location_jeddah" model="hr.work.location">
+        <field name="name">Jeddah</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="address_id" ref="work_address_jeddah"/>
+        <field name="location_type">office</field>
+        <field name="hosny_branch_code">jeddah</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="work_location_madinah" model="hr.work.location">
+        <field name="name">Madinah</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="address_id" ref="work_address_madinah"/>
+        <field name="location_type">office</field>
+        <field name="hosny_branch_code">madinah</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="work_location_riyadh" model="hr.work.location">
+        <field name="name">Riyadh</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="address_id" ref="work_address_riyadh"/>
+        <field name="location_type">office</field>
+        <field name="hosny_branch_code">riyadh</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

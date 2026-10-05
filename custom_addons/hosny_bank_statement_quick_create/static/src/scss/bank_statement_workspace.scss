@@ -1,0 +1,49 @@
+.o_hosny_bank_workspace {
+    .o_hosny_balance {
+        background: var(--o-gray-100);
+        border-bottom: 1px solid var(--border-color, #dee2e6);
+        font-size: 1rem;
+    }
+
+    .o_hosny_quick_entry {
+        background: var(--o-view-background-color, #fff);
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .o_input_dropdown,
+        .o-autocomplete,
+        .o-autocomplete--input {
+            width: 100%;
+        }
+    }
+
+    .o_hosny_transaction_table {
+        min-width: 960px;
+
+        th,
+        td {
+            vertical-align: middle;
+        }
+
+        .o_hosny_expand_col {
+            width: 3rem;
+        }
+    }
+
+    .o_hosny_inline_edit {
+        min-width: 16rem;
+
+        .o_input_dropdown {
+            flex: 1 1 auto;
+        }
+    }
+
+    .o_hosny_details_row > td {
+        background: var(--o-gray-100);
+        padding-inline: 2rem;
+    }
+}

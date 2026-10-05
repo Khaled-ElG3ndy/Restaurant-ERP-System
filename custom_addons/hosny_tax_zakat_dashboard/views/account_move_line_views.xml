@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tax_zakat_move_line_list" model="ir.ui.view">
+        <field name="name">account.move.line.tax.zakat.list</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <list string="Tax and Zakat Movements" create="0" edit="0" delete="0"
+                  decoration-muted="parent_state == 'draft'">
+                <field name="date" optional="show"/>
+                <field name="move_id" string="Journal Entry" optional="show"/>
+                <field name="ref" optional="show"/>
+                <field name="tax_zakat_document_type" optional="show"/>
+                <field name="journal_id" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="tax_zakat_label" optional="show"/>
+                <field name="tax_zakat_kind" optional="show"/>
+                <field name="account_id" optional="show"/>
+                <field name="tax_base_amount" string="Taxable Base" optional="show"
+                       decoration-danger="tax_base_amount &lt; 0"/>
+                <field name="amount_currency" string="Tax Amount" optional="show"
+                       decoration-danger="amount_currency &lt; 0"/>
+                <field name="tax_zakat_report_amount" optional="show"
+                       decoration-danger="tax_zakat_report_amount &lt; 0"/>
+                <field name="debit" sum="Total Debit" optional="show"
+                       decoration-danger="debit &lt; 0"/>
+                <field name="credit" sum="Total Credit" optional="show"
+                       decoration-danger="credit &lt; 0"/>
+                <field name="balance" sum="Total Balance" optional="show"
+                       decoration-danger="balance &lt; 0"/>
+                <field name="currency_id" optional="show"/>
+                <field name="company_currency_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="show"/>
+                <field name="parent_state" widget="badge" optional="show"
+                       decoration-success="parent_state == 'posted'"
+                       decoration-warning="parent_state == 'draft'"
+                       decoration-danger="parent_state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tax_zakat_move_line_search" model="ir.ui.view">
+        <field name="name">account.move.line.tax.zakat.search</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <search string="Tax and Zakat Movements">
+                <field name="move_id"/>
+                <field name="ref"/>
+                <field name="journal_id"/>
+                <field name="partner_id"/>
+                <field name="tax_line_id"/>
+                <field name="account_id"/>
+
+                <filter string="Sales Taxes" name="sales_taxes"
+                        domain="[('tax_zakat_kind', '=', 'output')]"/>
+                <filter string="Purchase Taxes" name="purchase_taxes"
+                        domain="[('tax_zakat_kind', '=', 'input')]"/>
+                <filter string="Zakat" name="zakat"
+                        domain="[('tax_zakat_kind', '=', 'zakat')]"/>
+                <filter string="Tax Due" name="tax_due"
+                        domain="[('account_id.account_type', 'in', ('liability_current', 'liability_non_current', 'liability_payable'))]"/>
+                <filter string="Recoverable Tax" name="recoverable_tax"
+                        domain="[('account_id.account_type', 'in', ('asset_current', 'asset_non_current', 'asset_receivable'))]"/>
+                <separator/>
+
+                <filter string="Customer Invoices" name="customer_invoices"
+                        domain="[('tax_zakat_document_type', '=', 'out_invoice')]"/>
+                <filter string="Vendor Bills" name="vendor_bills"
+                        domain="[('tax_zakat_document_type', 'in', ('in_invoice', 'in_receipt'))]"/>
+                <filter string="Point of Sale" name="point_of_sale"
+                        domain="['|', ('move_id.pos_session_ids', '!=', False), ('move_id.pos_order_ids', '!=', False)]"/>
+                <filter string="Credit Notes" name="credit_notes"
+                        domain="[('tax_zakat_document_type', 'in', ('out_refund', 'in_refund'))]"/>
+                <filter string="Manual Entries" name="manual_entries"
+                        domain="[('tax_zakat_document_type', '=', 'entry'), ('move_id.pos_session_ids', '=', False), ('move_id.pos_order_ids', '=', False)]"/>
+                <separator/>
+
+                <filter string="Posted" name="posted" domain="[('parent_state', '=', 'posted')]"/>
+                <filter string="Draft" name="draft" domain="[('parent_state', '=', 'draft')]"/>
+                <filter string="This Month" name="current_month"
+                        domain="[('date', '&gt;=', context.get('tax_zakat_current_month_from')), ('date', '&lt;', context.get('tax_zakat_current_month_to'))]"/>
+                <filter string="Current Quarter" name="current_quarter"
+                        domain="[('date', '&gt;=', context.get('tax_zakat_current_quarter_from')), ('date', '&lt;', context.get('tax_zakat_current_quarter_to'))]"/>
+                <filter string="Current Year" name="current_year"
+                        domain="[('date', '&gt;=', context.get('tax_zakat_current_year_from')), ('date', '&lt;', context.get('tax_zakat_current_year_to'))]"/>
+
+                <group>
+                    <filter string="Tax" name="group_by_tax" context="{'group_by': 'tax_line_id'}"/>
+                    <filter string="Account" name="group_by_account" context="{'group_by': 'account_id'}"/>
+                    <filter string="Journal" name="group_by_journal" context="{'group_by': 'journal_id'}"/>
+                    <filter string="Partner" name="group_by_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Month" name="group_by_month" context="{'group_by': 'date:month'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                    <filter string="Document Type" name="group_by_document_type"
+                            context="{'group_by': 'tax_zakat_document_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tax_zakat_move_lines" model="ir.actions.act_window">
+        <field name="name">Tax and Zakat Movements</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_tax_zakat_move_line_list"/>
+        <field name="search_view_id" ref="view_tax_zakat_move_line_search"/>
+        <field name="domain">[('tax_zakat_is_reportable', '=', True)]</field>
+        <field name="context">{'search_default_posted': 1, 'search_default_current_year': 1}</field>
+        <field name="group_ids" eval="[(4, ref('account.group_account_readonly'))]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tax or configured Zakat movements were found for the selected filters.
+            </p>
+        </field>
+    </record>
+</odoo>

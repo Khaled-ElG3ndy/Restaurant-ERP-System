@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hosny_hr_salary_adjustment_company_rule" model="ir.rule">
+        <field name="name">تعديلات الرواتب حسب الشركات المسموح بها</field>
+        <field name="model_id" ref="model_hosny_hr_salary_adjustment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+    </record>
+    <record id="hosny_hr_salary_adjustment_payroll_company_rule" model="ir.rule">
+        <field name="name">تعديلات الرواتب لمسؤولي الرواتب حسب الشركات</field>
+        <field name="model_id" ref="model_hosny_hr_salary_adjustment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('bi_hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_prepaid_schedule_readonly,prepaid.expense.schedule readonly,model_prepaid_expense_schedule,account.group_account_readonly,1,0,0,0
+access_prepaid_schedule_invoice,prepaid.expense.schedule invoice,model_prepaid_expense_schedule,account.group_account_invoice,1,1,1,1
+access_prepaid_schedule_line_readonly,prepaid.expense.schedule.line readonly,model_prepaid_expense_schedule_line,account.group_account_readonly,1,0,0,0
+access_prepaid_schedule_line_invoice,prepaid.expense.schedule.line invoice,model_prepaid_expense_schedule_line,account.group_account_invoice,1,1,1,1
+access_prepaid_refund_allocation_readonly,prepaid.expense.refund.allocation readonly,model_prepaid_expense_refund_allocation,account.group_account_readonly,1,0,0,0
+access_prepaid_refund_allocation_invoice,prepaid.expense.refund.allocation invoice,model_prepaid_expense_refund_allocation,account.group_account_invoice,1,1,1,1
+access_prepaid_bill_wizard,prepaid.expense.bill.wizard,model_prepaid_expense_bill_wizard,account.group_account_invoice,1,1,1,1
+access_prepaid_payment_wizard,prepaid.expense.payment.wizard,model_prepaid_expense_payment_wizard,account.group_account_invoice,1,1,1,1

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!-- اعتماد إلغاء صنف مُرسل (void_approval.js). السبب يكتبه الكاشير،
+       والاعتماد باسم وكلمة سر إلغاء حساب مفعّل له ذلك. -->
+  <t t-name="hosny_pos_controls.VoidApprovalDialog">
+    <Dialog title="props.title" size="'lg'" contentClass="'hosny-void-content'">
+      <div class="hosny-void" dir="rtl">
+        <div class="hosny-void-warning">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"/>
+          <span>هذا الصنف وصل المطبخ. الإلغاء يحتاج سبباً واعتماد مسؤول، ويُسجَّل للمراجعة.</span>
+        </div>
+
+        <ul class="hosny-void-items">
+          <li t-foreach="props.summary" t-as="row" t-key="row_index">
+            <span class="hosny-void-product" t-esc="row.product"/>
+            <span class="hosny-void-qty" t-esc="row.text"/>
+            <span class="hosny-void-amount" dir="ltr" t-esc="row.amount"/>
+          </li>
+        </ul>
+
+        <label class="hosny-void-label">١. سبب الإلغاء <small>(يكتبه الكاشير)</small></label>
+        <div class="hosny-void-chips">
+          <button t-foreach="reasons" t-as="reason" t-key="reason_index" type="button"
+                  class="hosny-void-chip" t-on-click="() => this.addReason(reason)">
+            <t t-esc="reason"/>
+          </button>
+        </div>
+        <textarea t-ref="reason" class="form-control hosny-void-reason" rows="2" dir="auto" maxlength="300"
+                  t-model="state.reason" placeholder="اكتب سبب الإلغاء…"/>
+
+        <label class="hosny-void-label">٢. اعتماد المسؤول</label>
+        <div t-if="state.loading" class="hosny-void-muted"><i class="fa fa-circle-o-notch fa-spin"/> جارٍ التحميل…</div>
+        <div t-elif="!state.approvers.length and !state.error" class="hosny-void-muted is-empty">
+          لا يوجد حساب مفعّل لاعتماد الإلغاء. يفعّله مدير النظام من: الإعدادات ← المستخدمون ← «إلغاء الأصناف (نقاط البيع)».
+        </div>
+        <div t-else="" class="hosny-void-approvers">
+          <button t-foreach="state.approvers" t-as="approver" t-key="approver.id" type="button"
+                  class="hosny-void-approver" t-att-class="{ 'is-selected': state.approverId === approver.id }"
+                  t-on-click="() => this.selectApprover(approver.id)">
+            <i class="fa fa-user-circle-o" aria-hidden="true"/>
+            <span t-esc="approver.name"/>
+          </button>
+        </div>
+        <input t-if="state.approvers.length" t-ref="password" type="password" class="form-control hosny-void-password"
+               autocomplete="new-password" placeholder="كلمة سر الإلغاء"
+               t-model="state.password" t-on-keydown="onPasswordKeydown"/>
+
+        <div t-if="state.error" class="hosny-void-error" role="alert">
+          <i class="fa fa-times-circle" aria-hidden="true"/> <t t-esc="state.error"/>
+        </div>
+      </div>
+      <t t-set-slot="footer">
+        <button class="btn btn-danger btn-lg lh-lg hosny-void-submit" t-att-disabled="!canSubmit" t-on-click="submit">
+          <i t-if="state.busy" class="fa fa-circle-o-notch fa-spin me-1"/>
+          اعتماد الإلغاء
+        </button>
+        <button class="btn btn-light btn-lg lh-lg hosny-void-cancel" t-on-click="props.close">تراجع</button>
+      </t>
+    </Dialog>
+  </t>
+</templates>

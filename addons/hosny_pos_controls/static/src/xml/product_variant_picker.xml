@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!--
+    The price line on every product card.
+    It sits next to the name block rather than inside it, and it replaces the
+    price tag pos_modern_ui renders so a card can never end up carrying two
+    price elements. The amount and the currency are separate spans because the
+    card sets them at different sizes. A plain product shows its price on one
+    centred line; a product sold in variants adds a quiet "starting from" line
+    above it. No card carries an icon.
+  -->
+  <t t-name="hosny_pos_controls.ProductCardPriceFooter"
+     t-inherit="point_of_sale.ProductCard"
+     t-inherit-mode="extension"
+     owl="1">
+    <!-- First child of the card body, so both the name block and the footer
+         below can read it. -->
+    <xpath expr="//div[hasclass('o-text-product-main')]" position="before">
+      <t t-set="hosnyPrice" t-value="this.hosnyCardPrice"/>
+    </xpath>
+
+    <xpath expr="//div[hasclass('product-price')]" position="replace"/>
+
+    <xpath expr="//div[hasclass('o-text-product-main')]" position="after">
+      <div t-if="hosnyPrice"
+           class="hosny-card-price"
+           t-att-class="{ 'is-from': hosnyPrice.isFrom }"
+           dir="rtl"
+           aria-label="Product price">
+        <span t-if="hosnyPrice.isFrom" class="hosny-card-price-lead">يبدأ من</span>
+        <span class="hosny-card-price-value" dir="ltr">
+          <span class="hosny-card-price-amount" t-esc="hosnyPrice.amount"/>
+          <span t-if="hosnyPrice.currency" class="hosny-card-price-currency" t-esc="hosnyPrice.currency"/>
+        </span>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.VariantQuickPickPopup">
+    <Dialog size="'md'" footer="false" contentClass="'hosny-variant-picker'">
+      <!-- dir is set here rather than left to the stylesheet: the RTL asset
+           pipeline rewrites `direction` declarations, an attribute survives. -->
+      <t t-set-slot="header">
+        <div class="hosny-variant-picker-header" dir="rtl">
+          <div class="hosny-variant-picker-titles">
+            <span class="hosny-variant-picker-product" t-esc="props.productTemplate.name"/>
+            <span class="hosny-variant-picker-prompt">
+              اختر <t t-esc="promptLabel"/>
+            </span>
+          </div>
+          <button type="button"
+                  class="hosny-variant-picker-close"
+                  aria-label="Close"
+                  t-on-click="() => this.props.close()">
+            <i class="fa fa-times" aria-hidden="true"/>
+          </button>
+        </div>
+      </t>
+
+      <div class="hosny-variant-picker-body" dir="rtl">
+        <div t-if="showSearch" class="hosny-variant-picker-search">
+          <i class="fa fa-search" aria-hidden="true"/>
+          <input type="text"
+                 t-model="state.search"
+                 placeholder="ابحث"
+                 autocomplete="off"/>
+        </div>
+
+        <div class="hosny-variant-picker-grid" t-att-data-options="options.length">
+          <button t-foreach="visibleOptions"
+                  t-as="option"
+                  t-key="option.id"
+                  type="button"
+                  class="hosny-variant-option"
+                  t-on-click.stop="() => this.selectOption(option)">
+            <span class="hosny-variant-option-name" t-esc="option.name"/>
+            <span class="hosny-variant-option-price" dir="ltr" t-esc="option.price"/>
+          </button>
+        </div>
+
+        <p t-if="!visibleOptions.length" class="hosny-variant-picker-empty">لا يوجد نوع مطابق</p>
+      </div>
+    </Dialog>
+  </t>
+
+</templates>

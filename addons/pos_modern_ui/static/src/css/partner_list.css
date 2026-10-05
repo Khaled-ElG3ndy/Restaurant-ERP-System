@@ -1,0 +1,1182 @@
+/*rtl:begin:ignore*/
+body:has(.hosny-partner-list-dialog) .modal.show {
+    --bs-modal-margin: 25px;
+}
+
+body:has(.hosny-partner-list-dialog) .modal-backdrop.show {
+    background: #111827 !important;
+    opacity: 0.58 !important;
+}
+
+body:has(.hosny-partner-list-dialog) .modal.show .modal-dialog,
+body .pos .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+body .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+body .modal-dialog:has(> .modal-content.hosny-partner-list-dialog) {
+    width: calc(100vw - 58px) !important;
+    max-width: calc(100vw - 58px) !important;
+    height: calc(100vh - 64px) !important;
+    max-height: calc(100vh - 64px) !important;
+    margin: 25px auto !important;
+}
+
+.hosny-partner-list-dialog {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    overflow: hidden !important;
+    border: 1px solid #dfe8f3 !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18) !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-list-dialog .modal-header {
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    height: 194px !important;
+    display: block !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background:
+        radial-gradient(circle at 94% 18%, rgba(218, 179, 70, 0.12), transparent 210px),
+        radial-gradient(circle at 0 72%, rgba(226, 235, 246, 0.56), transparent 170px),
+        #ffffff !important;
+}
+
+.hosny-partner-list-dialog .modal-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210px;
+    height: 150px;
+    background: radial-gradient(circle at 6px 6px, rgba(218, 179, 70, 0.22) 1.7px, transparent 2px) 0 0 / 24px 24px;
+    pointer-events: none;
+}
+
+.hosny-partner-list-dialog .modal-header::after {
+    content: "";
+    position: absolute;
+    top: -58px;
+    right: -46px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(218, 179, 70, 0.08);
+    pointer-events: none;
+}
+
+.hosny-partner-heading {
+    position: absolute !important;
+    top: 55px !important;
+    right: 42px !important;
+    left: auto !important;
+    z-index: 1 !important;
+    width: 450px !important;
+    height: 86px !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 28px !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-header-icon {
+    flex: 0 0 86px !important;
+    width: 86px !important;
+    height: 86px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #f1e5c6 !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    color: #c99b1f !important;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12) !important;
+    font-size: 32px !important;
+}
+
+.hosny-partner-title {
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-title-main {
+    color: #0b1730 !important;
+    font-size: 34px !important;
+    line-height: 1.15 !important;
+    font-weight: 900 !important;
+}
+
+.hosny-partner-title-sub {
+    margin-top: 12px !important;
+    color: #233b60 !important;
+    font-size: 17px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+}
+
+.hosny-partner-search {
+    position: absolute !important;
+    top: 75px !important;
+    left: 42px !important;
+    right: auto !important;
+    z-index: 1 !important;
+    width: 310px !important;
+    min-width: 310px !important;
+    height: 52px !important;
+    margin: 0 !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-search .input-group,
+.hosny-partner-search .input-container {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.hosny-partner-search .input-container {
+    min-height: 52px !important;
+    height: 52px !important;
+    padding: 0 14px !important;
+    border: 1px solid #cfdbe9 !important;
+    border-radius: 13px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02) !important;
+}
+
+.hosny-partner-search .input-container:focus-within {
+    border-color: #cfdbe9 !important;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02) !important;
+}
+
+.hosny-partner-search .o_input {
+    min-width: 0 !important;
+    width: 100% !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #172033 !important;
+    font-size: 15px !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-search i {
+    color: #7788a0 !important;
+    font-size: 22px !important;
+}
+
+.hosny-partner-list-dialog .modal-body.hosny-partner-list {
+    position: absolute !important;
+    top: 194px !important;
+    right: 0 !important;
+    bottom: 118px !important;
+    left: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 30px 14px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: #ffffff !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-list-shell {
+    min-height: 0 !important;
+    height: 100% !important;
+    padding: 0 !important;
+}
+
+.hosny-partner-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    direction: ltr !important;
+    table-layout: fixed !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.hosny-partner-table .hosny-col-actions {
+    width: 16% !important;
+}
+
+.hosny-partner-table .hosny-col-contact {
+    width: 30% !important;
+}
+
+.hosny-partner-table .hosny-col-address {
+    width: 25% !important;
+}
+
+.hosny-partner-table .hosny-col-name {
+    width: 29% !important;
+}
+
+.hosny-partner-table-head {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 8 !important;
+    background: #ffffff !important;
+}
+
+.hosny-partner-table-head th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9 !important;
+    height: 56px !important;
+    padding: 0 36px !important;
+    border: 0 !important;
+    background: #f3f8fe !important;
+    color: #0f172a !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    direction: rtl !important;
+    vertical-align: middle !important;
+    box-shadow: 0 1px 0 #dfe8f3 !important;
+}
+
+.hosny-partner-table-head th:first-child {
+    border-top-left-radius: 14px !important;
+}
+
+.hosny-partner-table-head th:last-child {
+    border-top-right-radius: 14px !important;
+}
+
+.hosny-partner-row {
+    cursor: pointer !important;
+}
+
+.hosny-partner-row > .hosny-partner-cell {
+    min-width: 0 !important;
+    height: 96px !important;
+    padding: 16px 36px !important;
+    vertical-align: middle !important;
+    border-top: 1px solid #dfe8f3 !important;
+    border-bottom: 0 !important;
+    background: #ffffff !important;
+    color: #172033 !important;
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    direction: rtl !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    transition: background-color 180ms ease !important;
+}
+
+.hosny-partner-row > .hosny-partner-cell:first-child {
+    border-left: 1px solid #dfe8f3 !important;
+    border-top-left-radius: 14px !important;
+    border-bottom-left-radius: 14px !important;
+}
+
+.hosny-partner-row > .hosny-partner-cell:last-child {
+    border-right: 1px solid #dfe8f3 !important;
+    border-top-right-radius: 14px !important;
+    border-bottom-right-radius: 14px !important;
+}
+
+.hosny-partner-row > .hosny-partner-cell + .hosny-partner-cell {
+    border-left: 1px solid #edf2f7 !important;
+}
+
+.hosny-partner-row:hover > .hosny-partner-cell {
+    background: #fbfdff !important;
+}
+
+.hosny-partner-row.selected > .hosny-partner-cell {
+    background: #fffdf8 !important;
+}
+
+.hosny-partner-actions-cell {
+    text-align: left !important;
+    direction: ltr !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+}
+
+.hosny-partner-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+}
+
+.hosny-action-menu,
+.hosny-unselect {
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #dbe5ef !important;
+    border-radius: 13px !important;
+    background: #ffffff !important;
+    color: #172033 !important;
+    box-shadow: none !important;
+    font-size: 20px !important;
+}
+
+.hosny-action-menu:hover,
+.hosny-unselect:hover {
+    border-color: #c7d3df !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+.hosny-partner-contact-cell,
+.hosny-partner-address-cell {
+    text-align: center !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-name-cell {
+    text-align: right !important;
+    direction: ltr !important;
+    padding-right: 28px !important;
+    padding-left: 28px !important;
+}
+
+.hosny-partner-identity,
+.hosny-partner-detail,
+.hosny-contact-line {
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+}
+
+.hosny-partner-identity {
+    width: 100% !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-avatar {
+    flex: 0 0 54px !important;
+    width: 54px !important;
+    height: 54px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #a7f3d0 !important;
+    border-radius: 50% !important;
+    background: #dcfce7 !important;
+    color: #0f8a79 !important;
+    font-size: 20px !important;
+}
+
+.hosny-partner-text {
+    min-width: 0 !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-name {
+    display: block !important;
+    color: #0f172a !important;
+    font-size: 20px !important;
+    line-height: 1.35 !important;
+    font-weight: 900 !important;
+    overflow-wrap: anywhere !important;
+}
+
+.hosny-partner-identity .company-field {
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin-top: 5px !important;
+    color: #64748b !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+}
+
+.hosny-partner-detail {
+    justify-content: center !important;
+}
+
+.hosny-partner-contact {
+    min-width: 0 !important;
+    display: grid !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+.hosny-partner-detail,
+.hosny-partner-contact,
+.hosny-contact-line {
+    color: #334155 !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    font-weight: 700 !important;
+    overflow-wrap: anywhere !important;
+}
+
+.hosny-contact-line {
+    justify-content: center !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-detail i,
+.hosny-partner-contact i,
+.hosny-partner-identity .company-field i {
+    flex: 0 0 20px !important;
+    width: 20px !important;
+    color: #0f8a79 !important;
+    text-align: center !important;
+    font-size: 18px !important;
+}
+
+.hosny-contact-line span,
+.hosny-partner-detail span,
+.hosny-partner-identity .company-field span {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+}
+
+.hosny-muted {
+    color: #71859d !important;
+    font-weight: 800 !important;
+}
+
+.hosny-partner-list-dialog .dropdown-menu,
+.pos .dropdown-menu {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.hosny-partner-list-dialog .dropdown-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.hosny-partner-list-dialog .modal-footer {
+    position: absolute !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    height: 118px !important;
+    padding: 0 !important;
+    border-top: 1px solid #dfe8f3 !important;
+    background: #ffffff !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-footer-actions {
+    position: absolute !important;
+    top: 28px !important;
+    left: 34px !important;
+    right: auto !important;
+    width: auto !important;
+    height: 62px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 20px !important;
+    direction: ltr !important;
+}
+
+.hosny-partner-list-dialog .modal-footer .btn-secondary,
+.hosny-partner-list-dialog .modal-footer .btn-primary {
+    min-width: 140px !important;
+    width: auto !important;
+    height: 62px !important;
+    min-height: 62px !important;
+    flex: 0 0 auto !important;
+    padding: 0 34px !important;
+    border-radius: 14px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    direction: rtl !important;
+}
+
+.hosny-partner-list-dialog .modal-footer .btn-primary {
+    order: 1 !important;
+    border: 1px solid #b89022 !important;
+    background: #caa437 !important;
+    color: #0f172a !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 18px rgba(202, 164, 55, 0.18) !important;
+}
+
+.hosny-partner-list-dialog .modal-footer .btn-primary:hover {
+    border-color: #a98018 !important;
+    background: #bd962a !important;
+}
+
+.hosny-partner-list-dialog .modal-footer .btn-secondary {
+    order: 2 !important;
+    border: 1px solid #d9e2ee !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+.hosny-partner-list-dialog .modal-footer .btn-secondary:hover {
+    border-color: #cbd6e4 !important;
+    background: #f4f7fb !important;
+}
+
+.hosny-partner-list .text-center {
+    direction: rtl !important;
+}
+
+@media (max-width: 991.98px) {
+    body:has(.hosny-partner-list-dialog) .modal.show .modal-dialog,
+    body .pos .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+    body .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+    body .modal-dialog:has(> .modal-content.hosny-partner-list-dialog) {
+        width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+        height: calc(100vh - 20px) !important;
+        max-height: calc(100vh - 20px) !important;
+        margin: 10px auto !important;
+    }
+
+    .hosny-partner-list-dialog {
+        border-radius: 18px !important;
+    }
+
+    .hosny-partner-list-dialog .modal-header {
+        height: 176px !important;
+    }
+
+    .hosny-partner-heading {
+        top: 22px !important;
+        right: 20px !important;
+        width: calc(100% - 40px) !important;
+        height: 64px !important;
+        gap: 14px !important;
+    }
+
+    .hosny-partner-header-icon {
+        width: 62px !important;
+        height: 62px !important;
+        flex-basis: 62px !important;
+        font-size: 24px !important;
+    }
+
+    .hosny-partner-title-main {
+        font-size: 24px !important;
+    }
+
+    .hosny-partner-title-sub {
+        margin-top: 5px !important;
+        font-size: 13px !important;
+    }
+
+    .hosny-partner-search {
+        top: 104px !important;
+        left: 20px !important;
+        width: calc(100% - 40px) !important;
+        min-width: 0 !important;
+    }
+
+    .hosny-partner-list-dialog .modal-body.hosny-partner-list {
+        top: 176px !important;
+        padding: 0 12px 12px !important;
+    }
+
+    .hosny-partner-table,
+    .hosny-partner-table tbody,
+    .hosny-partner-row > .hosny-partner-cell {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .hosny-partner-table colgroup,
+    .hosny-partner-table-head {
+        display: none !important;
+    }
+
+    .hosny-partner-row {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+
+    .hosny-partner-name-cell {
+        order: 1 !important;
+    }
+
+    .hosny-partner-address-cell {
+        order: 2 !important;
+    }
+
+    .hosny-partner-contact-cell {
+        order: 3 !important;
+    }
+
+    .hosny-partner-actions-cell {
+        order: 4 !important;
+    }
+
+    .hosny-partner-row > .hosny-partner-cell {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 13px 16px !important;
+        border-right: 1px solid #dfe8f3 !important;
+        border-left: 1px solid #dfe8f3 !important;
+        border-top: 0 !important;
+        border-bottom: 1px solid #edf2f7 !important;
+        border-radius: 0 !important;
+    }
+
+    .hosny-partner-row > .hosny-partner-cell::before {
+        content: attr(data-label);
+        display: block !important;
+        margin-bottom: 6px !important;
+        color: #64748b !important;
+        font-size: 12px !important;
+        font-weight: 900 !important;
+        text-align: right !important;
+    }
+
+    .hosny-partner-row > .hosny-partner-name-cell {
+        border-top: 1px solid #dfe8f3 !important;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+    }
+
+    .hosny-partner-row > .hosny-partner-actions-cell {
+        text-align: right !important;
+        direction: rtl !important;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+    }
+
+    .hosny-partner-actions {
+        display: flex !important;
+        justify-content: flex-start !important;
+    }
+
+    .hosny-partner-list-dialog .modal-footer {
+        height: 86px !important;
+    }
+
+    .hosny-partner-list-dialog .modal-body.hosny-partner-list {
+        bottom: 86px !important;
+    }
+
+    .hosny-partner-footer-actions {
+        top: 15px !important;
+        left: 14px !important;
+        gap: 10px !important;
+    }
+
+    .hosny-partner-list-dialog .modal-footer .btn-secondary,
+    .hosny-partner-list-dialog .modal-footer .btn-primary {
+        min-width: 108px !important;
+        height: 54px !important;
+        min-height: 54px !important;
+        padding-inline: 22px !important;
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hosny-partner-list-dialog {
+        border-radius: 14px !important;
+    }
+
+    .hosny-partner-title-sub {
+        display: none !important;
+    }
+
+    .hosny-partner-avatar {
+        width: 42px !important;
+        height: 42px !important;
+        flex-basis: 42px !important;
+    }
+
+    .hosny-partner-name {
+        font-size: 16px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    body .pos .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+    body .o_dialog .modal-dialog:has(> .modal-content.hosny-partner-list-dialog),
+    body .modal-dialog:has(> .modal-content.hosny-partner-list-dialog) {
+        width: calc(100vw - 58px) !important;
+        max-width: calc(100vw - 58px) !important;
+        height: calc(100vh - 64px) !important;
+        min-height: 0 !important;
+        max-height: calc(100vh - 64px) !important;
+        margin: 25px auto !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog,
+    body .o_dialog .modal-content.hosny-partner-list-dialog,
+    body .modal-content.hosny-partner-list-dialog {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog > .modal-header,
+    body .o_dialog .modal-content.hosny-partner-list-dialog > .modal-header,
+    body .modal-content.hosny-partner-list-dialog > .modal-header {
+        position: absolute !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: auto !important;
+        left: 0 !important;
+        height: 194px !important;
+        min-height: 194px !important;
+        max-height: 194px !important;
+        display: block !important;
+        padding: 0 !important;
+        border: 0 !important;
+        justify-content: initial !important;
+        background:
+            radial-gradient(circle at 94% 18%, rgba(218, 179, 70, 0.12), transparent 210px),
+            radial-gradient(circle at 0 72%, rgba(226, 235, 246, 0.56), transparent 170px),
+            #ffffff !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list,
+    body .o_dialog .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list,
+    body .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list {
+        position: absolute !important;
+        top: 194px !important;
+        right: 0 !important;
+        bottom: 118px !important;
+        left: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 30px 14px !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        background: #ffffff !important;
+        direction: ltr !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog > .modal-footer,
+    body .o_dialog .modal-content.hosny-partner-list-dialog > .modal-footer,
+    body .modal-content.hosny-partner-list-dialog > .modal-footer {
+        position: absolute !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        height: 118px !important;
+        min-height: 118px !important;
+        padding: 0 !important;
+        border-top: 1px solid #dfe8f3 !important;
+        background: #ffffff !important;
+        direction: ltr !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-list-shell,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-list-shell,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-list-shell {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table {
+        position: static !important;
+        width: 100% !important;
+        margin: 0 !important;
+        transform: none !important;
+        direction: ltr !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-actions,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-actions,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-actions {
+        width: 16% !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-contact,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-contact,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-contact {
+        width: 30% !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-address,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-address,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-address {
+        width: 25% !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-name,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-name,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table .hosny-col-name {
+        width: 29% !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table-head,
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 9 !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-table-head th {
+        height: 56px !important;
+        padding-left: 36px !important;
+        padding-right: 36px !important;
+        background: #f3f8fe !important;
+        box-shadow: 0 1px 0 #dfe8f3 !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-row,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-row,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-row {
+        height: 96px !important;
+        max-height: 96px !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-row > .hosny-partner-cell,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-row > .hosny-partner-cell,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-row > .hosny-partner-cell {
+        height: 96px !important;
+        max-height: 96px !important;
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+        overflow: hidden !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-text,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-text,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-text {
+        max-width: calc(100% - 68px) !important;
+        overflow: hidden !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-name,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-name,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-name {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-identity .company-field,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-identity .company-field,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-identity .company-field {
+        display: none !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions-cell,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions-cell,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-actions-cell {
+        text-align: left !important;
+        padding-left: 28px !important;
+        padding-right: 28px !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-actions {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: flex-start !important;
+        direction: ltr !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions > .dropdown,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-actions > .dropdown,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-actions > .dropdown {
+        flex: 0 0 auto !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-action-menu,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-action-menu,
+    body .modal-content.hosny-partner-list-dialog .hosny-action-menu {
+        padding: 0 !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-search .input-container:focus-within,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-search .input-container:focus-within,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-search .input-container:focus-within {
+        border-color: #cfdbe9 !important;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02) !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-search .o_input,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-search .o_input,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-search .o_input {
+        height: 46px !important;
+        border: 0 !important;
+        outline: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    body .pos .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-footer-actions .btn,
+    body .o_dialog .modal-content.hosny-partner-list-dialog .hosny-partner-footer-actions .btn,
+    body .modal-content.hosny-partner-list-dialog .hosny-partner-footer-actions .btn {
+        margin: 0 !important;
+    }
+}
+
+.hosny-partner-favorites {
+    position: absolute !important;
+    top: 58px !important;
+    right: 500px !important;
+    left: 370px !important;
+    z-index: 2 !important;
+    min-width: 0 !important;
+    height: 76px !important;
+    display: flex !important;
+    align-items: center !important;
+    align-content: center !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    column-gap: 10px !important;
+    row-gap: 8px !important;
+    overflow: hidden !important;
+    direction: rtl !important;
+}
+
+.hosny-favorite-chip {
+    flex: 1 1 138px !important;
+    max-width: 166px !important;
+    min-width: 120px !important;
+    height: 52px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    padding: 0 10px !important;
+    border: 1px solid #eadfbf !important;
+    border-radius: 14px !important;
+    background: #fffaf0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06) !important;
+    direction: rtl !important;
+}
+
+.hosny-favorite-chip:hover {
+    border-color: #d6b75f !important;
+    background: #fff6df !important;
+}
+
+.hosny-favorite-avatar {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    color: #c99b1f !important;
+    font-size: 14px !important;
+}
+
+.hosny-favorite-copy {
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.hosny-favorite-name,
+.hosny-favorite-meta {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.hosny-favorite-name {
+    color: #0f172a !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    font-weight: 900 !important;
+}
+
+.hosny-favorite-meta {
+    margin-top: 2px !important;
+    color: #52647a !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+}
+
+.hosny-favorite-menu-icon {
+    width: 18px !important;
+    color: #c99b1f !important;
+    text-align: center !important;
+}
+
+.hosny-favorite-menu-icon.active {
+    color: #b48412 !important;
+}
+
+@media (min-width: 992px) and (max-width: 1599.98px) {
+    body:has(.hosny-partner-favorites) .pos .o_dialog .modal-content.hosny-partner-list-dialog > .modal-header,
+    body:has(.hosny-partner-favorites) .o_dialog .modal-content.hosny-partner-list-dialog > .modal-header,
+    body:has(.hosny-partner-favorites) .modal-content.hosny-partner-list-dialog > .modal-header,
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-header {
+        height: 258px !important;
+        min-height: 258px !important;
+        max-height: 258px !important;
+    }
+
+    body:has(.hosny-partner-favorites) .pos .o_dialog .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list,
+    body:has(.hosny-partner-favorites) .o_dialog .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list,
+    body:has(.hosny-partner-favorites) .modal-content.hosny-partner-list-dialog > .modal-body.hosny-partner-list,
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-body.hosny-partner-list {
+        top: 258px !important;
+    }
+
+    .hosny-partner-favorites {
+        top: 146px !important;
+        right: 42px !important;
+        left: 42px !important;
+        height: 88px !important;
+    }
+
+    .hosny-favorite-chip {
+        flex: 1 1 136px !important;
+        min-width: 120px !important;
+        max-width: 172px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+    }
+
+    .hosny-favorite-avatar {
+        width: 30px !important;
+        height: 30px !important;
+        flex-basis: 30px !important;
+        font-size: 13px !important;
+    }
+
+    .hosny-favorite-meta {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-header {
+        height: 282px !important;
+    }
+
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-body.hosny-partner-list {
+        top: 282px !important;
+    }
+
+    .hosny-partner-favorites {
+        top: 166px !important;
+        right: 12px !important;
+        left: 12px !important;
+        height: 94px !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+    }
+
+    .hosny-favorite-chip {
+        flex: 1 1 126px !important;
+        min-width: 108px !important;
+        max-width: 166px !important;
+        height: 42px !important;
+        padding: 0 9px !important;
+        border-radius: 12px !important;
+    }
+
+    .hosny-favorite-avatar {
+        width: 30px !important;
+        height: 30px !important;
+        flex-basis: 30px !important;
+        font-size: 13px !important;
+    }
+
+    .hosny-favorite-name {
+        font-size: 12px !important;
+    }
+
+    .hosny-favorite-meta {
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-header {
+        height: 248px !important;
+    }
+
+    body:has(.hosny-partner-favorites) .hosny-partner-search {
+        top: 86px !important;
+        height: 52px !important;
+    }
+
+    body:has(.hosny-partner-favorites) .hosny-partner-list-dialog .modal-body.hosny-partner-list {
+        top: 248px !important;
+    }
+
+    .hosny-partner-favorites {
+        top: 148px !important;
+        height: 84px !important;
+        column-gap: 7px !important;
+        row-gap: 7px !important;
+    }
+
+    .hosny-favorite-chip {
+        flex: 1 1 88px !important;
+        min-width: 86px !important;
+        max-width: 118px !important;
+        height: 36px !important;
+        gap: 5px !important;
+        padding: 0 7px !important;
+    }
+
+    .hosny-favorite-avatar {
+        width: 24px !important;
+        height: 24px !important;
+        flex-basis: 24px !important;
+        font-size: 11px !important;
+    }
+
+    .hosny-favorite-name {
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+    }
+
+    .hosny-favorite-meta {
+        display: none !important;
+    }
+}
+/*rtl:end:ignore*/

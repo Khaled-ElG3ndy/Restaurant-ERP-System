@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ملاحظات الفاتورة في طلب نقطة البيع: تحت العميل مباشرة، فمن يراجع طلب
+         عميل أجل أو شركة توصيل يراها بلا فتح أي تبويب. -->
+    <record id="view_pos_order_form_hosny_invoice_note" model="ir.ui.view">
+        <field name="name">pos.order.form.hosny.invoice.note</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='order_fields']" position="after">
+                <group name="hosny_invoice_note_group">
+                    <field name="hosny_invoice_note"
+                           placeholder="مثال: رقم طلب التطبيق، اسم المستلم، المندوب…"
+                           colspan="2"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree_hosny_invoice_note" model="ir.ui.view">
+        <field name="name">pos.order.list.hosny.invoice.note</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hosny_invoice_note" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_search_hosny_invoice_note" model="ir.ui.view">
+        <field name="name">pos.order.search.hosny.invoice.note</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hosny_invoice_note"/>
+            </xpath>
+            <xpath expr="//filter[@name='cancelled']" position="after">
+                <filter name="hosny_has_invoice_note" string="بها ملاحظات فاتورة"
+                        domain="[('hosny_invoice_note', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

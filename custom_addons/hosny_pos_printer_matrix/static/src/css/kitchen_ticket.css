@@ -1,0 +1,327 @@
+/*
+ * تذكرة المطبخ بتصميم FERP («نسخة المطبخ»).
+ *
+ * التذكرة تُرسم صورةً بعرض 512 نقطة (html-to-image) ثم تُحوَّل لأبيض وأسود
+ * بخوارزمية Floyd–Steinberg في EpsonPrinter، فالرمادي هنا يُطبع نقاطاً كما
+ * في تذاكر FERP. كل المقاسات بالبكسل = نقطة طابعة، مأخوذة من صورة تذكرة
+ * FERP بعد تصحيح المنظور.
+ *
+ * الخطوط مضمّنة في الموديول (ولا نعتمد على خطوط جهاز الفرع) حتى تخرج
+ * التذكرة واحدة من أي جهاز: Amiri بدل Traditional Arabic، Noto Naskh
+ * Arabic بدل Simplified Arabic، Wine Tahoma بدل Tahoma، Liberation Serif
+ * بدل Times New Roman.
+ *
+ * html-to-image يكتب كل font-size على الصورة floor(x) - 0.1 (26px ← 25.9)،
+ * والـ POS كله geometricPrecision؛ المقاسات هنا معايَرة على هذا المسار نفسه
+ * (أي رقم عشري هنا يضيع، فالأحجام أعداد صحيحة).
+ *
+ * الاتجاه ثابت RTL في الحزمتين، والخصائص المنطقية (inline-start…) لا
+ * يلمسها rtlcss. أي خاصية فيزيائية لازم يسبقها تعليق rtl:ignore على نفس
+ * السطر وإلا قلبها rtlcss في الحزمة العربية.
+ */
+
+@font-face {
+    font-family: "Hosny Kitchen Amiri";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-Amiri-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+@font-face {
+    font-family: "Hosny Kitchen Amiri";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-Amiri-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+}
+@font-face {
+    font-family: "Hosny Kitchen Naskh";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-NotoNaskhArabic-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+@font-face {
+    font-family: "Hosny Kitchen Tahoma";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-WineTahoma-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+@font-face {
+    font-family: "Hosny Kitchen Serif";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-LiberationSerif-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+@font-face {
+    font-family: "Hosny Kitchen Serif";
+    src: url("/hosny_pos_printer_matrix/static/fonts/HosnyKitchen-LiberationSerif-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+}
+
+/*
+ * الجذر بوزن id حتى لا تغلبه قواعد الثيم (:is(#hs,.pos)) مهما تراكمت.
+ * font-family كلها !important لأن hosny_pos_theme يفرض
+ * «.pos * { font-family: Cairo !important }» و body نفسه يحمل class="pos"،
+ * فحتى حاوية الطباعة خارج الشاشة تقع تحته.
+ */
+:is(#hosny-kt, .hosny-kitchen-ticket) {
+    width: 512px;
+    margin: 0;
+    padding: 56px 0 12px;
+    background: #fff;
+    color: #000;
+    /*rtl:ignore*/direction: rtl;
+    text-align: start;
+    font-family: "Hosny Kitchen Amiri", serif !important;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 0;
+    word-spacing: 0;
+    text-transform: none;
+    text-rendering: geometricPrecision;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) * {
+    box-sizing: border-box;
+    margin: 0;
+    /* (1,0,0) !important يغلب «.pos *» (0,1,0) فترث العناصر خط أبيها */
+    font-family: inherit !important;
+}
+
+/* ١) إطار «نسخة المطبخ»: خط رفيع + ظل غامق يمين وأسفل، والنص مفرّغ */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 504px;
+    height: 78px;
+    padding-bottom: 6px;
+    border: 1px solid #5a5a5a;
+    /*rtl:ignore*/box-shadow: 8px 8px 0 #3a3a3a;
+    font-family: "Hosny Kitchen Naskh", serif !important;
+    font-size: 41px;
+    color: #fff;
+    -webkit-text-stroke: 0.9px #111;
+}
+
+/* حالة التذكرة لغير «جديد» (إلغاء / تعديل ملاحظة / نسخة مكررة) */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    margin-top: 22px;
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+    font-size: 36px;
+}
+
+/* ٢) نوع الفاتوره / طاوله: العنوان يمين والقيمة تبدأ عند 211 */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-meta {
+    margin-top: 32px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-row {
+    display: flex;
+    align-items: flex-end;
+    height: 66px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-label {
+    flex: 0 0 301px;
+    padding-inline-start: 14px;
+    text-align: start;
+    font-size: 37px;
+    white-space: nowrap;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-value {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: start;
+    font-size: 41px;
+    white-space: nowrap;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-value > span {
+    position: relative;
+    top: 3px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-value.is-strong {
+    -webkit-text-stroke: 0.3px #000;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-value.is-number {
+    font-family: "Hosny Kitchen Serif", "Hosny Kitchen Amiri", serif !important;
+    font-size: 32px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-value.is-number > span {
+    top: 5px;
+}
+
+/* ٣) شريط «رقم الفاتورة» الغامق */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-bar {
+    display: flex;
+    align-items: center;
+    height: 68px;
+    margin-top: 18px;
+    background: #2e2e2e;
+    color: #fff;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-bar-label {
+    flex: 0 0 301px;
+    padding-inline-start: 14px;
+    font-weight: 700;
+    font-size: 41px;
+    white-space: nowrap;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-bar-number {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: "Hosny Kitchen Serif", "Hosny Kitchen Amiri", serif !important;
+    font-weight: 700;
+    font-size: 43px;
+    white-space: nowrap;
+}
+
+/* ٤) اسم الصالة (الدور) في المنتصف */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-floor {
+    height: 52px;
+    padding-top: 12px;
+    text-align: center;
+    font-size: 28px;
+    white-space: nowrap;
+}
+
+/* ٥) الجدول: الوجبه | الكميه، ثم مجموعة الوجبات، ثم الأصناف */
+:is(#hosny-kt, .hosny-kitchen-ticket) table.hosny-kt-table {
+    width: 512px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    background: transparent;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-table th,
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-table td {
+    padding: 0;
+    border: 1px solid #000;
+    vertical-align: middle;
+    background-clip: padding-box;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-table .hosny-kt-col-qty {
+    width: 140px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-table thead th {
+    height: 85px;
+    background: #a4a4a4;
+    text-align: center;
+    font-weight: 700;
+    font-size: 49px;
+    -webkit-text-stroke: 0.9px #000;
+    text-shadow:
+        1.5px 0 0 #fff, -1.5px 0 0 #fff, 0 1.5px 0 #fff, 0 -1.5px 0 #fff,
+        1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-group td {
+    height: 55px;
+    background: #e2e2e2;
+    text-align: center;
+    font-weight: 700;
+    font-size: 41px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-group span {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item td {
+    height: 58px;
+    padding-bottom: 14px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item .hosny-kt-name {
+    padding-inline: 5px 6px;
+    text-align: start;
+    font-family: "Hosny Kitchen Naskh", "Hosny Kitchen Tahoma", serif !important;
+    font-size: 30px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item.is-combo-child .hosny-kt-name {
+    padding-inline-start: 34px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item .hosny-kt-detail {
+    display: block;
+    font-size: 23px;
+    line-height: 1.3;
+}
+/* ملاحظة الصنف: مربع بخط عريض تحت الخيارات، حتى لا تُقرأ كخيار آخر */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item .hosny-kt-detail.is-note {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 6px;
+    padding: 2px 8px 6px;
+    border: 2px solid #000;
+    font-family: "Hosny Kitchen Amiri", serif !important;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 1.35;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item .hosny-kt-qty {
+    text-align: center;
+    font-family: "Hosny Kitchen Serif", "Hosny Kitchen Amiri", serif !important;
+    font-size: 24px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-item .hosny-kt-qty > span {
+    position: relative;
+    top: 3px;
+}
+
+/* ملاحظة الطلب: في تذكرتها الخاصة، وفي آخر تذكرة الأصناف الجديدة */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-notes {
+    border: 1px solid #000;
+    padding: 10px 12px 14px;
+    font-family: "Hosny Kitchen Naskh", "Hosny Kitchen Tahoma", serif !important;
+    font-size: 28px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-notes .hosny-kt-note + .hosny-kt-note {
+    margin-top: 8px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-note-label {
+    font-family: "Hosny Kitchen Amiri", serif !important;
+    font-weight: 700;
+}
+
+/* ٦) Cashier + اسم من ضرب الفاتورة، ثم التاريخ */
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-cashier {
+    display: flex;
+    align-items: baseline;
+    height: 34px;
+    margin-top: 7px;
+    padding-inline-start: 41px;
+    white-space: nowrap;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-cashier-label {
+    font-family: "Hosny Kitchen Tahoma", sans-serif !important;
+    font-size: 26px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-cashier-name {
+    margin-inline-start: 38px;
+    font-weight: 700;
+    font-size: 33px;
+}
+:is(#hosny-kt, .hosny-kitchen-ticket) .hosny-kt-date {
+    /*rtl:ignore*/direction: ltr;
+    unicode-bidi: isolate;
+    margin-top: 15px;
+    padding-inline-start: 28px;
+    text-align: center;
+    font-family: "Hosny Kitchen Tahoma", sans-serif !important;
+    font-size: 26px;
+    white-space: nowrap;
+}

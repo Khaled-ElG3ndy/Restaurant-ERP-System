@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Every rule below is global and reads the same way: a user with no
+        "Allowed Points of Sale" keeps the access they have today, so managers
+        and the administrator are untouched. The moment branches are set on a
+        user, everything that hangs off a point of sale is limited to those
+        branches - the point of sale itself, its sessions, its orders, its
+        order lines, its payments and the sales analysis.
+    -->
+
+    <record id="pos_config_branch_rule" model="ir.rule">
+        <field name="name">Point of sale: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_config"/>
+        <field name="domain_force">[('id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_session_branch_rule" model="ir.rule">
+        <field name="name">POS sessions: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_session"/>
+        <field name="domain_force">[('config_id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_order_branch_rule" model="ir.rule">
+        <field name="name">POS orders: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="domain_force">[('config_id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_order_line_branch_rule" model="ir.rule">
+        <field name="name">POS order lines: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order_line"/>
+        <field name="domain_force">[('order_id.config_id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_payment_branch_rule" model="ir.rule">
+        <field name="name">POS payments: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_payment"/>
+        <field name="domain_force">[('session_id.config_id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="report_pos_order_branch_rule" model="ir.rule">
+        <field name="name">POS analysis: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_report_pos_order"/>
+        <field name="domain_force">[('config_id', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_payment_method_branch_rule" model="ir.rule">
+        <field name="name">POS payment methods: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_payment_method"/>
+        <field name="domain_force">['|', ('config_ids', '=', False), ('config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="restaurant_floor_branch_rule" model="ir.rule">
+        <field name="name">Restaurant floors: allowed branches only</field>
+        <field name="model_id" ref="pos_restaurant.model_restaurant_floor"/>
+        <field name="domain_force">['|', ('pos_config_ids', '=', False), ('pos_config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="restaurant_table_branch_rule" model="ir.rule">
+        <field name="name">Restaurant tables: allowed branches only</field>
+        <field name="model_id" ref="pos_restaurant.model_restaurant_table"/>
+        <field name="domain_force">['|', ('floor_id.pos_config_ids', '=', False), ('floor_id.pos_config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_bill_branch_rule" model="ir.rule">
+        <field name="name">POS bills: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_bill"/>
+        <field name="domain_force">['|', ('pos_config_ids', '=', False), ('pos_config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_printer_branch_rule" model="ir.rule">
+        <field name="name">POS printers: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_printer"/>
+        <field name="domain_force">['|', ('pos_config_ids', '=', False), ('pos_config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <record id="pos_category_branch_rule" model="ir.rule">
+        <field name="name">POS categories: allowed branches only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_category"/>
+        <field name="domain_force">['|', ('pos_config_ids', '=', False), ('pos_config_ids', 'in', user.pos_config_ids.ids)] if user.pos_config_ids else [(1, '=', 1)]</field>
+    </record>
+
+    <!--
+        Configuration menus a cashier has no business in. They stay available to
+        the point of sale administrator, which is the group that configures them.
+    -->
+    <record id="point_of_sale.menu_pos_payment_method" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('point_of_sale.group_pos_manager')])]"/>
+    </record>
+
+    <record id="pos_restaurant.menu_restaurant_floor_all" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('point_of_sale.group_pos_manager')])]"/>
+    </record>
+
+</odoo>

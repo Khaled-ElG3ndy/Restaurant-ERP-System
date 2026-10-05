@@ -1,0 +1,8 @@
+.o_account_kanban .o_hosny_dashboard_amount {
+    // Isolate monetary text from an Arabic/RTL card so the number remains first.
+    // rtlcss must not reverse this declaration in the Arabic asset bundle.
+    /*rtl:ignore*/
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
+    display: inline-block;
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- شاشة الطابعة: تبويب أنواع الفواتير + علم Is Chief -->
+    <record id="view_pos_printer_form_matrix" model="ir.ui.view">
+        <field name="name">pos.printer.form.matrix</field>
+        <field name="model">pos.printer</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_printer_form"/>
+        <field name="arch" type="xml">
+            <field name="product_categories_ids" position="before">
+                <field name="is_chief"/>
+            </field>
+            <field name="product_categories_ids" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="مجموعات الوجبات" name="meal_groups" class="hs_wide_page">
+                        <field name="product_categories_ids"
+                               widget="many2many_checkboxes"
+                               class="hs_checkbox_grid"
+                               readonly="is_chief" nolabel="1"/>
+                        <p class="text-muted mt-2" invisible="not is_chief">
+                            طابعة الشيف تستقبل كل المجموعات تلقائياً.
+                        </p>
+                    </page>
+                    <page string="الأصناف" name="products" class="hs_wide_page">
+                        <field name="product_ids"
+                               widget="many2many_checkboxes"
+                               class="hs_checkbox_grid"
+                               readonly="is_chief" nolabel="1"/>
+                        <separator string="استثناءات — لا تُطبع هنا إطلاقاً"/>
+                        <field name="excluded_product_ids"
+                               widget="many2many_tags" nolabel="1"/>
+                        <separator string="ما يُطبع فعلياً على هذه الطابعة"/>
+                        <field name="effective_product_ids" nolabel="1" readonly="1">
+                            <list create="0" delete="0">
+                                <field name="name"/>
+                                <field name="pos_categ_ids" widget="many2many_tags"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="أنواع الفواتير" name="order_types">
+                        <field name="line_ids">
+                            <list editable="bottom" create="0" delete="0">
+                                <field name="order_type_id" readonly="1"/>
+                                <field name="enabled" widget="boolean_toggle"/>
+                                <field name="copies" readonly="not enabled"/>
+                                <field name="report_template" readonly="not enabled"/>
+                                <field name="bundled" widget="boolean_toggle"
+                                       readonly="not enabled"/>
+                                <field name="bundled_copies"
+                                       readonly="not bundled or not enabled"/>
+                                <field name="bundled_report"
+                                       readonly="not bundled or not enabled"/>
+                            </list>
+                        </field>
+                        <p class="text-muted mt-2">
+                            «تطبع» يحدد ما إذا كانت هذه الطابعة تُخرج تذكرة لهذا
+                            النوع من الفواتير. و«Bundeled Receipt» تذكرة إضافية
+                            تحتوي أصناف كل المحطات وليس أصناف هذه الطابعة فقط.
+                        </p>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- قائمة الطابعات: عمود Is Chief كما في FERP -->
+    <record id="view_pos_printer_list_matrix" model="ir.ui.view">
+        <field name="name">pos.printer.list.matrix</field>
+        <field name="model">pos.printer</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_printer"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_chief" widget="boolean_toggle"/>
+                <field name="epson_printer_ip" string="IP"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- زر يولّد الأسطر الناقصة لكل الطابعات -->
+    <record id="action_pos_printer_sync_lines" model="ir.actions.server">
+        <field name="name">توليد أسطر أنواع الفواتير</field>
+        <field name="model_id" ref="point_of_sale.model_pos_printer"/>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_printer"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">records._ensure_lines()</field>
+    </record>
+</odoo>

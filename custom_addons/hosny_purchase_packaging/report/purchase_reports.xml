@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="purchase_order_packaging_report" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//td[@id='product']/span[@t-field='line.name']" position="after">
+            <div t-if="line.hosny_line_packaging_enabled" class="text-muted small">
+                <span t-field="line.hosny_line_packaging_summary"/>
+                <br/>
+                <span>الكمية النهائية:</span>
+                <span t-field="line.product_qty" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+                <span t-field="line.product_uom_id"/>
+                <span class="mx-1">|</span>
+                <span>عدد التعبئات:</span>
+                <span t-field="line.hosny_outer_package_qty" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+            </div>
+            <div t-elif="line.hosny_purchase_packaging_id" class="text-muted small">
+                <span t-field="line.hosny_packaging_hierarchy"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="purchase_quotation_packaging_report" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//td[@id='product']/span[@t-field='order_line.name']" position="after">
+            <div t-if="order_line.hosny_line_packaging_enabled" class="text-muted small">
+                <span t-field="order_line.hosny_line_packaging_summary"/>
+                <br/>
+                <span>الكمية النهائية:</span>
+                <span t-field="order_line.product_qty" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+                <span t-field="order_line.product_uom_id"/>
+                <span class="mx-1">|</span>
+                <span>عدد التعبئات:</span>
+                <span t-field="order_line.hosny_outer_package_qty" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"/>
+            </div>
+            <div t-elif="order_line.hosny_purchase_packaging_id" class="text-muted small">
+                <span t-field="order_line.hosny_packaging_hierarchy"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

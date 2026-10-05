@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_meal_components" model="ir.ui.view">
+        <field name="name">product.template.form.meal.components</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <field name="show_meal_components_config" invisible="1"/>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="after">
+                <div class="o_product_final_cost_row d-flex align-items-center gap-2"
+                     colspan="2"
+                     invisible="not additional_final_product_line_ids">
+                    <label for="final_cost_with_additional_products"
+                           class="mb-0 text-nowrap"/>
+                    <field name="final_cost_with_additional_products"
+                           class="oe_inline w-auto flex-grow-0 fw-semibold"
+                           widget="monetary"
+                           options="{'currency_field': 'cost_currency_id', 'field_digits': True}"
+                           readonly="1"/>
+                    <button name="action_open_additional_cost_breakdown"
+                            type="object"
+                            icon="fa-info-circle"
+                            class="btn btn-link btn-sm p-0 o_pos_additional_cost_info"
+                            title="Details"/>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Meal Components" name="meal_components" invisible="not show_meal_components_config">
+                    <group>
+                        <group>
+                            <field name="is_meal_combo"/>
+                            <field name="component_display_mode" invisible="not is_meal_combo" required="is_meal_combo"/>
+                        </group>
+                    </group>
+                    <field name="meal_component_line_ids"
+                           invisible="not is_meal_combo"
+                           context="{'default_meal_product_tmpl_id': id}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                            <field name="uom_id"/>
+                            <field name="extra_price"/>
+                            <field name="note"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="إضافات المنتج" name="additional_final_products" invisible="not sale_ok">
+                    <field name="additional_final_product_line_ids"
+                           context="{'default_parent_product_tmpl_id': id}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id" string="المنتج المرفق"/>
+                            <field name="quantity" string="الكمية"/>
+                            <field name="uom_id" string="وحدة القياس"/>
+                            <field name="price_unit" string="سعر الوحدة"/>
+                            <field name="discount" string="الخصم (%)"/>
+                            <field name="note" string="ملاحظة"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

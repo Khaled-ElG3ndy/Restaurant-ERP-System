@@ -1,0 +1,610 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hosny_attendance_timeline
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-29 14:58+0000\n"
+"PO-Revision-Date: 2026-07-29 00:00+0000\n"
+"Last-Translator: Hosny\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "%s checked in."
+msgstr "تم تسجيل حضور %s."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "%s checked out."
+msgstr "تم تسجيل خروج %s."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "%s is already checked in."
+msgstr "تم تسجيل حضور %s بالفعل."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "%s is not currently checked in."
+msgstr "لم يتم تسجيل حضور %s حالياً."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "A timeline request cannot load more than %s employees."
+msgstr "لا يمكن لطلب الخط الزمني تحميل أكثر من %s موظف."
+
+#. module: hosny_attendance_timeline
+#: model:ir.model,name:hosny_attendance_timeline.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr "عرض نافذة الإجراء"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "All Companies"
+msgstr "كل الشركات"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "All Departments"
+msgstr "كل الأقسام"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "All Work Locations"
+msgstr "كل مواقع العمل"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Are you sure you want to delete this attendance?"
+msgstr "هل أنت متأكد من رغبتك في حذف سجل الحضور هذا؟"
+
+#. module: hosny_attendance_timeline
+#: model:ir.model,name:hosny_attendance_timeline.model_hr_attendance
+msgid "Attendance"
+msgstr "الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Attendance History: %s"
+msgstr "سجل حضور: %s"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Attendance ID"
+msgstr "معرّف الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+msgid "Attendance Problem"
+msgstr "مشكلة في الحضور"
+
+#. module: hosny_attendance_timeline
+#: model_terms:ir.ui.view,arch_db:hosny_attendance_timeline.view_attendance_timeline
+msgid "Attendance Timeline"
+msgstr "الخط الزمني للحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Attendance Today"
+msgstr "حضور اليوم"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Attendance action failed"
+msgstr "فشل إجراء الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Attendance deletion failed"
+msgstr "فشل حذف سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/ir_ui_view.py:0
+msgid "Attendance timeline children must be field nodes, got %s"
+msgstr ""
+"يجب أن تكون العناصر الفرعية للخط الزمني للحضور حقولاً، وتم العثور على %s"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Attendance update failed"
+msgstr "فشل تحديث سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Change the employee search or reset the filters."
+msgstr "غيّر بحث الموظفين أو أعد تعيين عوامل التصفية."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Change the filters or date range to display attendances."
+msgstr "غيّر عوامل التصفية أو نطاق التاريخ لعرض سجلات الحضور."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Check In"
+msgstr "تسجيل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Check Out"
+msgstr "تسجيل الخروج"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Check in %s now?"
+msgstr "هل تريد تسجيل حضور %s الآن؟"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Check out %s now?"
+msgstr "هل تريد تسجيل خروج %s الآن؟"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Clear search"
+msgstr "مسح البحث"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Clear selection"
+msgstr "مسح التحديد"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_hr_attendance__company_id
+#: model_terms:ir.ui.view,arch_db:hosny_attendance_timeline.hr_attendance_search_company
+msgid "Company"
+msgstr "الشركة"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Create Attendance"
+msgstr "إنشاء سجل حضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Current Status"
+msgstr "الحالة الحالية"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+msgid "Currently Checked In"
+msgstr "مسجل الحضور حالياً"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Currently working"
+msgstr "يعمل حالياً"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Day"
+msgstr "يوم"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Delete"
+msgstr "حذف"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Delete Attendance"
+msgstr "حذف سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Department"
+msgstr "القسم"
+
+#. module: hosny_attendance_timeline
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_hr_attendance__display_name
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_actions_act_window_view__display_name
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Duplicate"
+msgstr "تكرار"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Duplicate Attendance"
+msgstr "تكرار سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Edit"
+msgstr "تحرير"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "Edit Attendance"
+msgstr "تحرير سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Employee Filters"
+msgstr "عوامل تصفية الموظفين"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Employee filters"
+msgstr "عوامل تصفية الموظفين"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Employees"
+msgstr "الموظفون"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Filters"
+msgstr "عوامل التصفية"
+
+#. module: hosny_attendance_timeline
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_hr_attendance__id
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_actions_act_window_view__id
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_ui_view__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+msgid "Incomplete Attendance"
+msgstr "حضور غير مكتمل"
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/ir_ui_view.py:0
+msgid ""
+"Invalid attendance timeline attributes (%(invalid_attributes)s). Allowed "
+"attributes are %(valid_attributes)s."
+msgstr ""
+"خصائص الخط الزمني للحضور غير صالحة (%(invalid_attributes)s). الخصائص المسموح "
+"بها هي %(valid_attributes)s."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Last Check In"
+msgstr "آخر تسجيل حضور"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Last Check Out"
+msgstr "آخر تسجيل خروج"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Late Employees"
+msgstr "الموظفون المتأخرون"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Loading attendances…"
+msgstr "جارٍ تحميل سجلات الحضور…"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Missing Checkout"
+msgstr "تسجيل خروج مفقود"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Month"
+msgstr "شهر"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "New"
+msgstr "جديد"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "New Attendance"
+msgstr "سجل حضور جديد"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Next"
+msgstr "التالي"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "No employee found"
+msgstr "لم يتم العثور على موظف"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+msgid "Not Working"
+msgstr "لا يعمل"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Open"
+msgstr "فتح"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Open Employee"
+msgstr "فتح الموظف"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Overtime"
+msgstr "الوقت الإضافي"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Overtime Today"
+msgstr "الوقت الإضافي اليوم"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Previous"
+msgstr "السابق"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Reset Filters"
+msgstr "إعادة تعيين عوامل التصفية"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Search employees"
+msgstr "البحث عن موظفين"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Search employees…"
+msgstr "البحث عن موظفين…"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "The attendance could not be deleted."
+msgstr "تعذّر حذف سجل الحضور."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "The attendance could not be updated."
+msgstr "تعذّر تحديث سجل الحضور."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.js:0
+msgid "The attendance status could not be changed."
+msgstr "تعذّر تغيير حالة الحضور."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "The employee attendance action is not valid."
+msgstr "إجراء حضور الموظف غير صالح."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "The timeline cannot load more than %s days at once."
+msgstr "لا يمكن للخط الزمني تحميل أكثر من %s يوم في المرة الواحدة."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "The timeline date range is not valid."
+msgstr "نطاق تاريخ الخط الزمني غير صالح."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "The timeline domain must be a list."
+msgstr "يجب أن يكون نطاق بحث الخط الزمني قائمة."
+
+#. module: hosny_attendance_timeline
+#: model:ir.model.fields.selection,name:hosny_attendance_timeline.selection__ir_actions_act_window_view__view_mode__attendance_timeline
+#: model:ir.model.fields.selection,name:hosny_attendance_timeline.selection__ir_ui_view__type__attendance_timeline
+msgid "Timeline"
+msgstr "الخط الزمني"
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "Timeline employee identifiers must be integers."
+msgstr "يجب أن تكون معرّفات موظفي الخط الزمني أرقاماً صحيحة."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Timeline navigation"
+msgstr "التنقل في الخط الزمني"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Timeline scale"
+msgstr "مقياس الخط الزمني"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Timeline zoom"
+msgstr "تكبير الخط الزمني"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Today"
+msgstr "اليوم"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+msgid "Unassigned"
+msgstr "غير معيّن"
+
+#. module: hosny_attendance_timeline
+#: model:ir.model,name:hosny_attendance_timeline.model_ir_ui_view
+msgid "View"
+msgstr "طريقة العرض"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "View Attendance History"
+msgstr "عرض سجل الحضور"
+
+#. module: hosny_attendance_timeline
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:hosny_attendance_timeline.field_ir_ui_view__type
+msgid "View Type"
+msgstr "نوع العرض"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Week"
+msgstr "أسبوع"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "With Overtime"
+msgstr "لديهم وقت إضافي"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Work Location"
+msgstr "موقع العمل"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.js:0
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Worked Time"
+msgstr "وقت العمل"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_renderer.xml:0
+msgid "Worked Today"
+msgstr "وقت العمل اليوم"
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "You cannot access this employee."
+msgstr "لا يمكنك الوصول إلى هذا الموظف."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "You cannot create attendance records."
+msgstr "لا يمكنك إنشاء سجلات الحضور."
+
+#. module: hosny_attendance_timeline
+#. odoo-python
+#: code:addons/hosny_attendance_timeline/models/hr_attendance.py:0
+msgid "You cannot update this attendance record."
+msgstr "لا يمكنك تحديث سجل الحضور هذا."
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Zoom in"
+msgstr "تكبير"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "Zoom out"
+msgstr "تصغير"
+
+#. module: hosny_attendance_timeline
+#. odoo-javascript
+#: code:addons/hosny_attendance_timeline/static/src/views/attendance_timeline/attendance_timeline_controller.xml:0
+msgid "selected"
+msgstr "محدد"

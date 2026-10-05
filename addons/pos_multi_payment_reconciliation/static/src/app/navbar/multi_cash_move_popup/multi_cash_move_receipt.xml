@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_multi_payment_reconciliation.MultiCashMoveReceipt">
+        <div class="pos-receipt">
+            <ReceiptHeader data="props.headerData"/>
+            <div class="pos-receipt-center-align">
+                POS CASH IN / OUT
+            </div>
+            <br/>
+            <div t-foreach="props.lines" t-as="line" t-key="line.paymentMethodName" class="mb-2">
+                <div class="fw-bolder">
+                    <t t-esc="line.paymentMethodName"/>
+                </div>
+                <div>
+                    CURRENT BALANCE
+                    <span t-esc="line.currentBalance" class="pos-receipt-right-align"/>
+                </div>
+                <div>
+                    COUNTED BALANCE
+                    <span t-esc="line.countedBalance" class="pos-receipt-right-align"/>
+                </div>
+                <div>
+                    DIFFERENCE
+                    <span t-esc="line.difference" class="pos-receipt-right-align"/>
+                </div>
+                <div t-if="line.reason">
+                    REASON
+                    <span t-esc="line.reason" class="pos-receipt-right-align"/>
+                </div>
+                <div t-if="!line.entryCreated" class="small">
+                    No journal entry created.
+                </div>
+            </div>
+            <br/>
+            <div class="pos-receipt-order-data">
+                <div><t t-esc="props.date"/></div>
+            </div>
+        </div>
+    </t>
+
+</templates>

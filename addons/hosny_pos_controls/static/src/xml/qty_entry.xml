@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!--
+    شبكة الأرقام (qty_entry.js): مخفية، تظهر حين يُضغط «الكمية» أو «نسبة
+    الخصم» أو شريحة الكمية في السطر، وتختفي بالضغط عليه مرة ثانية أو خارجها.
+    تُكتب داخل لوحة الطلب لكنها position: fixed، ومكانها يُحسب عند الفتح:
+    على يسار اللوحة فوق المنتجات، بمحاذاة أول قائمة الطلب — فلا تأخذ من
+    مساحة الأصناف شيئاً. الشكل والحركة في hosny_pos_skin (قسم 39).
+  -->
+  <t t-name="hosny_pos_controls.ProductScreenQtyPad"
+     t-inherit="point_of_sale.ProductScreen"
+     t-inherit-mode="extension">
+    <xpath expr="//OrderSummary" position="after">
+      <t t-set="hosnyPadView" t-value="pos.hosnyEntryView()"/>
+      <div t-ref="hosnyPad"
+           class="hosny-qtypad"
+           t-att-class="{'is-open': hosnyPadView.padOpen, 'is-discount': hosnyPadView.mode === 'discount', 'is-typing': hosnyPadView.typing}"
+           t-att-aria-hidden="hosnyPadView.padOpen ? 'false' : 'true'"
+           role="dialog"
+           aria-label="لوحة الأرقام"
+           dir="rtl">
+        <div class="hosny-qtypad-head">
+          <div class="hosny-qtypad-reading">
+            <span class="hosny-qtypad-mode" t-esc="hosnyPadView.mode === 'discount' ? 'الخصم' : 'الكمية'"/>
+            <bdi class="hosny-qtypad-value" t-esc="hosnyPadView.value or '—'"/>
+          </div>
+          <button type="button"
+                  tabindex="-1"
+                  class="hosny-qtypad-done"
+                  title="تم"
+                  aria-label="تم"
+                  t-on-mousedown.prevent="() => {}"
+                  t-on-click="() => this.pos.hosnyClosePad()">
+            <i class="fa fa-check" aria-hidden="true"/>
+          </button>
+        </div>
+        <div class="hosny-qtypad-keys" dir="ltr">
+          <button t-foreach="hosnyPadKeys" t-as="padKey" t-key="padKey"
+                  type="button"
+                  tabindex="-1"
+                  class="hosny-qtypad-key"
+                  t-att-class="{'is-back': padKey === 'Backspace'}"
+                  t-att-aria-label="padKey === 'Backspace' ? 'مسح آخر رقم' : padKey"
+                  t-att-disabled="!hosnyPadView.hasLine"
+                  t-on-mousedown.prevent="() => {}"
+                  t-on-click="() => this.pos.hosnyEntryKey(padKey)">
+            <t t-if="padKey === 'Backspace'">⌫</t>
+            <t t-else="" t-esc="padKey"/>
+          </button>
+        </div>
+      </div>
+    </xpath>
+  </t>
+
+  <!-- شريحة الكمية في السطر الذي يُكتب فيه الآن -->
+  <t t-name="hosny_pos_controls.OrderlineQtyTyping"
+     t-inherit="point_of_sale.Orderline"
+     t-inherit-mode="extension">
+    <xpath expr="//button[hasclass('hosny-orderline-qty')]" position="attributes">
+      <attribute name="t-att-class">{'is-typing': pos.hosnyEntry.open and pos.hosnyEntry.lineUuid === props.line.uuid}</attribute>
+      <attribute name="title">الكمية — اكتب الرقم مباشرة أو اضغط لإظهار لوحة الأرقام</attribute>
+      <attribute name="aria-label">الكمية</attribute>
+    </xpath>
+  </t>
+
+</templates>

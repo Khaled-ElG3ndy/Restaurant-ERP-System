@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_view_inherit_preferred_mrp_location" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.pos.mrp.source</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='options']" position="after">
+                <field name="bom_ids" invisible="1"/>
+                <field name="available_in_pos" invisible="1"/>
+                <div name="pos_mrp_source_location"
+                     class="mt-3 mb-2 p-3 border rounded bg-light"
+                     invisible="not bom_ids or not available_in_pos">
+                    <div class="row align-items-center g-3">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fa fa-map-marker text-primary" title="مصدر المكونات"/>
+                                <label for="pos_mrp_source_profile_id" class="fw-bold mb-0"/>
+                            </div>
+                            <div class="text-muted small mt-1">
+                                يحدد النظام موقع الفرع الفعلي تلقائيًا حسب نقطة البيع.
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-6">
+                            <field name="pos_mrp_source_profile_id"
+                                   class="w-100"
+                                   options="{'no_create': True, 'no_create_edit': True}"
+                                   placeholder="اختر موقع سحب المكونات"
+                                   help="يحدد النظام موقع مخزون الفرع تلقائيًا من نقطة البيع النشطة."/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--
+        POS orders open the product variant form (product.product), not the
+        product-template-only form above.  Product fields are related to the
+        template on that model, so render the same selector there as well.
+    -->
+    <record id="product_product_form_view_inherit_pos_mrp_source" model="ir.ui.view">
+        <field name="name">product.product.form.inherit.pos.mrp.source</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='options']" position="after">
+                <field name="bom_ids" invisible="1"/>
+                <field name="available_in_pos" invisible="1"/>
+                <div name="pos_mrp_source_location"
+                     class="mt-3 mb-2 p-3 border rounded bg-light"
+                     invisible="not bom_ids or not available_in_pos">
+                    <div class="row align-items-center g-3">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fa fa-map-marker text-primary" title="مصدر المكونات"/>
+                                <label for="pos_mrp_source_profile_id" class="fw-bold mb-0"/>
+                            </div>
+                            <div class="text-muted small mt-1">
+                                يحدد النظام موقع الفرع الفعلي تلقائيًا حسب نقطة البيع.
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-6">
+                            <field name="pos_mrp_source_profile_id"
+                                   class="w-100"
+                                   options="{'no_create': True, 'no_create_edit': True}"
+                                   placeholder="اختر موقع سحب المكونات"
+                                   help="يحدد النظام موقع مخزون الفرع تلقائيًا من نقطة البيع النشطة."/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

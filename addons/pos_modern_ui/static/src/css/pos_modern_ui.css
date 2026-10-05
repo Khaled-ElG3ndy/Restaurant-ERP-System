@@ -1,0 +1,3285 @@
+:root {
+    --pos-primary: #243742;
+    --pos-primary-dark: #1b2a32;
+    --pos-accent: #2f4a57;
+    --pos-accent-soft: #e6eef2;
+    --pos-success: #16a34a;
+    --pos-bg: #f4f7fb;
+    --pos-panel: #ffffff;
+    --pos-card: #ffffff;
+    --pos-muted: #6b7280;
+    --pos-text: #1f2937;
+    --pos-border: rgba(15, 23, 42, 0.08);
+    --pos-shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
+    --pos-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.10);
+    --pos-shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.14);
+    --pos-radius-sm: 12px;
+    --pos-radius-md: 18px;
+    --pos-radius-lg: 24px;
+    --mk-sidebar-width: 250px !important;
+
+}
+
+/* =========================
+   General Layout
+========================= */
+.pos,
+.pos .product-screen,
+.pos .leftpane,
+.pos .rightpane,
+.pos .screen,
+.pos-content {
+    background: var(--pos-bg) !important;
+    font-family: "Cairo", "Inter", sans-serif !important;
+    color: var(--pos-text) !important;
+}
+
+/* =========================
+   Top Header
+========================= */
+
+.pos .topheader .left-header-button,
+.pos .topheader .status-buttons,
+.pos .topheader .status-buttons *,
+.pos .topheader .header-button,
+.pos .topheader .ticket-button,
+.pos .topheader .change-table,
+.pos .topheader .orders-button,
+.pos .topheader .synch,
+.pos .topheader .cashier-name,
+.pos .topheader .username,
+.pos .pos-topheader .left-header-button,
+.pos .pos-topheader .header-button,
+.pos .pos-topheader .ticket-button,
+.pos .pos-topheader .change-table,
+.pos .pos-topheader .orders-button,
+.pos .pos-topheader .synch,
+.pos .header .left-header-button,
+.pos .header .status-buttons,
+.pos .header .status-buttons *,
+.pos .header .header-button,
+.pos .header .ticket-button,
+.pos .header .change-table,
+.pos .header .orders-button,
+.pos .header .synch,
+.pos .header .cashier-name,
+.pos .header .username,
+.pos .top-header .left-header-button,
+.pos .top-header .status-buttons,
+.pos .top-header .status-buttons *,
+.pos .top-header .header-button,
+.pos .top-header .ticket-button,
+.pos .top-header .change-table,
+.pos .top-header .orders-button,
+.pos .top-header .synch,
+.pos .top-header .cashier-name,
+.pos .top-header .username {
+    color: #ffffff !important;
+}
+
+.pos .topheader .right,
+.pos .pos-topheader .right,
+.pos .header .right,
+.pos .top-header .right {
+    background: #f5f7fb !important;
+    color: var(--pos-text) !important;
+    border-inline-start: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+.pos .topheader .right *,
+.pos .pos-topheader .right *,
+.pos .header .right *,
+.pos .top-header .right * {
+    color: var(--pos-text) !important;
+    opacity: 1 !important;
+}
+
+.pos .topheader .right .username,
+.pos .topheader .right .cashier-name,
+.pos .pos-topheader .right .username,
+.pos .pos-topheader .right .cashier-name,
+.pos .header .right .username,
+.pos .header .right .cashier-name,
+.pos .top-header .right .username,
+.pos .top-header .right .cashier-name {
+    color: var(--pos-text) !important;
+    font-weight: 700 !important;
+}
+
+.pos .topheader .right .fa,
+.pos .topheader .right i,
+.pos .pos-topheader .right .fa,
+.pos .pos-topheader .right i,
+.pos .header .right .fa,
+.pos .header .right i,
+.pos .top-header .right .fa,
+.pos .top-header .right i {
+    color: var(--pos-text) !important;
+}
+
+/* =========================
+   Left Order Panel
+========================= */
+.pos .orderlines,
+.pos .order-lines,
+.pos .order .orderlines {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.pos .order-container,
+.pos .order {
+    background: var(--pos-panel) !important;
+    border-radius: 0 0 var(--pos-radius-lg) var(--pos-radius-lg) !important;
+    box-shadow: var(--pos-shadow-md) !important;
+    border: 1px solid var(--pos-border) !important;
+}
+
+/* order lines */
+.pos .orderline {
+    background: #f3f7f9 !important;
+    border: 1px solid rgba(36, 55, 66, 0.08) !important;
+    border-radius: 16px !important;
+    margin: 8px !important;
+    padding: 12px !important;
+    transition: all 0.2s ease !important;
+}
+.pos .orderline.selected,
+.pos .orderline:hover {
+    background: #eef4f6 !important;
+    border-color: rgba(36, 55, 66, 0.18) !important;
+    box-shadow: 0 6px 16px rgba(36, 55, 66, 0.08) !important;
+}
+
+/* total area */
+.pos .order-summary,
+.pos .summary,
+.pos .total {
+    color: var(--pos-primary-dark) !important;
+    font-weight: 800 !important;
+}
+
+/* =========================
+   Left Action Buttons
+========================= */
+.pos .button,
+.pos .control-button,
+.pos button {
+    border-radius: 14px !important;
+    border: 1px solid rgba(130, 95, 40, 0.16) !important;
+    transition: all 0.18s ease !important;
+    font-weight: 600 !important;
+    margin: 5px;
+}
+
+.pos .button:hover,
+.pos .control-button:hover,
+.pos button:hover {
+    transform: translateY(-1px);
+}
+
+.pos .button.highlight,
+.pos .control-button.highlight,
+.pos .pay-order-button,
+.pos .payment-button {
+    color: #fff !important;
+    box-shadow: 0 10px 22px rgba(36, 55, 66, 0.25) !important;
+}
+
+.pos .button.highlight:hover,
+.pos .control-button.highlight:hover,
+.pos .pay-order-button:hover,
+.pos .payment-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(36, 55, 66, 0.30) !important;
+}
+
+
+/* small buttons block */
+.pos .control-buttons,
+.pos .product-screen .numpad,
+.pos .product-screen .subpads {
+    background: transparent !important;
+}
+
+/* number pad */
+.pos .product-screen .numpad .button,
+.pos .product-screen .mode-button,
+.pos .product-screen .input-button {
+    background: #ffffff !important;
+    color: var(--pos-text) !important;
+    border: 1px solid var(--pos-border) !important;
+    min-height: 52px !important;
+}
+
+.pos .product-screen .numpad .button:hover,
+.pos .product-screen .mode-button:hover,
+.pos .product-screen .input-button:hover {
+    background: #f3f7f9 !important;
+    border-color: rgba(36, 55, 66, 0.18) !important;
+}
+
+/* =========================
+   TOP BAR FIX
+========================= */
+.pos .rightpane {
+    padding: 8px 10px 10px !important;
+    background: transparent !important;
+}
+
+.pos .control-buttons,
+.pos .category-search,
+.pos .products-widget-control,
+.pos .products-widget .controls,
+.pos .rightpane .controls {
+    align-items: center !important;
+}
+
+/* =========================
+   Categories Wrapper
+========================= */
+.pos .category-list,
+.pos .categories,
+.pos .category-simple-button-list {
+    background: #ffffff !important;
+    border: 1px solid rgba(15, 23, 42, 0.06) !important;
+    border-radius: 20px !important;
+    box-shadow: var(--pos-shadow-sm) !important;
+    padding: 8px !important;
+    gap: 8px !important;
+    min-height: 64px !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: thin;
+}
+
+.pos .category-button,
+.pos .category-simple-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    min-width: 92px !important;
+    max-width: 155px !important;
+    height: 46px !important;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    color: var(--pos-text) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    transition: all 0.22s ease !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.pos .category-button span,
+.pos .category-simple-button span,
+.pos .category-button .label,
+.pos .category-simple-button .label {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+}
+
+.pos .category-button:hover,
+.pos .category-simple-button:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(36, 55, 66, 0.16) !important;
+    background: #f3f7f9 !important;
+    box-shadow: 0 8px 18px rgba(36, 55, 66, 0.08) !important;
+}
+
+.pos .category-button.active,
+.pos .category-simple-button.active,
+.pos .category-button.highlight,
+.pos .category-simple-button.highlight,
+.pos .category-button.selected,
+.pos .category-simple-button.selected {
+    background: linear-gradient(135deg, #243742, #2f4a57) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 12px 22px rgba(36, 55, 66, 0.22) !important;
+}
+
+/* home icon */
+.pos .category-button .fa,
+.pos .category-simple-button .fa {
+    margin-inline-end: 6px !important;
+    flex: 0 0 auto !important;
+}
+
+/* =========================
+   Search Bar
+========================= */
+.pos .search-bar,
+.pos .searchbox,
+.pos .search-box {
+    margin-inline-start: 10px !important;
+    flex: 0 0 170px !important;
+    width: 170px !important;
+}
+
+.pos .search input,
+.pos input[type="text"] {
+    background: rgba(255, 255, 255, 0.96) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: var(--pos-text) !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    padding: 0 16px !important;
+    border-radius: 16px !important;
+    box-shadow: var(--pos-shadow-sm) !important;
+    font-size: 14px !important;
+}
+
+.pos .search input:focus,
+.pos input[type="text"]:focus {
+    outline: none !important;
+    border-color: rgba(36, 55, 66, 0.35) !important;
+    box-shadow: 0 0 0 4px rgba(36, 55, 66, 0.12) !important;
+}
+
+/* =========================
+   Product Grid Area
+========================= */
+
+/* =========================
+   Product Card
+========================= */
+.pos .product {
+    background: var(--pos-card) !important;
+    border: 1px solid rgba(15, 23, 42, 0.06) !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: var(--pos-shadow-md) !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+    position: relative !important;
+    padding-bottom: 8px !important;
+    min-width: 150px !important;
+}
+
+.pos .product:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--pos-shadow-lg) !important;
+    border-color: rgba(36, 55, 66, 0.14) !important;
+}
+
+.pos .product:active {
+    transform: scale(0.985) !important;
+}
+
+/* product image */
+.pos .product .product-img,
+.pos .product img {
+    width: 100% !important;
+    height: 130px !important;
+    object-fit: cover !important;
+    border-radius: 18px 18px 0 0 !important;
+}
+
+/* text area */
+.pos .product .product-name,
+.pos .product-name {
+    color: var(--pos-text) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    padding: 10px 12px 4px !important;
+    min-height: 50px !important;
+    text-align: center !important;
+}
+
+/* price */
+.pos .product .price-tag,
+.pos .product-price,
+.pos .price-tag {
+    display: block !important;
+    color: var(--pos-primary) !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    padding: 4px 14px 14px !important;
+    text-align: center !important;
+    letter-spacing: 0.2px !important;
+}
+/* optional subtle badge feel for info icons */
+.pos .product .info-tag,
+.pos .product .product-info-tag,
+.pos .product .fa-info-circle,
+.pos .product .fa-info {
+    opacity: 0.75 !important;
+}
+
+/* =========================
+   Scrollbars
+========================= */
+.pos ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.pos ::-webkit-scrollbar-track {
+    background: #eef3f6;
+    border-radius: 10px;
+}
+
+.pos ::-webkit-scrollbar-thumb {
+    background: #9fb3bd;
+    border-radius: 10px;
+}
+
+.pos ::-webkit-scrollbar-thumb:hover {
+    background: #6f8a96;
+}
+
+/* =========================
+   Table / Order top info
+========================= */
+.pos .orders,
+.pos .header-button,
+.pos .change-table,
+.pos .ticket-button {
+    border-radius: 12px !important;
+}
+
+/* =========================
+   Better spacing on compact screens
+========================= */
+@media (max-width: 1400px) {
+    .pos .category-button,
+    .pos .category-simple-button {
+        min-width: 84px !important;
+        max-width: 122px !important;
+        font-size: 13px !important;
+    }
+
+    .pos .search-bar,
+    .pos .searchbox,
+    .pos .search-box {
+        flex: 0 0 150px !important;
+        width: 150px !important;
+    }
+
+    .pos .product .product-name,
+    .pos .product-name {
+        font-size: 14px !important;
+        min-height: 46px !important;
+    }
+
+    .pos .product .price-tag,
+    .pos .product-price,
+    .pos .price-tag {
+        font-size: 16px !important;
+    }
+}
+
+/* =========================
+   Arabic readability
+========================= */
+html[lang="ar"] .pos,
+body[lang="ar"] .pos,
+.pos {
+    letter-spacing: 0 !important;
+}
+
+.pos .product,
+.pos .orderline,
+.pos .category-button,
+.pos .category-simple-button,
+.pos .button,
+.pos .control-button {
+    backdrop-filter: blur(4px);
+}
+
+.pos .topheader .logo,
+.pos .pos-topheader .logo,
+.pos .top-header .logo,
+.pos .header .logo,
+.pos .pos-logo {
+    display: none !important;
+}
+
+.pos .topheader::before,
+.pos .pos-topheader::before,
+.pos .top-header::before,
+.pos .header::before {
+    content: "";
+    display: block;
+    width: 140px;
+    height: 44px;
+    margin-inline-start: 16px;
+
+    background-image: url('/pos_modern_ui/static/src/img/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   PRODUCT GRID - CLEAN SPACING
+========================= */
+
+
+
+/* نخلي الليست نفسها Flex وتلف بشكل طبيعي */
+.pos .product-list,
+.pos .products {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 18px !important;
+    overflow-x: hidden !important;
+}
+
+.pos .product-list .product,
+.pos .products .product,
+.pos .products-widget .product {
+    flex: 1 1 180px !important;   
+   
+}
+/* شكل الكارت */
+.pos .product {
+    background: var(--pos-card) !important;
+    border: 1px solid rgba(15, 23, 42, 0.06) !important;
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: var(--pos-shadow-md) !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+    position: relative !important;
+    padding-bottom: 10px !important;
+}
+
+.pos .product:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--pos-shadow-lg) !important;
+    border-color: rgba(36, 55, 66, 0.14) !important;
+}
+
+/* الصورة */
+.pos .product .product-img,
+.pos .product img {
+    width: 100% !important;
+    height: 132px !important;
+    object-fit: cover !important;
+    border-radius: 18px 18px 0 0 !important;
+}
+
+/* الاسم */
+.pos .product .product-name,
+.pos .product-name {
+    color: var(--pos-text) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    padding: 12px 14px 6px !important;
+    min-height: 58px !important;
+    text-align: center !important;
+}
+
+/* السعر */
+.pos .product .price-tag,
+.pos .product-price,
+.pos .price-tag {
+    display: block !important;
+    color: var(--pos-primary) !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    padding: 4px 14px 14px !important;
+    text-align: center !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* =========================
+
+   LEFT PANEL SCROLL FIX
+========================= */
+.pos .product-screen {
+    display: flex !important;
+    align-items: stretch !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+/* العمود الشمال */
+.pos .leftpane {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+/* الكونتينر الداخلي */
+.pos .order-container,
+.pos .order {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+}
+
+/* الليست اللي فيها الأصناف */
+.pos .orderlines,
+.pos .order-lines,
+.pos .order .orderlines {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+
+/* =========================
+   CLEAN LEFT PANEL SCROLL FIX
+========================= */
+
+.pos .product-screen {
+    display: flex !important;
+    align-items: stretch !important;
+    
+}
+
+.pos .leftpane,
+.pos .rightpane {
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.pos .leftpane {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.pos .leftpane .order-container,
+.pos .leftpane .order {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+}
+
+.pos .leftpane .orderlines,
+.pos .leftpane .order-lines,
+.pos .leftpane .order .orderlines {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 8px !important;
+}
+
+.pos-workplace-btn {
+    border-radius: 10px !important;
+    margin: 2px 6px;
+    height: 42px;
+    padding: 0 16px !important;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-weight: 600;
+    font-size: 14px;
+
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+.pos-workplace-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 102, 204, 0.35);
+}
+
+/* Click */
+.pos-workplace-btn:active {
+    transform: scale(0.97);
+}
+
+/* الأيقونة */
+.pos-workplace-btn i {
+    font-size: 16px;
+}
+
+/* النص */
+.pos-workplace-btn span {
+    white-space: nowrap;
+}
+
+.o_web_client .pos-workplace-btn {
+    display: none;
+}
+
+.pos .pos-workplace-btn {
+    display: flex !important;
+}
+
+.o_navbar_apps_menu.show .dropdown-menu .o_app > a .mk_app_name {
+    color: #1f2d3d !important;
+    font-weight: 600 !important;
+}
+/*
+
+.o_main_navbar:has(.o_navbar_apps_menu.show) {
+    background: #f3ebd6  !important;
+    border-bottom: 1px solid rgba(0, 51, 102, 0.12) !important;
+}
+
+.o_main_navbar:has(.o_navbar_apps_menu.show) a,
+.o_main_navbar:has(.o_navbar_apps_menu.show) .dropdown-toggle,
+.o_main_navbar:has(.o_navbar_apps_menu.show) .o_menu_brand,
+.o_main_navbar:has(.o_navbar_apps_menu.show) .mk_app_name,
+.o_main_navbar:has(.o_navbar_apps_menu.show) .fa,
+.o_main_navbar:has(.o_navbar_apps_menu.show) .oi {
+    color: #18354a !important;
+}
+*/
+/* خلفية الـ navbar */
+.o_main_navbar {
+    background: #e9e1cf !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* كل الروابط والنصوص جوه الـ navbar */
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .dropdown-toggle,
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .o_main_navbar a,
+.o_main_navbar .o_menu_sections .dropdown-item,
+.o_main_navbar .o_menu_sections > * > a {
+    color: #17384d !important;
+}
+
+/* العنصر النشط */
+.o_main_navbar .o_menu_sections .active > a,
+.o_main_navbar .o_menu_sections a.active,
+.o_main_navbar .o_menu_sections .show > a {
+    color: #17384d !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    border-bottom: 3px solid #17384d !important;
+}
+
+/* اسم التطبيق اللي على الشمال */
+.o_main_navbar .o_menu_brand {
+    color: #17384d !important;
+    background: transparent !important;
+}
+
+/* الأيقونات اللي فوق */
+.o_main_navbar .fa,
+.o_main_navbar .oi {
+    color: #17384d !important;
+}
+.o_main_navbar > a,
+.o_main_navbar .navbar-brand,
+.o_main_navbar .o_menu_brand {
+    background: transparent !important;
+    color: #17384d !important;
+}
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background: transparent !important;
+}
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    box-shadow: none !important;
+}
+
+.o_main_navbar .o_menu_sections .o_nav_entry:hover,
+.o_main_navbar .o_menu_sections .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections .o_nav_entry:focus,
+.o_main_navbar .o_menu_sections .dropdown-toggle:focus,
+.o_main_navbar .o_menu_sections .show > .dropdown-toggle,
+.o_main_navbar .o_menu_sections .active > .o_nav_entry,
+.o_main_navbar .o_menu_sections .active > a,
+.o_main_navbar .o_menu_sections a.active {
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: #17384d !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+.o_main_navbar .o_menu_sections > * > a,
+.o_main_navbar .o_menu_sections > * > button,
+.o_main_navbar .o_menu_sections .o_nav_entry,
+.o_main_navbar .o_menu_sections .dropdown-toggle {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* ===== Sidebar Container ===== */
+.mk_apps_sidebar {
+    width: 250px !important;
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* ===== Menu List ===== */
+.mk_apps_sidebar_menu {
+    padding: 12px 10px !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+/* ===== Each Item ===== */
+.mk_apps_sidebar_menu .nav-item {
+    margin-bottom: 6px !important;
+}
+
+/* ===== Link Style ===== */
+.mk_apps_sidebar_menu .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 48px !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    background: transparent !important;
+    transition: all 0.25s ease !important;
+    text-decoration: none !important;
+    overflow: visible !important;
+}
+
+/* ===== Hover ===== */
+.mk_apps_sidebar_menu .nav-link:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    transform: translateX(-2px);
+}
+
+/* ===== Active Item ===== */
+.mk_apps_sidebar_menu .nav-item.active .nav-link,
+.mk_apps_sidebar_menu .nav-link.active {
+    background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08)) !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08) !important;
+    position: relative;
+}
+
+.mk_apps_sidebar_menu .nav-item.active .nav-link::before,
+.mk_apps_sidebar_menu .nav-link.active::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 4px;
+    border-radius: 0 8px 8px 0;
+    background: linear-gradient(180deg, #d8b36a, #f3dfb0);
+}
+
+/* ===== Icon ===== */
+.mk_apps_sidebar_icon {
+    width: 22px !important;
+    height: 22px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+    border-radius: 6px;
+}
+
+/* ===== Text ===== */
+.mk_apps_sidebar_name {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: inherit !important;
+    white-space: nowrap !important;
+    display: block !important;
+}
+
+/* Force names visible at all sidebar sizes (overrides muk_web_appsbar hiding at md breakpoint) */
+.mk_sidebar_type_large .mk_apps_sidebar_name,
+.mk_sidebar_type_small .mk_apps_sidebar_name {
+    display: block !important;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+    .mk_apps_sidebar {
+        width: 120px !important;
+    }
+
+    .mk_apps_sidebar_panel {
+        width: 120px !important;
+    }
+
+    .mk_apps_sidebar_menu .nav-link {
+        padding: 8px 10px !important;
+    }
+
+    .mk_apps_sidebar_name,
+    .mk_sidebar_type_large .mk_apps_sidebar_name,
+    .mk_sidebar_type_small .mk_apps_sidebar_name {
+        font-size: 12px !important;
+        display: block !important;
+    }
+}
+.mk_apps_sidebar_panel {
+    background: linear-gradient(90deg, #d6c3a1, #cbb38c) !important;
+    width: 250px !important;
+    overflow-y: auto !important;
+    border-inline-end: 1px solid rgba(255,255,255,0.08) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+        border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+
+}
+.mk_apps_sidebar_panel img {
+    max-width: 120px;
+    opacity: 0.85;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    padding: 12px 10px !important;
+    margin: 0 !important;
+}
+
+.mk_apps_sidebar_panel .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: 48px !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    color: rgba(255,255,255,0.9) !important;
+    background: transparent !important;
+    transition: all 0.25s ease !important;
+}
+
+.mk_apps_sidebar_panel .nav-link:hover {
+   background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.22),
+        rgba(255,255,255,0.12)
+    ) !important;
+        color: #fff !important;
+}
+
+.mk_apps_sidebar_panel .nav-item.active .nav-link {
+  background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0.18)
+    ) !important;
+        color: #fff !important;
+}
+
+
+.mk_apps_sidebar_menu .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    left: 12px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #d8b36a, #f3dfb0);
+    transition: width 0.3s ease;
+}
+
+.mk_apps_sidebar_menu .nav-link:hover::after {
+    width: 60%;
+}
+
+.mk_apps_sidebar_menu .nav-item.active .nav-link::after {
+    width: 70%;
+}
+
+.mk_apps_sidebar_menu .nav-link:hover .mk_apps_sidebar_icon {
+    transform: scale(1.1) rotate(-3deg);
+    transition: all 0.25s ease;
+}
+.mk_apps_sidebar_panel {
+    backdrop-filter: blur(12px);
+    background: linear-gradient(90deg, rgba(214,195,161,0.9), rgba(203,179,140,0.9)) !important;
+}
+
+.mk_apps_sidebar_menu .nav-item + .nav-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 6px;
+}
+
+.mk_apps_sidebar_menu .nav-link:hover {
+    transform: translateX(-3px) translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.mk_apps_sidebar_panel .nav-item.active .nav-link {
+    box-shadow: 
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 4px 12px rgba(216,179,106,0.25);
+}
+
+.mk_apps_sidebar_panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.15), transparent 60%);
+    pointer-events: none;
+}
+
+.mk_apps_sidebar_panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mk_apps_sidebar_panel::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+}
+
+/* Primary Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #d8b36a, #c7a55d) !important;
+    border: none !important;
+    color: #1f2d3d !important;
+    font-weight: 600;
+    border-radius: 10px !important;
+    padding: 8px 16px !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e2c17a, #d0af6c) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.btn-primary:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(216,179,106,0.3) !important;
+}
+
+/* =========================================
+   POS NAVBAR - FINAL CLEAN VERSION
+========================================= */
+
+.pos .pos-topheader {
+    /* Reads as the top of the same gradient the screen below it carries:
+       a shade deeper, lit along its own top edge, closed with a gold hairline. */
+    background: linear-gradient(180deg, #ece4d5 0%, #e2d9c6 100%) !important;
+    color: #17384d !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(135, 100, 32, 0.22) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+
+    min-height: 72px !important;
+    height: 72px !important;
+
+    position: relative !important;
+    overflow: visible !important;
+    z-index: 1000 !important;
+}
+
+/* يشيل أي bg-white / border-bottom جاي من Odoo */
+.pos .pos-topheader.bg-white {
+    background: linear-gradient(90deg, #e9e1cf, #dfd2b8) !important;
+}
+
+.pos .pos-topheader.border-bottom {
+    border-bottom: 1px solid rgba(23, 56, 77, 0.08) !important;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+
+.pos .topheader .logo,
+.pos .pos-topheader .logo,
+.pos .top-header .logo,
+.pos .header .logo,
+.pos .pos-logo {
+    display: none !important;
+}
+
+.pos .topheader::before,
+.pos .pos-topheader::before,
+.pos .top-header::before,
+.pos .header::before {
+    content: "";
+    display: block;
+
+    width: 60px !important;
+    height: 68px !important;
+
+    margin-inline-start: 12px !important;
+    margin-inline-end: 8px !important;
+
+    opacity: 0.95;
+
+    background-image: url('/pos_modern_ui/static/src/img/logo.png');
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+
+    flex-shrink: 0;
+}
+
+/* =========================================
+   BRANDING + RIGHT AREA
+========================================= */
+
+.pos .pos-topheader .pos-branding {
+    background: transparent !important;
+    padding-inline-start: 6px !important;
+    overflow: visible !important;
+}
+
+.pos .pos-topheader .pos-rightheader {
+    background: transparent !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    padding-inline-end: 12px !important;
+    overflow: visible !important;
+}
+
+/* =========================================
+   BUTTONS RESET
+========================================= */
+
+.pos .pos-topheader .btn,
+.pos .pos-topheader .btn.btn-light,
+.pos .pos-topheader .navbar-button,
+.pos .pos-topheader .menu-button,
+.pos .pos-topheader .status-buttons > div {
+    background: transparent !important;
+    color: #17384d !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   TEXT + ICONS
+========================================= */
+
+
+/* =========================================
+   USER BLOCK
+========================================= */
+
+.pos .pos-topheader .status-buttons {
+    align-items: center !important;
+    gap: 8px !important;
+    overflow: visible !important;
+}
+
+.pos .pos-topheader .status-buttons .not-clickable {
+    background: rgba(255, 255, 255, 0.58) !important;
+    border: 1px solid rgba(139, 107, 37, 0.16) !important;
+    border-radius: 999px !important;
+    padding: 6px 14px !important;
+}
+
+/* Avatar */
+.pos .pos-topheader .avatar {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(23, 56, 77, 0.12) !important;
+}
+
+/* =========================================
+   MENU BUTTON
+========================================= */
+
+.pos .pos-topheader .menu-button {
+    min-width: 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 12px !important;
+    transition: all 0.22s ease !important;
+}
+
+.pos .pos-topheader .menu-button:hover {
+    background: rgba(255, 255, 255, 0.62) !important;
+}
+
+/* =========================================
+   WORKPLACE BUTTON
+========================================= */
+
+.pos .pos-topheader .pos-workplace-btn {
+    /* A quiet pill on the sand band: legible as a button without a second
+       accent colour competing with the gold in the product grid. */
+    background: rgba(255, 255, 255, 0.58) !important;
+    color: #1f2d3d !important;
+    border-radius: 999px !important;
+    margin: 4px 8px !important;
+    height: 42px !important;
+    padding: 0 18px !important;
+    border: 1px solid rgba(139, 107, 37, 0.20) !important;
+    box-shadow: none !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: background-color 160ms ease, border-color 160ms ease !important;
+}
+
+.pos .pos-topheader .pos-workplace-btn span,
+.pos .pos-topheader .pos-workplace-btn i,
+.pos .pos-topheader .pos-workplace-btn .fa {
+    color: #1f2d3d !important;
+    font-weight: 700 !important;
+}
+
+.pos .pos-topheader .pos-workplace-btn:hover {
+    background: #ffffff !important;
+    border-color: rgba(139, 107, 37, 0.34) !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   SYNC STATUS
+========================================= */
+
+.pos .pos-topheader .oe_status {
+    border-radius: 12px !important;
+    padding: 0 6px !important;
+    background: transparent !important;
+}
+
+.pos .pos-topheader .js_connected,
+.pos .pos-topheader .oe_icon {
+    color: #17384d !important;
+}
+
+/* =========================================
+   DROPDOWN / MENU LAYER FIX
+========================================= */
+
+.pos .pos-topheader,
+.pos .pos-topheader .pos-rightheader,
+.pos .pos-topheader .status-buttons,
+.pos .pos-topheader .navbar-button,
+.pos .pos-topheader .menu-button {
+    overflow: visible !important;
+}
+
+.pos .pos-topheader .dropdown-menu,
+.pos .pos-topheader .o-dropdown--menu,
+.pos .pos-topheader .popover,
+.pos .pos-topheader .o-popover {
+    position: absolute !important;
+    z-index: 9999 !important;
+}
+
+/* نخلي المحتوى تحت الـ navbar دايمًا */
+.pos .screen,
+.pos .product-screen,
+.pos .floor-screen,
+.pos .floor-map,
+.pos .rightpane,
+.pos .leftpane {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* =========================================
+   MOBILE / SMALL WIDTH
+========================================= */
+
+@media (max-width: 992px) {
+    .pos .pos-topheader {
+        min-height: 64px !important;
+        height: 64px !important;
+    }
+
+    .pos .topheader::before,
+    .pos .pos-topheader::before,
+    .pos .top-header::before,
+    .pos .header::before {
+        width: 68px !important;
+        height: 68px !important;
+        margin-inline-start: 10px !important;
+        margin-inline-end: 6px !important;
+    }
+
+    .pos .pos-topheader .username {
+        font-size: 14px !important;
+    }
+
+    .pos .pos-topheader .pos-workplace-btn {
+        height: 38px !important;
+        padding: 0 12px !important;
+    }
+
+    .pos .pos-topheader .pos-workplace-btn span {
+        font-size: 13px !important;
+    }
+}
+
+/* =========================================
+   LEFT PANEL + PAYMENT + NUMPAD
+   WARM / GOLD THEME OVERRIDE
+========================================= */
+
+.pos .order-container,
+.pos .order {
+    background: linear-gradient(180deg, #fffdf9 0%, #f7f0e4 100%) !important;
+    border-radius: 0 0 var(--pos-radius-lg) var(--pos-radius-lg) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(216, 179, 106, 0.16) !important;
+}
+
+.pos .orderlines,
+.pos .order-lines,
+.pos .order .orderlines {
+    background: transparent !important;
+}
+
+.pos .orderline {
+    background: rgba(255, 255, 255, 0.86) !important;
+    border: 1px solid rgba(216, 179, 106, 0.14) !important;
+    border-radius: 16px !important;
+    margin: 8px !important;
+    padding: 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.pos .orderline.selected,
+.pos .orderline:hover {
+    background: #fffaf2 !important;
+    border-color: rgba(216, 179, 106, 0.30) !important;
+    box-shadow: 0 6px 16px rgba(199, 165, 93, 0.10) !important;
+}
+
+.pos .orderline .price,
+.pos .orderline .product-name,
+.pos .orderline .product-name *,
+.pos .orderline .info-list,
+.pos .orderline .info-list * {
+    color: #3b4752 !important;
+}
+
+.pos .orderline .qty,
+.pos .orderline .quantity,
+.pos .orderline .info,
+.pos .orderline .price-per-unit {
+    color: #b8892f !important;
+    font-weight: 700 !important;
+}
+
+/* total / summary */
+.pos .order-summary,
+.pos .summary,
+.pos .total {
+    color: #1f2d3d !important;
+    font-weight: 900 !important;
+}
+
+.pos .order-summary .value,
+.pos .summary .value,
+.pos .total .value,
+.pos .summary .total,
+.pos .summary .total-price {
+    color: #1f2d3d !important;
+}
+
+.pos .summary .subentry,
+.pos .summary .taxes,
+.pos .summary .subtle,
+.pos .order-summary .subentry {
+    color: #7a6a4f !important;
+    font-weight: 700 !important;
+}
+
+/*
+ * Every button in the POS, in one place.
+ *
+ * This rule reaches any bare `<button>`, so it is what actually decides how a
+ * control looks no matter which screen it sits on — it used to force a cool
+ * translucent white with a blue-grey ink, which is why buttons read as
+ * foreign against the warm screen around them. It now carries the same
+ * champagne surface, warm hairline and lit top edge as the product cards, so
+ * a control looks the same whether it is a mode toggle, an action tile, a
+ * numpad key or a button on the payment screen.
+ */
+.pos .button,
+.pos .control-button,
+.pos button {
+    border-radius: 14px !important;
+    border: 1px solid rgba(130, 95, 40, 0.16) !important;
+    transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
+    box-shadow:
+        0 1px 2px rgba(70, 50, 20, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.62) !important;
+    font-weight: 600 !important;
+    margin: 5px;
+    background: linear-gradient(180deg, #fdfaf3 0%, #f7f0e2 100%) !important;
+    color: #4a443b !important;
+}
+
+.pos .button:hover,
+.pos .control-button:hover,
+.pos button:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(180deg, #fffdf7 0%, #faf4e8 100%) !important;
+    border-color: rgba(130, 95, 40, 0.30) !important;
+}
+
+.pos .button.highlight,
+.pos .control-button.highlight,
+.pos .pay-order-button,
+.pos .payment-button {
+    background: linear-gradient(135deg, #d8b36a, #c7a55d) !important;
+    color: #1f2d3d !important;
+    box-shadow: 0 10px 22px rgba(199, 165, 93, 0.22) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.pos .button.highlight:hover,
+.pos .control-button.highlight:hover,
+.pos .pay-order-button:hover,
+.pos .payment-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(199, 165, 93, 0.28) !important;
+    background: linear-gradient(135deg, #e2c17a, #d0af6c) !important;
+}
+
+.pos .payment-button,
+.pos .pay-order-button {
+    min-height: 52px !important;
+    height: 52px !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    border-radius: 18px !important;
+    margin-bottom: 10px !important;
+    font-weight: 800 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 16px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .control-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+}
+
+.pos .product-screen .control-buttons .control-button,
+.pos .product-screen .control-buttons button,
+.pos .product-screen .control-buttons .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .control-buttons .order-split {
+    order: 1 !important;
+}
+
+.pos .product-screen .control-buttons .customer-button {
+    order: 2 !important;
+}
+
+.pos .product-screen .control-buttons .refund-button {
+    order: 3 !important;
+}
+
+.pos .product-screen .control-buttons .transfer-order-button {
+    order: 4 !important;
+}
+
+.pos .product-screen .control-buttons .save-order-button {
+    order: 5 !important;
+    grid-column: 1 / -1 !important;
+}
+
+/* numpad */
+.pos .product-screen .numpad,
+.pos .product-screen .subpads {
+    background: #f3eee3 !important;
+    border-inline-start: 1px solid rgba(216, 179, 106, 0.14) !important;
+}
+
+.pos .product-screen .numpad .button,
+.pos .product-screen .mode-button,
+.pos .product-screen .input-button {
+    background: rgba(255, 255, 255, 0.90) !important;
+    color: #3b4752 !important;
+    border: 1px solid rgba(216, 179, 106, 0.16) !important;
+    min-height: 52px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+    font-weight: 800 !important;
+}
+
+.pos .product-screen .numpad .button:hover,
+.pos .product-screen .mode-button:hover,
+.pos .product-screen .input-button:hover {
+    background: #fffaf2 !important;
+    border-color: rgba(216, 179, 106, 0.34) !important;
+    box-shadow: 0 8px 18px rgba(199, 165, 93, 0.12) !important;
+}
+
+.pos .product-screen .numpad .button.active,
+.pos .product-screen .mode-button.active,
+.pos .product-screen .input-button.active,
+.pos .product-screen .numpad .button.selected,
+.pos .product-screen .mode-button.selected,
+.pos .product-screen .input-button.selected {
+    background: linear-gradient(135deg, #d8b36a, #c7a55d) !important;
+    color: #1f2d3d !important;
+    border-color: transparent !important;
+}
+
+
+
+.pos .order-button *,
+.pos .leftpane .order-button *,
+.pos .order-widget .order-button *,
+.pos .summary-button * {
+    color: #ffffff !important;
+}
+
+/* =========================================
+   FLOOR SCREEN / TABLES
+   WARM GOLD THEME - FINAL
+========================================= */
+
+/* الخلفية العامة */
+.pos .floor-screen,
+.pos .screen.floor-screen,
+.pos .floor-map {
+    background:
+        radial-gradient(circle at 12% 10%, rgba(216, 179, 106, 0.10), transparent 28%),
+        radial-gradient(circle at 88% 85%, rgba(199, 165, 93, 0.08), transparent 32%),
+        linear-gradient(160deg, #f7f3eb 0%, #f1eadf 48%, #e8dece 100%) !important;
+}
+
+/* ماب الطاولات */
+.pos .floor-map {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 28px 34px 40px !important;
+    overflow: auto !important;
+}
+
+.pos .floor-map > div {
+    position: relative !important;
+    margin: 0 auto !important;
+}
+
+.pos .floor-map .tables,
+.pos .floor-map .table-map {
+    position: relative !important;
+    display: block !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* شريط اختيار الدور */
+.pos .floor-selector {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 10px 18px 2px !important;
+    justify-content: center !important;
+    gap: 14px !important;
+}
+
+.pos .floor-selector .button-add {
+    display: none !important;
+}
+
+.pos .floor-selector .button-floor {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border: 1px solid rgba(199, 165, 93, 0.18) !important;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04) !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 220px !important;
+    min-height: 56px !important;
+    padding: 0 24px !important;
+    margin: 0 !important;
+
+    border-radius: 0 0 18px 18px !important;
+    color: #243742 !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    transition: all 0.22s ease !important;
+}
+
+.pos .floor-selector .button-floor:hover {
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(199, 165, 93, 0.28) !important;
+}
+
+.pos .floor-selector .button-floor.active,
+.pos .floor-selector .button-floor.selected {
+    background: linear-gradient(180deg, #f6efe2 0%, #efe3cf 100%) !important;
+    border-color: rgba(199, 165, 93, 0.34) !important;
+    box-shadow: 0 12px 24px rgba(199, 165, 93, 0.12) !important;
+    color: #1f2d3d !important;
+}
+
+.pos .floor-selector .button-floor::after {
+    content: "" !important;
+    display: block !important;
+    width: 96px !important;
+    height: 4px !important;
+    margin: 10px auto 0 !important;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, #c7a55d, #e2c17a) !important;
+    opacity: 0.95 !important;
+}
+
+/* الطاولة نفسها */
+.pos .table,
+.pos .floor-table,
+.pos .table-widget {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(248,244,236,0.96) 100%) !important;
+    border: 1px solid rgba(199, 165, 93, 0.16) !important;
+    border-radius: 24px !important;
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.05),
+        0 2px 6px rgba(199, 165, 93, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.75) !important;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease,
+        background 0.22s ease !important;
+    overflow: visible !important;
+    backdrop-filter: blur(4px);
+}
+
+/* Hover */
+.pos .table:hover,
+.pos .floor-table:hover,
+.pos .table-widget:hover {
+    transform: translateY(-4px) scale(1.02) !important;
+    border-color: rgba(199, 165, 93, 0.34) !important;
+    box-shadow:
+        0 18px 34px rgba(0, 0, 0, 0.08),
+        0 8px 16px rgba(199, 165, 93, 0.14) !important;
+}
+
+/* Selected */
+.pos .table.selected,
+.pos .floor-table.selected,
+.pos .table-widget.selected {
+    background: linear-gradient(180deg, #fff8ec 0%, #f3e3bf 100%) !important;
+    border-color: #d8b36a !important;
+    box-shadow:
+        0 18px 36px rgba(199, 165, 93, 0.22),
+        inset 0 0 0 1px rgba(255,255,255,0.42) !important;
+    color: #1f2d3d !important;
+}
+
+/* رقم الطاولة */
+.pos .table .label,
+.pos .table .table-name,
+.pos .floor-table .label,
+.pos .floor-table .table-name,
+.pos .table-widget .label,
+.pos .table-widget .table-name {
+    font-size: 30px !important;
+    font-weight: 900 !important;
+    color: #f8fafc !important;
+    line-height: 1 !important;
+    letter-spacing: 0.2px !important;
+    text-align: center !important;
+    text-shadow: 0 3px 10px rgba(15, 23, 42, 0.16) !important;
+    opacity: 0.96 !important;
+}
+
+.pos .table.selected .label,
+.pos .table.selected .table-name,
+.pos .floor-table.selected .label,
+.pos .floor-table.selected .table-name,
+.pos .table-widget.selected .label,
+.pos .table-widget.selected .table-name {
+    color: #ffffff !important;
+    text-shadow: 0 4px 12px rgba(120, 92, 44, 0.28) !important;
+}
+
+/* عدد الكراسي */
+.pos .table .seats,
+.pos .table .capacity,
+.pos .floor-table .seats,
+.pos .floor-table .capacity,
+.pos .table-widget .seats,
+.pos .table-widget .capacity {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 30px !important;
+    height: 28px !important;
+    padding: 0 10px !important;
+    margin-top: 8px !important;
+    border-radius: 999px !important;
+    background: rgba(199, 165, 93, 0.12) !important;
+    color: #8f7440 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+.pos .table.selected .seats,
+.pos .table.selected .capacity,
+.pos .floor-table.selected .seats,
+.pos .floor-table.selected .capacity,
+.pos .table-widget.selected .seats,
+.pos .table-widget.selected .capacity {
+    background: rgba(255, 255, 255, 0.26) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+/* عداد الأوردرات */
+.pos .table .orders,
+.pos .table .order-count,
+.pos .floor-table .orders,
+.pos .floor-table .order-count,
+.pos .table-widget .orders,
+.pos .table-widget .order-count {
+    background: #1f2d3d !important;
+    color: #ffffff !important;
+    border: 3px solid #ffffff !important;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.16) !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+}
+
+.pos .table.selected .orders,
+.pos .table.selected .order-count,
+.pos .floor-table.selected .orders,
+.pos .floor-table.selected .order-count,
+.pos .table-widget.selected .orders,
+.pos .table-widget.selected .order-count {
+    background: #16a34a !important;
+    border-color: rgba(255,255,255,0.9) !important;
+}
+
+.pos .table > div,
+.pos .floor-table > div,
+.pos .table-widget > div {
+    text-align: center !important;
+}
+
+/* responsive */
+@media (max-width: 1200px) {
+    .pos .floor-map {
+        padding: 22px !important;
+    }
+
+    .pos .floor-selector .button-floor {
+        min-width: 170px !important;
+        min-height: 50px !important;
+        font-size: 18px !important;
+        padding: 0 16px !important;
+    }
+
+    .pos .table .label,
+    .pos .table .table-name,
+    .pos .floor-table .label,
+    .pos .floor-table .table-name,
+    .pos .table-widget .label,
+    .pos .table-widget .table-name {
+        font-size: 24px !important;
+    }
+}
+
+.pos .table .order-count,
+.pos .floor-table .order-count,
+.pos .table-widget .order-count,
+.custom-floor-table .order-count {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+.table-free {
+    background: #e8f5e9 !important;
+    border: 2px solid #22c55e !important;
+}
+
+.table-occupied {
+    background: #fee2e2 !important;
+    border: 2px solid #ef4444 !important;
+}
+
+.table-reserved {
+    background: #fef9c3 !important;
+    border: 2px solid #eab308 !important;
+}
+
+
+/* =========================
+   LAYOUT WIDTH CONTROL
+========================= */
+
+.pos .leftpane {
+    flex: 0 0 32% !important;   
+    max-width: 32% !important;
+}
+
+.pos .product-screen .rightpane {
+    flex: 1 1 auto !important;
+}
+
+.pos .products,
+.pos .product-list,
+.pos .products-widget {
+    width: 100% !important;
+}
+
+/* =========================
+   LEFT PANEL HEIGHT CONTROL
+======================== */
+.pos .leftpane {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+
+.pos .leftpane > div:first-child {
+    flex: 1 1 auto !important; 
+    min-height: 0 !important;
+}
+
+.pos .leftpane .pads {
+    flex: 0 0 auto !important;
+}
+
+
+/* =========================================
+   CLEAN NUMPAD / ACTIONPAD LAYOUT
+========================================= */
+
+/* افتراضي: النمباد مخفية */
+.pos .product-screen .numpad {
+    display: none !important;
+}
+
+/* الحاوية السفلية */
+.pos .product-screen .subpads {
+    display: flex !important;
+    align-items: stretch !important;
+    background: #f3eee3 !important;
+    border-inline-start: 1px solid rgba(216, 179, 106, 0.14) !important;
+}
+
+/* العمود الشمال */
+.pos .product-screen .actionpad {
+    padding: 10px !important;
+    background: #f7f1e6 !important;
+}
+
+/* زرار numpad */
+.pos .product-screen .toggle-numpad-btn {
+    width: 100% !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    margin: 0 0 10px 0 !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #fffaf2 !important;
+    border: 1px solid rgba(216, 179, 106, 0.22) !important;
+    color: #7a5a22 !important;
+    box-shadow: none !important;
+}
+
+/* =========================
+   WHEN NUMPAD IS HIDDEN
+========================= */
+.pos .product-screen:not(.pos-modern-numpad-open) .actionpad {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto auto !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    border-inline-end: none !important;
+}
+
+.pos .product-screen:not(.pos-modern-numpad-open) .toggle-numpad-btn {
+    grid-column: 1 / 3 !important;
+}
+
+.pos .product-screen:not(.pos-modern-numpad-open) .pay-order-button,
+.pos .product-screen:not(.pos-modern-numpad-open) .payment-button {
+    grid-column: 1 / 2 !important;
+    width: 100% !important;
+    min-height: 54px !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen:not(.pos-modern-numpad-open) .submit-order {
+    grid-column: 2 / 3 !important;
+    width: 100% !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    margin: 0 !important;
+    border-radius: 18px !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    padding: 0 14px !important;
+}
+
+/* =========================
+   WHEN NUMPAD IS SHOWN
+========================= */
+.pos .product-screen.pos-modern-numpad-open .actionpad {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 47% !important;
+    min-width: 47% !important;
+    max-width: 47% !important;
+    gap: 10px !important;
+    border-inline-end: 1px solid rgba(216, 179, 106, 0.14) !important;
+}
+
+.pos .product-screen.pos-modern-numpad-open .pay-order-button,
+.pos .product-screen.pos-modern-numpad-open .payment-button {
+    width: 100% !important;
+    min-height: 54px !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen.pos-modern-numpad-open .submit-order {
+    width: 100% !important;
+    min-height: 120px !important;
+    height: auto !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    overflow: hidden !important;
+    padding: 12px !important;
+}
+
+/* النمباد وهي ظاهرة */
+.pos .product-screen.pos-modern-numpad-open .numpad {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-content: flex-start !important;
+    width: 53% !important;
+    min-width: 53% !important;
+    max-width: 53% !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    row-gap: 10px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* أزرار النمباد */
+.pos .product-screen.pos-modern-numpad-open .numpad .col,
+.pos .product-screen.pos-modern-numpad-open .numpad > button {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+}
+
+.pos .product-screen .numpad .button,
+.pos .product-screen .mode-button,
+.pos .product-screen .input-button {
+    min-height: 54px !important;
+    border-radius: 14px !important;
+}
+
+/* =========================
+   ORDER TEXT OVERFLOW FIX
+========================= */
+.pos .submit-order,
+.pos .submit-order * {
+    min-width: 0 !important;
+}
+
+.pos .submit-order span,
+.pos .submit-order div,
+.pos .submit-order .label,
+.pos .submit-order .text-truncate {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+}
+
+/* FORCE PRODUCT PRICE VISIBILITY */
+
+.pos .product-price {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    color: #111827 !important;
+    background: transparent !important;
+
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+
+    text-align: center !important;
+
+    min-height: 24px !important;
+    height: auto !important;
+
+    position: relative !important;
+    z-index: 999 !important;
+}
+
+/* ===== PRODUCT CARD IMPROVEMENTS ===== */
+
+.pos .product {
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.05) !important;
+
+    transition: all 0.22s ease !important;
+}
+
+.pos .product:hover {
+    transform: translateY(-2px) !important;
+
+    box-shadow:
+        0 10px 24px rgba(0,0,0,0.10) !important;
+}
+
+/* image */
+
+.pos .product-img {
+    border-radius: 22px 22px 0 0 !important;
+    overflow: hidden !important;
+}
+
+.pos .product-img img {
+    object-fit: cover !important;
+}
+
+/* content area */
+
+.pos .product-content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    gap: 10px !important;
+
+    padding: 14px 10px 18px !important;
+
+    min-height: 108px !important;
+
+    background: #fff !important;
+}
+
+/* product name */
+
+.pos .product-name {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+
+    color: #1f2937 !important;
+
+    text-align: center !important;
+    line-height: 1.5 !important;
+
+    max-height: 52px !important;
+
+    overflow: hidden !important;
+}
+
+/* price */
+
+.pos .product-price {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    font-size: 15px !important;
+    font-weight: 800 !important;
+
+    color: #0f172a !important;
+
+    background: #f8f5ee !important;
+
+    padding: 6px 14px !important;
+
+    border-radius: 999px !important;
+
+    min-width: 90px !important;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.05) !important;
+}
+
+/* =========================================================
+   FINAL PRODUCT CARD STYLE — screenshot match
+========================================================= */
+
+
+
+.pos .product:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.10) !important;
+    border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+.pos .product:active {
+    transform: scale(0.99) !important;
+}
+
+/* Image area */
+.pos .product .product-img {
+    height: 122px !important;
+    min-height: 122px !important;
+    border-radius: 24px 24px 0 0 !important;
+    overflow: hidden !important;
+    background: #f5efe6 !important;
+}
+
+.pos .product .product-img img,
+.pos .product img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+/* Content area */
+.pos .product .product-content {
+    min-height: auto !important;
+
+    padding: 10px 10px 12px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 6px !important;
+}
+
+/* Name */
+.pos .product .product-name,
+.pos .product-name {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    color: #111827 !important;
+    text-align: center !important;
+
+    min-height: 40px !important;
+    max-height: 42px !important;
+    overflow: hidden !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Price pill */
+.pos .product .price-tag,
+.pos .product-price,
+.pos .price-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 92px !important;
+    height: 30px !important;
+
+    padding: 0 14px !important;
+    margin-top: 2px !important;
+
+    border-radius: 999px !important;
+    background: #f5f1e7 !important;
+    color: #111827 !important;
+
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Keep card spacing clean in the grid */
+
+
+/* Small screens */
+@media (max-width: 1400px) {
+    .pos .product,
+    .pos .product-list .product,
+    .pos .products .product,
+    .pos .products-widget .product {
+        flex: 0 0 168px !important;
+        width: 168px !important;
+        max-width: 168px !important;
+        min-width: 168px !important;
+    }
+
+    .pos .product .product-img {
+        height: 112px !important;
+        min-height: 112px !important;
+    }
+
+    .pos .product .product-content {
+        min-height: 108px !important;
+        padding: 12px 10px 14px !important;
+        gap: 10px !important;
+    }
+
+    .pos .product .product-name,
+    .pos .product-name {
+        font-size: 13px !important;
+        min-height: 38px !important;
+        max-height: 40px !important;
+    }
+
+    .pos .product .price-tag,
+    .pos .product-price,
+    .pos .price-tag {
+        font-size: 15px !important;
+        min-width: 86px !important;
+        height: 28px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .pos .product,
+    .pos .product-list .product,
+    .pos .products .product,
+    .pos .products-widget .product {
+        flex: 0 0 160px !important;
+        width: 160px !important;
+        max-width: 160px !important;
+        min-width: 160px !important;
+    }
+
+    .pos .product .product-img {
+        height: 106px !important;
+        min-height: 106px !important;
+    }
+}
+/* ===== NAVBAR ALIGN FIX ===== */
+
+.pos .top-header,
+.pos .pos-topheader,
+.pos .top-content {
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* right area */
+
+.pos .pos-rightheader {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+}
+
+/* workplace button */
+
+.pos .pos-workplace-btn {
+    height: 44px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin: 0 !important;
+    padding-inline: 18px !important;
+
+    border-radius: 999px !important;
+}
+
+/* search */
+
+.pos .search-bar,
+.pos .search-product-input,
+.pos .search-products {
+    margin: 0 !important;
+}
+
+/* avatar + menu */
+
+.pos .header-button,
+.pos .menu-button,
+.pos .oe_status {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* prevent vertical shifting */
+
+.pos .navbar-button,
+.pos .top-header button,
+.pos .top-header input,
+.pos .top-header i {
+    vertical-align: middle !important;
+}
+/* ===== CATEGORY SEARCH BAR ===== */
+
+.pos .category-search-wrapper {
+    width: 100%;
+    padding: 0 12px 14px;
+}
+
+.pos .category-search-wrapper .search-bar {
+    width: 100% !important;
+    max-width: 520px !important;
+
+    margin-inline: auto !important;
+
+    border-radius: 18px !important;
+    overflow: hidden !important;
+
+    background: #22232b !important;
+}
+
+/* navbar spacing */
+
+.pos .top-header {
+    min-height: 82px !important;
+}
+/* HIDE NAVBAR SEARCH */
+
+.pos .top-header .search-bar,
+.pos .top-header .search-container,
+.pos .top-header .pos-search-bar {
+    display: none !important;
+}
+/* CUSTOM SEARCH */
+
+.pos .category-search-wrapper {
+    padding: 10px 14px;
+}
+
+.pos .custom-pos-search {
+    width: 100%;
+    max-width: 420px;
+
+    height: 52px;
+
+    background: #23232b;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 18px;
+
+    gap: 12px;
+}
+
+.pos .custom-pos-search i {
+    color: white;
+    font-size: 20px;
+}
+
+.pos .custom-pos-search input {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+
+    width: 100%;
+
+    color: white;
+    font-size: 16px;
+}
+
+.pos .custom-pos-search input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+/* ===== CUSTOM POS SEARCH ===== */
+
+.pos .category-search-wrapper {
+
+    padding: 12px 16px 6px;
+
+    display: flex;
+    justify-content: center;
+
+    background: #f3f4f6;
+}
+
+.pos .custom-pos-search {
+
+    width: 100%;
+    max-width: 520px;
+
+    height: 52px;
+
+    background: #23232b;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+
+    padding-inline: 18px;
+
+    gap: 12px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.08);
+}
+
+.pos .custom-pos-search i {
+
+    color: white;
+    font-size: 18px;
+}
+
+.pos .custom-pos-search input {
+
+    width: 100%;
+
+    border: none !important;
+    outline: none !important;
+
+    background: transparent !important;
+
+    color: white;
+
+    font-size: 16px;
+}
+
+.pos .custom-pos-search input::placeholder {
+
+    color: rgba(255,255,255,0.55);
+}
+.pos .product-list .product,
+.pos .products .product,
+.pos .products-widget .product {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)) !important;
+    gap: 18px !important;
+    align-content: start !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    flex: unset !important;
+}
+.pos .product-list,
+.pos .products,
+.pos .products-widget {
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    gap: 18px !important;
+}
+/* ===== CLEAN PRODUCT GRID ===== */
+
+.pos .products,
+.pos .product-list,
+.pos .products-widget {
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(185px, 1fr)) !important;
+
+    gap: 18px !important;
+
+    align-content: start !important;
+
+    padding: 10px !important;
+}
+
+/* الكارت */
+.pos .product,
+.pos .product-list .product,
+.pos .products .product,
+.pos .products-widget .product {
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    flex: unset !important;
+}
+.pos .product .product-name,
+.pos .product-name {
+    min-height: auto !important;
+    max-height: none !important;
+}
+
+/* Hosny POS final RTL alignment lock. Source values are written for Odoo's RTL compilation. */
+.pos .pos-topheader {
+    direction: rtl !important;
+    flex-direction: row !important;
+}
+
+.pos .pos-topheader .pos-branding {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+    min-width: 92px !important;
+    justify-content: flex-start !important;
+}
+
+.pos .pos-topheader .pos-logo {
+    margin-right: 18px !important;
+    margin-left: 0 !important;
+}
+
+/* =========================================================
+   Text-first POS product cards
+   Scope: Product screen right pane only.
+========================================================= */
+
+.pos .product-screen .rightpane .product-list,
+.pos .product-screen .rightpane .products,
+.pos .product-screen .rightpane .products-widget {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(184px, 1fr)) !important;
+    gap: 14px !important;
+    align-content: start !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    padding: 10px 12px 14px !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .product-list article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .products article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .products-widget article.product.o-text-first-product-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 118px !important;
+    height: 100% !important;
+    flex: unset !important;
+    border: 1px solid rgba(201, 168, 76, 0.26) !important;
+    border-radius: 18px !important;
+    background: #fffdf8 !important;
+    color: #16202c !important;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07) !important;
+    overflow: hidden !important;
+    transform: none !important;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease !important;
+    touch-action: manipulation !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card:hover {
+    border-color: rgba(201, 168, 76, 0.48) !important;
+    background: #fffaf0 !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10) !important;
+    transform: translateY(-1px) !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card:active {
+    border-color: rgba(185, 143, 43, 0.68) !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.10) !important;
+    transform: scale(0.995) !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card:focus-visible {
+    outline: 0 !important;
+    border-color: rgba(185, 143, 43, 0.72) !important;
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.20), 0 8px 20px rgba(15, 23, 42, 0.10) !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-img,
+.pos .product-screen .rightpane article.product.o-text-first-product-card img {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+    width: 100% !important;
+    min-height: 118px !important;
+    height: 100% !important;
+    padding: 14px 12px 12px !important;
+    gap: 10px !important;
+    background: transparent !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-text-product-main {
+    flex: 1 1 auto !important;
+    min-height: 74px !important;
+    gap: 10px !important;
+    text-align: center !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+    width: 100% !important;
+    min-height: 0 !important;
+    max-height: calc(2 * 1.35em) !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    color: #141f2b !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
+    text-align: center !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    overflow-wrap: anywhere !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-price {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    min-width: 112px !important;
+    min-height: 36px !important;
+    margin: 0 !important;
+    padding: 7px 14px !important;
+    border: 1px solid rgba(201, 168, 76, 0.34) !important;
+    border-radius: 12px !important;
+    background: #f8f1df !important;
+    color: #132033 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.72) !important;
+    font-variant-numeric: tabular-nums !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-price-value {
+    font-size: 19px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-price-currency {
+    font-size: 0.82em !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-product-card-actions {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(66px, 1fr)) !important;
+    gap: 6px !important;
+    width: 100% !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-product-card-actions:empty {
+    display: none !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-product-card-actions .btn,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-product-card-actions button {
+    min-width: 0 !important;
+    min-height: 42px !important;
+    padding: 6px 7px !important;
+    border-radius: 10px !important;
+    border-color: rgba(201, 168, 76, 0.24) !important;
+    background: #fffaf1 !important;
+    color: #16202c !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-cart-qty {
+    min-width: 28px !important;
+    height: 28px !important;
+    border-radius: 9px !important;
+    background: #d9b64f !important;
+    color: #3b2a06 !important;
+    box-shadow: 0 4px 10px rgba(185, 143, 43, 0.30) !important;
+}
+
+@media (max-width: 1400px) {
+    .pos .product-screen .rightpane .product-list,
+    .pos .product-screen .rightpane .products,
+    .pos .product-screen .rightpane .products-widget {
+        grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .pos .product-screen .rightpane article.product.o-text-first-product-card {
+        min-height: 112px !important;
+    }
+
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+        min-height: 112px !important;
+        padding: 12px 10px 10px !important;
+    }
+
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+        font-size: 15px !important;
+    }
+
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .o-price-value {
+        font-size: 17px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .pos .product-screen .rightpane .product-list,
+    .pos .product-screen .rightpane .products,
+    .pos .product-screen .rightpane .products-widget {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+        font-size: 14px !important;
+    }
+}
+
+.pos .pos-topheader .pos-rightheader {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    direction: rtl !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .menu-button {
+    order: 1 !important;
+    flex: 0 0 auto !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .status-buttons {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+}
+
+.pos .pos-topheader .pos-rightheader > .pos-workplace-btn {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .rightpane .category-list {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    direction: rtl !important;
+}
+
+.pos .product-screen .rightpane .category-list > :not(.hosny-category-search) {
+    order: 1 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    direction: rtl !important;
+    scrollbar-gutter: stable !important;
+}
+
+/*
+ * Bidi only: `color` does not belong on a `*` rule with `!important`, because
+ * nothing inside a card can then set a colour of its own.
+ */
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto .product * {
+    direction:ltr !important;
+    unicode-bidi:plaintext !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-actions {
+    width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-footer-action {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.payment-screen .main-content.hosny-payment-layout {
+    direction: rtl !important;
+    flex-direction: row !important;
+}
+
+.payment-screen .payment-primary-panel {
+    order: 1 !important;
+}
+
+.payment-screen .payment-side-panel {
+    order: 2 !important;
+    overflow-y: auto !important;
+    scrollbar-gutter: stable !important;
+}
+
+.payment-screen .hosny-payment-status,
+.payment-screen .hosny-payment-status .payment-status-shell,
+.payment-screen .payment-actions-card,
+.payment-screen .payment-numpad-card {
+    direction: ltr !important;
+}
+
+.payment-screen .payment-numpad-card {
+    flex: 0 0 auto !important;
+    padding: 14px !important;
+}
+
+.payment-screen .payment-numpad-card .numpad {
+    direction: rtl !important;
+    grid-auto-rows: 54px !important;
+    gap: 10px !important;
+    height: auto !important;
+    align-content: start !important;
+}
+
+.payment-screen .payment-numpad-card .numpad .btn {
+    width: 80% !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    border-radius: 14px !important;
+    font-size: 22px !important;
+}
+.oi:before, .fa:before {
+    margin: 10px !important;
+}
+
+/* ================================================================
+   RESTAURANT FLOOR — HOSNY HOSPITALITY DASHBOARD
+   Kept at the end of the bundle so every floor uses one visual system.
+================================================================ */
+.pos .floor-screen {
+    --floor-ink: #20342f;
+    --floor-muted: #71807b;
+    --floor-gold: #b99142;
+    --floor-gold-dark: #866526;
+    --floor-line: rgba(77, 91, 85, 0.12);
+    --floor-surface: rgba(255, 255, 255, 0.92);
+    background: #f4f1e9 !important;
+    color: var(--floor-ink) !important;
+}
+
+/* A single-purpose header: only the floor sections remain visible. */
+.pos .floor-screen > .d-flex:first-child {
+    min-height: 76px !important;
+    padding: 10px 48px !important;
+    align-items: center !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(185, 145, 66, 0.18) !important;
+    background: rgba(255, 253, 248, 0.96) !important;
+    box-shadow: 0 8px 28px rgba(43, 55, 50, 0.06) !important;
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+.pos .floor-screen .new-order,
+.pos .floor-screen .right-buttons {
+    display: none !important;
+}
+
+/* Floor names: علوي، سفري، أرضي، VIP and any future section. */
+.pos .floor-screen .floor-selector {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    justify-content: safe center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    scrollbar-width: thin;
+}
+
+.pos .floor-screen .floor-selector .button-floor {
+    position: relative !important;
+    min-width: 150px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    padding: 0 26px !important;
+    border: 1px solid var(--floor-line) !important;
+    border-radius: 14px !important;
+    background: #f8f7f3 !important;
+    color: #5d6965 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9) !important;
+    transform: none !important;
+    transition: color .18s ease, background .18s ease, border-color .18s ease,
+        box-shadow .18s ease, transform .18s ease !important;
+}
+
+.pos .floor-screen .floor-selector .button-floor::after {
+    content: "" !important;
+    position: absolute !important;
+    inset-inline-start: 50% !important;
+    bottom: 7px !important;
+    width: 0 !important;
+    height: 3px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    background: var(--floor-gold) !important;
+    opacity: 0 !important;
+    transform: translateX(-50%) !important;
+    transition: width .18s ease, opacity .18s ease !important;
+}
+
+.pos .floor-screen .floor-selector .button-floor:hover {
+    border-color: rgba(185, 145, 66, 0.34) !important;
+    background: #fffdf9 !important;
+    color: var(--floor-ink) !important;
+    transform: translateY(-1px) !important;
+}
+
+.pos .floor-screen .floor-selector .button-floor.active,
+.pos .floor-screen .floor-selector .button-floor.selected {
+    border-color: rgba(185, 145, 66, 0.48) !important;
+    background: linear-gradient(145deg, #fffdf7, #f8edda) !important;
+    color: var(--floor-gold-dark) !important;
+    box-shadow: 0 8px 20px rgba(137, 102, 39, 0.11),
+        inset 0 1px 0 #fff !important;
+}
+
+.pos .floor-screen .floor-selector .button-floor.active::after,
+.pos .floor-screen .floor-selector .button-floor.selected::after {
+    width: 38px !important;
+    opacity: 1 !important;
+}
+
+/* Calm canvas with a subtle architectural grid. */
+.pos .floor-screen > .overflow-auto,
+.pos .floor-screen .floor-map {
+    background-color: #f4f1e9 !important;
+    background-image:
+        linear-gradient(rgba(76, 91, 84, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 91, 84, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(205, 177, 117, 0.10), transparent 42%) !important;
+    background-size: 28px 28px, 28px 28px, 100% 100% !important;
+}
+
+.pos .floor-screen > .overflow-auto {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+}
+
+.pos .floor-screen .floor-map {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    box-sizing: border-box !important;
+    padding: 28px 32px 44px !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    overflow-x: hidden !important;
+}
+
+.pos .floor-screen .floor-kanban {
+    display: flex !important;
+    flex-flow: row wrap !important;
+    justify-content: center !important;
+    align-content: start !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 1560px !important;
+    min-width: 0 !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+/* Table cards. Inline Odoo colors remain meaningful in edit mode; normal mode
+   gets a consistent free/occupied language for fast cashier scanning. */
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table {
+    flex: 1 1 210px !important;
+    width: 100% !important;
+    max-width: 260px !important;
+    min-width: 180px !important;
+    min-height: 150px !important;
+    height: 150px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(42, 83, 69, 0.16) !important;
+    border-radius: 20px !important;
+    background: linear-gradient(145deg, #ffffff 0%, #f2f8f5 100%) !important;
+    color: var(--floor-ink) !important;
+    overflow: hidden !important;
+    box-shadow: 0 9px 22px rgba(35, 62, 52, 0.075),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    isolation: isolate !important;
+    transform: none !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table::before {
+    content: "" !important;
+    position: absolute !important;
+    inset-inline-start: 22px !important;
+    top: 18px !important;
+    bottom: auto !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
+    background: #3d9872 !important;
+    box-shadow: 0 0 0 5px rgba(61, 152, 114, .11) !important;
+    z-index: 2 !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table:hover {
+    border-color: rgba(54, 126, 98, 0.48) !important;
+    box-shadow: 0 17px 34px rgba(35, 62, 52, 0.14),
+        0 4px 10px rgba(185, 145, 66, 0.08) !important;
+    transform: translateY(-4px) !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table.occupied {
+    border-color: rgba(190, 97, 72, 0.34) !important;
+    background: linear-gradient(145deg, #fffefd 0%, #faece7 100%) !important;
+    box-shadow: 0 10px 25px rgba(118, 61, 45, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table.occupied::before {
+    background: #c66e55 !important;
+    box-shadow: 0 0 0 5px rgba(198, 110, 85, .11) !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table.selected {
+    border-color: var(--floor-gold) !important;
+    background: linear-gradient(145deg, #fffdf8 0%, #f5e5c4 100%) !important;
+    box-shadow: 0 0 0 3px rgba(185, 145, 66, 0.16),
+        0 18px 38px rgba(83, 65, 30, 0.16) !important;
+}
+
+.pos .floor-screen .floor-table .info {
+    border-radius: inherit !important;
+    overflow: hidden !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table .info::before {
+    content: none !important;
+    display: none !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table .label {
+    top: 22px !important;
+    left: 50% !important;
+    right: auto !important;
+    color: #233d35 !important;
+    font-size: 36px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    letter-spacing: -1px !important;
+    text-shadow: none !important;
+    transform: translateX(-50%) !important;
+    opacity: 1 !important;
+}
+
+[dir="rtl"] .pos .floor-screen:not(:has(.edit-buttons)) .floor-table .label,
+.pos[dir="rtl"] .floor-screen:not(:has(.edit-buttons)) .floor-table .label {
+    left: 50% !important;
+    right: auto !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table .info::after {
+    content: "متاحة" !important;
+    position: absolute !important;
+    inset-inline-start: 50% !important;
+    bottom: 16px !important;
+    padding: 6px 12px !important;
+    border-radius: 999px !important;
+    background: rgba(76, 163, 126, 0.11) !important;
+    color: #327c60 !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transform: translateX(-50%) !important;
+}
+
+.pos .floor-screen:not(:has(.edit-buttons)) .floor-table.occupied .info::after {
+    content: "مشغولة" !important;
+    background: rgba(198, 110, 85, 0.12) !important;
+    color: #a5533d !important;
+}
+
+.pos .floor-screen .floor-table .order-count {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    top: 12px !important;
+    inset-inline-end: 12px !important;
+    width: 27px !important;
+    height: 27px !important;
+    border: 2px solid #fff !important;
+    border-radius: 50% !important;
+    background: #c65348 !important;
+    color: #fff !important;
+    box-shadow: 0 5px 12px rgba(115, 51, 43, 0.22) !important;
+}
+
+@media (max-width: 1100px) {
+    .pos .floor-screen > .d-flex:first-child {
+        min-height: 68px !important;
+        padding: 8px 10px !important;
+    }
+
+    .pos .floor-screen .floor-selector {
+        justify-content: safe center !important;
+        padding: 0 8px !important;
+    }
+
+    .pos .floor-screen .floor-selector .button-floor {
+        min-width: 118px !important;
+        min-height: 46px !important;
+        height: 46px !important;
+        padding: 0 16px !important;
+        font-size: 14px !important;
+    }
+
+    .pos .floor-screen .floor-kanban {
+        gap: 12px !important;
+    }
+
+    .pos .floor-screen:not(:has(.edit-buttons)) .floor-table {
+        flex-basis: 180px !important;
+        max-width: 230px !important;
+        min-width: 160px !important;
+        min-height: 142px !important;
+        height: 142px !important;
+    }
+}
+
+@media (max-width: 620px) {
+    .pos .floor-screen .floor-map {
+        padding: 16px 12px 28px !important;
+    }
+
+    .pos .floor-screen .floor-kanban {
+        gap: 10px !important;
+    }
+
+    .pos .floor-screen:not(:has(.edit-buttons)) .floor-table {
+        flex: 1 1 calc(50% - 5px) !important;
+        width: calc(50% - 5px) !important;
+        max-width: calc(50% - 5px) !important;
+        min-width: 0 !important;
+        min-height: 128px !important;
+        height: 128px !important;
+        border-radius: 17px !important;
+    }
+
+    .pos .floor-screen:not(:has(.edit-buttons)) .floor-table .label {
+        font-size: 28px !important;
+    }
+}
+
+/* Final lock: text-first product cards must win over older product rules above. */
+.pos .product-screen .rightpane .product-list,
+.pos .product-screen .rightpane .products,
+.pos .product-screen .rightpane .products-widget {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(184px, 1fr)) !important;
+    gap: 14px !important;
+    align-items: stretch !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 118px !important;
+    height: 100% !important;
+    flex: unset !important;
+    border-radius: 18px !important;
+    padding: 0 !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-img,
+.pos .product-screen .rightpane article.product.o-text-first-product-card img {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+    min-height: 118px !important;
+    padding: 14px 12px 12px !important;
+}
+
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+    min-height: 0 !important;
+    max-height: calc(2 * 1.35em) !important;
+    padding: 0 4px !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loyalty_card_view_form_hosny_download" model="ir.ui.view">
+        <field name="name">loyalty.card.view.form.hosny.download</field>
+        <field name="model">loyalty.card</field>
+        <field name="inherit_id" ref="loyalty.loyalty_card_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_hosny_download_gift_card" string="تحميل" type="object" class="btn-primary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="loyalty.report_gift_card" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+        <field name="print_report_name">'gift-card-%s' % object.code</field>
+    </record>
+
+    <record id="sale_order_view_form_hosny_discount_coupon_button" model="ir.ui.view">
+        <field name="name">sale.order.view.form.hosny.discount.coupon.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_gift_cards']/field[@name='gift_card_count']" position="attributes">
+                <attribute name="string">كوبونات الخصم</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

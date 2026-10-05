@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_production_form_inherit_links" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.links</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <field name="pos_order_id" invisible="1"/>
+                <field name="sale_order_id" invisible="1"/>
+                <field name="pos_auto_mrp_unbuilt" invisible="1"/>
+                <field name="pos_auto_mrp_unbuild_id" invisible="1"/>
+                <field name="pos_auto_mrp_refund_status" invisible="1"/>
+                <field name="pos_auto_mrp_generated" invisible="1"/>
+                <field name="pos_auto_mrp_unbuild_count" invisible="1"/>
+
+                <button name="action_open_pos_order"
+                        type="object"
+                        string="POS Order"
+                        class="btn btn-secondary"
+                        icon="fa-shopping-cart"
+                        invisible="not pos_order_id"/>
+
+                <button name="action_open_sale_order"
+                        type="object"
+                        string="Sales Order"
+                        class="btn btn-secondary"
+                        icon="fa-file-text-o"
+                        invisible="not sale_order_id"/>
+
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_pos_auto_mrp_unbuild"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-undo"
+                        invisible="pos_auto_mrp_unbuild_count == 0 and not pos_auto_mrp_unbuild_id">
+                    <field name="pos_auto_mrp_unbuild_count" widget="statinfo" string="Automatic Unbuilds"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='product_qty']" position="after">
+                <field name="pos_auto_mrp_unbuilt_qty" readonly="1" invisible="not pos_auto_mrp_generated"/>
+                <field name="pos_auto_mrp_returnable_qty" readonly="1" invisible="not pos_auto_mrp_generated"/>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <field name="pos_auto_mrp_refund_status"
+                       widget="badge"
+                       class="mt-2 text-bg-warning"
+                       invisible="not pos_auto_mrp_unbuild_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="mrp_production_tree_view_inherit_pos_refund_status" model="ir.ui.view">
+        <field name="name">mrp.production.tree.inherit.pos.refund.status</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="pos_auto_mrp_refund_status" string="Unbuild Status" widget="badge" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,296 @@
+/* rtl:begin:ignore */
+.pos .o_dialog:has(.product-configurator-popup) .modal-dialog,
+.pos .o_dialog:has(.hosny-product-configurator-popup) .modal-dialog {
+    width: min(820px, calc(100vw - 36px)) !important;
+    max-width: min(820px, calc(100vw - 36px)) !important;
+}
+
+.pos .modal-content.product-configurator-popup,
+.pos .modal-content.hosny-product-configurator-popup {
+    direction: rtl !important;
+    text-align: right !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.24) !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-header,
+.pos .modal-content.hosny-product-configurator-popup .modal-header {
+    direction: rtl !important;
+    min-height: 74px !important;
+    padding: 20px 28px !important;
+    border-bottom: 1px solid #e7edf4 !important;
+    background: #ffffff !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-title,
+.pos .modal-content.hosny-product-configurator-popup .modal-title {
+    direction: rtl !important;
+    unicode-bidi: plaintext !important;
+    margin: 0 !important;
+    text-align: right !important;
+    color: #0f1d33 !important;
+    font-size: 19px !important;
+    font-weight: 900 !important;
+    line-height: 1.35 !important;
+}
+
+.pos .modal-content.product-configurator-popup .btn-close,
+.pos .modal-content.hosny-product-configurator-popup .btn-close {
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-body,
+.pos .modal-content.hosny-product-configurator-popup .modal-body,
+.pos .modal-content.product-configurator-popup .hosny-product-configurator-body,
+.pos .modal-content.hosny-product-configurator-popup .hosny-product-configurator-body {
+    direction: rtl !important;
+    text-align: right !important;
+    padding: 18px 28px 24px !important;
+    background: #f6f8fb !important;
+}
+
+.pos .modal-content.product-configurator-popup .product-info-banner,
+.pos .modal-content.hosny-product-configurator-popup .product-info-banner {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.pos .modal-content.product-configurator-popup .attribute,
+.pos .modal-content.hosny-product-configurator-popup .attribute {
+    direction: rtl !important;
+    margin: 0 0 18px !important;
+    padding: 20px !important;
+    border: 1px solid #e1e8f1 !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.055) !important;
+}
+
+.pos .modal-content.product-configurator-popup .attribute_name,
+.pos .modal-content.hosny-product-configurator-popup .attribute_name {
+    direction: rtl !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 0 16px !important;
+    color: #111d31 !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    line-height: 1.3 !important;
+}
+
+.pos .modal-content.product-configurator-popup .attribute_name::before,
+.pos .modal-content.hosny-product-configurator-popup .attribute_name::before {
+    content: "" !important;
+    width: 6px !important;
+    height: 24px !important;
+    flex: 0 0 6px !important;
+    border-radius: 999px !important;
+    background: #d2aa3c !important;
+}
+
+.pos .modal-content.product-configurator-popup .configurator_radio > .d-flex,
+.pos .modal-content.hosny-product-configurator-popup .configurator_radio > .d-flex,
+.pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-2,
+.pos .modal-content.hosny-product-configurator-popup .attribute > .d-flex.gap-2,
+.pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-3,
+.pos .modal-content.hosny-product-configurator-popup .attribute > .d-flex.gap-3 {
+    direction: rtl !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(132px, 1fr)) !important;
+    gap: 14px !important;
+    width: 100% !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+}
+
+.pos .modal-content.product-configurator-popup .attribute-name-cell,
+.pos .modal-content.hosny-product-configurator-popup .attribute-name-cell {
+    direction: rtl !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pos .modal-content.product-configurator-popup .form-check-input,
+.pos .modal-content.hosny-product-configurator-popup .form-check-input {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.pos .modal-content.product-configurator-popup label:not(.configurator_color),
+.pos .modal-content.hosny-product-configurator-popup label:not(.configurator_color) {
+    direction: rtl !important;
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding-block: 12px !important;
+    padding-inline-start: 44px !important;
+    padding-inline-end: 16px !important;
+    border: 1px solid #dde6f0 !important;
+    border-radius: 15px !important;
+    background: #f8fafc !important;
+    color: #172033 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 8px rgba(15, 23, 42, 0.035) !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background-color 140ms ease !important;
+}
+
+.pos .modal-content.product-configurator-popup label:not(.configurator_color)::before,
+.pos .modal-content.hosny-product-configurator-popup label:not(.configurator_color)::before {
+    content: "" !important;
+    position: absolute !important;
+    inset-inline-start: 15px !important;
+    top: 50% !important;
+    width: 18px !important;
+    height: 18px !important;
+    border: 2px solid #cbd5e1 !important;
+    border-radius: 999px !important;
+    background: #ffffff !important;
+    transform: translateY(-50%) !important;
+}
+
+.pos .modal-content.product-configurator-popup label:not(.configurator_color)::after,
+.pos .modal-content.hosny-product-configurator-popup label:not(.configurator_color)::after {
+    content: "" !important;
+    position: absolute !important;
+    inset-inline-start: 20px !important;
+    top: 50% !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    transform: translateY(-50%) scale(0.45) !important;
+    transition: transform 140ms ease, background-color 140ms ease !important;
+}
+
+.pos .modal-content.product-configurator-popup label:not(.configurator_color):hover,
+.pos .modal-content.hosny-product-configurator-popup label:not(.configurator_color):hover {
+    transform: translateY(-2px) !important;
+    border-color: #c9d4e2 !important;
+    background: #ffffff !important;
+    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08) !important;
+}
+
+.pos .modal-content.product-configurator-popup input:checked + label,
+.pos .modal-content.hosny-product-configurator-popup input:checked + label,
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color),
+.pos .modal-content.hosny-product-configurator-popup label.active:not(.configurator_color) {
+    border-color: #d2aa3c !important;
+    background: #fff6dc !important;
+    color: #111827 !important;
+    box-shadow: 0 12px 24px rgba(177, 139, 41, 0.16), inset 0 0 0 1px rgba(210, 170, 60, 0.34) !important;
+}
+
+.pos .modal-content.product-configurator-popup input:checked + label::before,
+.pos .modal-content.hosny-product-configurator-popup input:checked + label::before,
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color)::before,
+.pos .modal-content.hosny-product-configurator-popup label.active:not(.configurator_color)::before {
+    border-color: #b9912f !important;
+    background: #d2aa3c !important;
+}
+
+.pos .modal-content.product-configurator-popup input:checked + label::after,
+.pos .modal-content.hosny-product-configurator-popup input:checked + label::after,
+.pos .modal-content.product-configurator-popup label.active:not(.configurator_color)::after,
+.pos .modal-content.hosny-product-configurator-popup label.active:not(.configurator_color)::after {
+    background: #ffffff !important;
+    transform: translateY(-50%) scale(1) !important;
+}
+
+.pos .modal-content.product-configurator-popup .price-extra-cell,
+.pos .modal-content.hosny-product-configurator-popup .price-extra-cell {
+    margin-inline-start: 8px !important;
+    margin-inline-end: 0 !important;
+}
+
+.pos .modal-content.product-configurator-popup .price_extra,
+.pos .modal-content.hosny-product-configurator-popup .price_extra {
+    background: #eef2f7 !important;
+    border: 1px solid #dde6f0 !important;
+    color: #344155 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-footer,
+.pos .modal-content.hosny-product-configurator-popup .modal-footer {
+    direction: rtl !important;
+    padding: 22px 28px 28px !important;
+    border-top: 1px solid #e7edf4 !important;
+    background: #ffffff !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-footer > .d-flex,
+.pos .modal-content.hosny-product-configurator-popup .modal-footer > .d-flex,
+.pos .modal-content.product-configurator-popup .hosny-product-configurator-footer,
+.pos .modal-content.hosny-product-configurator-popup .hosny-product-configurator-footer {
+    direction: rtl !important;
+    flex-direction: row !important;
+    gap: 20px !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-footer .btn,
+.pos .modal-content.hosny-product-configurator-popup .modal-footer .btn {
+    min-height: 62px !important;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-footer .btn-primary,
+.pos .modal-content.hosny-product-configurator-popup .modal-footer .btn-primary {
+    background: linear-gradient(180deg, #e7c766, #caa23a) !important;
+    border: 1px solid #bd9230 !important;
+    color: #111827 !important;
+    box-shadow: 0 12px 26px rgba(177, 139, 41, 0.22) !important;
+}
+
+.pos .modal-content.product-configurator-popup .modal-footer .btn-secondary,
+.pos .modal-content.hosny-product-configurator-popup .modal-footer .btn-secondary {
+    background: #f8fafc !important;
+    border: 1px solid #dde6f0 !important;
+    color: #263244 !important;
+}
+
+@media (max-width: 720px) {
+    .pos .o_dialog:has(.product-configurator-popup) .modal-dialog,
+    .pos .o_dialog:has(.hosny-product-configurator-popup) .modal-dialog {
+        width: calc(100vw - 18px) !important;
+        max-width: calc(100vw - 18px) !important;
+        margin: 9px auto !important;
+    }
+
+    .pos .modal-content.product-configurator-popup .modal-header,
+    .pos .modal-content.hosny-product-configurator-popup .modal-header,
+    .pos .modal-content.product-configurator-popup .modal-body,
+    .pos .modal-content.hosny-product-configurator-popup .modal-body,
+    .pos .modal-content.product-configurator-popup .modal-footer,
+    .pos .modal-content.hosny-product-configurator-popup .modal-footer {
+        padding-inline: 16px !important;
+    }
+
+    .pos .modal-content.product-configurator-popup .configurator_radio > .d-flex,
+    .pos .modal-content.hosny-product-configurator-popup .configurator_radio > .d-flex,
+    .pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-2,
+    .pos .modal-content.hosny-product-configurator-popup .attribute > .d-flex.gap-2,
+    .pos .modal-content.product-configurator-popup .attribute > .d-flex.gap-3,
+    .pos .modal-content.hosny-product-configurator-popup .attribute > .d-flex.gap-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+/* rtl:end:ignore */

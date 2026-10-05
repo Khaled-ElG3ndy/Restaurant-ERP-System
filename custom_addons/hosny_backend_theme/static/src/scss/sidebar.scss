@@ -1,0 +1,2376 @@
+// Hosny Apps Sidebar Variables
+$sidebar-width: 248px;
+$sidebar-width-collapsed: 86px;
+$sidebar-bg: #f8f9fa;
+$sidebar-border: rgba(255, 255, 255, 0.16);
+$sidebar-icon-size: 48px;
+$sidebar-transition: 0.22s ease;
+
+// Sidebar Toggle Container
+.hosny_sidebar_toggle_container {
+    position: relative;
+    z-index: 1030;
+
+    .hosny_sidebar_toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        padding: 0 !important;
+        margin: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: background-color $sidebar-transition;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+
+        i {
+            font-size: 20px;
+            color: #333;
+        }
+    }
+}
+
+// Main Sidebar
+.hosny_apps_sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: $sidebar-width;
+    height: 100vh;
+    background-color: $sidebar-bg;
+    border-left: 1px solid $sidebar-border;
+    display: flex;
+    flex-direction: column;
+    z-index: 1020;
+    transition: width $sidebar-transition;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none !important;
+    &--collapsed {
+        width: $sidebar-width-collapsed;
+        min-width: $sidebar-width-collapsed;
+        max-width: $sidebar-width-collapsed;
+
+        .hosny_apps_sidebar__header {
+            justify-content: center !important;
+            padding: 12px 0;
+        }
+
+        .hosny_apps_sidebar__title {
+            display: none;
+        }
+
+        .hosny_apps_sidebar__close {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hosny_apps_sidebar__nav {
+            padding-top: 4px;
+        }
+
+        .hosny_apps_sidebar__app_label {
+            display: block;
+            visibility: visible;
+            width: auto;
+            margin: 0 8px;
+            padding: 0;
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hosny_apps_sidebar__app {
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 8px;
+            width: 100%;
+            min-height: auto;
+        }
+
+        .hosny_apps_sidebar__app_icon {
+            width: 46px;
+            height: 46px;
+            min-width: 46px;
+            min-height: 46px;
+        }
+    }
+
+    // Sidebar Header
+    .hosny_apps_sidebar__header {
+        padding: 16px;
+        border-bottom: 1px solid $sidebar-border;
+        background-color: #ffffff;
+        flex-shrink: 0;
+
+        .hosny_apps_sidebar__title {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .hosny_apps_sidebar__close {
+            padding: 0 !important;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color $sidebar-transition;
+            position: relative;
+            z-index: 2;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+
+            i {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 18px;
+                height: 18px;
+                line-height: 1;
+                font-size: 16px;
+                color: #666;
+            }
+        }
+    }
+
+    // Navigation Section
+    .hosny_apps_sidebar__nav {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 8px 0;
+
+        .hosny_apps_sidebar__nav_wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 8px;
+        }
+    }
+
+    // App Items
+    .hosny_apps_sidebar__app {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all $sidebar-transition;
+        text-align: right;
+        direction: rtl;
+        color: #333;
+        text-decoration: none;
+        width: 100%;
+        min-height: $sidebar-icon-size;
+
+        &:hover {
+            background-color: #e9ecef;
+        }
+
+        &:active {
+            background-color: #dee2e6;
+        }
+
+        .hosny_apps_sidebar__app_icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .mk_app_icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        .hosny_apps_sidebar__app_label {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #333;
+            white-space: normal;
+            word-break: break-word;
+            transition: opacity $sidebar-transition;
+        }
+    }
+}
+
+// Adjust main content when sidebar is present
+.o_web_client::before {
+    content: none !important;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .hosny_apps_sidebar {
+        &--collapsed {
+            width: $sidebar-width-collapsed;
+        }
+
+        width: $sidebar-width;
+    }
+
+    .hosny_sidebar_toggle_container {
+        .hosny_sidebar_toggle {
+            display: flex;
+        }
+    }
+}
+
+// Keep the custom sidebar on the physical right when Arabic enables RTL.
+[dir="rtl"] {
+    .hosny_apps_sidebar {
+        /*rtl:ignore*/
+        left: auto;
+        /*rtl:ignore*/
+        right: 0;
+        /*rtl:ignore*/
+        border-right: none;
+        /*rtl:ignore*/
+        border-left: 1px solid $sidebar-border;
+
+        .hosny_apps_sidebar__header {
+            .hosny_apps_sidebar__title {
+                text-align: right;
+            }
+        }
+
+        .hosny_apps_sidebar__app {
+            text-align: right;
+            flex-direction: row;
+        }
+    }
+}
+
+.o_web_client.o_rtl {
+    /*rtl:ignore*/
+    direction: ltr !important;
+    /*rtl:ignore*/
+    grid-template-areas:
+        "banner banner"
+        "navbar navbar"
+        "content sidebar"
+        "components components" !important;
+    /*rtl:ignore*/
+    grid-template-columns: minmax(0, 1fr) auto !important;
+
+    > div:has(#oe_neutralize_banner) {
+        grid-area: banner !important;
+    }
+
+    > .o_navbar {
+        grid-area: navbar !important;
+    }
+
+    > .mk_apps_sidebar_panel {
+        grid-area: sidebar !important;
+        /*rtl:ignore*/
+        direction: rtl !important;
+        /*rtl:ignore*/
+        border-right: none !important;
+        /*rtl:ignore*/
+        border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+
+    > .o_action_manager {
+        grid-area: content !important;
+        /*rtl:ignore*/
+        direction: ltr !important;
+        min-width: 0;
+
+        > .o_action,
+        .o_content,
+        .o_content > .o_view_controller,
+        .o_controller_with_searchpanel,
+        .o_component_with_search_panel,
+        .o_form_view .o_form_view_container,
+        .o_form_view .o_form_sheet_bg,
+        .o_kanban_renderer {
+            /*rtl:ignore*/
+            direction: ltr !important;
+        }
+
+        .o_kanban_renderer {
+            /*rtl:ignore*/
+            flex-direction: row !important;
+            justify-content: flex-start !important;
+            align-content: flex-start !important;
+        }
+
+        .o_kanban_renderer.o_kanban_ungrouped {
+            flex-wrap: wrap !important;
+        }
+
+        .o_form_view .o_form_sheet_bg {
+            /*rtl:ignore*/
+            margin-left: 0 !important;
+            /*rtl:ignore*/
+            margin-right: auto !important;
+        }
+
+        .o_form_view .o_form_sheet,
+        .o_form_view .o_form_statusbar,
+        .o_kanban_renderer .o_kanban_record,
+        .o_kanban_renderer .o_kanban_group,
+        .o_search_panel,
+        .o_list_view .o_list_table,
+        .o_view_nocontent {
+            /*rtl:ignore*/
+            direction: rtl !important;
+            text-align: start;
+            unicode-bidi: plaintext;
+        }
+    }
+
+    > .o-main-components-container {
+        grid-area: components !important;
+        /*rtl:ignore*/
+        direction: rtl !important;
+    }
+
+    > .o_navbar .o_main_navbar {
+        /*rtl:ignore*/
+        direction: ltr !important;
+        flex-direction: row !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_navbar_apps_menu {
+        order: 60 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_brand {
+        order: 50 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_navbar_breadcrumbs {
+        order: 50 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_sections {
+        order: 40 !important;
+        /*rtl:ignore*/
+        margin-left: auto !important;
+        /*rtl:ignore*/
+        margin-right: 0 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_systray {
+        order: 0 !important;
+        /*rtl:ignore*/
+        direction: rtl !important;
+        /*rtl:ignore*/
+        margin-left: 0 !important;
+        /*rtl:ignore*/
+        margin-right: 0 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_navbar_apps_menu,
+    > .o_navbar .o_main_navbar .o_menu_brand,
+    > .o_navbar .o_main_navbar .o_menu_sections {
+        /*rtl:ignore*/
+        direction: rtl !important;
+    }
+
+    .mk_apps_sidebar_menu > li > a {
+        /*rtl:ignore*/
+        direction: rtl !important;
+        /*rtl:ignore*/
+        text-align: right !important;
+    }
+
+    .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        /*rtl:ignore*/
+        margin-left: 8px !important;
+        /*rtl:ignore*/
+        margin-right: 0 !important;
+    }
+
+    .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name {
+        /*rtl:ignore*/
+        direction: rtl !important;
+        unicode-bidi: plaintext;
+    }
+
+    .mk_apps_sidebar_menu .nav-link:hover {
+        /*rtl:ignore*/
+        transform: translateX(3px) translateY(-1px) !important;
+    }
+}
+
+// Scrollbar styling
+.hosny_apps_sidebar__nav {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 3px;
+
+        &:hover {
+            background: #999;
+        }
+    }
+}
+
+// Physical layout overrides for the MuK appsbar used in the live backend.
+.o_web_client {
+    /*rtl:ignore*/
+    grid-template-areas:
+        "banner banner"
+        "navbar navbar"
+        "content sidebar"
+        "components components" !important;
+    /*rtl:ignore*/
+    grid-template-columns: minmax(0, 1fr) auto !important;
+
+    > .mk_apps_sidebar_panel {
+        grid-area: sidebar !important;
+        justify-self: end;
+        min-width: 0;
+    }
+
+    > .o_action_manager {
+        min-width: 0;
+    }
+
+    > .o_navbar .o_main_navbar {
+        /*rtl:ignore*/
+        direction: ltr !important;
+        flex-direction: row !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_sections {
+        order: 40 !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        justify-content: flex-start !important;
+        min-width: 0;
+        /*rtl:ignore*/
+        direction: ltr !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_sections > * {
+        /*rtl:ignore*/
+        direction: rtl !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_systray {
+        order: 0 !important;
+        /*rtl:ignore*/
+        margin-left: 0 !important;
+        /*rtl:ignore*/
+        margin-right: 0 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_menu_brand,
+    > .o_navbar .o_main_navbar .o_navbar_breadcrumbs {
+        order: 50 !important;
+    }
+
+    > .o_navbar .o_main_navbar .o_navbar_apps_menu {
+        order: 60 !important;
+    }
+}
+
+.mk_apps_sidebar_panel {
+    border-right: none !important;
+    border-left: 1px solid $sidebar-border !important;
+    width: var(--mk-sidebar-width, #{$sidebar-width}) !important;
+    flex: 0 0 var(--mk-sidebar-width, #{$sidebar-width}) !important;
+    background: linear-gradient(180deg, #d8c197 0%, #cfb482 52%, #c3aa79 100%) !important;
+    transition: width $sidebar-transition, flex-basis $sidebar-transition, transform $sidebar-transition, box-shadow $sidebar-transition;
+    box-shadow: -12px 0 28px rgba(88, 67, 32, 0.18);
+    overflow: hidden !important;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar {
+    direction: rtl;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px 8px !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.44) transparent;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start !important;
+    flex-direction: row-reverse !important;
+    gap: 10px;
+    min-height: 52px;
+    padding: 10px 12px !important;
+    direction: ltr !important;
+    text-align: right !important;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.96) !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    line-height: 1.2;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu > li.active > a,
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu > li:hover > a {
+    background: rgba(255, 255, 255, 0.18) !important;
+    box-shadow:
+        inset -4px 0 0 rgba(255, 227, 157, 0.95),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 8px 18px rgba(88, 67, 32, 0.1);
+    transform: translateX(-2px);
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+    flex: 0 0 34px;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 5px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 44px);
+    direction: rtl !important;
+    text-align: right !important;
+    unicode-bidi: plaintext;
+    color: #ffffff !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_logo {
+    flex: 0 0 auto;
+    text-align: center;
+    display: none !important;
+}
+
+.hosny_appsbar_toggle_wrap {
+    position: sticky;
+    bottom: 0;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    padding: 12px 16px 18px;
+    background: linear-gradient(180deg, rgba(195, 170, 121, 0), rgba(195, 170, 121, 0.96) 42%);
+    z-index: 2;
+}
+
+.hosny_appsbar_toggle {
+    width: 44px;
+    height: 44px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.46);
+    border-radius: 50%;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 22px rgba(93, 72, 36, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.hosny_appsbar_toggle:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.26);
+    transform: translateY(-1px);
+}
+
+.mk_sidebar_type_large {
+    --mk-sidebar-width: #{$sidebar-width};
+}
+
+.mk_sidebar_type_small {
+    --mk-sidebar-width: #{$sidebar-width-collapsed};
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding: 12px 8px !important;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        justify-content: center !important;
+        flex-direction: row !important;
+        gap: 0;
+        min-height: 60px;
+        width: 100%;
+        max-width: 70px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 10px !important;
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+        overflow: visible !important;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li.active > a,
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li:hover > a {
+        transform: none;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex-basis: 38px;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 38px !important;
+        height: 38px !important;
+        margin: 0 !important;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_name,
+    .mk_apps_sidebar_panel .mk_apps_sidebar_logo {
+        display: none !important;
+    }
+
+    .hosny_appsbar_toggle_wrap {
+        justify-content: center;
+        margin-top: auto;
+        padding: 12px 8px 18px;
+    }
+
+    .hosny_appsbar_toggle {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    justify-content: flex-start !important;
+    flex-direction: row-reverse !important;
+    direction: ltr !important;
+    text-align: right !important;
+}
+
+.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name {
+    flex: 0 1 auto !important;
+    text-align: right !important;
+}
+
+.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li.active > a,
+.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li:hover > a {
+    transform: translateX(-2px) !important;
+}
+
+.mk_sidebar_type_small.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    justify-content: center !important;
+    flex-direction: row !important;
+    direction: ltr !important;
+}
+
+.mk_sidebar_type_small.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li.active > a,
+.mk_sidebar_type_small.o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li:hover > a,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li.active > a,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li:hover > a {
+    transform: none !important;
+}
+
+@media (max-width: 768px) {
+    .o_web_client {
+        /*rtl:ignore*/
+        grid-template-areas:
+            "banner"
+            "navbar"
+            "content"
+            "components" !important;
+        /*rtl:ignore*/
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mk_sidebar_type_large .mk_apps_sidebar_panel,
+    .mk_sidebar_type_small .mk_apps_sidebar_panel {
+        position: fixed;
+        top: 40px;
+        right: 0;
+        left: auto;
+        height: calc(100dvh - 40px);
+        z-index: 1040;
+        box-shadow: -18px 0 40px rgba(15, 23, 42, 0.18);
+    }
+
+    .mk_sidebar_type_large .mk_apps_sidebar_panel {
+        width: 82vw !important;
+        max-width: 280px;
+    }
+
+    .mk_sidebar_type_small .mk_apps_sidebar_panel {
+        width: #{$sidebar-width-collapsed} !important;
+    }
+
+    .o_web_client > .o_navbar .o_main_navbar .o_menu_sections {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .o_web_client > .o_navbar .o_main_navbar .o_menu_sections::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Final appsbar lock: keep Arabic rows physically right-starting and keep
+   collapsed icons visible regardless of RTL CSS transformations. */
+body .o_web_client .mk_apps_sidebar_panel {
+    width: var(--mk-sidebar-width, #{$sidebar-width}) !important;
+    flex: 0 0 var(--mk-sidebar-width, #{$sidebar-width}) !important;
+    background: linear-gradient(180deg, #d8c197 0%, #cfb482 52%, #c3aa79 100%) !important;
+    overflow: hidden !important;
+}
+
+body .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    padding: 12px 8px !important;
+    overflow-x: hidden !important;
+}
+
+body .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    grid-auto-flow: column !important;
+    align-items: center !important;
+    justify-items: stretch !important;
+    column-gap: 10px !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    padding: 9px 12px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+body .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    grid-column: 1 !important;
+    justify-self: end !important;
+    align-self: center !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name {
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    color: #ffffff !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel {
+    width: #{$sidebar-width-collapsed} !important;
+    flex-basis: #{$sidebar-width-collapsed} !important;
+    min-width: #{$sidebar-width-collapsed} !important;
+    max-width: #{$sidebar-width-collapsed} !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    padding: 12px 8px !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    display: grid !important;
+    grid-template-columns: 42px !important;
+    place-items: center !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    min-height: 58px !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    transform: none !important;
+    overflow: visible !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    grid-column: 1 !important;
+    justify-self: center !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    object-fit: contain !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_logo,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_logo {
+    display: none !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .o_web_client.o_rtl .hosny_appsbar_toggle_wrap {
+    justify-content: center !important;
+    padding: 12px 8px 18px !important;
+}
+
+/* Hard physical alignment for the live MuK appsbar.
+   Open: icon and Arabic label begin from the right edge.
+   Closed: only the icon remains, centered and visible. */
+body:not(.mk_sidebar_type_small) .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body:not(.mk_sidebar_type_small) .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    position: relative !important;
+    display: block !important;
+    min-height: 52px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    /*rtl:ignore*/
+    padding: 10px 56px 10px 12px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+body:not(.mk_sidebar_type_small) .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body:not(.mk_sidebar_type_small) .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    position: absolute !important;
+    top: 50% !important;
+    /*rtl:ignore*/
+    right: 12px !important;
+    /*rtl:ignore*/
+    left: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: translateY(-50%) !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body:not(.mk_sidebar_type_small) .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body:not(.mk_sidebar_type_small) .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    color: #ffffff !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    transform: none !important;
+    overflow: visible !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body.mk_sidebar_type_small .o_web_client.o_rtl .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    position: static !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: none !important;
+    object-fit: contain !important;
+}
+
+/* Final live-state override. MuK can place mk_sidebar_type_* on either body
+   or .o_web_client depending on load timing, so cover both locations. */
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .o_web_client:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    position: relative !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    min-height: 52px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    /*rtl:ignore*/
+    padding: 10px 56px 10px 12px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .o_web_client:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    position: absolute !important;
+    top: 50% !important;
+    /*rtl:ignore*/
+    right: 12px !important;
+    /*rtl:ignore*/
+    left: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: translateY(-50%) !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .o_web_client:not(.mk_sidebar_type_small):not(.mk_sidebar_type_invisible) .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    color: #ffffff !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel {
+    width: #{$sidebar-width-collapsed} !important;
+    flex-basis: #{$sidebar-width-collapsed} !important;
+    min-width: #{$sidebar-width-collapsed} !important;
+    max-width: #{$sidebar-width-collapsed} !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    transform: none !important;
+    overflow: visible !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    position: static !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: none !important;
+    object-fit: contain !important;
+}
+
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_logo,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_logo {
+    display: none !important;
+}
+
+/* EOF sidebar toggle visibility guarantee. */
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 60px !important;
+    min-height: 60px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 8px 16px !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle {
+    position: relative !important;
+    z-index: 110 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.86) !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+        0 10px 24px rgba(77, 57, 24, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before {
+    content: "›";
+    display: block !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 46px !important;
+    font-weight: 400 !important;
+    line-height: 42px !important;
+    transform: translateY(-1px);
+    text-shadow: 0 2px 8px rgba(77, 57, 24, 0.5) !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle[data-state="small"]::before {
+    content: "‹";
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle > i {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Absolute final sidebar toggle visibility guarantee. */
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 60px !important;
+    min-height: 60px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 8px 16px !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 80 !important;
+    pointer-events: auto !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle {
+    position: relative !important;
+    z-index: 90 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.86) !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+        0 10px 24px rgba(77, 57, 24, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before {
+    content: "›";
+    display: block !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 46px !important;
+    font-weight: 400 !important;
+    line-height: 42px !important;
+    transform: translateY(-1px);
+    text-shadow: 0 2px 8px rgba(77, 57, 24, 0.5) !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle[data-state="small"]::before {
+    content: "‹";
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle > i {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Final visible toggle fallback: exact inner placement plus CSS-drawn arrow. */
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 60px !important;
+    min-height: 60px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 8px 16px !important;
+    overflow: visible !important;
+    z-index: 50 !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle {
+    position: relative !important;
+    z-index: 60 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.82) !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    box-shadow:
+        0 10px 24px rgba(77, 57, 24, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.38) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before {
+    content: "›";
+    display: block !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 46px !important;
+    font-weight: 400 !important;
+    line-height: 42px !important;
+    transform: translateY(-1px);
+    text-shadow: 0 2px 8px rgba(77, 57, 24, 0.48) !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle[data-state="small"]::before {
+    content: "‹";
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle > i {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Keep the footer toggle out of the scroll lane so it never covers an app. */
+.mk_apps_sidebar_panel .mk_apps_sidebar,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+.mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-bottom: 14px !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle_wrap,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle_wrap,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle_wrap {
+    position: static !important;
+    inset: auto !important;
+    flex: 0 0 74px !important;
+    min-height: 74px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 8px 16px !important;
+    background: linear-gradient(180deg, rgba(195, 170, 121, 0), rgba(195, 170, 121, 0.96) 34%) !important;
+    z-index: 1 !important;
+}
+
+/* Closed appsbar guarantee: icons only, centered, no labels or logo. */
+html.mk_sidebar_type_small,
+body.mk_sidebar_type_small,
+.o_web_client.mk_sidebar_type_small {
+    --mk-sidebar-width: #{$sidebar-width-collapsed} !important;
+}
+
+html.mk_sidebar_type_small .o_web_client > .mk_apps_sidebar_panel,
+body.mk_sidebar_type_small .o_web_client > .mk_apps_sidebar_panel,
+.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel {
+    width: #{$sidebar-width-collapsed} !important;
+    min-width: #{$sidebar-width-collapsed} !important;
+    max-width: #{$sidebar-width-collapsed} !important;
+    flex: 0 0 #{$sidebar-width-collapsed} !important;
+    flex-basis: #{$sidebar-width-collapsed} !important;
+    overflow: hidden !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_menu {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 8px !important;
+    list-style: none !important;
+    overflow-x: hidden !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_menu > li {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 6px !important;
+    padding: 0 !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_menu > li > a.nav-link {
+    position: relative !important;
+    inset: auto !important;
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    min-height: 58px !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+    gap: 0 !important;
+    direction: ltr !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    transform: none !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link > img.mk_apps_sidebar_icon,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link > img.mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_menu > li > a.nav-link > img.mk_apps_sidebar_icon {
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 0 0 38px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: none !important;
+    clip-path: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    z-index: 2 !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link > .mk_apps_sidebar_name,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_menu > li > a.nav-link > .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_menu > li > a.nav-link > .mk_apps_sidebar_name,
+html.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_logo,
+body.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_logo,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_logo {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+}
+
+html.mk_sidebar_type_small .o_web_client .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .o_web_client .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .hosny_appsbar_toggle_wrap {
+    justify-content: center !important;
+    padding: 12px 8px 18px !important;
+}
+
+/* Always expose the sidebar control. */
+.mk_apps_sidebar_panel .hosny_appsbar_toggle,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle {
+    position: relative !important;
+    z-index: 20 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.24) !important;
+    box-shadow:
+        0 10px 24px rgba(77, 57, 24, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:hover,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:focus-visible {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.34) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+    outline: none !important;
+    transform: translateY(-1px) !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle > i,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle > i,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle > i,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .hosny_appsbar_toggle > i,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .hosny_appsbar_toggle > i {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    color: #ffffff !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 0 2px 8px rgba(77, 57, 24, 0.42) !important;
+}
+
+/* Absolute final closed-state icon guarantee. Keep this last: the live sidebar
+   may receive the small-state class on html, body, or .o_web_client. */
+html.mk_sidebar_type_small .mk_apps_sidebar_panel,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel {
+    width: #{$sidebar-width-collapsed} !important;
+    flex: 0 0 #{$sidebar-width-collapsed} !important;
+    flex-basis: #{$sidebar-width-collapsed} !important;
+    min-width: #{$sidebar-width-collapsed} !important;
+    max-width: #{$sidebar-width-collapsed} !important;
+    overflow: hidden !important;
+}
+
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+    padding: 12px 8px !important;
+    overflow-x: hidden !important;
+}
+
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    gap: 0 !important;
+    min-height: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    margin: 0 auto !important;
+    padding: 8px !important;
+    /*rtl:ignore*/
+    direction: ltr !important;
+    transform: none !important;
+    overflow: visible !important;
+}
+
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+    position: static !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 0 0 38px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: none !important;
+    object-fit: contain !important;
+    z-index: 2 !important;
+}
+
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_logo,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_logo,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_logo,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_logo {
+    display: none !important;
+}
+
+/* True EOF sidebar toggle visibility guarantee. */
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+html.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+body.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.mk_sidebar_type_small .o_web_client .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap,
+.o_web_client.mk_sidebar_type_small .mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap {
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 60px !important;
+    min-height: 60px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 8px 16px !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 120 !important;
+    pointer-events: auto !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle {
+    position: relative !important;
+    z-index: 130 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.86) !important;
+    border-radius: 50% !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    box-shadow:
+        0 10px 24px rgba(77, 57, 24, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before {
+    content: "›";
+    display: block !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 46px !important;
+    font-weight: 400 !important;
+    line-height: 42px !important;
+    transform: translateY(-1px);
+    text-shadow: 0 2px 8px rgba(77, 57, 24, 0.5) !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle[data-state="small"]::before {
+    content: "‹";
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle > i {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+.o_cp_action_menus {
+    margin-left: 10px;
+}
+.fa:before {
+    margin: 0 !important;
+}
+
+/* Unified sidebar row alignment and modern open/close control. */
+html.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    position: relative !important;
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 56px !important;
+    margin: 0 !important;
+    padding: 9px 12px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    overflow: hidden !important;
+}
+
+html.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    position: static !important;
+    inset: auto !important;
+    align-self: center !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    transform: none !important;
+    object-fit: contain !important;
+}
+
+html.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name {
+    align-self: center !important;
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    margin: 0 !important;
+    line-height: 34px !important;
+    transform: translateY(2px) !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    border: 1px solid rgba(255, 255, 255, 0.66) !important;
+    border-radius: 15px !important;
+    color: #ffffff !important;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.14)),
+        rgba(105, 76, 29, 0.14) !important;
+    box-shadow:
+        0 12px 24px rgba(73, 50, 14, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.58),
+        inset 0 -8px 18px rgba(93, 65, 18, 0.1) !important;
+    overflow: hidden !important;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 3px !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    transform: none !important;
+    text-shadow: none !important;
+    pointer-events: none !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:hover,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:focus-visible {
+    border-color: rgba(255, 255, 255, 0.94) !important;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.2)),
+        rgba(105, 76, 29, 0.12) !important;
+    transform: translateY(-2px) !important;
+    outline: none !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle__ring {
+    position: relative !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 11px !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle__icon {
+    width: 23px !important;
+    height: 23px !important;
+    color: #ffffff !important;
+    stroke: currentColor !important;
+    stroke-width: 1.8 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    filter: drop-shadow(0 2px 3px rgba(77, 57, 24, 0.28));
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle__arrow {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.2s ease !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle[data-state="small"] .hosny_appsbar_toggle__arrow {
+    transform: rotate(180deg) !important;
+}
+
+/* Minimal sidebar toggle: one clear directional chevron. */
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 6px 14px rgba(73, 50, 14, 0.18) !important;
+}
+
+.mk_apps_sidebar_panel > .mk_apps_sidebar > .hosny_appsbar_toggle_wrap > .hosny_appsbar_toggle::before,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle::before {
+    content: none !important;
+    display: none !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:hover,
+.mk_apps_sidebar_panel .hosny_appsbar_toggle:focus-visible {
+    border-color: rgba(255, 255, 255, 0.96) !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 16px rgba(73, 50, 14, 0.22) !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle__ring {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+}
+
+.mk_apps_sidebar_panel .hosny_appsbar_toggle__icon {
+    width: 22px !important;
+    height: 22px !important;
+    stroke-width: 2.25 !important;
+    filter: none !important;
+}
+
+/* Mobile/tablet final placement: keep the real AppsBar as a layout column so
+   content always starts beside it, not underneath it. */
+@media (max-width: 768px) {
+    html,
+    body.o_web_client,
+    .o_web_client {
+        --hosny-mobile-sidebar-small: 64px;
+        --hosny-mobile-sidebar-large: 184px;
+    }
+
+    html.mk_sidebar_type_small,
+    body.o_web_client.mk_sidebar_type_small,
+    .o_web_client.mk_sidebar_type_small {
+        --mk-sidebar-width: var(--hosny-mobile-sidebar-small) !important;
+    }
+
+    html.mk_sidebar_type_large,
+    body.o_web_client.mk_sidebar_type_large,
+    .o_web_client.mk_sidebar_type_large {
+        --mk-sidebar-width: var(--hosny-mobile-sidebar-large) !important;
+    }
+
+    body.o_web_client,
+    .o_web_client {
+        /*rtl:ignore*/
+        grid-template-areas:
+            "banner banner"
+            "navbar navbar"
+            "content sidebar"
+            "components components" !important;
+        grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+        /*rtl:ignore*/
+        grid-template-columns: minmax(0, 1fr) var(--mk-sidebar-width, var(--hosny-mobile-sidebar-small)) !important;
+        min-height: 100dvh !important;
+        overflow: hidden !important;
+        transition: grid-template-columns 0.2s ease !important;
+    }
+
+    body.o_web_client > .o_navbar,
+    .o_web_client > .o_navbar {
+        grid-area: navbar !important;
+        position: relative !important;
+        z-index: 1041 !important;
+        overflow: visible !important;
+    }
+
+    body.o_web_client > .o_navbar .o_main_navbar,
+    .o_web_client > .o_navbar .o_main_navbar {
+        background: linear-gradient(90deg, #f2ead9 0%, #e5d4b3 70%, #d1b67e 100%) !important;
+        border-bottom: 1px solid rgba(117, 86, 38, 0.16) !important;
+        box-shadow: 0 8px 22px rgba(71, 50, 19, 0.1) !important;
+    }
+
+    body.o_web_client > .o_action_manager,
+    .o_web_client > .o_action_manager {
+        grid-area: content !important;
+        min-width: 0 !important;
+        overflow: auto !important;
+        overscroll-behavior: contain !important;
+    }
+
+    body.o_web_client > .mk_apps_sidebar_panel,
+    .o_web_client > .mk_apps_sidebar_panel {
+        grid-area: sidebar !important;
+        position: relative !important;
+        inset: auto !important;
+        align-self: stretch !important;
+        width: var(--mk-sidebar-width, var(--hosny-mobile-sidebar-small)) !important;
+        min-width: var(--mk-sidebar-width, var(--hosny-mobile-sidebar-small)) !important;
+        max-width: var(--mk-sidebar-width, var(--hosny-mobile-sidebar-small)) !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        z-index: 3 !important;
+        transform: none !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+        box-shadow: -12px 0 28px rgba(83, 61, 26, 0.12) !important;
+        transition:
+            width 0.2s ease,
+            min-width 0.2s ease,
+            max-width 0.2s ease !important;
+    }
+
+    body.o_web_client > .mk_apps_sidebar_panel > .mk_apps_sidebar,
+    .o_web_client > .mk_apps_sidebar_panel > .mk_apps_sidebar {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        border-start-start-radius: 12px !important;
+        box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.16) !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding: 9px 5px 8px !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        width: 48px !important;
+        min-width: 48px !important;
+        max-width: 48px !important;
+        min-height: 50px !important;
+        padding: 7px !important;
+        border-radius: 11px !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex-basis: 32px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+        padding: 4px !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding: 10px 8px 8px !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        min-height: 50px !important;
+        padding: 8px 9px !important;
+        gap: 8px !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex-basis: 30px !important;
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name {
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+    }
+
+    body.o_web_client > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    .o_web_client > .mk_apps_sidebar_panel .hosny_appsbar_toggle {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        max-width: 38px !important;
+        max-height: 38px !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    html,
+    body.o_web_client,
+    .o_web_client {
+        --hosny-mobile-sidebar-small: 72px;
+        --hosny-mobile-sidebar-large: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    body.o_web_client.o_rtl,
+    .o_web_client.o_rtl {
+        /*rtl:ignore*/
+        grid-template-columns: minmax(0, 1fr) var(--mk-sidebar-width, var(--hosny-mobile-sidebar-small)) !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    body.o_web_client.o_rtl.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    .o_web_client.o_rtl.mk_sidebar_type_small > .mk_apps_sidebar_panel {
+        width: var(--hosny-mobile-sidebar-small) !important;
+        min-width: var(--hosny-mobile-sidebar-small) !important;
+        max-width: var(--hosny-mobile-sidebar-small) !important;
+        flex: 0 0 var(--hosny-mobile-sidebar-small) !important;
+        flex-basis: var(--hosny-mobile-sidebar-small) !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    body.o_web_client.o_rtl.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    .o_web_client.o_rtl.mk_sidebar_type_large > .mk_apps_sidebar_panel {
+        width: var(--hosny-mobile-sidebar-large) !important;
+        min-width: var(--hosny-mobile-sidebar-large) !important;
+        max-width: var(--hosny-mobile-sidebar-large) !important;
+        flex: 0 0 var(--hosny-mobile-sidebar-large) !important;
+        flex-basis: var(--hosny-mobile-sidebar-large) !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .hosny_appsbar_toggle,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .hosny_appsbar_toggle {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        max-width: 38px !important;
+        max-height: 38px !important;
+    }
+}
+
+/* Medium screens: avoid the desktop sidebar width on narrow browser windows. */
+@media (min-width: 769px) and (max-width: 1200px) {
+    html,
+    body.o_web_client,
+    .o_web_client {
+        --hosny-medium-sidebar-small: 72px;
+        --hosny-medium-sidebar-large: 196px;
+        --hosny-medium-sidebar-icon: 32px;
+        --hosny-medium-sidebar-link: 54px;
+        --hosny-medium-sidebar-toggle: 40px;
+    }
+
+    html.mk_sidebar_type_small,
+    body.o_web_client.mk_sidebar_type_small,
+    .o_web_client.mk_sidebar_type_small {
+        --mk-sidebar-width: var(--hosny-medium-sidebar-small) !important;
+    }
+
+    html.mk_sidebar_type_large,
+    body.o_web_client.mk_sidebar_type_large,
+    .o_web_client.mk_sidebar_type_large {
+        --mk-sidebar-width: var(--hosny-medium-sidebar-large) !important;
+    }
+
+    body.o_web_client,
+    .o_web_client,
+    body.o_web_client.o_rtl,
+    .o_web_client.o_rtl {
+        /*rtl:ignore*/
+        grid-template-columns: minmax(0, 1fr) var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        transition: grid-template-columns 0.2s ease !important;
+    }
+
+    body.o_web_client > .o_action_manager,
+    .o_web_client > .o_action_manager {
+        min-width: 0 !important;
+        overflow: auto !important;
+        overscroll-behavior: contain !important;
+    }
+
+    body.o_web_client > .mk_apps_sidebar_panel,
+    .o_web_client > .mk_apps_sidebar_panel {
+        width: var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        min-width: var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        max-width: var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        flex: 0 0 var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        flex-basis: var(--mk-sidebar-width, var(--hosny-medium-sidebar-small)) !important;
+        overflow: hidden !important;
+        box-shadow: -12px 0 28px rgba(83, 61, 26, 0.12) !important;
+        transition:
+            width 0.2s ease,
+            min-width 0.2s ease,
+            max-width 0.2s ease,
+            flex-basis 0.2s ease !important;
+    }
+
+    body.o_web_client > .mk_apps_sidebar_panel > .mk_apps_sidebar,
+    .o_web_client > .mk_apps_sidebar_panel > .mk_apps_sidebar {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding: 10px 6px 8px !important;
+    }
+
+    html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        width: var(--hosny-medium-sidebar-link) !important;
+        min-width: var(--hosny-medium-sidebar-link) !important;
+        max-width: var(--hosny-medium-sidebar-link) !important;
+        min-height: calc(var(--hosny-medium-sidebar-link) + 2px) !important;
+        margin: 0 auto !important;
+        padding: 7px !important;
+        border-radius: 12px !important;
+    }
+
+    html.mk_sidebar_type_small .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex: 0 0 var(--hosny-medium-sidebar-icon) !important;
+        width: var(--hosny-medium-sidebar-icon) !important;
+        height: var(--hosny-medium-sidebar-icon) !important;
+        min-width: var(--hosny-medium-sidebar-icon) !important;
+        min-height: var(--hosny-medium-sidebar-icon) !important;
+        max-width: var(--hosny-medium-sidebar-icon) !important;
+        max-height: var(--hosny-medium-sidebar-icon) !important;
+        padding: 4px !important;
+    }
+
+    html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding: 10px 8px 8px !important;
+    }
+
+    html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        min-height: 52px !important;
+        padding: 8px 9px !important;
+        gap: 8px !important;
+        border-radius: 12px !important;
+    }
+
+    html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex: 0 0 var(--hosny-medium-sidebar-icon) !important;
+        width: var(--hosny-medium-sidebar-icon) !important;
+        height: var(--hosny-medium-sidebar-icon) !important;
+        min-width: var(--hosny-medium-sidebar-icon) !important;
+        min-height: var(--hosny-medium-sidebar-icon) !important;
+        max-width: var(--hosny-medium-sidebar-icon) !important;
+        max-height: var(--hosny-medium-sidebar-icon) !important;
+        padding: 4px !important;
+    }
+
+    html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_name {
+        display: block !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 42px) !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+        text-align: right !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .mk_apps_sidebar_panel .hosny_appsbar_toggle {
+        width: var(--hosny-medium-sidebar-toggle) !important;
+        height: var(--hosny-medium-sidebar-toggle) !important;
+        min-width: var(--hosny-medium-sidebar-toggle) !important;
+        min-height: var(--hosny-medium-sidebar-toggle) !important;
+        max-width: var(--hosny-medium-sidebar-toggle) !important;
+        max-height: var(--hosny-medium-sidebar-toggle) !important;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    html,
+    body.o_web_client,
+    .o_web_client {
+        --hosny-medium-sidebar-small: 76px;
+        --hosny-medium-sidebar-large: 220px;
+        --hosny-medium-sidebar-icon: 34px;
+        --hosny-medium-sidebar-link: 56px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    body.o_web_client.o_rtl.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel,
+    .o_web_client.o_rtl.mk_sidebar_type_small > .mk_apps_sidebar_panel {
+        width: var(--hosny-medium-sidebar-small) !important;
+        min-width: var(--hosny-medium-sidebar-small) !important;
+        max-width: var(--hosny-medium-sidebar-small) !important;
+        flex: 0 0 var(--hosny-medium-sidebar-small) !important;
+        flex-basis: var(--hosny-medium-sidebar-small) !important;
+    }
+
+    html.mk_sidebar_type_large body.o_web_client > .mk_apps_sidebar_panel,
+    body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    body.o_web_client.o_rtl.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    .o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel,
+    .o_web_client.o_rtl.mk_sidebar_type_large > .mk_apps_sidebar_panel {
+        width: var(--hosny-medium-sidebar-large) !important;
+        min-width: var(--hosny-medium-sidebar-large) !important;
+        max-width: var(--hosny-medium-sidebar-large) !important;
+        flex: 0 0 var(--hosny-medium-sidebar-large) !important;
+        flex-basis: var(--hosny-medium-sidebar-large) !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        width: var(--hosny-medium-sidebar-link) !important;
+        min-width: var(--hosny-medium-sidebar-link) !important;
+        max-width: var(--hosny-medium-sidebar-link) !important;
+    }
+
+    html.mk_sidebar_type_small body.o_web_client > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    body.o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon,
+    .o_web_client.mk_sidebar_type_small > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        flex: 0 0 var(--hosny-medium-sidebar-icon) !important;
+        width: var(--hosny-medium-sidebar-icon) !important;
+        height: var(--hosny-medium-sidebar-icon) !important;
+        min-width: var(--hosny-medium-sidebar-icon) !important;
+        min-height: var(--hosny-medium-sidebar-icon) !important;
+        max-width: var(--hosny-medium-sidebar-icon) !important;
+        max-height: var(--hosny-medium-sidebar-icon) !important;
+    }
+}
+
+/* Expanded rows: keep the Arabic label grouped directly beside the right icon. */
+html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a,
+.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+}
+
+html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon,
+.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > img.mk_apps_sidebar_icon {
+    flex: 0 0 auto !important;
+    order: 0 !important;
+    margin: 0 !important;
+}
+
+html.mk_sidebar_type_large .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+body.mk_sidebar_type_large .o_web_client .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name,
+.o_web_client.mk_sidebar_type_large > .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a > .mk_apps_sidebar_name {
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: center !important;
+    flex: 0 1 auto !important;
+    width: auto !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 44px) !important;
+    margin: 0 !important;
+    transform: none !important;
+    line-height: 1.15 !important;
+    padding-block-start: 1px !important;
+    /*rtl:ignore*/
+    direction: rtl !important;
+    /*rtl:ignore*/
+    text-align: right !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}

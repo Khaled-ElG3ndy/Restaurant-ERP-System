@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Language: ar_001\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_product_tax_price
+#: model:ir.model.fields,field_description:hosny_product_tax_price.field_product_product__price_before_tax
+#: model:ir.model.fields,field_description:hosny_product_tax_price.field_product_template__price_before_tax
+msgid "Price Before Tax"
+msgstr "السعر قبل الضريبة"
+
+#. module: hosny_product_tax_price
+#. odoo-python
+#: code:addons/hosny_product_tax_price/models/product.py:0
+msgid "Price excluding tax: %(amount)s"
+msgstr "السعر غير شامل الضريبة: %(amount)s"
+
+#. module: hosny_product_tax_price
+#. odoo-python
+#: code:addons/hosny_product_tax_price/models/product.py:0
+msgid "Price including tax: %(amount)s"
+msgstr "السعر شامل الضريبة: %(amount)s"
+
+#. module: hosny_product_tax_price
+#. odoo-python
+#: code:addons/hosny_product_tax_price/models/product.py:0
+msgid "SAR"
+msgstr "ر.س"

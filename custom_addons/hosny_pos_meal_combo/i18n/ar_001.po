@@ -1,0 +1,609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * hosny_pos_meal_combo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-22 00:41+0000\n"
+"PO-Revision-Date: 2026-06-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__additional_final_parent_uuid
+#, fuzzy
+msgid "Additional Final Parent Uuid"
+msgstr "سطر أساسي لمنتجات نهائية إضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__is_additional_final_product
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__product_id
+msgid "Additional Final Product"
+msgstr "منتج نهائي إضافي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_product_additional_final_line
+#, fuzzy
+msgid "Additional Final Product Line"
+msgstr "منتج نهائي إضافي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__is_additional_final_parent
+msgid "Additional Final Product Parent"
+msgstr "سطر أساسي لمنتجات نهائية إضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__additional_final_product_line_ids
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__additional_final_product_line_ids
+msgid "Additional Final Products"
+msgstr "منتجات نهائية إضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__additional_final_line_id
+msgid "Additional Final Rule"
+msgstr "قاعدة المنتج النهائي الإضافي"
+
+#. module: hosny_pos_meal_combo
+#. odoo-python
+#: code:addons/hosny_pos_meal_combo/models/pos_order_cost_display.py:0
+msgid "Additional Product"
+msgstr "منتج إضافي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Additional Products"
+msgstr "المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_additional_products_cost
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Additional Products Cost"
+msgstr "تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#. odoo-python
+#: code:addons/hosny_pos_meal_combo/models/pos_order_cost_display.py:0
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Additional Products Cost Details"
+msgstr "تفاصيل تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__total_additional_cost_display
+msgid "Additional Products Cost Total"
+msgstr "إجمالي تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__additional_final_products_cost
+#, fuzzy
+msgid "Additional Products Manufacturing Cost"
+msgstr "تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__breakdown_complete
+msgid "Breakdown Complete"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_additional_product_cost_breakdown_line__production_state__cancelled
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__component_display_mode
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__component_display_mode
+msgid "Component Display Mode"
+msgstr "طريقة عرض المكونات"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__product_id
+msgid "Component Product"
+msgstr "منتج المكون"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+msgid "Cost Audit"
+msgstr "تدقيق التكلفة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__cost_computed
+#, fuzzy
+msgid "Cost Computed"
+msgstr "غير محسوبة بعد"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+msgid "Cost Summary"
+msgstr "ملخص التكلفة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__create_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__create_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__create_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__create_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__create_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__create_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__currency_id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Details"
+msgstr "تفاصيل"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__mrp_direct_cost
+#, fuzzy
+msgid "Direct Manufacturing Cost"
+msgstr "أمر التصنيع"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__discount
+msgid "Discount (%)"
+msgstr "الخصم (%)"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_session__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_report_pos_order__display_name
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_margin
+msgid "Displayed Margin"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_additional_product_cost_breakdown_line__production_state__done
+msgid "Done"
+msgstr "منتهي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__extra_price
+msgid "Extra Price"
+msgstr "سعر إضافي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_mrp_production__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_session__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_report_pos_order__id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_order_line__meal_component_display_mode__internal
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__product_template__component_display_mode__internal
+msgid "Internal only (stock deduction only)"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__write_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__write_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__write_uid
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__write_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__write_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__write_date
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__production_state
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "MO Status"
+msgstr "حالة أمر التصنيع"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__parent_product_name
+msgid "Main Product"
+msgstr "المنتج الرئيسي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_mrp_production
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__production_name
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Manufacturing Order"
+msgstr "أمر التصنيع"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Margin"
+msgstr "الهامش"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_margin_percent
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Margin %"
+msgstr "الهامش %"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__is_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__is_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+msgid "Meal Combo"
+msgstr "وجبة مركبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__is_meal_component
+#, fuzzy
+msgid "Meal Component"
+msgstr "مكونات الوجبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__meal_component_display_mode
+#, fuzzy
+msgid "Meal Component Display Mode"
+msgstr "طريقة عرض المكونات"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_product_meal_component_line
+#, fuzzy
+msgid "Meal Component Line"
+msgstr "مكونات الوجبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__meal_component_product_id
+#, fuzzy
+msgid "Meal Component Product"
+msgstr "منتج المكون"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__meal_component_line_ids
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__meal_component_line_ids
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "Meal Components"
+msgstr "مكونات الوجبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__is_meal_parent
+#, fuzzy
+msgid "Meal Parent"
+msgstr "مكونات الوجبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__meal_parent_uuid
+msgid "Meal Parent Uuid"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__meal_product_tmpl_id
+#, fuzzy
+msgid "Meal Product"
+msgstr "المنتج الرئيسي"
+
+#. module: hosny_pos_meal_combo
+#. odoo-python
+#: code:addons/hosny_pos_meal_combo/models/pos_order_cost_display.py:0
+msgid "Not Computed Yet"
+msgstr "غير محسوبة بعد"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__note
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__note
+msgid "Note"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_order_line__meal_component_display_mode__pos_receipt_invoice
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__product_template__component_display_mode__pos_receipt_invoice
+msgid "POS + Receipt + Invoice"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_order_line__meal_component_display_mode__pos_receipt
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__product_template__component_display_mode__pos_receipt
+msgid "POS + Receipt only"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_pos_additional_product_cost_breakdown_wizard
+#, fuzzy
+msgid "POS Additional Product Cost Breakdown"
+msgstr "تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_pos_additional_product_cost_breakdown_line
+#, fuzzy
+msgid "POS Additional Product Cost Breakdown Line"
+msgstr "تفاصيل تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__order_reference
+msgid "POS Order"
+msgstr "طلب نقطة البيع"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__parent_product_tmpl_id
+msgid "Parent Final Product"
+msgstr "المنتج النهائي الأساسي"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields.selection,name:hosny_pos_meal_combo.selection__pos_additional_product_cost_breakdown_line__production_state__pending
+msgid "Pending"
+msgstr "في الانتظار"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_report_pos_order
+msgid "Point of Sale Orders Report"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_pos_session
+msgid "Point of Sale Session"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_product_template
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__product_name
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Product"
+msgstr "المنتج"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_product_cost
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Product Cost"
+msgstr "تكلفة المنتج"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_product_product
+#, fuzzy
+msgid "Product Variant"
+msgstr "تكلفة المنتج"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__quantity
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__quantity
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__quantity
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__total_additional_cost
+#, fuzzy
+msgid "Raw Additional Products Cost Total"
+msgstr "إجمالي تكلفة المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__total_cost
+#, fuzzy
+msgid "Raw Total Cost"
+msgstr "إجمالي التكلفة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__unit_cost
+#, fuzzy
+msgid "Raw Unit Cost"
+msgstr "تكلفة الوحدة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__sequence
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_product__show_meal_components_config
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__show_meal_components_config
+#, fuzzy
+msgid "Show Meal Components Configuration"
+msgstr "مكونات الوجبة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,help:hosny_pos_meal_combo.field_pos_order_line__additional_final_products_cost
+msgid ""
+"The cost of linked additional final products allocated to this parent line."
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,help:hosny_pos_meal_combo.field_pos_order_line__mrp_direct_cost
+msgid ""
+"The cost of this line's own manufacturing order(s), before bundle allocation."
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__total_cost_display
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_total_cost
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_form
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_line_meal_combo_list
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.view_pos_order_meal_combo_costs_form
+msgid "Total Cost"
+msgstr "إجمالي التكلفة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model,name:hosny_pos_meal_combo.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_cost_role
+msgid "Type"
+msgstr "النوع"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_order_line__ui_has_additional_products
+#, fuzzy
+msgid "Ui Has Additional Products"
+msgstr "المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__uom_name
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__unit_cost_display
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Unit Cost"
+msgstr "تكلفة الوحدة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__price_unit
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_additional_final_line__uom_id
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_meal_component_line__uom_id
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "إضافات المنتج"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "الخصم (%)"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "الكمية"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "المنتج المرفق"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "سعر الوحدة"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "ملاحظة"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.product_template_form_meal_components
+msgid "وحدة القياس"
+msgstr ""
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_product_template__final_cost_with_additional_products
+msgid "Final Cost"
+msgstr "التكلفة النهائية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,help:hosny_pos_meal_combo.field_product_template__final_cost_with_additional_products
+msgid "Current product cost plus the current BoM manufacturing cost of all configured additional products and quantities. This read-only value does not change standard price or inventory valuation."
+msgstr "تكلفة المنتج الحالية مضافًا إليها تكلفة التصنيع الحالية من قائمة المواد لجميع المنتجات الإضافية المُعدّة وكمياتها. هذه القيمة للعرض فقط ولا تغيّر التكلفة القياسية أو تقييم المخزون."
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__base_product_cost
+msgid "Base Product Cost"
+msgstr "تكلفة المنتج الأساسية"
+
+#. module: hosny_pos_meal_combo
+#: model:ir.model.fields,field_description:hosny_pos_meal_combo.field_pos_additional_product_cost_breakdown_wizard__final_product_cost
+msgid "Final Product Cost"
+msgstr "التكلفة النهائية للمنتج"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Additional Products Breakdown"
+msgstr "تفصيل المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Base cost + additional products"
+msgstr "التكلفة الأساسية + المنتجات الإضافية"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "BoM Cost Estimate"
+msgstr "تقدير حسب قائمة المواد"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Current base cost"
+msgstr "التكلفة الأساسية الحالية"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Each card belongs to one configured additional product."
+msgstr "كل بطاقة تخص منتجًا إضافيًا واحدًا من إعدادات المنتج."
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "Sum of the cards below"
+msgstr "مجموع بطاقات المنتجات أدناه"
+
+#. module: hosny_pos_meal_combo
+#: model_terms:ir.ui.view,arch_db:hosny_pos_meal_combo.pos_additional_product_cost_breakdown_wizard_form
+msgid "This is a read-only estimate from the current BoMs; it does not change standard cost or inventory valuation."
+msgstr "هذا تقدير للعرض فقط من قوائم المواد الحالية، ولا يغيّر التكلفة القياسية أو تقييم المخزون."

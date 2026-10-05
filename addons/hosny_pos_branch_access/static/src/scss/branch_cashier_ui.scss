@@ -1,0 +1,46 @@
+html.o_hosny_branch_cashier_ui {
+    .o_web_client {
+        grid-template-areas:
+            "banner"
+            "navbar"
+            "content"
+            "components" !important;
+        grid-template-columns: 1fr !important;
+    }
+
+    .o_web_client > .o_action_manager {
+        grid-area: content !important;
+    }
+
+    .o_web_client > iframe {
+        grid-column: 1 / -1 !important;
+    }
+
+    .o_main_navbar {
+        /*rtl:ignore*/
+        padding-right: clamp(20px, 1.8vw, 32px) !important;
+
+        .o_menu_toggle,
+        .o_navbar_apps_menu,
+        .hosny_sidebar_toggle_container {
+            display: none !important;
+        }
+
+        .o_menu_brand {
+            /*rtl:ignore*/
+            margin-right: clamp(20px, 1.8vw, 32px) !important;
+            /*rtl:ignore*/
+            margin-left: 0 !important;
+        }
+    }
+
+    .hosny_apps_sidebar,
+    .mk_apps_sidebar_panel,
+    .mk_apps_sidebar {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        min-width: 0 !important;
+        max-width: 0 !important;
+    }
+}

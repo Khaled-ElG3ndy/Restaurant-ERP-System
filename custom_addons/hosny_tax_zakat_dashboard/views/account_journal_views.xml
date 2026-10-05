@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_tax_zakat" model="ir.ui.view">
+        <field name="name">account.journal.form.tax.zakat</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/field[@name='company_id']" position="after">
+                <field name="is_tax_zakat_dashboard" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="tax_zakat_detection" string="Zakat Detection"
+                      invisible="not is_tax_zakat_dashboard"
+                      groups="account.group_account_manager">
+                    <div class="alert alert-info" role="alert">
+                        VAT is detected from actual tax repartition lines. Zakat is never
+                        inferred from a journal or account name; select its authoritative
+                        taxes, control accounts, or dedicated tax-grid tags below.
+                    </div>
+                    <group>
+                        <field name="tax_zakat_tax_ids"
+                               widget="many2many_tags"
+                               domain="[('company_id', '=', company_id)]"
+                               options="{'no_create': True}"/>
+                        <field name="tax_zakat_account_ids"
+                               widget="many2many_tags"
+                               domain="[('company_ids', 'in', [company_id])]"
+                               options="{'no_create': True}"/>
+                        <field name="tax_zakat_tag_ids"
+                               widget="many2many_tags"
+                               domain="[('applicability', '=', 'taxes')]"
+                               options="{'no_create': True}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_journal_dashboard_kanban_tax_zakat" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.tax.zakat</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban/field[@name='kanban_dashboard']" position="after">
+                <field name="is_tax_zakat_dashboard"/>
+                <field name="tax_zakat_dashboard_data"/>
+                <field name="tax_zakat_dashboard_graph"/>
+            </xpath>
+
+            <xpath expr="//t[@t-name='card']/t[@t-set='journal_type']" position="after">
+                <t t-value="record.is_tax_zakat_dashboard.raw_value"
+                   t-set="is_tax_zakat_dashboard"/>
+            </xpath>
+
+            <!--
+                Keep monetary values isolated from the surrounding RTL direction.
+                The values returned by Odoo are already formatted according to the
+                currency (for example "177.50 SR"); dir=ltr preserves that order.
+                These templates are shared by every current and future journal card.
+            -->
+            <xpath expr="//t[@t-name='JournalBodyBankCash']//span[t[@t-out='dashboard.account_balance']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.account_balance || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodyBankCash']//span[t[@t-out='dashboard.last_balance']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.last_balance || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodyBankCash']//span[t[@t-out='dashboard.outstanding_pay_account_balance']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.outstanding_pay_account_balance || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodyBankCash']//span[t[@t-out='dashboard.misc_operations_balance']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.misc_operations_balance || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//span[t[@t-out='dashboard.sum_draft']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.sum_draft || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//span[t[@t-out='dashboard.sum_waiting']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.sum_waiting || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//span[t[@t-out='dashboard.sum_late']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.sum_late || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='JournalBodySalePurchase']//span[t[@t-out='dashboard.to_check_balance']]"
+                   position="attributes">
+                <attribute name="dir">ltr</attribute>
+                <attribute name="class">o_hosny_dashboard_amount</attribute>
+                <attribute name="style">direction: ltr !important; unicode-bidi: isolate;</attribute>
+                <attribute name="t-att-class">(dashboard.to_check_balance || '').includes('-') ? 'text-danger' : ''</attribute>
+            </xpath>
+
+            <xpath expr="//t[@t-name='JournalTop']//a[@name='open_action' and field[@name='name']]"
+                   position="replace">
+                <a t-if="is_tax_zakat_dashboard" class="fs-4 fw-bold"
+                   type="object" name="action_open_tax_zakat_lines">
+                    <field name="name"/>
+                </a>
+                <a t-else="" class="fs-4 fw-bold" type="object" name="open_action"
+                   context="{'show_fetch_in_einvoices_button': show_fetch_in_einvoices_button, 'show_refresh_out_einvoices_status_button': show_refresh_out_einvoices_status_button}">
+                    <field name="name"/>
+                </a>
+            </xpath>
+
+            <xpath expr="//t[@t-name='card']//t[@t-call='JournalMiscelaneous']"
+                   position="attributes">
+                <attribute name="t-if">journal_type == 'general' and !is_tax_zakat_dashboard</attribute>
+            </xpath>
+            <xpath expr="//t[@t-name='card']//t[@t-call='JournalMiscelaneous']"
+                   position="after">
+                <t t-if="is_tax_zakat_dashboard" t-call="TaxZakatJournalBody"/>
+            </xpath>
+
+            <xpath expr="//t[@t-name='card']/div/div[hasclass('row', 'mt-auto')]"
+                   position="after">
+                <div class="row mt-auto" t-if="is_tax_zakat_dashboard">
+                    <field name="tax_zakat_dashboard_graph"
+                           t-att-graph_type="'line'"
+                           widget="dashboard_graph"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//templates" position="inside">
+                <t t-name="TaxZakatJournalBody">
+                    <t t-value="JSON.parse(record.tax_zakat_dashboard_data.raw_value)"
+                       t-set="tax_zakat"/>
+                    <div class="col mb-3 mb-sm-0">
+                        <button type="object" name="action_open_tax_zakat_lines"
+                                class="btn btn-primary"
+                                groups="account.group_account_readonly">
+                            Transactions
+                        </button>
+                        <div class="small text-muted mt-2">
+                            Period: <t t-out="tax_zakat.period_label"/>
+                        </div>
+                        <div t-if="!tax_zakat.has_zakat_configuration"
+                             class="small text-muted mt-1">
+                            Zakat appears after explicit configuration.
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row">
+                            <div class="col text-start">Output Tax</div>
+                            <div class="col-auto text-end o_hosny_dashboard_amount" dir="ltr"
+                                 style="direction: ltr !important; unicode-bidi: isolate;"
+                                 t-att-class="tax_zakat.output_tax_raw &lt; 0 ? 'text-danger' : ''">
+                                <t t-out="tax_zakat.output_tax"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-start">Input Tax</div>
+                            <div class="col-auto text-end o_hosny_dashboard_amount" dir="ltr"
+                                 style="direction: ltr !important; unicode-bidi: isolate;"
+                                 t-att-class="tax_zakat.input_tax_raw &lt; 0 ? 'text-danger' : ''">
+                                <t t-out="tax_zakat.input_tax"/>
+                            </div>
+                        </div>
+                        <div class="row" t-if="tax_zakat.has_zakat_configuration">
+                            <div class="col text-start">Zakat</div>
+                            <div class="col-auto text-end o_hosny_dashboard_amount" dir="ltr"
+                                 style="direction: ltr !important; unicode-bidi: isolate;"
+                                 t-att-class="tax_zakat.zakat_raw &lt; 0 ? 'text-danger' : ''">
+                                <t t-out="tax_zakat.zakat"/>
+                            </div>
+                        </div>
+                        <div class="row fw-bold">
+                            <div class="col text-start">Net Due</div>
+                            <div class="col-auto text-end o_hosny_dashboard_amount" dir="ltr"
+                                 style="direction: ltr !important; unicode-bidi: isolate;"
+                                 t-att-class="tax_zakat.net_raw &lt; 0 ? 'text-danger' : ''">
+                                <t t-out="tax_zakat.net"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>

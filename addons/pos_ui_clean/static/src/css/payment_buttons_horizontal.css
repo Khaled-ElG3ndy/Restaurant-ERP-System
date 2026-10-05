@@ -1,0 +1,28 @@
+/* Override: Display payment buttons horizontally in a single row */
+
+.payment-screen .right-content .payment-buttons {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+}
+
+.payment-screen .right-content .payment-buttons .button {
+    height: 50px !important;
+    width: auto !important;
+    min-width: 124px !important;
+    flex: 1 1 156px !important;
+}
+
+@media (max-width: 860px) {
+    .payment-screen .right-content .payment-buttons .button {
+        flex-basis: calc(50% - 0.5rem) !important;
+        min-width: 0 !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .payment-screen .right-content .payment-buttons .button {
+        flex-basis: 100% !important;
+        height: 44px !important;
+    }
+}

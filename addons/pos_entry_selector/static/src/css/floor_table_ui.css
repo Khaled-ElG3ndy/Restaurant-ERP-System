@@ -1,0 +1,799 @@
+/* =========================
+   FLOOR SCREEN - PREMIUM LIGHT LUXURY
+   ENHANCED v6: Added سفري (sky-blue) and VIP (royal-purple) themes
+   ========================= */
+
+/* ===== BACKGROUND ===== */
+.floor-map {
+    background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.85), transparent 22%),
+        radial-gradient(circle at top right, rgba(243,229,195,0.22), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(224,208,177,0.14), transparent 26%),
+        linear-gradient(180deg, #f8f3ea 0%, #efe7d8 52%, #e9dfcf 100%) !important;
+    position: relative !important;
+    width: 100% !important;
+    overflow: auto !important;
+}
+
+.floor-map::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(186,160,105,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(186,160,105,0.035) 1px, transparent 1px);
+    background-size: 46px 46px;
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+/* ===== FLOOR TABS — CLEAN PROFESSIONAL SEGMENT CONTROL ===== */
+
+.floor-screen .floor-selector {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    background: linear-gradient(180deg, #fffdf8 0%, #faf3e2 100%) !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(202,162,77,0.20) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 16px 26px !important;
+    box-shadow: 0 2px 18px rgba(150,121,69,0.08) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 78px !important;
+    position: relative !important;
+}
+
+/* Gold shimmer line at bottom */
+.floor-screen .floor-selector::before {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(202,162,77,0.40) 25%,
+        rgba(202,162,77,0.65) 50%,
+        rgba(202,162,77,0.40) 75%,
+        transparent 100%
+    ) !important;
+    pointer-events: none !important;
+}
+
+/* Segment pill wrapper */
+.floor-screen .floor-selector .button-floor,
+.floor-screen .floor-selector button:not(.button-add) {
+    position: relative !important;
+    flex: 0 0 auto !important;
+    min-width: 180px !important;
+    width: auto !important;
+    height: 48px !important;
+    color: #7e6a3d !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 18px !important;
+    padding: 0 18px !important;
+    margin: 0 !important;
+    background: rgba(250,243,228,0.80) !important;
+    border: 1.5px solid rgba(202,162,77,0.22) !important;
+    transition: all 0.22s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 0 rgba(0,0,0,0) !important;
+    z-index: 0 !important;
+}
+
+/* Reset segmented pill styles */
+.floor-screen .floor-selector button:not(.button-add):first-of-type,
+.floor-screen .floor-selector button:not(.button-add):nth-of-type(2) {
+    border-radius: 18px !important;
+    border-left: 1.5px solid rgba(202,162,77,0.22) !important;
+    border-right: 1.5px solid rgba(202,162,77,0.22) !important;
+}
+
+/* Hover state */
+.floor-screen .floor-selector .button-floor:hover {
+    background: rgba(202,162,77,0.10) !important;
+    color: #6b4f1a !important;
+}
+
+/* ── ACTIVE STATE ── */
+.floor-screen .floor-selector .btn-primary,
+.floor-screen .floor-selector .button-floor.active {
+    color: #3d2608 !important;
+    font-weight: 700 !important;
+    background: linear-gradient(
+        160deg,
+        rgba(255,252,240,0.98) 0%,
+        rgba(254,245,218,0.95) 100%
+    ) !important;
+    border-color: rgba(202,162,77,0.55) !important;
+    box-shadow:
+        0 4px 18px rgba(202,162,77,0.20),
+        0 1px 4px rgba(202,162,77,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.90) !important;
+    z-index: 1 !important;
+}
+
+/* Gold dot indicator above active label */
+.floor-screen .floor-selector .btn-primary::before,
+.floor-screen .floor-selector .button-floor.active::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    bottom: 7px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 22px !important;
+    height: 3px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, rgba(202,162,77,0.4), #caa24d, rgba(202,162,77,0.4)) !important;
+    box-shadow: 0 0 8px rgba(202,162,77,0.45) !important;
+}
+
+.floor-screen .floor-selector .btn-primary::after,
+.floor-screen .floor-selector .button-floor::after {
+    display: none !important;
+}
+
+.floor-screen .floor-selector .button-add {
+    display: none !important;
+}
+
+.pos .pos-rightheader .order-button.floor-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.85rem !important;
+    min-height: 35px !important;
+    padding: 0.9rem 1.3rem !important;
+    color: #3e2e18 !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.6px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #fffaf0 0%, #f9e5b9 45%, #f5d78a 100%) !important;
+    border: 1px solid rgba(171, 124, 35, 0.24) !important;
+    box-shadow: 0 14px 30px rgba(126, 92, 33, 0.12) !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease !important;
+    height: 20px;
+}
+
+.pos .pos-rightheader .order-button.floor-button:hover {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #fffdf5 0%, #fbe7b0 45%, #f5d47a 100%) !important;
+    box-shadow: 0 18px 36px rgba(126, 92, 33, 0.16) !important;
+}
+
+.pos .pos-rightheader .order-button.floor-button i {
+    font-size: 1.45rem !important;
+    color: #6c4a18 !important;
+}
+
+.pos .pos-rightheader .order-button.floor-button span {
+    line-height: 1 !important;
+}
+
+/* ===== GRID CONTAINER ===== */
+
+.floor-map > div {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    padding: 32px 24px !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    z-index: 1;
+    box-sizing: border-box !important;
+}
+
+.floor-map > div > div:not(.table):not(.custom-floor-table) {
+    display: contents !important;
+}
+
+/* ===== KILL ODOO ABSOLUTE POSITIONING ===== */
+.floor-map .table,
+.floor-map .table[style],
+.floor-map .custom-floor-table,
+.floor-map .custom-floor-table[style],
+.floor-map div.table,
+.floor-map div.custom-floor-table {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    float: none !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    width: calc((100vw - 48px - 80px) / 5) !important;
+    height: calc((100vw - 48px - 80px) / 5) !important;
+    max-width: 280px !important;
+    max-height: 280px !important;
+    min-width: 120px !important;
+    min-height: 120px !important;
+}
+
+/* ===================================================================
+   TABLE CARD BASE DESIGN
+   =================================================================== */
+
+.table.custom-floor-table {
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    transition: transform 0.26s cubic-bezier(.22,.68,0,1.2), box-shadow 0.24s ease, border-color 0.22s ease !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    position: relative !important;
+}
+
+/* Shine overlay for all cards */
+.table.custom-floor-table::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.55) 0%,
+        rgba(255,255,255,0.18) 38%,
+        transparent 60%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===================================================================
+   GROUND FLOOR (أرضي) — Warm Sage Green
+   =================================================================== */
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table {
+    background:
+        radial-gradient(ellipse at 25% 20%, rgba(195,215,170,0.38) 0%, transparent 52%),
+        radial-gradient(ellipse at 80% 85%, rgba(140,175,110,0.26) 0%, transparent 48%),
+        linear-gradient(150deg, #f0f4e8 0%, #dce8cc 30%, #c6d9b0 60%, #b2cc98 100%) !important;
+    border: 1.5px solid rgba(160,195,130,0.50) !important;
+    box-shadow:
+        0 8px 28px rgba(100,145,70,0.14),
+        0 2px 8px rgba(100,145,70,0.08),
+        inset 0 1.5px 0 rgba(255,255,255,0.82),
+        inset 0 -2px 10px rgba(100,145,70,0.10) !important;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table::after {
+    content: "";
+    position: absolute;
+    left: 16%; right: 16%; bottom: 11px;
+    height: 3.5px; border-radius: 999px;
+    background: linear-gradient(90deg, rgba(195,210,160,0.5), rgba(130,170,90,0.85), rgba(195,210,160,0.5));
+    box-shadow: 0 2px 8px rgba(120,165,80,0.24);
+    z-index: 2;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table:hover {
+    transform: translateY(-8px) scale(1.05) !important;
+    border-color: rgba(130,175,90,0.65) !important;
+    box-shadow:
+        0 22px 44px rgba(100,145,70,0.22),
+        0 4px 12px rgba(100,145,70,0.12),
+        inset 0 1.5px 0 rgba(255,255,255,0.88),
+        inset 0 -2px 10px rgba(100,145,70,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .custom-floor-table-number {
+    color: rgba(75,115,48,0.52) !important;
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.92),
+        0 3px 12px rgba(75,115,48,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table:has(.order-count:not(.d-none)) {
+    background:
+        radial-gradient(ellipse at 25% 20%, rgba(195,220,140,0.34) 0%, transparent 50%),
+        radial-gradient(ellipse at 78% 85%, rgba(145,195,90,0.26) 0%, transparent 46%),
+        linear-gradient(150deg, #e6f0d4 0%, #cee2b0 32%, #b2d088 62%, #96be62 100%) !important;
+    border-color: rgba(140,195,90,0.58) !important;
+    box-shadow:
+        0 8px 28px rgba(100,165,60,0.22),
+        0 2px 8px rgba(100,165,60,0.10),
+        inset 0 1.5px 0 rgba(255,255,255,0.78),
+        inset 0 -2px 10px rgba(100,165,60,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table:has(.order-count:not(.d-none))::after {
+    background: linear-gradient(90deg, rgba(195,225,150,0.5), #8aba4a, rgba(195,225,150,0.5));
+    box-shadow: 0 2px 10px rgba(138,186,74,0.34);
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .table-seats {
+    background: rgba(255,255,255,0.72) !important;
+    color: #5a8030 !important;
+    border: 1px solid rgba(255,255,255,0.88) !important;
+}
+
+/* ===================================================================
+   UPPER FLOOR (علوي) — NOW: Powder Sky Blue
+   (was Warm Amber / Golden — swapped with سفري)
+   =================================================================== */
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(190,225,255,0.45) 0%, transparent 52%),
+        radial-gradient(ellipse at 80% 86%, rgba(140,190,235,0.28) 0%, transparent 48%),
+        linear-gradient(148deg, #edf6ff 0%, #d4eafa 28%, #baddee 58%, #a4cfe3 100%) !important;
+    border: 1.5px solid rgba(120,180,220,0.50) !important;
+    box-shadow:
+        0 8px 28px rgba(70,140,195,0.14),
+        0 2px 8px rgba(70,140,195,0.08),
+        inset 0 1.5px 0 rgba(255,255,255,0.88),
+        inset 0 -2px 10px rgba(70,140,195,0.10) !important;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table::after {
+    content: "";
+    position: absolute;
+    left: 16%; right: 16%; bottom: 11px;
+    height: 3.5px; border-radius: 999px;
+    background: linear-gradient(90deg, rgba(160,210,240,0.5), rgba(80,160,215,0.88), rgba(160,210,240,0.5));
+    box-shadow: 0 2px 8px rgba(80,160,215,0.28);
+    z-index: 2;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table:hover {
+    transform: translateY(-8px) scale(1.05) !important;
+    border-color: rgba(80,160,215,0.68) !important;
+    box-shadow:
+        0 22px 44px rgba(70,140,195,0.22),
+        0 4px 12px rgba(70,140,195,0.12),
+        inset 0 1.5px 0 rgba(255,255,255,0.92),
+        inset 0 -2px 10px rgba(70,140,195,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .custom-floor-table-number {
+    color: rgba(40,100,155,0.50) !important;
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.95),
+        0 3px 12px rgba(40,100,155,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table:has(.order-count:not(.d-none)) {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(160,215,255,0.38) 0%, transparent 50%),
+        radial-gradient(ellipse at 82% 88%, rgba(90,175,230,0.28) 0%, transparent 46%),
+        linear-gradient(148deg, #d6eefa 0%, #b6dcf5 30%, #8fc8ee 58%, #63b2e6 100%) !important;
+    border-color: rgba(80,170,225,0.60) !important;
+    box-shadow:
+        0 8px 28px rgba(50,140,205,0.24),
+        0 2px 8px rgba(50,140,205,0.10),
+        inset 0 1.5px 0 rgba(255,255,255,0.82),
+        inset 0 -2px 10px rgba(50,140,205,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table:has(.order-count:not(.d-none))::after {
+    background: linear-gradient(90deg, rgba(140,210,245,0.5), #3fa0d8, rgba(140,210,245,0.5));
+    box-shadow: 0 2px 10px rgba(63,160,216,0.38);
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .table-seats {
+    background: rgba(255,255,255,0.72) !important;
+    color: #2272a8 !important;
+    border: 1px solid rgba(255,255,255,0.88) !important;
+}
+
+/* Upper amount pill — sky blue */
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .table-amount-badge {
+    background: linear-gradient(135deg, rgba(235,248,255,0.97) 0%, rgba(206,237,255,0.97) 100%);
+    border: 1.5px solid rgba(80,160,215,0.48);
+    box-shadow:
+        0 6px 20px rgba(50,140,205,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.92);
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .table-amount-badge .badge-icon {
+    background: rgba(50,140,205,0.14);
+    color: #1a70a8;
+}
+
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .table-amount-badge .badge-value {
+    color: #155a8a;
+}
+
+/* ===================================================================
+   TAKEAWAY / سفري — NOW: Warm Amber / Golden
+   (was Powder Sky Blue — swapped with علوي)
+   =================================================================== */
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(255,220,150,0.42) 0%, transparent 50%),
+        radial-gradient(ellipse at 82% 88%, rgba(210,165,80,0.28) 0%, transparent 48%),
+        linear-gradient(148deg, #fdf5e0 0%, #f8e8bc 28%, #f2d898 58%, #eac878 100%) !important;
+    border: 1.5px solid rgba(210,175,100,0.52) !important;
+    box-shadow:
+        0 8px 28px rgba(175,135,50,0.14),
+        0 2px 8px rgba(175,135,50,0.08),
+        inset 0 1.5px 0 rgba(255,255,255,0.85),
+        inset 0 -2px 10px rgba(175,135,50,0.10) !important;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table::after {
+    content: "";
+    position: absolute;
+    left: 16%; right: 16%; bottom: 11px;
+    height: 3.5px; border-radius: 999px;
+    background: linear-gradient(90deg, rgba(235,200,120,0.5), rgba(195,150,55,0.88), rgba(235,200,120,0.5));
+    box-shadow: 0 2px 8px rgba(195,150,55,0.28);
+    z-index: 2;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table:hover {
+    transform: translateY(-8px) scale(1.05) !important;
+    border-color: rgba(200,155,60,0.68) !important;
+    box-shadow:
+        0 22px 44px rgba(175,135,50,0.22),
+        0 4px 12px rgba(175,135,50,0.12),
+        inset 0 1.5px 0 rgba(255,255,255,0.92),
+        inset 0 -2px 10px rgba(175,135,50,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .custom-floor-table-number {
+    color: rgba(140,100,25,0.50) !important;
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.95),
+        0 3px 12px rgba(140,100,25,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table:has(.order-count:not(.d-none)) {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(255,210,110,0.36) 0%, transparent 50%),
+        radial-gradient(ellipse at 82% 88%, rgba(220,170,60,0.26) 0%, transparent 46%),
+        linear-gradient(148deg, #fcefc8 0%, #f5d990 30%, #ecc460 58%, #e2ae38 100%) !important;
+    border-color: rgba(215,170,55,0.60) !important;
+    box-shadow:
+        0 8px 28px rgba(185,145,35,0.24),
+        0 2px 8px rgba(185,145,35,0.10),
+        inset 0 1.5px 0 rgba(255,255,255,0.82),
+        inset 0 -2px 10px rgba(185,145,35,0.12) !important;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table:has(.order-count:not(.d-none))::after {
+    background: linear-gradient(90deg, rgba(240,210,120,0.5), #caa24d, rgba(240,210,120,0.5));
+    box-shadow: 0 2px 10px rgba(202,162,77,0.38);
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .table-seats {
+    background: rgba(255,255,255,0.72) !important;
+    color: #8a6818 !important;
+    border: 1px solid rgba(255,255,255,0.88) !important;
+}
+
+/* Takeaway amount pill — warm gold */
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .table-amount-badge {
+    background: linear-gradient(135deg, rgba(255,252,238,0.97) 0%, rgba(254,243,210,0.97) 100%);
+    border: 1.5px solid rgba(202,162,77,0.48);
+    box-shadow:
+        0 6px 20px rgba(175,135,50,0.24),
+        inset 0 1px 0 rgba(255,255,255,0.92);
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .table-amount-badge .badge-icon {
+    background: rgba(195,150,55,0.14);
+    color: #8a6010;
+}
+
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .table-amount-badge .badge-value {
+    color: #6b4a0c;
+}
+
+/* ===================================================================
+   VIP FLOOR — Royal Purple with Gold Accents
+   Color story: deep violet-plum with warm gold shimmer,
+   conveying exclusivity, prestige, and luxury.
+   =================================================================== */
+
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(220,195,255,0.45) 0%, transparent 52%),
+        radial-gradient(ellipse at 80% 86%, rgba(175,135,230,0.28) 0%, transparent 48%),
+        linear-gradient(148deg, #f5eeff 0%, #e4d3f8 28%, #cdb3ef 58%, #b894e6 100%) !important;
+    border: 1.5px solid rgba(175,130,220,0.52) !important;
+    box-shadow:
+        0 8px 28px rgba(130,80,200,0.16),
+        0 2px 8px rgba(130,80,200,0.08),
+        inset 0 1.5px 0 rgba(255,255,255,0.88),
+        inset 0 -2px 10px rgba(130,80,200,0.10) !important;
+}
+
+/* VIP — gold accent bar (purple card + gold accent = prestige) */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table::after {
+    content: "";
+    position: absolute;
+    left: 16%; right: 16%; bottom: 11px;
+    height: 3.5px; border-radius: 999px;
+    background: linear-gradient(90deg, rgba(220,185,100,0.45), rgba(202,162,77,0.95), rgba(220,185,100,0.45));
+    box-shadow: 0 2px 10px rgba(202,162,77,0.42);
+    z-index: 2;
+}
+
+/* VIP hover */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table:hover {
+    transform: translateY(-8px) scale(1.05) !important;
+    border-color: rgba(160,110,215,0.72) !important;
+    box-shadow:
+        0 22px 44px rgba(130,80,200,0.24),
+        0 4px 12px rgba(130,80,200,0.12),
+        inset 0 1.5px 0 rgba(255,255,255,0.92),
+        inset 0 -2px 10px rgba(130,80,200,0.12) !important;
+}
+
+/* VIP table number */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .custom-floor-table-number {
+    color: rgba(105,60,175,0.50) !important;
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.95),
+        0 3px 12px rgba(105,60,175,0.14) !important;
+}
+
+/* VIP occupied */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table:has(.order-count:not(.d-none)) {
+    background:
+        radial-gradient(ellipse at 22% 18%, rgba(205,165,255,0.40) 0%, transparent 50%),
+        radial-gradient(ellipse at 82% 88%, rgba(160,100,240,0.28) 0%, transparent 46%),
+        linear-gradient(148deg, #ead8ff 0%, #d4b6f8 30%, #b88ef0 58%, #9c68e6 100%) !important;
+    border-color: rgba(160,100,225,0.62) !important;
+    box-shadow:
+        0 8px 28px rgba(130,70,210,0.26),
+        0 2px 8px rgba(130,70,210,0.12),
+        inset 0 1.5px 0 rgba(255,255,255,0.80),
+        inset 0 -2px 10px rgba(130,70,210,0.14) !important;
+}
+
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table:has(.order-count:not(.d-none))::after {
+    background: linear-gradient(90deg, rgba(230,195,105,0.5), #caa24d, rgba(230,195,105,0.5));
+    box-shadow: 0 2px 12px rgba(202,162,77,0.50);
+}
+
+/* VIP seats badge */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .table-seats {
+    background: rgba(255,255,255,0.72) !important;
+    color: #6b32b0 !important;
+    border: 1px solid rgba(255,255,255,0.88) !important;
+}
+
+/* VIP amount pill — gold-purple blend */
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .table-amount-badge {
+    background: linear-gradient(135deg, rgba(252,246,255,0.97) 0%, rgba(238,220,255,0.97) 100%);
+    border: 1.5px solid rgba(175,130,215,0.48);
+    box-shadow:
+        0 6px 20px rgba(130,70,210,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.94);
+}
+
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .table-amount-badge .badge-icon {
+    background: rgba(140,80,215,0.12);
+    color: #7030b0;
+}
+
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .table-amount-badge .badge-value {
+    color: #581a9a;
+}
+
+/* ===================================================================
+   FLOOR INDICATOR LINES (top accent strip per table)
+   =================================================================== */
+
+.table.custom-floor-table .pos-floor-indicator {
+    position: absolute;
+    left: 16%; right: 16%; top: 12px;
+    height: 3px; border-radius: 999px;
+    opacity: 0.80;
+    pointer-events: none;
+    z-index: 3;
+    background: transparent;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .pos-floor-indicator {
+    background: linear-gradient(90deg, rgba(130,170,90,0.30), rgba(130,170,90,0.75), rgba(130,170,90,0.30));
+    box-shadow: 0 1px 6px rgba(130,170,90,0.20);
+}
+
+/* upper → now sky blue indicator */
+.floor-map[data-pos-floor-tone="upper"] .table.custom-floor-table .pos-floor-indicator {
+    background: linear-gradient(90deg, rgba(80,160,215,0.28), rgba(80,160,215,0.75), rgba(80,160,215,0.28));
+    box-shadow: 0 1px 6px rgba(80,160,215,0.20);
+}
+
+/* takeaway → now amber/gold indicator */
+.floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table .pos-floor-indicator {
+    background: linear-gradient(90deg, rgba(195,150,55,0.30), rgba(195,150,55,0.80), rgba(195,150,55,0.30));
+    box-shadow: 0 1px 6px rgba(195,150,55,0.24);
+}
+
+.floor-map[data-pos-floor-tone="vip"] .table.custom-floor-table .pos-floor-indicator {
+    background: linear-gradient(90deg, rgba(175,120,230,0.30), rgba(202,162,77,0.78), rgba(175,120,230,0.30));
+    box-shadow: 0 1px 6px rgba(175,120,230,0.24);
+}
+
+.table.custom-floor-table:has(.order-count:not(.d-none)) .pos-floor-indicator {
+    display: none;
+}
+
+/* ===================================================================
+   TABLE CONTENT — shared
+   =================================================================== */
+
+.table.custom-floor-table .info,
+.table.custom-floor-table .infos {
+    width: 100% !important;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    position: relative;
+    z-index: 2;
+    padding: 14px 14px 0 14px !important;
+}
+
+.table.custom-floor-table .custom-floor-table-content,
+.table.custom-floor-table .custom-floor-table-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.table.custom-floor-table .custom-floor-table-number {
+    font-size: clamp(20px, 2.8vw, 42px) !important;
+    font-weight: 900 !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    user-select: none;
+}
+
+/* ===================================================================
+   ORDER COUNT BADGE
+   =================================================================== */
+
+.table.custom-floor-table .order-count {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    padding: 0 8px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, #ff8a4c, #f05a1a) !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    border: 2px solid rgba(255,255,255,0.92) !important;
+    box-shadow: 0 6px 16px rgba(240,90,26,0.30) !important;
+    z-index: 10 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.table.custom-floor-table .order-count.d-none {
+    display: none !important;
+}
+
+/* ===================================================================
+   SEATS BADGE — shared
+   =================================================================== */
+
+.table.custom-floor-table .table-seats {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 18px !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    min-width: 40px !important;
+    padding: 5px 14px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 4 !important;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.07) !important;
+}
+
+.table.custom-floor-table .table-seats .cover {
+    display: none !important;
+}
+
+/* ===================================================================
+   TABLE AMOUNT BADGE — centered pill (base / fallback)
+   =================================================================== */
+
+.table.custom-floor-table .table-amount-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 16px 8px 10px;
+    border-radius: 999px;
+    z-index: 12;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.95);
+    border: 1.5px solid rgba(200,200,200,0.45);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.90);
+}
+
+/* Ground floor pill — sage green */
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .table-amount-badge {
+    background: linear-gradient(135deg, rgba(245,252,237,0.97) 0%, rgba(224,242,206,0.97) 100%);
+    border: 1.5px solid rgba(130,175,90,0.50);
+    box-shadow:
+        0 6px 20px rgba(100,150,60,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.90);
+}
+
+/* Icon circle — shared base */
+.table.custom-floor-table .table-amount-badge .badge-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .table-amount-badge .badge-icon {
+    background: rgba(100,155,60,0.14);
+    color: #4e8a28;
+}
+
+.table.custom-floor-table .table-amount-badge .badge-icon i {
+    font-size: 11px;
+}
+
+/* Amount value */
+.table.custom-floor-table .table-amount-badge .badge-value {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.floor-map[data-pos-floor-tone="ground"] .table.custom-floor-table .table-amount-badge .badge-value {
+    color: #3a6a1a;
+}
+
+.table.custom-floor-table .table-seats {
+    display: none !important;
+}

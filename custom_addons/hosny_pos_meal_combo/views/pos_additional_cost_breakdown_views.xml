@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_additional_product_cost_breakdown_line_product_kanban" model="ir.ui.view">
+        <field name="name">pos.additional.product.cost.breakdown.line.product.kanban</field>
+        <field name="model">pos.additional.product.cost.breakdown.line</field>
+        <field name="arch" type="xml">
+            <kanban create="0"
+                    can_open="0"
+                    records_draggable="0"
+                    class="o_product_additional_cost_kanban">
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card" class="o_product_additional_cost_card p-3">
+                        <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+                            <div class="d-flex align-items-center gap-2 min-w-0">
+                                <span class="o_additional_product_icon d-inline-flex align-items-center justify-content-center flex-shrink-0">
+                                    <i class="fa fa-cube" aria-hidden="true"/>
+                                </span>
+                                <field name="product_id"
+                                       widget="pos_product_internal_link"
+                                       class="fw-bold min-w-0"/>
+                            </div>
+                            <span class="badge rounded-pill text-bg-info flex-shrink-0">منتج إضافي</span>
+                        </div>
+                        <div class="o_additional_product_metrics">
+                            <div class="o_additional_metric">
+                                <span class="text-muted small">الكمية</span>
+                                <strong>
+                                    <field name="quantity"/>
+                                    <field name="uom_name"/>
+                                </strong>
+                            </div>
+                            <div class="o_additional_metric">
+                                <span class="text-muted small">تكلفة الوحدة</span>
+                                <strong>
+                                    <field name="unit_cost"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                </strong>
+                            </div>
+                            <div class="o_additional_metric o_additional_metric_total">
+                                <span class="text-muted small">الإجمالي</span>
+                                <strong>
+                                    <field name="total_cost"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="pos_additional_product_cost_breakdown_wizard_form" model="ir.ui.view">
+        <field name="name">pos.additional.product.cost.breakdown.wizard.form</field>
+        <field name="model">pos.additional.product.cost.breakdown.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Additional Products Cost Details"
+                  create="0"
+                  edit="0"
+                  delete="0"
+                  class="o_pos_additional_cost_breakdown">
+                <sheet>
+                    <field name="is_product_configuration" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="breakdown_complete" invisible="1"/>
+
+                    <div class="o_product_configuration_cost_breakdown"
+                         invisible="not is_product_configuration">
+                        <div class="o_product_cost_context_card d-flex align-items-center gap-3 mb-3">
+                            <div class="d-flex align-items-center gap-3 min-w-0">
+                                <span class="o_product_cost_context_icon d-inline-flex align-items-center justify-content-center flex-shrink-0">
+                                    <i class="fa fa-cutlery" aria-hidden="true"/>
+                                </span>
+                                <div class="min-w-0">
+                                    <div class="text-muted small">المنتج الرئيسي</div>
+                                    <field name="parent_product_name"
+                                           nolabel="1"
+                                           readonly="1"
+                                           class="fw-bold fs-5 text-truncate"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="o_product_cost_formula mb-4">
+                            <div class="o_product_cost_summary_card">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fa fa-cube text-primary" aria-hidden="true"/>
+                                    <span class="fw-semibold">تكلفة المنتج</span>
+                                </div>
+                                <field name="base_product_cost"
+                                       nolabel="1"
+                                       readonly="1"
+                                       class="o_product_cost_summary_value"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            </div>
+                            <div class="o_product_cost_operator" aria-label="زائد">+</div>
+                            <div class="o_product_cost_summary_card">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fa fa-cubes text-info" aria-hidden="true"/>
+                                    <span class="fw-semibold">تكلفة الإضافات</span>
+                                </div>
+                                <field name="total_additional_cost"
+                                       nolabel="1"
+                                       readonly="1"
+                                       class="o_product_cost_summary_value"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            </div>
+                            <div class="o_product_cost_operator" aria-label="يساوي">=</div>
+                            <div class="o_product_cost_summary_card o_product_cost_summary_final">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="fa fa-calculator" aria-hidden="true"/>
+                                    <span class="fw-semibold">التكلفة النهائية</span>
+                                </div>
+                                <field name="final_product_cost"
+                                       nolabel="1"
+                                       readonly="1"
+                                       class="o_product_cost_summary_value"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-end justify-content-between gap-3 mb-2">
+                            <h4 class="mb-0">تفاصيل الإضافات</h4>
+                        </div>
+                        <field name="line_ids"
+                               mode="kanban"
+                               nolabel="1"
+                               readonly="1"
+                               class="w-100"
+                               context="{'kanban_view_ref': 'hosny_pos_meal_combo.pos_additional_product_cost_breakdown_line_product_kanban'}"
+                               options="{'no_create': True, 'no_open': True}"/>
+                    </div>
+
+                    <div invisible="is_product_configuration">
+                        <group col="4">
+                            <field name="order_reference" readonly="1"/>
+                            <field name="parent_product_name" readonly="1"/>
+                        </group>
+                        <field name="line_ids" nolabel="1" readonly="1">
+                            <list string="Additional Products" create="0" edit="0" delete="0">
+                                <field name="product_id"
+                                       string="Product"
+                                       readonly="1"
+                                       widget="pos_product_internal_link"
+                                       options="{'no_create': True, 'no_create_edit': True}"
+                                       width="190px"/>
+                                <field name="quantity" string="Quantity" width="85px"/>
+                                <field name="uom_name" string="Unit" optional="hide" width="80px"/>
+                                <field name="production_name" string="Manufacturing Order" width="135px"/>
+                                <field name="production_state"
+                                       string="MO Status"
+                                       widget="badge"
+                                       decoration-success="production_state == 'done'"
+                                       decoration-warning="production_state == 'pending'"
+                                       decoration-danger="production_state == 'cancelled'"
+                                       width="95px"/>
+                                <field name="cost_computed" column_invisible="True"/>
+                                <field name="unit_cost_display" string="Unit Cost" width="115px"/>
+                                <field name="total_cost_display" string="Total Cost" width="115px"/>
+                            </list>
+                        </field>
+                        <group class="oe_subtotal_footer" col="2">
+                            <label for="total_additional_cost_display"/>
+                            <field name="total_additional_cost_display"
+                                   nolabel="1"
+                                   readonly="1"
+                                   class="oe_inline fw-bold"/>
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

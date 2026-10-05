@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_requisition_form_hosny_name" model="ir.ui.view">
+        <field name="name">purchase.requisition.form.hosny.name</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]//field[@name='name']" position="replace">
+                <field name="reference" placeholder="اسم الاتفاقية" required="1" readonly="state not in ('draft', 'confirmed')"/>
+            </xpath>
+            <xpath expr="//group/group/field[@name='reference']" position="replace">
+                <field name="name" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_requisition_list_hosny_name" model="ir.ui.view">
+        <field name="name">purchase.requisition.list.hosny.name</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reference']" position="attributes">
+                <attribute name="string">اسم الاتفاقية</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

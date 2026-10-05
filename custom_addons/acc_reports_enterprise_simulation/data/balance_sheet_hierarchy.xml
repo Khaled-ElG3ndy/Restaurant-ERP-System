@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="accounting_pdf_reports.account_financial_report_balancesheet0" model="account.financial.report">
+            <field name="sequence">0</field>
+            <field name="type">sum</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="accounting_pdf_reports.account_financial_report_assets0" model="account.financial.report">
+            <field name="name">الأصول</field>
+            <field name="parent_id" ref="accounting_pdf_reports.account_financial_report_balancesheet0"/>
+            <field name="sequence">10</field>
+            <field name="type">sum</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(5, 0, 0)]"/>
+        </record>
+
+        <record id="account_financial_report_current_assets_group" model="account.financial.report">
+            <field name="name">الأصول المتداولة</field>
+            <field name="parent_id" ref="accounting_pdf_reports.account_financial_report_assets0"/>
+            <field name="sequence">10</field>
+            <field name="type">sum</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="account_financial_report_receivables" model="account.financial.report">
+            <field name="name">المدينون</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">11</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_receivable')])]"/>
+        </record>
+
+        <record id="account_financial_report_bank_cash" model="account.financial.report">
+            <field name="name">الحسابات البنكية والنقدية</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">12</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_liquidity')])]"/>
+        </record>
+
+        <record id="account_financial_report_current_assets" model="account.financial.report">
+            <field name="name">الأصول المتداولة</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">13</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_current_assets')])]"/>
+        </record>
+
+        <record id="account_financial_report_prepayments" model="account.financial.report">
+            <field name="name">المدفوعات المسددة مقدماً</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">14</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_prepayments')])]"/>
+        </record>
+
+        <record id="account_financial_report_non_current_assets" model="account.financial.report">
+            <field name="name">بالإضافة للأصول غير المتداولة</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">15</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_non_current_assets')])]"/>
+        </record>
+
+        <record id="account_financial_report_fixed_assets" model="account.financial.report">
+            <field name="name">بالإضافة الى الأصول الثابتة</field>
+            <field name="parent_id" ref="account_financial_report_current_assets_group"/>
+            <field name="sequence">16</field>
+            <field name="type">account_type</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_fixed_assets')])]"/>
+        </record>
+
+        <record id="accounting_pdf_reports.account_financial_report_liabilitysum0" model="account.financial.report">
+            <field name="name">التزامات</field>
+            <field name="parent_id" ref="accounting_pdf_reports.account_financial_report_balancesheet0"/>
+            <field name="sequence">20</field>
+            <field name="type">sum</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="account_financial_report_current_liabilities_group" model="account.financial.report">
+            <field name="name">الالتزامات الجارية</field>
+            <field name="parent_id" ref="accounting_pdf_reports.account_financial_report_liabilitysum0"/>
+            <field name="sequence">20</field>
+            <field name="type">sum</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="accounting_pdf_reports.account_financial_report_liability0" model="account.financial.report">
+            <field name="name">الدائنون</field>
+            <field name="parent_id" ref="account_financial_report_current_liabilities_group"/>
+            <field name="sequence">21</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_payable')])]"/>
+        </record>
+
+        <record id="account_financial_report_credit_cards" model="account.financial.report">
+            <field name="name">بطاقات الائتمان</field>
+            <field name="parent_id" ref="account_financial_report_current_liabilities_group"/>
+            <field name="sequence">22</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_credit_card')])]"/>
+        </record>
+
+        <record id="account_financial_report_current_liabilities" model="account.financial.report">
+            <field name="name">الالتزامات الجارية</field>
+            <field name="parent_id" ref="account_financial_report_current_liabilities_group"/>
+            <field name="sequence">23</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_current_liabilities')])]"/>
+        </record>
+
+        <record id="account_financial_report_non_current_liabilities" model="account.financial.report">
+            <field name="name">بالإضافة للالتزامات غير الجارية</field>
+            <field name="parent_id" ref="account_financial_report_current_liabilities_group"/>
+            <field name="sequence">24</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_non_current_liabilities')])]"/>
+        </record>
+
+        <record id="account_financial_report_equity" model="account.financial.report">
+            <field name="name">رأس المال</field>
+            <field name="parent_id" ref="accounting_pdf_reports.account_financial_report_balancesheet0"/>
+            <field name="sequence">30</field>
+            <field name="type">sum</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="account_financial_report_unallocated_profit" model="account.financial.report">
+            <field name="name">أرباح غير مخصصة</field>
+            <field name="parent_id" ref="account_financial_report_equity"/>
+            <field name="sequence">30</field>
+            <field name="type">sum</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+
+        <record id="account_financial_report_equity_accounts" model="account.financial.report">
+            <field name="name">أرباح السنين الماضية غير المخصصة</field>
+            <field name="parent_id" ref="account_financial_report_unallocated_profit"/>
+            <field name="sequence">31</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_account_type_equity')])]"/>
+        </record>
+
+        <record id="account_financial_report_current_year_earnings" model="account.financial.report">
+            <field name="name">الأرباح غير المخصصة للسنة الجارية</field>
+            <field name="parent_id" ref="account_financial_report_unallocated_profit"/>
+            <field name="sequence">32</field>
+            <field name="type">account_type</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">detail_with_hierarchy</field>
+            <field name="style_overwrite">0</field>
+            <field name="account_type_ids" eval="[(6, 0, [ref('accounting_pdf_reports.data_unaffected_earnings')])]"/>
+        </record>
+
+        <record id="accounting_pdf_reports.account_financial_report_profitloss_toreport0" model="account.financial.report">
+            <field name="name">الأرباح المحتجزة</field>
+            <field name="parent_id" ref="account_financial_report_unallocated_profit"/>
+            <field name="sequence">33</field>
+            <field name="sign">-1</field>
+            <field name="display_detail">no_detail</field>
+            <field name="style_overwrite">0</field>
+        </record>
+    </data>
+</odoo>

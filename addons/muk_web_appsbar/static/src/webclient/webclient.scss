@@ -1,0 +1,62 @@
+.o_web_client {
+	display: grid !important;
+    grid-template-areas:
+        "banner banner"
+        "navbar navbar"
+        "sidebar content"
+        "components components";
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: auto 1fr;
+    > div:has(#oe_neutralize_banner) {
+    	grid-area: banner;
+    }
+    > .o_navbar {
+    	grid-area: navbar;
+    }
+    > .mk_apps_sidebar_panel {
+    	grid-area: sidebar;
+    }
+    > .o_action_manager {
+    	grid-area: content;
+    }
+    > .o-main-components-container {
+    	grid-area: components;
+    }
+    > iframe {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+}
+
+.o_web_client.o_rtl,
+.o_rtl .o_web_client {
+    /*rtl:ignore*/
+    grid-template-areas:
+        "banner banner"
+        "navbar navbar"
+        "content sidebar"
+        "components components";
+    /*rtl:ignore*/
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    > .o_navbar .o_main_navbar {
+        /*rtl:ignore*/
+        direction: ltr;
+
+        .o_navbar_apps_menu,
+        .o_menu_brand,
+        .o_menu_sections {
+            /*rtl:ignore*/
+            direction: rtl;
+        }
+
+        .o_menu_systray {
+            /*rtl:ignore*/
+            direction: rtl;
+            /*rtl:ignore*/
+            margin-left: auto !important;
+            /*rtl:ignore*/
+            margin-right: 0 !important;
+        }
+    }
+}

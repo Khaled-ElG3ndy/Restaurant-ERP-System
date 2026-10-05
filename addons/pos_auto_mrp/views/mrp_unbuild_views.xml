@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_unbuild_form_inherit_auto_return_trace" model="ir.ui.view">
+        <field name="name">mrp.unbuild.form.auto.return.trace</field>
+        <field name="model">mrp.unbuild</field>
+        <field name="inherit_id" ref="mrp.mrp_unbuild_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mo_id']" position="after">
+                <field name="origin_source" readonly="state == 'done'"/>
+                <field name="return_picking_id" readonly="1" invisible="not return_picking_id"/>
+                <field name="return_move_id" readonly="1" invisible="not return_move_id"/>
+                <field name="sale_order_line_id" readonly="1" invisible="not sale_order_line_id"/>
+                <field name="pos_order_line_id" readonly="1" invisible="not pos_order_line_id"/>
+                <field name="pos_refund_order_line_id" readonly="1" invisible="not pos_refund_order_line_id"/>
+                <field name="auto_return_allocation_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_unbuild_list_inherit_auto_return_trace" model="ir.ui.view">
+        <field name="name">mrp.unbuild.list.auto.return.trace</field>
+        <field name="model">mrp.unbuild</field>
+        <field name="inherit_id" ref="mrp.mrp_unbuild_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mo_id']" position="after">
+                <field name="origin_source" optional="show"/>
+                <field name="return_picking_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

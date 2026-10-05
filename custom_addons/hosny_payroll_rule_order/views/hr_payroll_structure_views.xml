@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payroll_structure_form_rule_order" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.form.rule.order</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_employee_grade_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='rule_ids']" position="before">
+                <field name="hosny_first_rule_id" invisible="1"/>
+                <field name="hosny_last_rule_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='rule_ids']/list/field[@name='register_id']" position="after">
+                <button
+                    name="action_move_up_in_payroll_structure"
+                    type="object"
+                    icon="fa-arrow-up"
+                    title="Move up"
+                    class="o_hosny_rule_order_button"
+                    context="{'payroll_rule_order_structure_id': parent.id}"
+                    invisible="not parent.id or id == parent.hosny_first_rule_id"
+                    groups="bi_hr_payroll.group_hr_payroll_user"/>
+                <button
+                    name="action_move_down_in_payroll_structure"
+                    type="object"
+                    icon="fa-arrow-down"
+                    title="Move down"
+                    class="o_hosny_rule_order_button"
+                    context="{'payroll_rule_order_structure_id': parent.id}"
+                    invisible="not parent.id or id == parent.hosny_last_rule_id"
+                    groups="bi_hr_payroll.group_hr_payroll_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

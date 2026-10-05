@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="hosny_pos_receipt.PaymentOrdersInvoiceNote"
+       t-inherit="hosny_pos_controls.PaymentOrdersScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('order-card-meta')]" position="inside">
+            <span class="meta-chip hosny-invoice-note-chip" t-if="pendingOrder.invoiceNote">
+                <i class="fa fa-file-text-o"/>
+                <span class="meta-label">ملاحظات الفاتورة</span>
+                <t t-esc="pendingOrder.invoiceNote"/>
+            </span>
+        </xpath>
+    </t>
+</templates>

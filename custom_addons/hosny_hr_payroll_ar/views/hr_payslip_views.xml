@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_view_form_hosny_payroll_ar" model="ir.ui.view">
+        <field name="name">hr.payslip.form.hosny.payroll.ar</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="hosny_payroll_sources" string="المصادر المرتبطة">
+                    <separator string="تعديلات الرواتب المحتسبة"/>
+                    <field name="hosny_adjustment_ids" readonly="1">
+                        <list string="تعديلات الرواتب المحتسبة">
+                            <field name="date_start"/>
+                            <field name="name"/>
+                            <field name="adjustment_type"/>
+                            <field name="recurrence"/>
+                            <field name="amount"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                    <separator string="قيود العمل المحتسبة"/>
+                    <field name="hosny_work_entry_ids" readonly="1">
+                        <list string="قيود العمل المحتسبة">
+                            <field name="date"/>
+                            <field name="work_entry_type_id"/>
+                            <field name="duration"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#  * hosny_payroll_rule_order
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-01 00:00+0000\n"
+"Last-Translator: Hosny\n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_payroll_rule_order
+#: model_terms:ir.ui.view,arch_db:hosny_payroll_rule_order.hr_payroll_structure_form_rule_order
+msgid "Move up"
+msgstr "تحريك لأعلى"
+
+#. module: hosny_payroll_rule_order
+#: model_terms:ir.ui.view,arch_db:hosny_payroll_rule_order.hr_payroll_structure_form_rule_order
+msgid "Move down"
+msgstr "تحريك لأسفل"
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "Salary Rule Order"
+msgstr "ترتيب قواعد الرواتب"
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "Save the salary structure before changing the rule order."
+msgstr "احفظ هيكل الرواتب قبل تغيير ترتيب القواعد."
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "This salary rule does not belong to the selected salary structure."
+msgstr "قاعدة الراتب هذه لا تنتمي إلى هيكل الرواتب المحدد."
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "This salary rule is already %(position)s."
+msgstr "قاعدة الراتب موجودة بالفعل في الموضع %(position)s."
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "first"
+msgstr "الأول"
+
+#. module: hosny_payroll_rule_order
+#. odoo-python
+#: code:addons/hosny_payroll_rule_order/models/hr_salary_rule.py:0
+msgid "last"
+msgstr "الأخير"

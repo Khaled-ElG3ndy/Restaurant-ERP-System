@@ -1,0 +1,15 @@
+/* Hide ONLY Internal Note button */
+.control-buttons button.control-button i.fa-tag {
+    display: none !important;
+}
+
+/* يخفي الزر بالكامل عن طريق إخفاء الأيقونة والنص */
+.control-buttons button.control-button i.fa-tag + span,
+.control-buttons button.control-button i.fa-tag + span + span {
+    display: none !important;
+}
+
+/* يخلي الزر نفسه يختفي */
+.control-buttons button.control-button:has(i.fa-tag) {
+    display: none !important;
+}

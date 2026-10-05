@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- A6 landscape. wkhtmltopdf reads the custom page size in portrait and
+             applies Landscape afterwards, so width/height are given un-rotated. -->
+        <record id="paperformat_discount_coupon" model="report.paperformat">
+            <field name="name">Hosny Discount Coupon A6</field>
+            <field name="default" eval="False"/>
+            <field name="format">custom</field>
+            <field name="page_width">105</field>
+            <field name="page_height">148</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="disable_shrinking" eval="True"/>
+            <field name="dpi">96</field>
+        </record>
+
+        <record id="loyalty.report_gift_card" model="ir.actions.report">
+            <field name="paperformat_id" ref="pos_gift_card_custom_design.paperformat_discount_coupon"/>
+        </record>
+
+        <!-- The whole card is one inline SVG built in Python (see
+             models/coupon_design.py) so every ornament stays in exact
+             proportion at any output size. -->
+        <template id="gift_card_report_arabic_inherit" inherit_id="loyalty.gift_card_report">
+            <xpath expr="." position="replace">
+                <div class="hosny-coupon-page">
+                    <style>
+                        <t t-out="o._hosny_gc_font_css()"/>
+                        @page { size: 148mm 105mm; margin: 0; }
+                        html, body { margin: 0 !important; padding: 0 !important;
+                                     background: #ffffff; }
+                        #wrapwrap, #wrapwrap > main { margin: 0 !important;
+                                     padding: 0 !important; }
+                        .hosny-coupon-page { width: 148mm; height: 105mm; margin: 0;
+                                     padding: 0; overflow: hidden;
+                                     page-break-after: always;
+                                     page-break-inside: avoid; }
+                        .hosny-coupon-page:last-child { page-break-after: auto; }
+                        .hosny-coupon-page > svg { display: block; width: 148mm;
+                                     height: 105mm; }
+                    </style>
+                    <t t-out="o._hosny_gc_card_svg()"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,1590 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * hosny_purchase_packaging
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-15 21:14+0000\n"
+"PO-Revision-Date: 2026-07-13 18:45+0000\n"
+"Last-Translator: Hosny\n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "%(amount)s %(currency)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "%(chain)s = %(total)s %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "%(details)s = %(total)s %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "%(packages)s %(package)s = %(qty)s %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "%(price)s %(currency)s / %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "%(qty)s %(packaging)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "%(qty)s %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "%(qty)s × %(packaging)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "1 %(package)s = %(qty)s %(unit)s"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.vendor_bill_packaging_report
+msgid ""
+"<br/>\n"
+"                <span>الكمية الأساسية المفوترة:</span>"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_packaging_report
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_quotation_packaging_report
+msgid ""
+"<br/>\n"
+"                <span>الكمية النهائية:</span>"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.vendor_bill_packaging_report
+msgid ""
+"<span class=\"mx-1\">|</span>\n"
+"                <span>عدد التعبئات المكافئ:</span>"
+msgstr ""
+"<span class=\"mx-1\">|</span>\n"
+"                <span>عدد التعبئات المكافئ:</span>"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_packaging_report
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_quotation_packaging_report
+msgid ""
+"<span class=\"mx-1\">|</span>\n"
+"                <span>عدد التعبئات:</span>"
+msgstr ""
+"<span class=\"mx-1\">|</span>\n"
+"                <span>عدد التعبئات:</span>"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "<span class=\"text-muted\">Base Unit</span>"
+msgstr "<span class=\"text-muted\">الوحدة الأساسية</span>"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "<span class=\"text-muted\">Product</span>"
+msgstr "<span class=\"text-muted\">المنتج</span>"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "A base-unit packaging cannot contain another packaging."
+msgstr "لا يمكن لتعبئة تعتمد على الوحدة الأساسية أن تحتوي تعبئة أخرى."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "A packaging cannot contain itself."
+msgstr "لا يمكن أن تحتوي التعبئة على نفسها."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging
+msgid ""
+"A packaging may contain the product's base unit or another packaging of the "
+"same product and company. Final base content and the technical conversion "
+"unit are calculated automatically."
+msgstr ""
+"يمكن أن تحتوي التعبئة وحدة المنتج الأساسية أو تعبئة أخرى لنفس المنتج "
+"والشركة. يتم حساب المحتوى الأساسي النهائي ووحدة التحويل الفنية تلقائيًا."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/packaging_type.py:0
+msgid "A packaging type with this name already exists for the company."
+msgstr "يوجد نوع تعبئة بهذا الاسم بالفعل لهذه الشركة."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "A product is required for the packaging."
+msgstr "يجب تحديد المنتج للتعبئة."
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__active
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__active
+msgid "Active"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Add Internal Level"
+msgstr "إضافة مستوى داخلي"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid ""
+"Add the final content unit, then insert internal packaging levels before it."
+msgstr "أضف وحدة المحتوى النهائي، ثم أدرج مستويات التعبئة الداخلية قبلها."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "An internal packaging level cannot contain a unit of measure."
+msgstr "لا يمكن أن يحتوي مستوى التعبئة الداخلي على وحدة قياس."
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_line_packaging_level__content_type__packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_packaging__content_type__packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_packaging_template_line__content_type__packaging
+msgid "Another Packaging"
+msgstr "تعبئة أخرى"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__allowed_content_uom_ids
+#, fuzzy
+msgid "Available Content Units"
+msgstr "وحدة المحتوى"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_available_purchase_packaging_template_ids
+msgid "Available Saved Purchase Packagings"
+msgstr "تعبئات الشراء المحفوظة المتاحة"
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_bag
+msgid "Bag"
+msgstr "كيس"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_packaging__content_type__base_uom
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging
+msgid "Base Product Unit"
+msgstr "وحدة المنتج الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Base Quantity"
+msgstr "الكمية الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__base_uom_id
+#, fuzzy
+msgid "Base Unit"
+msgstr "الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__base_uom_factor
+msgid "Base Unit Conversion Factor"
+msgstr "معامل التحويل إلى الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Base Unit Price"
+msgstr "سعر الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+#, fuzzy
+msgid "Base unit"
+msgstr "الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__purchase_order_line__hosny_packaging_price_method__base_uom
+msgid "By Base Unit"
+msgstr "حسب الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__purchase_order_line__hosny_packaging_price_method__package
+msgid "By Main Packaging"
+msgstr "حسب التعبئة الرئيسية"
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_carton
+msgid "Carton"
+msgstr "كرتونة"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Circular packaging references are not allowed."
+msgstr "الروابط الدائرية بين التعبئات غير مسموح بها."
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__company_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__company_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__company_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__company_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__company_id
+msgid "Company"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__parent_packaging_ids
+msgid "Containing Packagings"
+msgstr "التعبئات المحتوية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__quantity
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Contains"
+msgstr "يحتوي على"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__content_type
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__content_type
+msgid "Content Type"
+msgstr "نوع المحتوى"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_content_uom_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__content_uom_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_content_uom_id
+msgid "Content Unit"
+msgstr "وحدة المحتوى"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.actions.act_window,help:hosny_purchase_packaging.hosny_packaging_type_action
+msgid "Create a reusable packaging type"
+msgstr "أنشئ نوع تعبئة قابلًا لإعادة الاستخدام"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__create_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__create_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__create_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__create_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__create_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__create_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__create_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__create_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__purchase_default
+msgid "Default Purchase Packaging"
+msgstr "تعبئة الشراء الافتراضية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,help:hosny_purchase_packaging.field_hosny_purchase_packaging__content_uom_id
+#: model:ir.model.fields,help:hosny_purchase_packaging.field_hosny_purchase_packaging__final_content_uom_id
+#: model:ir.model.fields,help:hosny_purchase_packaging.field_hosny_purchase_packaging_template__base_uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+msgid ""
+"Define the content of one main package. Purchase quantity and actual price "
+"remain on the purchase order."
+msgstr ""
+"عرّف محتوى تعبئة رئيسية واحدة. تظل كمية الشراء والسعر الفعلي داخل أمر الشراء."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Delete packaging level"
+msgstr "حذف مستوى التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__details_button
+msgid "Details Button"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_product__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_template__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_stock_move__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_uom_uom__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Each"
+msgstr "كل"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+msgid ""
+"Editing purchase-order data loaded from this template will not change the "
+"original template."
+msgstr "تعديل بيانات أمر الشراء المحملة من هذا القالب لن يغير القالب الأصلي."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_list_view
+msgid "Enabled"
+msgstr "مفعّل"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "Enter a name for the purchase packaging template."
+msgstr "أدخل اسمًا لقالب تعبئة الشراء."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Equivalent Base Unit Price"
+msgstr "سعر الوحدة الأساسية المكافئ"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__final_content_qty
+msgid "Final Base Content"
+msgstr "المحتوى النهائي الأساسي"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__final_content_uom_id
+msgid "Final Base Unit"
+msgstr "الوحدة الأساسية النهائية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__final_base_qty
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__final_uom_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Final Content"
+msgstr "المحتوى النهائي"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Final Unit"
+msgstr "الوحدة النهائية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_line_packaging_level__content_type__base_uom
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__hosny_purchase_packaging_template_line__content_type__base_uom
+msgid "Final Unit of Measure"
+msgstr "وحدة قياس نهائية"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Final content"
+msgstr "المحتوى النهائي"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_summary_equivalent_price
+msgid "Hosny Summary Equivalent Price"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_summary_package_content
+#, fuzzy
+msgid "Hosny Summary Package Content"
+msgstr "محتوى التعبئة الواحدة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_summary_subtotal
+msgid "Hosny Summary Subtotal"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_summary_total
+msgid "Hosny Summary Total"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_summary_total_quantity
+#, fuzzy
+msgid "Hosny Summary Total Quantity"
+msgstr "إجمالي الكمية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_product__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_template__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_stock_move__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_stock_picking__id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_uom_uom__id
+msgid "ID"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_inner_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__inner_packaging_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_inner_id
+msgid "Inner Packaging"
+msgstr "التعبئة الداخلية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_inner_qty
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_inner_qty
+msgid "Inner Packaging Quantity"
+msgstr "عدد التعبئات الداخلية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__is_final_level
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__is_final_level
+#, fuzzy
+msgid "Is Final Level"
+msgstr "إضافة مستوى داخلي"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__write_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__write_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__write_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__write_uid
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__write_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__write_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__write_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__write_date
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__level_count
+#, fuzzy
+msgid "Level Count"
+msgstr "المستوى"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__main_packaging_type_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Main Packaging Type"
+msgstr "نوع التعبئة الرئيسية"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "Main packaging"
+msgstr "التعبئة الرئيسية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__managed_uom
+msgid "Managed Uom"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Move down"
+msgstr "تحريك لأسفل"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Move up"
+msgstr "تحريك لأعلى"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "No packaging details have been added yet"
+msgstr "لم تُضف تفاصيل تعبئة بعد"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Only one default purchase packaging is allowed per product and company."
+msgstr "يسمح بتعبئة شراء افتراضية واحدة فقط لكل منتج وشركة."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Open Packaging Details"
+msgstr "فتح تفاصيل التعبئة"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Operation Summary"
+msgstr "ملخص العملية"
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_pack
+msgid "Pack"
+msgstr "باكت"
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_package
+msgid "Package"
+msgstr "عبوة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Package / Base Unit Price"
+msgstr "سعر التعبئة / الوحدة الأساسية"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid ""
+"Packaging %(packaging)s cannot be converted to the product unit %(unit)s."
+msgstr "لا يمكن تحويل التعبئة المحددة إلى وحدة قياس المنتج."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging Components (Largest to Smallest)"
+msgstr "مكونات التعبئة (من الأعلى إلى الأصغر)"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_content_qty
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__content_qty
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_content_qty
+msgid "Packaging Content"
+msgstr "محتوى التعبئة"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_list_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging Details"
+msgstr "تفاصيل التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_hierarchy
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__hierarchy_display
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_hierarchy
+msgid "Packaging Hierarchy"
+msgstr "تسلسل التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__line_ids
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging Levels"
+msgstr "مستويات التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__name
+msgid "Packaging Name"
+msgstr "اسم التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.supplierinfo_purchase_packaging_labels
+msgid "Packaging Price / Unit Price"
+msgstr "سعر التعبئة / سعر الوحدة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging Pricing"
+msgstr "تسعير التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__summary
+msgid "Packaging Summary"
+msgstr "ملخص التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+msgid "Packaging Template Summary"
+msgstr "ملخص قالب التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_hosny_packaging_type
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__name
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__packaging_type_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__packaging_type_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_packaging_type_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging Type"
+msgstr "نوع التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.actions.act_window,name:hosny_purchase_packaging.hosny_packaging_type_action
+#: model:ir.ui.menu,name:hosny_purchase_packaging.hosny_packaging_type_menu
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_packaging_type_list_view
+msgid "Packaging Types"
+msgstr "أنواع التعبئة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Packaging and Calculations Summary"
+msgstr "ملخص التعبئة والحسابات"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.actions.act_window,help:hosny_purchase_packaging.hosny_packaging_type_action
+msgid "Packaging content is configured separately for each product."
+msgstr "يتم إعداد محتوى التعبئة بشكل مستقل لكل منتج."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Packaging content must be greater than zero."
+msgstr "يجب أن يكون محتوى التعبئة أكبر من صفر."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Packaging content:"
+msgstr "محتوى التعبئة:"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "Packaging details could not be opened. Reload the page and try again."
+msgstr "تعذر فتح تفاصيل التعبئة. أعد تحميل الصفحة وحاول مرة أخرى."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "Packaging level quantity must be greater than zero."
+msgstr "يجب أن تكون كمية مستوى التعبئة أكبر من صفر."
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_pallet
+msgid "Pallet"
+msgstr "باليت"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "Previous packaging"
+msgstr "التعبئة السابقة"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Pricing Method"
+msgstr "طريقة التسعير"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Pricing method:"
+msgstr "طريقة التسعير:"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_product_template
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__product_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__product_tmpl_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_hosny_purchase_packaging
+msgid "Product Purchase Packaging"
+msgstr "تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__product_tmpl_id
+msgid "Product Template"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_uom_uom
+msgid "Product Unit of Measure"
+msgstr "وحدة المنتج"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__purchase_ok
+msgid "Purchase"
+msgstr "تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_hosny_purchase_line_packaging_level
+#, fuzzy
+msgid "Purchase Order Line Packaging Component"
+msgstr "عدد التعبئات المشتراة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_purchase_packaging_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_product__hosny_purchase_packaging_template_ids
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_template__hosny_purchase_packaging_template_ids
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_purchase_packaging_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_list_view
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_product_form_purchase_packaging_templates
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging_templates
+msgid "Purchase Packaging"
+msgstr "تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.supplierinfo_purchase_packaging_labels
+msgid "Purchase Packaging / Unit"
+msgstr "تعبئة الشراء / الوحدة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__template_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+msgid "Purchase Packaging Template"
+msgstr "قالب تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_product__hosny_purchase_packaging_ids
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_product_template__hosny_purchase_packaging_ids
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging
+msgid "Purchase Packagings"
+msgstr "تعبئات الشراء"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Purchase Quantity and Main Packaging"
+msgstr "كمية الشراء والتعبئة الرئيسية"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.purchase_order_form_purchase_packaging
+msgid "Purchased Package Count"
+msgstr "عدد التعبئات المشتراة"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Remove the inner-packaging links before deleting: %(packagings)s"
+msgstr "أزل روابط التعبئة الداخلية قبل الحذف: %(packagings)s"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_hosny_purchase_packaging_template
+#, fuzzy
+msgid "Reusable Product Purchase Packaging Template"
+msgstr "قالب تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_hosny_purchase_packaging_template_line
+#, fuzzy
+msgid "Reusable Purchase Packaging Template Level"
+msgstr "مستوى قالب تعبئة الشراء"
+
+#. module: hosny_purchase_packaging
+#: model:hosny.packaging.type,name:hosny_purchase_packaging.packaging_type_sack
+msgid "Sack"
+msgstr "شوال"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__sale_ok
+msgid "Sales"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_template_form_purchase_packaging_templates
+msgid ""
+"Save reusable packaging structures here. Purchase quantities and actual "
+"prices are entered on each purchase order."
+msgstr ""
+"احفظ هنا تركيبات التعبئة القابلة لإعادة الاستخدام. يتم إدخال كميات الشراء "
+"والأسعار الفعلية في كل أمر شراء."
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_purchase_packaging_template_id
+msgid "Saved Purchase Packaging"
+msgstr "تعبئة الشراء المحفوظة"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Select a packaging type, such as Carton or Sack."
+msgstr "اختر نوع تعبئة مثل كرتونة أو شوال."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "Select the final content unit of measure."
+msgstr "اختر وحدة قياس المحتوى النهائي."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "Select the inner packaging."
+msgstr "اختر التعبئة الداخلية."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "Select the packaging type for the internal level."
+msgstr "اختر نوع التعبئة للمستوى الداخلي."
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_packaging_type__sequence
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__sequence
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__sequence
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__sequence
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Single Package Content"
+msgstr "محتوى التعبئة الواحدة"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Subtotal before tax:"
+msgstr "الإجمالي قبل الضريبة:"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging__uom_id
+msgid "Technical Packaging Unit"
+msgstr "وحدة التعبئة الفنية"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_uom_uom__hosny_is_technical_purchase_packaging
+msgid "Technical Purchase Packaging Unit"
+msgstr "وحدة تعبئة الشراء الفنية"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_purchase_packaging_template_form_view
+msgid "Template Information"
+msgstr "بيانات القالب"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_packaging_template__name
+msgid "Template Name"
+msgstr "اسم القالب"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "The default purchase packaging must be enabled for purchases."
+msgstr "يجب تفعيل تعبئة الشراء الافتراضية للاستخدام في المشتريات."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid ""
+"The final content row must remain last. Change its unit or add an internal "
+"packaging before it."
+msgstr ""
+"يجب أن يبقى سطر المحتوى النهائي في الأخير. غيّر وحدته أو أضف تعبئة داخلية "
+"قبله."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid "The final unit level cannot contain a packaging type."
+msgstr "لا يمكن أن يحتوي مستوى الوحدة النهائي على نوع تعبئة."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "The inner packaging must belong to the same company."
+msgstr "يجب أن تكون التعبئة الداخلية لنفس الشركة."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid "The inner packaging must belong to the same product."
+msgstr "يجب أن تكون التعبئة الداخلية لنفس المنتج."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "The new level is inserted before the final content automatically."
+msgstr "يتم إدراج المستوى الجديد قبل المحتوى النهائي تلقائيًا."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "The saved packaging has been loaded."
+msgstr "تم تحميل التعبئة المحفوظة."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "The saved packaging is not available for this product and company."
+msgstr "التعبئة المحفوظة غير متاحة لهذا المنتج وهذه الشركة."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging_template.py:0
+msgid ""
+"The template must contain a main packaging and at least one packaging level."
+msgstr "يجب أن يحتوي القالب على تعبئة رئيسية ومستوى تعبئة واحد على الأقل."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.product_product_form_purchase_packaging_templates
+msgid ""
+"These templates belong to the product template and are shared by all "
+"variants without duplicate records."
+msgstr ""
+"تتبع هذه القوالب قالب المنتج وتُشارك بين جميع المتغيرات دون تكرار السجلات."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+msgid ""
+"This packaging is already used in business documents. Create a new packaging "
+"instead of changing its content."
+msgstr ""
+"هذه التعبئة مستخدمة بالفعل في مستندات تشغيلية. أنشئ تعبئة جديدة بدلًا من "
+"تغيير محتواها."
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_packaging.py:0
+#: model:ir.model.constraint,message:hosny_purchase_packaging.constraint_hosny_purchase_packaging_unique_product_type_company
+msgid "This packaging type is already configured for this product and company."
+msgstr "نوع التعبئة هذا مُعد بالفعل لهذا المنتج وهذه الشركة."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Total Quantity"
+msgstr "إجمالي الكمية"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Total including tax:"
+msgstr "الإجمالي بعد الضريبة:"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model,name:hosny_purchase_packaging.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Will be purchased:"
+msgstr "سيتم شراء:"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "Will be received:"
+msgstr "سيتم استلام:"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "You can add up to 10 internal levels"
+msgstr "يمكن إضافة حتى 10 مستويات داخلية"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "You cannot add more than 10 packaging levels."
+msgstr "لا يمكن إضافة أكثر من 10 مستويات للتعبئة."
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "contains"
+msgstr "تحتوي على"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/xml/purchase_packaging_details_button.xml:0
+msgid "per"
+msgstr "لكل"
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_line_packaging_enabled
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_line_packaging_enabled
+msgid "استخدام التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "التعبئة المحددة غير مفعلة للشراء لهذا المنتج وهذه الشركة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_input_price
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_input_price
+msgid "السعر المدخل"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "السعر لا يمكن أن يكون أقل من صفر."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "الكمية الأساسية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_base_quantity
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_line_base_qty
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "الكمية الأساسية النهائية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "الكمية النهائية لا تطابق الكمية المحسوبة من تفاصيل التعبئة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__level_number
+msgid "المستوى"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__final_uom_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "الوحدة النهائية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "تعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "تعذر حساب الكمية الأساسية للتعبئة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_has_inner_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_has_inner_packaging
+msgid "توجد تعبئة داخلية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__account_move_line__hosny_packaging_price_method__package
+msgid "حسب التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields.selection,name:hosny_purchase_packaging.selection__account_move_line__hosny_packaging_price_method__base_uom
+msgid "حسب الوحدة الأساسية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__line_id
+msgid "سطر الشراء"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "سعر الوحدة الأساسية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_equivalent_unit_price
+msgid "سعر الوحدة الأساسية المكافئ"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_price_method
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_price_method
+msgid "طريقة التسعير"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_outer_package_qty
+msgid "عدد التعبئات"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_inner_package_qty
+msgid "عدد التعبئات الداخلية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_inner_package_qty
+msgid "عدد التعبئات الداخلية في كل تعبئة خارجية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "عدد التعبئات المشتراة يجب أن يكون أكبر من صفر."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_invoice_packaging_qty
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "عدد التعبئات المفوتر"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_outer_package_qty
+msgid "عدد التعبئات في أمر الشراء"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "عدد التعبئة في المستوى %(level)s يجب أن يكون أكبر من صفر."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "عدد تعبئات الشراء يجب أن يكون أكبر من صفر."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_level_count
+msgid "عدد مستويات التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_line_packaging_level.py:0
+msgid "كمية مستوى التعبئة يجب أن تكون أكبر من صفر."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "لا يمكن إضافة أكثر من 10 مستويات للتعبئة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/product_product.py:0
+msgid ""
+"لا يمكن تغيير وحدة قياس المنتج أثناء وجود سطور شراء تستخدم تفاصيل التعبئة. "
+"أزل تفاصيل التعبئة من السطور المسودة أولًا، أو أنشئ منتجًا جديدًا للمستندات "
+"السابقة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "لا يمكن تكرار نفس نوع التعبئة داخل السلسلة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.constraint,message:hosny_purchase_packaging.constraint_hosny_purchase_line_packaging_level_unique_line_packaging_type
+msgid "لا يمكن تكرار نفس نوع التعبئة داخل سلسلة تعبئة سطر الشراء."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "لم تُضف تفاصيل تعبئة بعد"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_line_content_qty
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_line_content_qty
+msgid "محتوى التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_main_package_base_qty
+msgid "محتوى التعبئة الرئيسية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_packaging_unit_base_qty
+msgid "محتوى التعبئة الواحدة بالوحدة الأساسية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_packaging_level_ids
+msgid "مستويات التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_line_packaging_summary
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_line_packaging_summary
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.account_move_form_purchase_packaging
+msgid "ملخص التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_stock_move__hosny_line_packaging_summary
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.stock_picking_form_purchase_packaging
+msgid "ملخص تعبئة الشراء"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__packaging_type_id
+msgid "نوع التعبئة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_outer_packaging_type_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_outer_packaging_type_id
+msgid "نوع التعبئة الخارجية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_inner_packaging_type_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_inner_packaging_type_id
+msgid "نوع التعبئة الداخلية"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "نوع التعبئة في المستوى %(level)s لا يتبع شركة سطر الشراء."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_line_packaging_level.py:0
+msgid "نوع التعبئة لا يتبع شركة سطر الشراء."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__content_type
+msgid "نوع المحتوى"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "نوع محتوى المستوى غير صحيح."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_allowed_content_uom_ids
+msgid "وحدات المحتوى المتاحة"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "وحدة الشراء غير متوافقة مع وحدة قياس المنتج."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_account_move_line__hosny_line_content_uom_id
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_purchase_order_line__hosny_line_content_uom_id
+msgid "وحدة المحتوى"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "وحدة المحتوى النهائي غير متوافقة مع وحدة قياس المنتج."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid ""
+"يجب أن تكون وحدة سطر الشراء هي الوحدة الأساسية للمنتج عند استخدام التعبئة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب أن يكون محتوى وحدة القياس هو المستوى الأخير."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب إضافة مستوى تعبئة واحد على الأقل."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب اختيار المنتج قبل إعداد التعبئة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب اختيار طريقة تسعير صحيحة."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب اختيار نوع التعبئة الرئيسية."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب اختيار نوع التعبئة في المستوى %(level)s."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_line_packaging_level.py:0
+msgid "يجب اختيار نوع التعبئة للمستوى الداخلي."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_line_packaging_level.py:0
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب اختيار وحدة القياس للمحتوى النهائي."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "يجب وجود محتوى نهائي واحد فقط بوحدة قياس."
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#: model:ir.model.fields,field_description:hosny_purchase_packaging.field_hosny_purchase_line_packaging_level__quantity
+msgid "يحتوي على"
+msgstr ""
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order.py:0
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "Duplicate Product Warning"
+msgstr "تنبيه: الصنف مكرر"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/models/purchase_order_line.py:0
+msgid "The product %(product)s already exists on another purchase line."
+msgstr "الصنف %(product)s موجود بالفعل في سطر شراء آخر"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "Warning: Duplicate Product"
+msgstr "تنبيه: الصنف مكرر"
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "This is a warning only. The repeated product is allowed, every line will remain separate, and no lines will be merged."
+msgstr "هذا تنبيه فقط. تكرار الصنف مسموح، وسيظل كل سطر منفصلًا، ولن يتم دمج أي سطور."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "Warning"
+msgstr "تنبيه"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "Keep as Separate Line"
+msgstr "الاحتفاظ كسطر منفصل"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "Go Back"
+msgstr "رجوع"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "this product"
+msgstr "هذا الصنف"
+
+#. module: hosny_purchase_packaging
+#. odoo-javascript
+#: code:addons/hosny_purchase_packaging/static/src/js/purchase_packaging_details_button.js:0
+msgid "The product \"%s\" already exists on another purchase line. Continuing will keep this as a separate line with its own purchase packaging, quantity, and price."
+msgstr "الصنف \"%s\" موجود بالفعل في سطر شراء آخر. عند المتابعة سيظل هذا سطرًا منفصلًا بوحدة التعبئة والكمية والسعر الخاص به."
+
+#. module: hosny_purchase_packaging
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_packaging.hosny_duplicate_purchase_line_warning_form
+msgid "Skip Warning and Continue"
+msgstr "تخطي التحذير والمتابعة"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/wizard/duplicate_purchase_line_warning.py:0
+msgid "%(order)s: %(products)s"
+msgstr "%(order)s: %(products)s"
+
+#. module: hosny_purchase_packaging
+#. odoo-python
+#: code:addons/hosny_purchase_packaging/wizard/duplicate_purchase_line_warning.py:0
+msgid "The following products are repeated on separate purchase lines:\n%(details)s\n\nEach line, quantity, price, and purchase packaging will remain separate. Do you want to skip this warning and continue?"
+msgstr "الأصناف التالية مكررة في سطور شراء منفصلة:\n%(details)s\n\nسيظل كل سطر وكمية وسعر ووحدة تعبئة شراء منفصلًا. هل تريد تخطي هذا التحذير والمتابعة؟"
+
+#~ msgid ""
+#~ "<small class=\"text-muted\">\n"
+#~ "                                        Stock will be received in the "
+#~ "product base unit. Editing current data will not change the original "
+#~ "template.\n"
+#~ "                                    </small>"
+#~ msgstr ""
+#~ "<small class=\"text-muted\">\n"
+#~ "                                        سيتم استلام الكمية في المخزون "
+#~ "بوحدة المنتج الأساسية. تعديل البيانات الحالية لن يغير القالب الأصلي.\n"
+#~ "                                    </small>"
+
+#~ msgid ""
+#~ "<span class=\"o_hosny_saved_packaging_title\">Choose Saved Packaging</"
+#~ "span>"
+#~ msgstr ""
+#~ "<span class=\"o_hosny_saved_packaging_title\">اختيار تعبئة محفوظة</span>"
+
+#, fuzzy
+#~ msgid "<span class=\"text-muted\">Packaging Summary</span>"
+#~ msgstr "<span class=\"text-muted\">المنتج</span>"
+
+#~ msgid "Manual entry is active. Current packaging data was kept."
+#~ msgstr "تم تفعيل الإدخال اليدوي مع الاحتفاظ ببيانات التعبئة الحالية."
+
+#~ msgid ""
+#~ "No saved purchase packaging exists for this product. You can enter "
+#~ "packaging manually or create it from the product page."
+#~ msgstr ""
+#~ "لا توجد تعبئات شراء محفوظة لهذا المنتج. يمكنك الإدخال يدويًا أو إنشاء "
+#~ "تعبئة من صفحة المنتج."
+
+#~ msgid "Add Packaging Details"
+#~ msgstr "إضافة تفاصيل التعبئة"
+
+#~ msgid "<span>Subtotal Before Tax</span>"
+#~ msgstr "<span>الإجمالي قبل الضريبة</span>"
+
+#~ msgid "<span>Total Including Tax</span>"
+#~ msgstr "<span>الإجمالي مع الضريبة</span>"
+
+#~ msgid "<span>Total Quantity</span>"
+#~ msgstr "<span>إجمالي الكمية</span>"
+
+#~ msgid "<span>Equivalent Base Unit Price</span>"
+#~ msgstr "<span>سعر الوحدة الأساسية المكافئ</span>"
+
+#~ msgid "Level Type"
+#~ msgstr "نوع المستوى"
+
+#~ msgid ""
+#~ "<span class=\"mx-1\">|</span>\n"
+#~ "                <span>Packaging price:</span>"
+#~ msgstr ""
+#~ "<span class=\"mx-1\">|</span>\n"
+#~ "                <span>سعر التعبئة:</span>"
+
+#~ msgid "<span>Packaging content:</span>"
+#~ msgstr "<span>محتوى التعبئة:</span>"
+
+#~ msgid "<strong>Packaging Price</strong>"
+#~ msgstr "<strong>سعر التعبئة</strong>"
+
+#~ msgid "<strong>Packaging Qty / Total</strong>"
+#~ msgstr "<strong>عدد التعبئات / الإجمالي</strong>"
+
+#~ msgid "Packaging Qty"
+#~ msgstr "عدد التعبئات"
+
+#~ msgid "Packaging Qty / Quantity"
+#~ msgstr "عدد التعبئات / الكمية"
+
+#~ msgid "Product Unit"
+#~ msgstr "وحدة المنتج"
+
+#~ msgid ""
+#~ "Select a reusable packaging type, then enter this product's real "
+#~ "packaging content. Example: Carton = 13.8 kg or Sack = 25 kg. The "
+#~ "technical conversion unit is created automatically."
+#~ msgstr ""
+#~ "اختر نوع تعبئة قابلًا لإعادة الاستخدام، ثم أدخل المحتوى الحقيقي الخاص بهذا "
+#~ "المنتج. مثال: كرتونة = 13.8 كجم أو شوال = 25 كجم. يتم إنشاء وحدة التحويل "
+#~ "الفنية تلقائيًا."
+
+#~ msgid "The number of purchase packagings must be greater than zero."
+#~ msgstr "يجب أن يكون عدد تعبئات الشراء أكبر من صفر."
+
+#~ msgid "The selected packaging cannot be converted to the product unit."
+#~ msgstr "لا يمكن تحويل التعبئة المحددة إلى وحدة قياس المنتج."
+
+#~ msgid ""
+#~ "The selected packaging is not enabled for purchases for this product and "
+#~ "company."
+#~ msgstr "التعبئة المحددة غير مفعلة للشراء لهذا المنتج وهذه الشركة."
+
+#~ msgid "Choose Saved Packaging"
+#~ msgstr "اختيار تعبئة محفوظة"
+
+#~ msgid "Editing current data will not change the original template."
+#~ msgstr "تعديل البيانات الحالية لن يغير القالب الأصلي."

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="pos_entry_selector.FloorScreenExtension"
+       t-inherit="pos_restaurant.FloorScreen"
+       t-inherit-mode="extension"
+       owl="1">
+
+        <xpath expr="//div[contains(@t-attf-class, 'floor-map')]" position="attributes">
+            <attribute name="t-att-data-pos-floor-tone">this.getFloorTone()</attribute>
+        </xpath>
+
+        <!-- طابق «سفري» ليس مكاناً للجلوس: السفري بلا طاولة (entry_selector.js) -->
+        <xpath expr="//div[hasclass('floor-selector')]/t[@t-as='floor']" position="attributes">
+            <attribute name="t-foreach">this.hosnyFloorTabs</attribute>
+        </xpath>
+
+        <!-- لا شاشة «اختر مكان العمل»: نقطة البيع تفتح على الكاشير مباشرة
+             (cashier_first.js)، ونوع الطلب يُختار من الشريط أسفل الأصناف. -->
+
+    </t>
+
+</templates>

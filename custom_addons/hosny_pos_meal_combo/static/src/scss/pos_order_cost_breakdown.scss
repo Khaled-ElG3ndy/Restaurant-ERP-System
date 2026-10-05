@@ -1,0 +1,169 @@
+.o_form_view.o_pos_additional_cost_breakdown {
+    .o_list_table {
+        font-size: 0.875rem;
+    }
+
+    .o_list_table th,
+    .o_list_table td {
+        white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+        .o_list_renderer {
+            overflow-x: auto;
+        }
+    }
+
+    .o_pos_product_internal_link {
+        color: var(--o-action, #017e84);
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+}
+
+.o_field_pos_additional_cost {
+    .o_pos_additional_cost_cell {
+        gap: 0.3rem;
+        white-space: nowrap;
+    }
+
+    .o_pos_additional_cost_info {
+        min-width: 0;
+        color: var(--o-action, #017e84);
+        font-size: 0.8rem;
+        line-height: 1;
+        vertical-align: middle;
+    }
+}
+
+.o_product_final_cost_row .o_pos_additional_cost_info {
+    min-width: 0;
+    color: var(--o-action, #017e84);
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+.o_form_view.o_pos_additional_cost_breakdown {
+    .o_product_configuration_cost_breakdown {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .o_product_cost_context_card {
+        padding: 0.9rem 1rem;
+        border: 1px solid var(--border-color, #dee2e6);
+        border-radius: 0.75rem;
+        background: var(--o-view-background-color, #fff);
+    }
+
+    .o_product_cost_context_icon,
+    .o_additional_product_icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.65rem;
+        color: var(--o-action, #017e84);
+        background: rgba(1, 126, 132, 0.1);
+    }
+
+    .o_product_cost_formula {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.1fr);
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .o_product_cost_summary_card {
+        min-width: 0;
+        padding: 1rem;
+        border: 1px solid var(--border-color, #dee2e6);
+        border-radius: 0.75rem;
+        background: var(--o-view-background-color, #fff);
+    }
+
+    .o_product_cost_summary_final {
+        color: #fff;
+        border-color: var(--o-action, #017e84);
+        background: linear-gradient(135deg, var(--o-action, #017e84), #075b60);
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+    }
+
+    .o_product_cost_summary_value {
+        display: block;
+        font-size: 1.35rem;
+        font-weight: 700;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .o_product_cost_operator {
+        align-self: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--o-gray-500, #6c757d);
+    }
+
+    .o_product_additional_cost_kanban.o_kanban_renderer {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 0.75rem;
+        padding: 0;
+        background: transparent;
+
+        .o_kanban_record {
+            width: auto !important;
+            min-width: 0;
+            margin: 0 !important;
+            border: 1px solid var(--border-color, #dee2e6);
+            border-radius: 0.75rem;
+            box-shadow: none;
+        }
+    }
+
+    .o_additional_product_metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .o_additional_metric {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding: 0.65rem;
+        border-radius: 0.5rem;
+        background: var(--o-gray-100, #f8f9fa);
+
+        strong {
+            white-space: nowrap;
+        }
+    }
+
+    .o_additional_metric_total {
+        color: var(--o-action, #017e84);
+        background: rgba(1, 126, 132, 0.08);
+    }
+
+    @media (max-width: 768px) {
+        .o_product_cost_formula {
+            grid-template-columns: 1fr;
+        }
+
+        .o_product_cost_operator {
+            line-height: 1;
+            text-align: center;
+        }
+
+        .o_additional_product_metrics {
+            grid-template-columns: 1fr;
+        }
+    }
+}

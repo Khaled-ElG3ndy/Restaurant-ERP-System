@@ -1,0 +1,169 @@
+.mk_apps_sidebar_panel {
+    @include mk-disable-scrollbar();
+    --mk-appsbar-rail-width: 58px;
+    --mk-appsbar-expanded-width: 220px;
+    width: var(--mk-sidebar-width, var(--mk-appsbar-expanded-width));
+    min-width: var(--mk-sidebar-width, var(--mk-appsbar-expanded-width));
+    max-width: var(--mk-sidebar-width, var(--mk-appsbar-expanded-width));
+    position: relative;
+    z-index: 3;
+    overflow: hidden;
+    background: transparent;
+    transition: width 180ms ease, min-width 180ms ease, max-width 180ms ease;
+
+    .mk_apps_sidebar {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        white-space: nowrap;
+        background: linear-gradient(180deg, rgba(214, 195, 161, 0.98), rgba(194, 166, 116, 0.98));
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+    }
+
+    .mk_apps_sidebar_menu {
+        flex: 1 1 auto;
+        min-height: 0;
+        margin: 0;
+        padding: 8px 10px 12px;
+        list-style: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        > li {
+            margin: 0;
+            padding: 3px 0;
+        }
+
+        > li > a {
+            position: relative;
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 11px;
+            overflow: hidden;
+            border-radius: 13px;
+            color: $mk-appbar-color;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            transition: background 160ms ease, box-shadow 160ms ease;
+
+            .mk_apps_sidebar_icon {
+                width: 26px;
+                height: 26px;
+                flex: 0 0 26px;
+                margin: 0;
+                object-fit: contain;
+                border-radius: 8px;
+            }
+        }
+
+        > li.active > a,
+        > li:hover > a {
+            background: $mk-appbar-active;
+            color: #fff;
+        }
+    }
+
+    .mk_apps_sidebar_name {
+        min-width: 0;
+        overflow: hidden;
+        color: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.25;
+        text-overflow: ellipsis;
+    }
+
+    .mk_apps_sidebar_logo {
+        flex: 0 0 auto;
+        padding: 10px !important;
+    }
+
+    .mk_apps_sidebar_logo img {
+        max-width: 100%;
+        max-height: 76px;
+        object-fit: contain;
+    }
+}
+
+.o_web_client.o_rtl .mk_apps_sidebar_panel,
+.o_rtl .o_web_client .mk_apps_sidebar_panel {
+    /*rtl:ignore*/
+    direction: ltr;
+
+    .mk_apps_sidebar_menu > li > a {
+        /*rtl:ignore*/
+        direction: rtl;
+        /*rtl:ignore*/
+        text-align: right;
+    }
+}
+
+.mk_sidebar_type_large {
+    --mk-sidebar-width: var(--mk-appsbar-expanded-width);
+}
+
+.mk_sidebar_type_small {
+    --mk-sidebar-width: var(--mk-appsbar-rail-width);
+
+    .mk_apps_sidebar_menu {
+        padding-inline: 7px;
+    }
+
+    .mk_apps_sidebar_menu > li > a {
+        justify-content: center;
+        gap: 0;
+        padding-inline: 0;
+    }
+
+    .mk_apps_sidebar_name,
+    .mk_apps_sidebar_logo {
+        display: none;
+    }
+}
+
+.mk_sidebar_type_invisible,
+.editor_has_snippets_hide_backend_navbar,
+.o_home_menu_background,
+.o_fullscreen {
+    --mk-sidebar-width: 0;
+}
+
+.editor_has_snippets_hide_backend_navbar .mk_apps_sidebar_panel {
+    transition: width 300ms;
+}
+
+@media (max-width: 640px) {
+    .mk_apps_sidebar_panel {
+        --mk-appsbar-rail-width: 52px;
+        --mk-appsbar-expanded-width: 220px;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu {
+        padding-inline: 6px;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a {
+        min-height: 42px;
+    }
+
+    .mk_apps_sidebar_panel .mk_apps_sidebar_menu > li > a .mk_apps_sidebar_icon {
+        width: 24px;
+        height: 24px;
+        flex-basis: 24px;
+    }
+}
+
+@media print {
+    .mk_sidebar_type_large,
+    .mk_sidebar_type_small {
+        --mk-sidebar-width: 0;
+    }
+}

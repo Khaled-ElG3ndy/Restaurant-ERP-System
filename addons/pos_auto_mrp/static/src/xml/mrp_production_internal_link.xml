@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="pos_auto_mrp.PosMrpProductionInternalLink">
+        <a t-if="production"
+           class="o_form_uri text-truncate d-inline-block w-100"
+           t-att-href="productionHref"
+           t-att-title="productionName"
+           t-on-click.stop.prevent="openProduction"
+           t-esc="productionName"/>
+        <span t-else="">—</span>
+    </t>
+</templates>

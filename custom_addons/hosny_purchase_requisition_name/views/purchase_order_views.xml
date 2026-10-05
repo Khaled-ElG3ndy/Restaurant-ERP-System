@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_hosny_branch" model="ir.ui.view">
+        <field name="name">purchase.order.form.hosny.branch</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_purchase_comparison']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="analytic_account_id" string="Branch" required="state in ['draft', 'sent', 'to approve']" readonly="state in ['cancel', 'done', 'purchase']"/>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="before">
+                <field name="hosny_picking_type_id_domain" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="domain">hosny_picking_type_id_domain</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='product_id']" position="after">
+                <button name="action_hosny_open_price_history"
+                        type="object"
+                        icon="fa-line-chart"
+                        title="Last Purchase Prices"
+                        class="o_hosny_price_history_line_button"
+                        invisible="not product_id or display_type"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
+                <button name="action_hosny_open_price_history"
+                        type="object"
+                        icon="fa-line-chart"
+                        string="Last Purchase Prices"
+                        class="btn btn-secondary o_hosny_price_history_form_button"
+                        invisible="not product_id or display_type"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='analytic_distribution']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='analytic_distribution']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_compare_tree_hosny_branch" model="ir.ui.view">
+        <field name="name">purchase.order.line.compare.tree.hosny.branch</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase_requisition.purchase_order_line_compare_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_qty']" position="after">
+                <field name="hosny_compare_company_branch_name" string="Company" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_history_tree_hosny_branch" model="ir.ui.view">
+        <field name="name">purchase.history.list.hosny.branch</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_history_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="js_class">purchase_order_line_compare</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="replace">
+                <field name="hosny_compare_company_branch_name" string="Company" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_search_hosny_lowest_price" model="ir.ui.view">
+        <field name="name">purchase.order.line.search.hosny.lowest.price</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='hide_cancelled']" position="after">
+                <filter name="hosny_lowest_price" string="Lowest Price" domain="[('hosny_is_lowest_compare_price', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <function model="purchase.order" name="_hosny_update_purchase_view_translations"/>
+</odoo>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hosny_hr_salary_adjustment_view_list" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.list</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="arch" type="xml">
+            <list string="تعديلات الرواتب"
+                  decoration-success="state == 'approved'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="date_start"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="adjustment_type"/>
+                <field name="category"/>
+                <field name="recurrence"/>
+                <field name="date_end" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="amount" sum="الإجمالي"/>
+                <field name="is_effective" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hosny_hr_salary_adjustment_view_form" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.form</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="تعديل راتب">
+                <header>
+                    <button name="action_approve" type="object" string="اعتماد"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="إلغاء"
+                            invisible="state == 'cancelled'"/>
+                    <button name="action_reset_to_draft" type="object" string="إعادة إلى مسودة"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_hosny_open_payslips"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-money"
+                                invisible="hosny_payslip_count == 0">
+                            <field name="hosny_payslip_count"
+                                   widget="statinfo"
+                                   string="قسائم الراتب"/>
+                        </button>
+                    </div>
+                    <field name="currency_id" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="مثال: مكافأة أداء شهرية"
+                                   readonly="state == 'approved'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="بيانات التعديل">
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state == 'approved'"/>
+                            <field name="employee_id" readonly="state == 'approved'"/>
+                            <field name="version_id" readonly="state == 'approved'"
+                                   options="{'no_create': True}"/>
+                            <field name="adjustment_type" readonly="state == 'approved'"/>
+                            <field name="category" readonly="state == 'approved'"/>
+                        </group>
+                        <group string="القيمة والسريان">
+                            <field name="amount" readonly="state == 'approved'"/>
+                            <field name="signed_amount" readonly="1"/>
+                            <field name="recurrence" readonly="state == 'approved'"/>
+                            <field name="date_start" readonly="state == 'approved'"/>
+                            <field name="date_end"
+                                   invisible="recurrence == 'once'"
+                                   readonly="state == 'approved'"/>
+                            <field name="is_effective" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="أي ملاحظات أو مستندات مرجعية..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="hosny_hr_salary_adjustment_view_search" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.search</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="arch" type="xml">
+            <search string="البحث في تعديلات الرواتب">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="category"/>
+                <filter name="approved" string="معتمد" domain="[('state', '=', 'approved')]"/>
+                <filter name="addition" string="إضافات" domain="[('adjustment_type', '=', 'addition')]"/>
+                <filter name="deduction" string="استقطاعات" domain="[('adjustment_type', '=', 'deduction')]"/>
+                <group>
+                    <filter name="group_employee" string="الموظف" context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_type" string="النوع" context="{'group_by': 'adjustment_type'}"/>
+                    <filter name="group_state" string="الحالة" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="hosny_hr_salary_adjustment_action" model="ir.actions.act_window">
+        <field name="name">تعديلات الرواتب</field>
+        <field name="res_model">hosny.hr.salary.adjustment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="hosny_hr_salary_adjustment_view_search"/>
+    </record>
+</odoo>

@@ -1,0 +1,312 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_multi_payment_reconciliation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-28 10:58+0000\n"
+"PO-Revision-Date: 2026-04-28 10:58+0000\n"
+"Last-Translator: OpenAI\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Cash reconciliation"
+msgstr "تسوية النقد"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Enter counted amounts and post only the differences."
+msgstr "أدخل المبالغ المعدودة ورحّل الفروقات فقط."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Loading payment methods..."
+msgstr "جاري تحميل طرق الدفع..."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "No payment methods with activity are available for reconciliation yet."
+msgstr "لا توجد طرق دفع بها حركة متاحة للتسوية حتى الآن."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Expected"
+msgstr "المتوقع"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Difference"
+msgstr "الفرق"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Counted"
+msgstr "المعدود"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Post"
+msgstr "ترحيل"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Match"
+msgstr "مطابقة"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.xml:0
+msgid "Clear"
+msgstr "مسح"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Failed to load methods."
+msgstr "تعذر تحميل طرق الدفع."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Awaiting"
+msgstr "بانتظار"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Check amount"
+msgstr "تحقق من المبلغ"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Needs Review"
+msgstr "يحتاج مراجعة"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Balanced"
+msgstr "متوازن"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Over"
+msgstr "زيادة"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Short"
+msgstr "عجز"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Cash"
+msgstr "نقدي"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Bank"
+msgstr "بنك"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Cash Count"
+msgstr "العد النقدي"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Card Count"
+msgstr "عد البطاقات"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Awaiting input"
+msgstr "بانتظار الإدخال"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "Enter at least one valid amount before confirming."
+msgstr "أدخل مبلغًا صالحًا واحدًا على الأقل قبل التأكيد."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/app/navbar/multi_cash_move_popup/multi_cash_move_popup.js:0
+msgid "POS payment reconciliation"
+msgstr "تسوية مدفوعات نقاط البيع"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-javascript
+#: code:addons/pos_multi_payment_reconciliation/static/src/overrides/navbar.js:0
+msgid "Cash in / out"
+msgstr "إدخال/إخراج نقدي"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "You do not have the access rights required to reconcile POS payment methods."
+msgstr "ليست لديك صلاحيات الوصول المطلوبة لتسوية طرق دفع نقاط البيع."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "This POS session is already closed."
+msgstr "جلسة نقطة البيع هذه مغلقة بالفعل."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "Payment method reconciliation is only available while the POS session is open."
+msgstr "تتوفر تسوية طرق الدفع فقط أثناء كون جلسة نقطة البيع مفتوحة."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "POS Adjustment - Session %s - Payment Method %s"
+msgstr "تسوية نقاط البيع - الجلسة %s - طريقة الدفع %s"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "%s Adjustment"
+msgstr "تسوية %s"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "profit"
+msgstr "الربح"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "loss"
+msgstr "الخسارة"
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "Please configure the %s account on the journal %s before posting this adjustment."
+msgstr "يرجى إعداد حساب %s في دفتر اليومية %s قبل ترحيل هذه التسوية."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "Please configure an outstanding or default account for the payment method %s."
+msgstr "يرجى إعداد حساب معلق أو افتراضي لطريقة الدفع %s."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "Invalid reconciliation payload."
+msgstr "بيانات التسوية غير صالحة."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "Invalid reconciliation line."
+msgstr "سطر التسوية غير صالح."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "The selected payment method is not available in this POS session."
+msgstr "طريقة الدفع المحددة غير متاحة في جلسة نقطة البيع هذه."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "A payment method was submitted more than once."
+msgstr "تم إرسال طريقة دفع أكثر من مرة."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "Counted amount must be a valid number for payment method %s."
+msgstr "يجب أن يكون المبلغ المعدود رقمًا صالحًا لطريقة الدفع %s."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "Please enter at least one counted amount before confirming."
+msgstr "يرجى إدخال مبلغ معدود واحد على الأقل قبل التأكيد."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+#, python-format
+msgid "Successfully posted %s POS payment adjustment(s)."
+msgstr "تم ترحيل %s من تسويات مدفوعات نقاط البيع بنجاح."
+
+#. module: pos_multi_payment_reconciliation
+#. odoo-python
+#: code:addons/pos_multi_payment_reconciliation/models/pos_session.py:0
+msgid "No accounting entries were created because all counted amounts match the expected balances."
+msgstr "لم يتم إنشاء قيود محاسبية لأن جميع المبالغ المعدودة تطابق الأرصدة المتوقعة."
+
+#. module: pos_multi_payment_reconciliation
+#: model_terms:ir.ui.view,arch_db:pos_multi_payment_reconciliation.view_account_move_filter_pos_adjustment
+msgid "POS Adjustments"
+msgstr "تسويات نقاط البيع"
+
+#. module: pos_multi_payment_reconciliation
+#: model_terms:ir.ui.view,arch_db:pos_multi_payment_reconciliation.view_account_move_filter_pos_adjustment
+msgid "POS Session"
+msgstr "جلسة نقطة البيع"
+
+#. module: pos_multi_payment_reconciliation
+#: model_terms:ir.ui.view,arch_db:pos_multi_payment_reconciliation.view_account_move_filter_pos_adjustment
+msgid "POS Payment Method"
+msgstr "طريقة دفع نقطة البيع"

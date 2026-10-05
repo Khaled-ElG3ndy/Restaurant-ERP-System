@@ -1,0 +1,211 @@
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'payment-screen')]/div[contains(@class, 'main-content')]" position="before">
+            <div class="hosny-payment-topbar">
+                <button type="button" class="button back back-button hosny-payment-back btn btn-light" t-on-click="() => pos.onClickBackButton()">
+                    <i class="fa fa-angle-double-left" />
+                    <span>رجوع</span>
+                </button>
+                <h2>الدفع</h2>
+                <div class="hosny-payment-topbar-spacer" />
+            </div>
+        </xpath>
+        <xpath expr="//div[contains(@class, 'payment-screen')]/div[contains(@class, 'main-content')]" position="replace">
+            <div class="main-content hosny-payment-layout h-100 overflow-hidden">
+                <section class="payment-primary-panel">
+                    <div class="payment-main-card h-100">
+                        <div class="payment-methods-shell d-flex flex-column h-100 overflow-hidden">
+                            <t t-call="point_of_sale.PaymentScreenMethods" />
+                        </div>
+                    </div>
+                </section>
+                <aside class="payment-side-panel">
+                    <t t-call="hosny_pos_controls.PaymentStatusSummary" />
+                    <div class="payment-sidebar-card payment-actions-card">
+                        <t t-call="point_of_sale.PaymentScreenButtons" />
+                    </div>
+                    <div class="payment-sidebar-card payment-numpad-card flex-grow-1">
+                        <Numpad class="'h-100'" buttons="getNumpadButtons()" />
+                    </div>
+                </aside>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-inherit="point_of_sale.PaymentScreenValidate" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('validation-button')]" position="replace">
+            <button
+                type="button"
+                t-on-click="() => this.validateOrder()"
+                t-attf-class="
+                    validation-button next hosny-payment-validate btn btn-primary btn-lg py-3 lh-lg
+                    {{ ui.isSmall ? 'btn-switchpane flex-fill' : 'button next w-50' }}
+                    {{ currentOrder.canBeValidated() and !currentOrder.isRefundInProcess() ? 'highlight' : 'disabled' }}
+                ">
+                <span>تصديق</span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-inherit="point_of_sale.PaymentScreenButtons" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'payment-buttons')]" position="inside">
+            <button
+                type="button"
+                class="button hosny-payment-action-btn btn btn-light"
+                t-on-click="() => this.openPromoCode()">
+                <span>إدخال كود</span>
+                <i class="fa fa-barcode" />
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_controls.PaymentStatusSummary">
+        <section class="paymentlines-container hosny-payment-status">
+            <div class="payment-status-shell">
+                <t t-set="paymentLinesValue" t-value="currentOrder.payment_ids || currentOrder.paymentlines || []" />
+                <t t-set="totalDueValue" t-value="currentOrder.totalDue || currentOrder.get_total_with_tax?.() || 0" />
+                <t t-set="remainingValue" t-value="currentOrder.remainingDue || currentOrder.get_due?.() || 0" />
+                <t t-set="changeValue" t-value="currentOrder.change || currentOrder.get_change?.() || 0" />
+                <div class="payment-status-header d-flex align-items-center justify-content-between gap-3">
+                    <div class="payment-status-heading">
+                        <span class="payment-status-eyebrow">ملخص الدفع</span>
+                        <h3>الدفع</h3>
+                    </div>
+                    <span class="payment-status-count" t-esc="paymentLinesValue.length" />
+                </div>
+
+                <div class="payment-status-metrics">
+                    <article class="payment-status-card is-primary is-wide">
+                        <span class="metric-label">المتبقي</span>
+                        <span class="metric-value" dir="ltr">
+                            <t t-esc="env.utils.formatCurrency(remainingValue > 0 ? remainingValue : 0)" />
+                        </span>
+                    </article>
+
+                    <article class="payment-status-card">
+                        <span class="metric-label">الإجمالي المستحق</span>
+                        <span class="metric-value" dir="ltr">
+                            <t t-esc="env.utils.formatCurrency(totalDueValue)" />
+                        </span>
+                    </article>
+
+                    <article class="payment-status-card">
+                        <span class="metric-label">المرتجع</span>
+                        <span class="metric-value" dir="ltr">
+                            <t t-esc="env.utils.formatCurrency(changeValue > 0 ? changeValue : 0)" />
+                        </span>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </t>
+
+    <t t-inherit="point_of_sale.PaymentScreenMethods" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'paymentmethods-container')]" position="replace">
+            <div class="paymentmethods-container hosny-payment-methods-container overflow-y-auto flex-grow-1">
+                <div class="hosny-payment-methods-stage">
+                    <t t-set="hosnyPaymentMethods" t-value="pos.config.payment_method_ids.slice().sort((a, b) => a.sequence - b.sequence)" />
+                    <div class="hosny-payment-section-header">
+                        <div>
+                            <span class="section-eyebrow">طريقة الدفع</span>
+                            <h4>اختر الوسيلة المناسبة</h4>
+                        </div>
+                        <span class="section-badge" t-esc="hosnyPaymentMethods.length" />
+                    </div>
+
+                    <div class="paymentmethods hosny-payment-methods-grid d-grid">
+                        <t t-foreach="hosnyPaymentMethods" t-as="paymentMethod" t-key="paymentMethod.id">
+                            <button
+                                class="button paymentmethod hosny-payment-method-card btn btn-light"
+                                t-att-class="{
+                                    'is-cash': paymentMethod.type === 'cash',
+                                    'is-pay-later': paymentMethod.type === 'pay_later',
+                                    'is-bank': paymentMethod.type === 'bank',
+                                    'is-active': currentOrder.getSelectedPaymentline?.()?.payment_method_id?.id === paymentMethod.id or currentOrder.selected_paymentline?.payment_method?.id === paymentMethod.id,
+                                }"
+                                t-on-click="() => this.addNewPaymentLine(paymentMethod)"
+                            >
+                                <span
+                                    class="method-icon-badge"
+                                    t-att-class="paymentMethod.type === 'cash' ? 'is-cash' : paymentMethod.type === 'pay_later' ? 'is-pay-later' : 'is-bank'"
+                                >
+                                    <t t-if="paymentMethod.type === 'cash'">
+                                        <svg viewBox="0 0 24 24" class="method-icon-svg" aria-hidden="true">
+                                            <rect x="3.5" y="6.5" width="17" height="11" rx="3" />
+                                            <circle cx="12" cy="12" r="2.5" />
+                                            <path d="M7 10.2h.01M17 13.8h.01" />
+                                        </svg>
+                                    </t>
+                                    <t t-if="paymentMethod.type === 'pay_later'">
+                                        <svg viewBox="0 0 24 24" class="method-icon-svg" aria-hidden="true">
+                                            <circle cx="12" cy="8" r="3.25" />
+                                            <path d="M6.5 18.2c1.7-2.75 3.9-4.1 5.5-4.1s3.8 1.35 5.5 4.1" />
+                                        </svg>
+                                    </t>
+                                    <t t-if="paymentMethod.type !== 'cash' and paymentMethod.type !== 'pay_later'">
+                                        <svg viewBox="0 0 24 24" class="method-icon-svg" aria-hidden="true">
+                                            <rect x="3.5" y="5.5" width="17" height="13" rx="3" />
+                                            <path d="M3.5 9.5h17M7.5 14.5h3.5" />
+                                        </svg>
+                                    </t>
+                                </span>
+
+                                <div class="payment-method-display d-flex align-items-center justify-content-between flex-grow-1">
+                                    <div class="method-copy">
+                                        <span class="payment-name">
+                                            <t t-if="paymentMethod.type === 'cash'">نقدي</t>
+                                            <t t-if="paymentMethod.type === 'pay_later'">أجل</t>
+                                            <t t-if="paymentMethod.type === 'bank'">بنك</t>
+                                            <t t-if="paymentMethod.type !== 'cash' and paymentMethod.type !== 'pay_later' and paymentMethod.type !== 'bank'" t-esc="paymentMethod.name" />
+                                        </span>
+                                        <span class="method-meta" t-if="paymentMethod.type === 'cash'">تحصيل نقدي مباشر</span>
+                                        <span class="method-meta" t-if="paymentMethod.type === 'pay_later'">تسجيل الدفع الآجل على حساب العميل</span>
+                                        <span class="method-meta" t-if="paymentMethod.type !== 'cash' and paymentMethod.type !== 'pay_later'">تحصيل بنكي ومدفوعات إلكترونية</span>
+                                    </div>
+                                    <span class="method-action">
+                                        <i class="fa fa-angle-left" />
+                                    </span>
+                                </div>
+                            </button>
+                        </t>
+                    </div>
+
+                    <div class="payment-methods-footer" t-if="!ui.isSmall">
+                        <t t-call="point_of_sale.PaymentScreenValidate" />
+                    </div>
+                </div>
+
+                <div class="hosny-payment-lines-pane">
+                    <PaymentScreenPaymentLines
+                        paymentLines="paymentLines"
+                        isRefundOrder="isRefundOrder"
+                        deleteLine.bind="deletePaymentLine"
+                        sendForceDone.bind="sendForceDone"
+                        sendPaymentReverse.bind="sendPaymentReverse"
+                        sendPaymentCancel.bind="sendPaymentCancel"
+                        sendPaymentRequest.bind="sendPaymentRequest"
+                        selectLine.bind="selectPaymentLine"
+                        updateSelectedPaymentline.bind="updateSelectedPaymentline"
+                    />
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-inherit="point_of_sale.PaymentScreenPaymentLines" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'paymentlines')]" position="attributes">
+            <attribute name="class">paymentlines d-flex flex-column hosny-payment-lines</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@class, 'paymentlines')]" position="before">
+            <div class="hosny-payment-section-header is-secondary">
+                <div>
+                    <span class="section-eyebrow">المدفوعات المضافة</span>
+                    <h4>ملخص السداد الحالي</h4>
+                </div>
+                <span class="section-badge" t-esc="props.paymentLines.length" />
+            </div>
+        </xpath>
+    </t>
+
+</templates>

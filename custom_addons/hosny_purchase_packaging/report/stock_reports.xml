@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="stock_picking_hierarchical_packaging_report" inherit_id="stock.report_picking">
+        <xpath expr="//span[@t-field='move.product_id.display_name']" position="after">
+            <div t-if="move.purchase_line_id and move.purchase_line_id.hosny_line_packaging_enabled"
+                 class="text-muted small">
+                <span t-field="move.purchase_line_id.hosny_line_packaging_summary"/>
+            </div>
+            <div t-elif="move.purchase_line_id and move.purchase_line_id.hosny_purchase_packaging_id"
+                 class="text-muted small">
+                <span t-field="move.purchase_line_id.hosny_packaging_hierarchy"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hosny_packaging_type_list_view" model="ir.ui.view">
+        <field name="name">hosny.packaging.type.list</field>
+        <field name="model">hosny.packaging.type</field>
+        <field name="arch" type="xml">
+            <list string="Packaging Types" editable="bottom" default_order="sequence, name">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hosny_packaging_type_form_view" model="ir.ui.view">
+        <field name="name">hosny.packaging.type.form</field>
+        <field name="model">hosny.packaging.type</field>
+        <field name="arch" type="xml">
+            <form string="Packaging Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hosny_packaging_type_action" model="ir.actions.act_window">
+        <field name="name">Packaging Types</field>
+        <field name="res_model">hosny.packaging.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a reusable packaging type</p>
+            <p>Packaging content is configured separately for each product.</p>
+        </field>
+    </record>
+
+    <menuitem id="hosny_packaging_type_menu"
+              name="Packaging Types"
+              parent="purchase.menu_product_in_config_purchase"
+              action="hosny_packaging_type_action"
+              sequence="8"
+              groups="purchase.group_purchase_manager"/>
+</odoo>

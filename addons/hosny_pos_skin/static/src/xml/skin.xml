@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_pos_skin.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-leftheader')]" position="inside">
+            <div class="hs-brand">
+                <img class="hs-brand-mark" src="/pos_modern_ui/static/src/img/logo.png" alt="Hosny"/>
+                <div class="hs-brand-copy">
+                    <strong class="hs-brand-name">مطعم حسني</strong>
+                    <span class="hs-brand-branch"
+                          t-esc="(pos.config.name || '').includes('الرياض') ? 'الرياض' : (pos.config.name || '').includes('المدينة') ? 'المدينة' : ((pos.config.name || '').includes('جدة') || (pos.config.name || '').includes('جده')) ? 'جدة' : (pos.config.name || '').replace('مطعم حسني', '').replace('-', '').trim()"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+    <t t-name="hosny_pos_skin.ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
+        <!-- «لوحة الأرقام» is gone (Khaled, 2026-09-28). The toggle was the only
+             way the order-panel numpad ever opened — الكمية and نسبة الخصم use
+             popups — so without it the numpad's t-if stays false. -->
+        <xpath expr="//button[hasclass('hosny-numpad-toggle')]" position="replace"/>
+    </t>
+    <t t-name="hosny_pos_skin.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <!-- the bill button prints the customer's bill; the till calls it «طباعة» -->
+        <xpath expr="//button[hasclass('hosny-print-bill-button')]/span" position="replace">
+            <span>طباعة</span>
+        </xpath>
+    </t>
+    <!-- «تقسيم الفاتورة» (pos_restaurant.SplitBillScreen), Arabic and read
+         right-to-left like the rest of the till (2026-10-02). Labels and layout
+         only: every button keeps its class and handler. The amount block is
+         rebuilt because core sizes its figure inline at 10vw — a 170px number
+         on a 1920px screen — which no stylesheet can override cleanly. -->
+    <t t-name="hosny_pos_skin.SplitBillScreen" t-inherit="pos_restaurant.SplitBillScreen" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('back-button')]" position="replace">
+            <button class="button back back-button btn btn-secondary lh-lg" t-on-click="back">
+                <i class="oi oi-chevron-left fa-fw" aria-hidden="true"/>
+                <span t-if="!this.ui.isSmall">رجوع</span>
+            </button>
+        </xpath>
+        <xpath expr="//div[hasclass('top-content-center')]" position="replace">
+            <div class="top-content-center hs-split-title flex-grow-1">
+                <h4 class="mb-0">تقسيم الفاتورة</h4>
+                <span t-if="currentOrder.table_id" class="hs-split-place">
+                    طاولة <bdi t-esc="currentOrder.table_id.table_number"/>
+                    <t t-if="currentOrder.table_id.floor_id"> · <t t-esc="currentOrder.table_id.floor_id.name"/></t>
+                </span>
+                <span t-elif="currentOrder.floating_order_name" class="hs-split-place" t-esc="currentOrder.floating_order_name"/>
+            </div>
+        </xpath>
+        <xpath expr="//OrderDisplay" position="before">
+            <div class="hs-split-hint">
+                <i class="fa fa-hand-pointer-o" aria-hidden="true"/>
+                <span>اضغط على الصنف لاختياره للفاتورة الجديدة — كل ضغطة تضيف قطعة، والضغط بعد آخر قطعة يلغي الاختيار.</span>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('order-info')]" position="replace">
+            <t t-set="hsSplitCount" t-value="this.getNumberOfProducts()"/>
+            <div class="order-info hs-split-info">
+                <div class="hs-split-label">مبلغ الفاتورة الجديدة</div>
+                <bdi class="hs-split-amount" t-esc="env.utils.formatCurrency(newOrderPrice)"/>
+                <div class="hs-split-of">من أصل <bdi t-esc="env.utils.formatCurrency(currentOrder.priceIncl)"/></div>
+                <div class="hs-split-count" t-att-class="{'is-empty': !hsSplitCount}">
+                    <t t-if="hsSplitCount">الكمية المحددة: <bdi t-esc="hsSplitCount"/></t>
+                    <t t-else="">لم يُحدَّد أي صنف بعد</t>
+                </div>
+                <div t-if="currentOrder.globalDiscountPc" class="hs-split-discount">
+                    بخصم <bdi t-esc="currentOrder.globalDiscountPc"/>%
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//button[hasclass('pay-split-order')]" position="inside">
+            <i class="fa fa-credit-card" aria-hidden="true"/>
+        </xpath>
+        <xpath expr="//button[hasclass('split-order-button')]" position="inside">
+            <i class="fa fa-files-o" aria-hidden="true"/>
+        </xpath>
+        <xpath expr="//button[hasclass('transfer-split-order')]" position="inside">
+            <i class="oi oi-arrow-right" aria-hidden="true"/>
+        </xpath>
+    </t>
+    <!-- On the split screen the line's chip shows what is picked of it, «1 / 2».
+         Core writes that into the qty span, but hosny_pos_controls rebuilds the
+         line and the rebuilt span read only the line's quantity, so a cashier
+         could not see what they had picked. Split mode only: uiState.splitQty
+         outlives the screen, and must not reach the bill. -->
+    <t t-name="hosny_pos_skin.OrderlineSplitQty" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('hosny-orderline-qty')]/t[@t-esc='vals.unitPart']" position="replace">
+            <t t-esc="(props.mode === 'split' and line.uiState.splitQty) or vals.unitPart"/>
+        </xpath>
+    </t>
+    <!-- «الضيافة»: its two empty states were English -->
+    <t t-name="hosny_pos_skin.HospitalityPopupArabic" t-inherit="hosny_pos_controls.HospitalityPopup" t-inherit-mode="extension">
+        <xpath expr="(//div[hasclass('hosny-hospitality-empty')])[1]/strong" position="replace">
+            <strong>لا توجد أصناف ضيافة مفعّلة لهذا الفرع</strong>
+        </xpath>
+        <xpath expr="(//div[hasclass('hosny-hospitality-empty')])[2]/strong" position="replace">
+            <strong>لا توجد أصناف مطابقة</strong>
+        </xpath>
+        <xpath expr="//img[hasclass('hosny-hospitality-image')]" position="attributes">
+            <attribute name="alt">صورة الصنف</attribute>
+        </xpath>
+    </t>
+</templates>

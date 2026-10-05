@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_multi_payment_reconciliation.MultiCashMovePopup">
+        <Dialog title="'Cash in / out'" class="'multi-cash-move-popup-dialog'">
+            <div class="popup multi-cash-move-popup">
+                <div class="modal-header multi-cash-move-header">
+                    <div class="multi-cash-move-header-copy">
+                        <h4 class="modal-title mb-1">Cash in / out</h4>
+                        <p class="text-muted mb-0">Enter the counted balance for each payment method. Cash in / out is calculated automatically from the current balance.</p>
+                    </div>
+                </div>
+                <main class="modal-body">
+                    <div t-if="state.isLoading" class="text-center text-muted py-4">
+                        Loading payment methods...
+                    </div>
+                    <div t-elif="!state.lines.length" class="text-center text-muted py-4">
+                        No cash or bank payment methods are configured for this POS session.
+                    </div>
+                    <div t-else="" class="multi-cash-move-layout d-flex flex-column gap-3">
+                        <div class="payment-method-list d-flex flex-column gap-3">
+                            <div t-foreach="state.lines" t-as="line" t-key="line.paymentMethodId" class="payment-method-card border rounded-4 p-3 bg-view" t-att-class="getCardClass(line)">
+                                <div class="payment-method-top">
+                                    <div class="payment-method-identification">
+                                        <div class="payment-method-title-row">
+                                            <div class="payment-method-name" t-esc="line.name"/>
+                                            <span class="status-chip" t-att-class="getStatusBadgeClass(line)" t-esc="getDifferenceStatus(line)"/>
+                                        </div>
+                                        <div class="payment-method-meta" t-esc="getMethodTypeLabel(line)"/>
+                                    </div>
+                                    <div class="expected-pill">
+                                        <span class="expected-pill-label">Current Balance</span>
+                                        <span class="expected-pill-value" t-esc="env.utils.formatCurrency(line.expected)"/>
+                                    </div>
+                                </div>
+                                <div class="payment-method-body mt-3">
+                                    <div class="payment-row">
+                                        <span class="payment-row-label" t-esc="getCountLabel(line)"/>
+                                        <div class="payment-row-value payment-row-input-group">
+                                            <Input
+                                                tModel="[line, 'counted']"
+                                                autofocus="isFirstLine(line)"
+                                                class="'multi-cash-move-input'"
+                                                icon="{type: 'string', value: pos.currency.symbol}"
+                                                iconOnLeftSide="pos.currency.position === 'before'"
+                                                isValid.bind="(value) => !value || env.utils.isValidFloat(value)"
+                                            />
+                                            <div class="payment-field-actions">
+                                                <button class="line-action-button" type="button" t-on-click="() => this.matchLine(line)">
+                                                    Match
+                                                </button>
+                                                <button class="line-action-button secondary" type="button" t-on-click="() => this.clearLine(line)">
+                                                    Clear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="payment-row">
+                                        <span class="payment-row-label">Difference</span>
+                                        <span class="payment-row-value difference-value" t-att-class="getDifferenceClass(line)" t-esc="hasValidCountedValue(line) ? env.utils.formatCurrency(getDifference(line)) : getDifferenceStatus(line)"/>
+                                    </div>
+                                    <div class="payment-row">
+                                        <span class="payment-row-label">Status</span>
+                                        <span class="payment-row-value difference-value" t-att-class="getDifferenceClass(line)" t-esc="getDifferenceStatus(line)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div t-if="!state.isLoading and state.lines.length" class="payment-method-card summary-card border rounded-4 p-3 bg-view">
+                            <div class="multi-cash-move-totals">
+                                <div class="total-card">
+                                    <span class="total-card-label">Current Balance</span>
+                                    <span class="total-card-value" t-esc="env.utils.formatCurrency(getTotalExpected())"/>
+                                </div>
+                                <div class="total-card">
+                                    <span class="total-card-label">Counted Total</span>
+                                    <span class="total-card-value" t-esc="formatTotalCounted()"/>
+                                </div>
+                                <div class="total-card">
+                                    <span class="total-card-label">Difference Total</span>
+                                    <span class="total-card-value" t-att-class="getTotalDifferenceClass()" t-esc="formatTotalDifference()"/>
+                                </div>
+                            </div>
+                            <div class="global-note-section">
+                                <label class="form-label mb-2">Notes</label>
+                                <textarea
+                                    class="form-control global-note-input"
+                                    rows="3"
+                                    t-model="state.note"
+                                />
+                            </div>
+                            <div class="summary-actions">
+                                <button class="button cancel btn btn-lg btn-secondary" t-on-click="() => this.props.close()">
+                                    Cancel
+                                </button>
+                                <button class="button confirm btn btn-lg btn-primary" t-att-disabled="!canConfirm()" t-on-click="confirm">
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </Dialog>
+    </t>
+
+</templates>

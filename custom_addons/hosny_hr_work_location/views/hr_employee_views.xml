@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_form_work_location" model="ir.ui.view">
+        <field name="name">hr.employee.form.hosny.work.location</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='work_information']//field[@name='address_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='work_information']//field[@name='work_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">اختر جدة أو المدينة أو الرياض</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_form_usual_week_location" model="ir.ui.view">
+        <field name="name">hr.employee.form.hosny.usual.week.location</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_homeworking.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='monday_location_id']/.." position="attributes">
+                <attribute name="string">مكان العمل المعتاد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='monday_location_id']" position="before">
+                <field name="usual_week_location_id"
+                       domain="[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]"
+                       placeholder="اختر موقعًا لتطبيقه على كل الأيام"
+                       options="{'no_create': True, 'no_create_edit': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='monday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tuesday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='wednesday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='thursday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='friday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='saturday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sunday_location_id']" position="attributes">
+                <attribute name="domain">[('company_id', '=', company_id), ('hosny_branch_code', 'in', ['jeddah', 'madinah', 'riyadh'])]</attribute>
+                <attribute name="context">{}</attribute>
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_search_work_location" model="ir.ui.view">
+        <field name="name">hr.employee.search.hosny.work.location</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="department_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_department" position="after">
+                <filter name="group_work_location"
+                        string="مكان العمل"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_employee_pivot_work_location" model="ir.ui.view">
+        <field name="name">hr.employee.pivot.hosny.work.location</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_employee_view_pivot"/>
+        <field name="arch" type="xml">
+            <pivot position="inside">
+                <field name="work_location_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

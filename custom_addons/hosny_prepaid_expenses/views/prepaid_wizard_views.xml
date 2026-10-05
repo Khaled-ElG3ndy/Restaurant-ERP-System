@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_prepaid_expense_bill_wizard_form" model="ir.ui.view">
+        <field name="name">prepaid.expense.bill.wizard.form</field>
+        <field name="model">prepaid.expense.bill.wizard</field>
+        <field name="arch" type="xml">
+            <form string="إنشاء مصروف مقدم">
+                <group>
+                    <field name="move_id" string="مستند الشراء"/>
+                    <field name="line_id" string="سطر مستند الشراء"
+                           domain="[('move_id', '=', move_id), ('display_type', '=', 'product'), ('prepaid_schedule_id', '=', False), ('is_prepaid_expense', '=', False)]"/>
+                    <field name="available_amount" string="المبلغ المتاح"/>
+                    <field name="amount" string="مبلغ المصروف المقدم"/>
+                    <field name="currency_id" invisible="1"/>
+                </group>
+                <group>
+                    <group>
+                        <field name="start_date" string="تاريخ البداية"/>
+                        <field name="end_date" string="تاريخ النهاية"/>
+                        <field name="distribution_method" string="طريقة التوزيع"/>
+                        <field name="installment_count" string="عدد الفترات"
+                               invisible="distribution_method != 'custom'"
+                               required="distribution_method == 'custom'"/>
+                    </group>
+                    <group>
+                        <field name="actual_account_id" string="حساب المصروف"
+                               domain="[('company_ids', 'in', company_id), ('account_type', 'in', ('expense', 'expense_depreciation', 'expense_direct_cost'))]"/>
+                        <field name="prepaid_account_id" string="حساب المصروفات المقدمة"
+                               domain="[('company_ids', 'in', company_id), ('account_type', 'not in', ('asset_receivable', 'liability_payable', 'off_balance'))]"/>
+                        <field name="name" string="البيان"/>
+                        <field name="analytic_account_id" string="الفرع"
+                               domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                        <field name="analytic_distribution" invisible="1"/>
+                        <field name="company_id" string="الشركة" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="تأكيد" class="btn-primary"/>
+                    <button string="إلغاء" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_prepaid_expense_payment_wizard_form" model="ir.ui.view">
+        <field name="name">prepaid.expense.payment.wizard.form</field>
+        <field name="model">prepaid.expense.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="إنشاء مصروف مقدم">
+                <group>
+                    <group>
+                        <field name="partner_id" string="المورد"/>
+                        <field name="payment_id" string="إيصال الصرف"/>
+                        <field name="payment_amount" string="مبلغ الدفعة"/>
+                        <field name="available_amount" string="المبلغ المتاح للاستخدام"/>
+                        <field name="amount" string="مبلغ المصروف المقدم"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="start_date" string="تاريخ البداية"/>
+                        <field name="end_date" string="تاريخ النهاية"/>
+                        <field name="distribution_method" string="طريقة التوزيع"/>
+                        <field name="installment_count" string="عدد الفترات"
+                               invisible="distribution_method != 'custom'"
+                               required="distribution_method == 'custom'"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="actual_account_id" string="حساب المصروف"
+                               domain="[('company_ids', 'in', company_id), ('account_type', 'in', ('expense', 'expense_depreciation', 'expense_direct_cost'))]"/>
+                        <field name="prepaid_account_id" string="حساب المصروفات المقدمة"
+                               domain="[('company_ids', 'in', company_id), ('account_type', 'not in', ('asset_receivable', 'liability_payable', 'off_balance'))]"/>
+                    </group>
+                    <group>
+                        <field name="name" string="البيان"/>
+                        <field name="analytic_account_id" string="الفرع"
+                               domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                        <field name="analytic_distribution" invisible="1"/>
+                        <field name="company_id" string="الشركة" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="تأكيد" class="btn-primary"/>
+                    <button string="إلغاء" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

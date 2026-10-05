@@ -1,0 +1,43 @@
+.floor-map .table .preparation-timer {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4.75rem;
+    height: 2rem;
+    padding: 0 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: linear-gradient(135deg, rgba(44, 191, 93, 0.96), rgba(22, 132, 61, 0.92));
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+    box-shadow:
+        0 12px 24px rgba(28, 133, 64, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.floor-map .table.custom-floor-table .preparation-timer {
+    top: calc(50% + 2.55rem);
+}
+
+.floor-map .table .preparation-timer::before {
+    content: "";
+    position: absolute;
+    inset: -0.35rem;
+    border-radius: inherit;
+    background: rgba(49, 181, 90, 0.18);
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.submit-order[disabled],
+.btn-switchpane[disabled] {
+    opacity: 1;
+    cursor: default;
+}

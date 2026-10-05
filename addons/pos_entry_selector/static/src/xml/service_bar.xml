@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- شريط نوع الطلب أسفل الأصناف (service_bar.js).
+         تفاصيل الطاولة تظهر في شارة الـ navbar، حتى يبقى هذا الشريط مخصصاً
+         للاختيار السريع بين سفري ومحلي فقط. -->
+    <t t-name="pos_entry_selector.HosnyServiceBar">
+        <div t-if="order" class="hs-service-bar" t-att-class="isTakeaway ? 'is-takeaway' : 'is-dine'" dir="rtl">
+            <div class="hs-service-switch" role="radiogroup" aria-label="نوع الطلب">
+                <span class="hs-service-thumb" aria-hidden="true"/>
+                <button type="button" role="radio"
+                        class="hs-service-option hs-service-takeaway"
+                        t-att-class="{ 'is-active': isTakeaway }"
+                        t-att-aria-checked="isTakeaway ? 'true' : 'false'"
+                        t-on-click="chooseTakeaway">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"/>
+                    <span>سفري</span>
+                </button>
+                <button type="button" role="radio"
+                        class="hs-service-option hs-service-dine"
+                        t-att-class="{ 'is-active': !isTakeaway }"
+                        t-att-aria-checked="isTakeaway ? 'false' : 'true'"
+                        t-on-click="chooseTable">
+                    <i class="fa fa-cutlery" aria-hidden="true"/>
+                    <span>محلي</span>
+                </button>
+            </div>
+        </div>
+    </t>
+
+    <!-- نافذة اختيار الطاولة لطلب محلي -->
+    <t t-name="pos_entry_selector.HosnyTablePicker">
+        <Dialog size="'lg'" contentClass="'hs-table-picker'">
+            <t t-set-slot="header" t-slot-scope="scope">
+                <div class="hs-tp-title">
+                    <span class="hs-tp-title-icon" aria-hidden="true">
+                        <i class="fa fa-cutlery"/>
+                    </span>
+                    <span class="hs-tp-title-copy">
+                        <strong t-esc="title"/>
+                        <small>اختيار الطاولة يجعل الطلب «محلي»</small>
+                    </span>
+                </div>
+                <button type="button" class="hs-tp-close" aria-label="إغلاق" t-on-click="() => scope.close()">
+                    <i class="fa fa-times" aria-hidden="true"/>
+                </button>
+            </t>
+
+            <div class="hs-tp" dir="rtl">
+                <div t-if="floors.length > 1" class="hs-tp-floors" role="tablist">
+                    <button t-foreach="floors" t-as="tpFloor" t-key="tpFloor.id"
+                            type="button" role="tab"
+                            class="hs-tp-floor"
+                            t-att-class="{ 'is-active': tpFloor.id === state.floorId }"
+                            t-att-aria-selected="tpFloor.id === state.floorId ? 'true' : 'false'"
+                            t-on-click="() => this.selectFloor(tpFloor)">
+                        <span t-esc="tpFloor.name"/>
+                        <t t-set="tpBusy" t-value="busyCount(tpFloor)"/>
+                        <span t-if="tpBusy" class="hs-tp-floor-count" t-att-title="tpBusy + ' مشغولة'" t-esc="tpBusy"/>
+                    </button>
+                </div>
+
+                <div class="hs-tp-grid">
+                    <t t-foreach="tables" t-as="tpTable" t-key="tpTable.id">
+                        <t t-set="tpInfo" t-value="tableState(tpTable)"/>
+                        <button type="button" class="hs-tp-table"
+                                t-att-class="{ 'is-busy': tpInfo.busy, 'is-current': tpInfo.current }"
+                                t-on-click="() => this.pick(tpTable)">
+                            <span class="hs-tp-table-number" t-esc="tpTable.table_number"/>
+                            <span class="hs-tp-table-state">
+                                <t t-if="tpInfo.current">الحالية</t>
+                                <bdi t-elif="tpInfo.amount" t-esc="tpInfo.amount"/>
+                                <t t-elif="tpInfo.busy">مفتوحة</t>
+                                <t t-else="">متاحة</t>
+                            </span>
+                            <span t-if="tpInfo.joinedTo" class="hs-tp-table-joined">
+                                <i class="fa fa-link" aria-hidden="true"/> <t t-esc="tpInfo.joinedTo"/>
+                            </span>
+                        </button>
+                    </t>
+                    <div t-if="!tables.length" class="hs-tp-empty">لا توجد طاولات في هذا الطابق</div>
+                </div>
+
+                <div class="hs-tp-legend">
+                    <span><i class="hs-tp-dot is-free"/>متاحة</span>
+                    <span><i class="hs-tp-dot is-busy"/>عليها طلب — يُضاف إليه</span>
+                    <span t-if="props.order.table_id"><i class="hs-tp-dot is-current"/>طاولة هذا الطلب</span>
+                </div>
+            </div>
+
+            <t t-set-slot="footer">
+                <div class="hs-tp-footer">
+                    <button type="button" class="btn btn-secondary btn-lg hs-tp-cancel" t-on-click="props.close">إلغاء</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <!-- الشريط تحت الأصناف، خارج منطقة التمرير -->
+    <t t-name="pos_entry_selector.ProductScreenServiceBar"
+       t-inherit="point_of_sale.ProductScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('rightpane')]/div[hasclass('position-relative')]" position="after">
+            <HosnyServiceBar t-if="pos.hosnyCashierFirst()"/>
+        </xpath>
+    </t>
+
+    <!-- زر المكان في الشريط العلوي (pos_modern_ui): «الطاولات» من الكاشير، و«الكاشير» من غيره -->
+    <t t-name="pos_entry_selector.NavbarPlace"
+       t-inherit="point_of_sale.Navbar"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-workplace-btn')]" position="replace">
+            <div class="navbar-button btn btn-light rounded-pill d-flex align-items-center px-3 cursor-pointer pos-workplace-btn"
+                 t-att-class="{ 'is-to-cashier': pos.router.state.current !== 'ProductScreen' }"
+                 t-on-click="() => pos.hosnyTogglePlace()">
+                <i t-att-class="pos.router.state.current === 'ProductScreen' ? 'fa fa-th-large me-2' : 'fa fa-shopping-basket me-2'"
+                   aria-hidden="true"/>
+                <span t-esc="pos.router.state.current === 'ProductScreen' ? 'الطاولات' : 'الكاشير'"/>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

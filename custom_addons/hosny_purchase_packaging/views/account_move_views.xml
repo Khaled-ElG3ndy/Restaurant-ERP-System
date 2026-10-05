@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_form_purchase_packaging" model="ir.ui.view">
+        <field name="name">account.move.form.purchase.packaging</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='quantity']" position="before">
+                <field name="hosny_line_packaging_enabled" column_invisible="True"/>
+                <field name="hosny_line_packaging_summary"
+                       string="ملخص التعبئة"
+                       optional="show"
+                       readonly="1"
+                       invisible="not hosny_line_packaging_enabled"
+                       column_invisible="parent.move_type not in ('in_invoice', 'in_refund', 'in_receipt')"/>
+                <field name="hosny_invoice_packaging_qty"
+                       string="عدد التعبئات المفوتر"
+                       optional="hide"
+                       readonly="1"
+                       invisible="not hosny_line_packaging_enabled"
+                       column_invisible="parent.move_type not in ('in_invoice', 'in_refund', 'in_receipt')"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='quantity']" position="attributes">
+                <attribute name="string">الكمية الأساسية</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='product_uom_id'][not(@column_invisible)]" position="attributes">
+                <attribute name="string">الوحدة النهائية</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='product_uom_id'][not(@column_invisible)]" position="after">
+                <field name="hosny_base_quantity"
+                       string="الكمية الأساسية النهائية"
+                       optional="hide"
+                       readonly="1"
+                       column_invisible="parent.move_type not in ('in_invoice', 'in_refund', 'in_receipt')"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='price_unit']" position="attributes">
+                <attribute name="string">سعر الوحدة الأساسية</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

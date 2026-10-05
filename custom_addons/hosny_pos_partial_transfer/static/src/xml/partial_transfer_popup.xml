@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="hosny_pos_partial_transfer.PartialTransferPopup">
+        <Dialog header="false" size="'xl'" contentClass="'hosny-partial-transfer-popup'" bodyClass="'p-0'" fullscreen="false">
+            <div class="hosny-partial-transfer-header">
+                <div class="hosny-header-pill">
+                    <t t-set="lineCount" t-value="lineEntries.length" />
+                    <span t-if="lineCount === 1">صنف واحد</span>
+                    <span t-elif="lineCount === 2">صنفان</span>
+                    <t t-else="">
+                        <span t-esc="lineCount" />
+                        <span t-esc="lineCount &lt;= 10 ? 'أصناف' : 'صنفاً'" />
+                    </t>
+                </div>
+                <div class="hosny-header-title">
+                    <h4 class="hosny-partial-transfer-title" t-esc="props.title" />
+                    <div class="hosny-partial-transfer-subtitle" t-if="sourceTableName">
+                        <span t-esc="'الطاولة الحالية: ' + sourceTableName + (sourceFloorName ? ' · ' + sourceFloorName : '')" />
+                    </div>
+                </div>
+            </div>
+            <div class="hosny-partial-transfer-body">
+                <section class="hosny-transfer-lines-panel">
+                    <div class="hosny-panel-title-row">
+                        <h5 class="hosny-panel-title">عناصر الطلب</h5>
+                        <div class="hosny-transfer-summary-inline">
+                            <span t-esc="transferSummary.totalLines" />
+                            <span>محدد</span>
+                        </div>
+                    </div>
+
+                    <div class="hosny-transfer-lines-list">
+                        <t t-foreach="lineEntries" t-as="entry" t-key="entry.id">
+                            <article class="hosny-transfer-line-card"
+                                t-att-class="{
+                                    'is-selected': entry.selectedQty,
+                                    'is-combo-child': entry.isComboChild
+                                }">
+                                <div class="hosny-transfer-line-main">
+                                    <div class="hosny-transfer-line-head">
+                                        <div class="hosny-transfer-line-title-wrap">
+                                            <h6 class="hosny-transfer-line-title" t-esc="entry.displayData.productName" />
+                                            <span t-if="entry.isComboChild" class="hosny-chip subtle">
+                                                عنصر كومبو
+                                            </span>
+                                        </div>
+                                        <div class="hosny-transfer-line-price" t-esc="entry.displayData.price" />
+                                    </div>
+
+                                    <div class="hosny-transfer-line-meta">
+                                        <span class="hosny-chip">
+                                            المتاح:
+                                            <t t-esc="env.utils.formatProductQty(entry.availableQty)" />
+                                        </span>
+                                        <span t-if="entry.displayData.unitPrice" class="hosny-chip light">
+                                            <t t-esc="entry.displayData.unitPrice" />
+                                            <t t-if="entry.displayData.unit">
+                                                /
+                                                <t t-esc="entry.displayData.unit" />
+                                            </t>
+                                        </span>
+                                        <span t-if="entry.displayData.comboParent" class="hosny-chip light">
+                                            الكومبو الرئيسي:
+                                            <t t-esc="entry.displayData.comboParent" />
+                                        </span>
+                                    </div>
+
+                                    <div t-if="entry.attributesText" class="hosny-transfer-line-note attributes">
+                                        <i class="fa fa-sliders me-1" />
+                                        <span t-esc="entry.attributesText" />
+                                    </div>
+                                    <div t-if="entry.displayData.customerNote" class="hosny-transfer-line-note customer">
+                                        <i class="fa fa-sticky-note me-1" />
+                                        <span t-esc="entry.displayData.customerNote" />
+                                    </div>
+                                 
+                                    <div t-if="entry.isComboChild" class="hosny-transfer-combo-hint">
+                                        هذه الكمية تتبع العنصر الرئيسي في الكومبو تلقائياً.
+                                    </div>
+                                </div>
+
+                                <div class="hosny-transfer-line-controls">
+                                    <button class="btn hosny-qty-btn"
+                                        t-att-disabled="entry.isComboChild or state.isSubmitting or !entry.selectedQty"
+                                        t-on-click="() => this.updateLineQuantity(entry.line, -1)">
+                                        <i class="fa fa-minus" />
+                                    </button>
+
+                                    <div class="hosny-qty-display">
+                                        <span class="hosny-qty-value">
+                                            <t t-esc="env.utils.formatProductQty(entry.selectedQty)" />
+                                        </span>
+                                        <span class="hosny-qty-label">للنقل</span>
+                                    </div>
+
+                                    <button class="btn hosny-qty-btn primary"
+                                        t-att-disabled="entry.isComboChild or state.isSubmitting or entry.selectedQty >= entry.availableQty"
+                                        t-on-click="() => this.updateLineQuantity(entry.line, 1)">
+                                        <i class="fa fa-plus" />
+                                    </button>
+
+                                    <button class="btn hosny-quick-btn"
+                                        t-att-disabled="entry.isComboChild or state.isSubmitting or entry.selectedQty >= entry.availableQty"
+                                        t-on-click="() => this.setMaxQuantity(entry.line)">
+                                        الكل
+                                    </button>
+                                    <button class="btn hosny-quick-btn subtle"
+                                        t-att-disabled="entry.isComboChild or state.isSubmitting or !entry.selectedQty"
+                                        t-on-click="() => this.clearQuantity(entry.line)">
+                                        مسح
+                                    </button>
+                                </div>
+                            </article>
+                        </t>
+                    </div>
+                </section>
+
+                <aside class="hosny-transfer-tables-panel">
+                    <div class="hosny-panel-title-row">
+                        <h5 class="hosny-panel-title">طاولة الوجهة</h5>
+                        <div class="hosny-transfer-summary-inline">
+                            <span t-esc="transferSummary.totalLines" />
+                            <span>محدد</span>
+                        </div>
+                    </div>
+
+                    <div class="hosny-transfer-floor-list">
+                        <t t-foreach="tableSections" t-as="section" t-key="section.id">
+                            <section class="hosny-floor-section">
+                                <button class="hosny-floor-toggle"
+                                    t-on-click="() => this.toggleFloorSection(section.id)">
+                                    <span class="hosny-floor-toggle-label" t-esc="section.name" />
+                                    <i class="fa fa-chevron-down hosny-floor-toggle-icon"
+                                        t-att-class="{ 'is-collapsed': section.isCollapsed }" />
+                                </button>
+                                <div t-if="!section.isCollapsed" class="hosny-table-grid">
+                                    <t t-foreach="section.tables" t-as="tableItem" t-key="tableItem.table.id">
+                                        <button class="hosny-table-card"
+                                            t-att-class="{ 'selected': tableItem.isSelected }"
+                                            t-att-disabled="state.isSubmitting"
+                                            t-on-click="() => this.setDestinationTable(tableItem.table.id)">
+                                            <span class="hosny-table-name" t-esc="tableItem.name" />
+                                            <span t-if="tableItem.isSelected" class="hosny-table-selected-badge">
+                                                محددة
+                                            </span>
+                                            <span class="hosny-table-meta">
+                                                <t t-esc="tableItem.table.seats || 0" />
+                                                مقعد
+                                            </span>
+                                            <span class="hosny-table-meta active-orders">
+                                                <t t-esc="tableItem.orderCount" />
+                                                طلب نشط
+                                            </span>
+                                        </button>
+                                    </t>
+                                </div>
+                            </section>
+                        </t>
+                    </div>
+
+                    <div class="hosny-transfer-summary-card">
+                        <div class="hosny-summary-label">ملخص التحويل</div>
+                        <div class="hosny-summary-row">
+                            <span>العناصر المحددة</span>
+                            <strong t-esc="transferSummary.totalLines" />
+                        </div>
+                        <div class="hosny-summary-row">
+                            <span>إجمالي الكمية</span>
+                            <strong t-esc="transferSummary.totalQuantity" />
+                        </div>
+                        <div class="hosny-summary-row">
+                            <span>الإجمالي التقديري</span>
+                            <strong t-esc="transferSummary.totalAmount" />
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <t t-set-slot="footer">
+                <div class="hosny-partial-transfer-footer">
+                    <div class="hosny-footer-actions">
+                        <button class="button cancel btn btn-lg btn-outline-secondary"
+                            t-att-disabled="state.isSubmitting"
+                            t-on-click="cancel">
+                            <t t-esc="props.cancelText" />
+                        </button>
+                        <button class="button confirm highlight btn btn-lg btn-primary"
+                            t-att-disabled="state.isSubmitting"
+                            t-on-click="confirm">
+                            <span t-if="!state.isSubmitting" t-esc="props.confirmText" />
+                            <span t-else="">جارٍ التحويل...</span>
+                        </button>
+                    </div>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- زر نوع الفاتورة بجانب بقية أزرار التحكم -->
+    <t t-name="hosny_pos_printer_matrix.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('more-btn')]" position="before">
+            <button class="order-type-btn" t-att-class="buttonClass"
+                    t-if="!props.showRemainingButtons and !pos.getOrder()?.isRefund"
+                    t-on-click="() => this.clickOrderType()">
+                <i class="fa fa-tag me-1"/>
+                <span t-esc="currentOrderTypeName"/>
+            </button>
+        </xpath>
+    </t>
+
+    <!-- شارة نوع الفاتورة في الشريط العلوي: سفري / محلي · الطاولة -->
+    <t t-name="hosny_pos_printer_matrix.NavbarOrderType"
+       t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-rightheader')]" position="inside">
+            <button type="button" t-if="hosnyOrderTypeChip" dir="rtl"
+                    class="hosny-order-type-chip"
+                    t-att-class="hosnyOrderTypeChip.takeaway ? 'is-takeaway' : 'is-local'"
+                    title="نوع الفاتورة"
+                    t-on-click="() => this.clickHosnyOrderTypeChip()">
+                <i t-att-class="hosnyOrderTypeChip.takeaway ? 'fa fa-shopping-bag' : 'fa fa-cutlery'"
+                   aria-hidden="true"/>
+                <span class="hosny-order-type-chip__copy">
+                    <span class="hosny-order-type-chip__type" t-esc="hosnyOrderTypeChip.label"/>
+                    <span t-if="hosnyOrderTypeChip.tableNumber !== null"
+                          class="hosny-order-type-chip__table">
+                        <span>طاولة</span>
+                        <bdi class="hosny-order-type-chip__number" t-esc="hosnyOrderTypeChip.tableNumber"/>
+                        <span t-if="hosnyOrderTypeChip.floorName"
+                              class="hosny-order-type-chip__floor"
+                              t-esc="hosnyOrderTypeChip.floorName"/>
+                    </span>
+                </span>
+            </button>
+        </xpath>
+    </t>
+
+    <!-- نوع الفاتورة على تذكرة التحضير القياسية -->
+    <t t-name="hosny_pos_printer_matrix.OrderChangeReceiptType"
+       t-inherit="point_of_sale.OrderChangeReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('receipt-header')]" position="inside">
+            <div t-if="data.order_type_name" class="order-type-line fw-bold"
+                 style="font-size: 120%;">
+                <t t-esc="data.order_type_name"/>
+            </div>
+        </xpath>
+    </t>
+
+    <!-- قالب «مختصرة»: الأصناف فقط بدون ترويسة موسّعة أو ملاحظات -->
+    <t t-name="hosny_pos_printer_matrix.OrderChangeReceiptCompact">
+        <div class="pos-receipt m-0 p-0 pt-3">
+            <div class="receipt-header text-center">
+                <div t-if="data.order_type_name" class="fw-bold" style="font-size: 130%;">
+                    <t t-esc="data.order_type_name"/>
+                </div>
+                <div style="font-size: 85%;">
+                    <t t-esc="data.config_name"/> : <t t-esc="data.time"/>
+                </div>
+                <span style="font-size: 140%;">
+                    <strong t-esc="data.pos_reference"/>
+                    <strong t-if="data.tracking_number" class="fw-light">
+                        # <t t-esc="data.tracking_number"/>
+                    </strong>
+                </span>
+            </div>
+            <hr style="border: none; border-top: 3px dashed black;"/>
+            <div class="pos-receipt-body pb-4">
+                <div class="pos-receipt-title text-center w-100">
+                    <strong t-esc="data.changes.title"/>
+                    <t t-if="data.reprint"> (DUPLICATE !)</t>
+                </div>
+                <t t-if="data.changes.groupedData">
+                    <div t-foreach="data.changes.groupedData" t-as="group" t-key="group_index">
+                        <div class="mb-1 pb-1 fw-bold"
+                             style="border-bottom: 1px dashed black;" t-esc="group.name"/>
+                        <div t-foreach="group.data" t-as="line" class="ps-2" t-key="change_index">
+                            <t t-call="point_of_sale.OrderChangeReceiptLine"/>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div t-foreach="data.changes.data" t-as="line" t-key="change_index">
+                        <t t-call="point_of_sale.OrderChangeReceiptLine"/>
+                    </div>
+                </t>
+                <!-- ملاحظة الطلب: printChanges يعلّم التذكرة التي تحملها -->
+                <div t-if="data.hosny_show_order_note" class="mt-3 pt-2 text-center"
+                     style="border-top: 2px dashed black; font-size: 125%;">
+                    <div t-if="data.internal_note"><strong>ملاحظة الطلب: </strong><t t-esc="data.internal_note"/></div>
+                    <div t-if="data.general_customer_note"><strong>ملاحظة العميل: </strong><t t-esc="data.general_customer_note"/></div>
+                    <div t-if="data.hosny_order_note_removed and !data.internal_note and !data.general_customer_note">
+                        <strong>أُلغيت ملاحظة الطلب السابقة</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_form_inherit_mo_link" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.mo.link</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="before">
+                <field name="pos_auto_mrp_production_count" invisible="1"/>
+                <field name="pos_auto_mrp_unbuild_count" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_pos_auto_mrp_productions"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-wrench"
+                        invisible="pos_auto_mrp_production_count == 0">
+                    <field name="pos_auto_mrp_production_count" widget="statinfo" string="Automatic Manufacturing"/>
+                </button>
+                <button name="action_view_pos_auto_mrp_unbuilds"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-undo"
+                        invisible="pos_auto_mrp_unbuild_count == 0">
+                    <field name="pos_auto_mrp_unbuild_count" widget="statinfo" string="Automatic Unbuilds"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="class" add="o_pos_auto_mrp_sale_order_lines" separator=" "/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="class" add="o_pos_auto_mrp_sale_order_line_tree" separator=" "/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_total']" position="after">
+                <button name="action_open_mrp_productions"
+                        type="object"
+                        string="MO"
+                        class="btn-link o_pos_auto_mrp_mo_button"
+                        invisible="mrp_production_count == 0"/>
+                <button name="action_open_mrp_unbuilds"
+                        type="object"
+                        string="Unbuilds"
+                        class="btn-link"
+                        invisible="mrp_unbuild_count == 0"/>
+                <field name="manufactured_qty" optional="hide" readonly="1"/>
+                <field name="returned_qty" optional="show" readonly="1"/>
+                <field name="unbuilt_qty" optional="show" readonly="1"/>
+                <field name="remaining_returnable_qty" optional="show" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list" position="inside">
+                <field name="mrp_production_count" column_invisible="True"/>
+                <field name="mrp_unbuild_count" column_invisible="True"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

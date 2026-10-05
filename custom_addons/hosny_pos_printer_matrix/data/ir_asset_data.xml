@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="0">
+
+    <!--
+        يمنع أصول pos_epson_printer (بقية أودو 17) من الدخول في حزمة نقاط البيع.
+
+        الموديول من مخلفات الترقية من 17: أودو 19 يدعم طابعات ePOS أصلاً
+        (`pos.printer.printer_type = 'epson_epos'` و `epson_printer_ip` حقلان
+        أساسيان، و `PosStore.createPrinter` يتعامل معهما). لكن الموديول القديم
+        لا يزال يعمل patch على `createPrinter` ويرجّع كلاس EpsonPrinter نسخة 17،
+        وذلك الكلاس:
+
+          • يستورد `templates` من `@web/core/assets` — **لم يُصدَّر في أودو 19**،
+            فتكون القيمة `undefined` وينفجر عند
+            `templates.querySelector(...)` بـ TypeError في **كل** طباعة ePOS.
+          • يبحث عن القالب `pos_epson_printer.ePOSLayout` (اسم نسخة 17) بدل
+            `point_of_sale.ePOSLayout`.
+          • يبني العنوان من `window.location.protocol`، أي https، فيُبطل إعداد
+            Local Network Access (`point_of_sale.use_lna`) الذي وُضع أساساً
+            لتجنّب شهادات الطابعات.
+
+        فالنتيجة أن تذاكر التحضير وفواتير الكاشير كانت تفشل كلها قبل أن تصل
+        الشبكة. إزالة الأصول تكفي: النسخة الأساسية في أودو 19 تتولّى الطباعة.
+
+        لا نلغي تركيب الموديول: حقوله (`epson_printer_ip` على pos.printer و
+        pos.config و selection_add) تحمل عناوين الطابعات الفعلية، وإلغاء
+        التركيب مخاطرة على تلك البيانات بلا داعٍ. الـ Python زائد لا ضار.
+    -->
+    <record id="remove_legacy_epson_printer_assets" model="ir.asset">
+        <field name="name">hosny: remove legacy v17 pos_epson_printer assets</field>
+        <field name="bundle">point_of_sale._assets_pos</field>
+        <field name="directive">remove</field>
+        <field name="path">pos_epson_printer/static/src/**/*</field>
+        <field name="sequence">99</field>
+    </record>
+
+</odoo>

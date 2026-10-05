@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!-- Professional POS orderline layout -->
+  <t t-name="hosny_pos_controls.OrderlineLayout"
+     t-inherit="point_of_sale.Orderline"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//div[hasclass('line-details')]" position="replace">
+      <div class="line-details hosny-orderline-head" dir="ltr">
+        <div class="hosny-orderline-price-box" dir="ltr">
+          <t t-if="vals.price" t-set="hosnyPriceParts" t-value="(vals.price || '').trim().split(' ')"/>
+          <div t-if="vals.price"
+               class="product-price price"
+               t-attf-class="{{ vals.isReceipt ? 'font-monospace' : 'fw-bolder' }}">
+            <span class="hosny-price-amount" t-esc="hosnyPriceParts.length > 1 ? hosnyPriceParts.slice(0, -1).join(' ') : vals.price"/>
+            <span t-if="hosnyPriceParts.length > 1" class="hosny-price-currency" t-esc="hosnyPriceParts[hosnyPriceParts.length - 1]"/>
+          </div>
+          <div t-if="vals.taxGroup" t-esc="vals.taxGroup" class="text-end hosny-orderline-tax"/>
+        </div>
+        <span class="hosny-orderline-separator" aria-hidden="true"/>
+        <div class="hosny-orderline-item" dir="rtl">
+          <div class="product-name" t-att-class="{ 'align-items-center' : vals.isReceipt }">
+            <span t-if="props.line?.is_hospitality" class="hosny-hospitality-badge">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="8" r="4"/>
+                <path d="M13 32c1.8-12.4 9.2-20 19-20s17.2 7.6 19 20H13z"/>
+                <path d="M7 34h50v5H7z"/>
+              </svg>
+              <span>Hospitality</span>
+            </span>
+            <span class="text-wrap d-inline hosny-product-name-wrap">
+              <t t-set="hosnyNameParts" t-value="(vals.name || '').includes(',') ? (vals.name || '').split(',') : ((vals.name || '').includes('،') ? (vals.name || '').split('،') : ((vals.name || '').includes('-') ? (vals.name || '').split('-') : [vals.name || '']))"/>
+              <span class="hosny-product-main" t-esc="(hosnyNameParts[0] || '').trim()" />
+              <span t-if="hosnyNameParts.length > 1" class="hosny-product-detail" t-esc="hosnyNameParts.slice(1).join(' - ').trim()" />
+              <small t-if="vals.attributeString" t-out="vals.attributeString" class="attribute-line fst-italic" />
+            </span>
+          </div>
+        </div>
+        <span class="hosny-orderline-action-separator" aria-hidden="true"/>
+        <button t-if="vals.isDisplay"
+                type="button"
+                class="qty hosny-orderline-qty"
+                title="تغيير الكمية"
+                aria-label="تغيير الكمية"
+                t-on-click.stop="() => this.openHosnyOrderlineQuantityPopup(props.line)">
+          <t t-esc="vals.unitPart"/>
+          <small t-if="vals.decimalPart" t-out="vals.decimalPart" class="fw-normal" />
+        </button>
+        <span t-else="" class="qty hosny-orderline-qty">
+          <t t-esc="vals.unitPart"/>
+          <small t-if="vals.decimalPart" t-out="vals.decimalPart" class="fw-normal" />
+        </span>
+        <button t-if="vals.isDisplay"
+                type="button"
+                class="hosny-orderline-delete"
+                title="حذف الصنف"
+                aria-label="حذف الصنف"
+                t-on-click.stop="() => this.deleteHosnyOrderline(props.line)">
+          <i class="fa fa-trash-o" aria-hidden="true"/>
+        </button>
+      </div>
+    </xpath>
+  </t>
+
+  <!-- Manager PIN Popup -->
+  <t t-name="hosny_pos_controls.ManagerPinPopup">
+    <div class="modal-dialog hosny-pin-modal" role="document">
+      <div class="modal-content">
+
+        <div class="hosny-pin-header">
+          <div class="hosny-pin-icon">🔐</div>
+          <h3 class="hosny-pin-title" t-esc="props.title || 'Manager Authorization'"/>
+          <p class="hosny-pin-subtitle" t-esc="props.subtitle || 'This action requires manager approval'"/>
+        </div>
+
+        <div class="hosny-pin-body">
+
+          <!-- Reason -->
+          <div class="hosny-pin-field">
+            <label>Reason / السبب *</label>
+            <select class="hosny-pin-select" t-ref="reasonSelect">
+              <option value="">-- Select Reason / اختر السبب --</option>
+
+              <t t-foreach="reasons" t-as="reason" t-key="reason.value">
+                <option t-att-value="reason.value" t-esc="reason.label"/>
+              </t>
+
+            </select>
+          </div>
+
+          <!-- PIN -->
+          <div class="hosny-pin-field">
+            <label>Manager PIN / رقم المدير *</label>
+            <div class="hosny-pin-display">
+              <t t-foreach="pinDisplay" t-as="dot" t-key="dot_index">
+                <span class="hosny-pin-dot" t-att-class="dot ? 'filled' : ''">●</span>
+              </t>
+            </div>
+          </div>
+
+          <!-- Numpad -->
+          <div class="hosny-pin-numpad">
+            <t t-foreach="keys" t-as="key" t-key="key">
+              <button
+                class="hosny-pin-key"
+                t-att-class="key === '✓' ? 'confirm' : (key === '⌫' ? 'delete' : '')"
+                t-att-data-key="key"
+                t-on-click="onPinKey"
+                t-esc="key"/>
+            </t>
+          </div>
+
+          <!-- Error -->
+          <t t-if="errorMsg">
+            <div class="hosny-pin-error" t-esc="errorMsg"/>
+          </t>
+
+        </div>
+
+        <div class="hosny-pin-footer">
+          <button class="hosny-btn-cancel" t-on-click="cancel">إلغاء / Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </t>
+
+  <!-- Product order panel layout -->
+  <t t-name="hosny_pos_controls.ProductScreenOrderPanel"
+     t-inherit="point_of_sale.ProductScreen"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//div[hasclass('leftpane')]" position="attributes">
+      <attribute name="class">leftpane hosny-order-panel d-flex flex-column pb-2 border-end bg-view</attribute>
+    </xpath>
+
+    <xpath expr="//OrderSummary" position="before">
+      <div class="hosny-mode-buttons">
+        <button type="button"
+                class="hosny-mode-button"
+                t-att-class="hosnyNumpadModeClass('quantity')"
+                t-on-click="() => this.openHosnyQuantityPopup()">
+          <i class="fa fa-sort-numeric-asc" aria-hidden="true" />
+          <span>الكمية</span>
+        </button>
+        <button type="button"
+                class="hosny-mode-button"
+                t-att-class="hosnyNumpadModeClass('discount')"
+                t-on-click="() => this.openHosnyDiscountPopup()">
+          <i class="fa fa-percent" aria-hidden="true" />
+          <span>نسبة الخصم</span>
+        </button>
+        <button type="button"
+                class="hosny-mode-button hosny-hospitality-button"
+                t-att-class="hospitalityButtonState.active ? 'is-active' : ''"
+                t-on-click="openHospitalityPopup"
+                title="الضيافة">
+          <svg class="hosny-hospitality-service-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="11" r="4"/>
+            <path d="M12 39c1.6-14 9.4-23 20-23s18.4 9 20 23H12z"/>
+            <rect x="6" y="40" width="52" height="6" rx="3"/>
+          </svg>
+          <span>الضيافة</span>
+        </button>
+      </div>
+    </xpath>
+
+    <xpath expr="//div[hasclass('control-buttons')]" position="attributes">
+      <attribute name="class">control-buttons hosny-order-actions d-grid gap-2 w-100 pt-2</attribute>
+    </xpath>
+
+    <xpath expr="//div[hasclass('subpads')]" position="attributes">
+      <attribute name="class">subpads hosny-subpads d-flex flex-column gap-2 pt-2</attribute>
+      <attribute name="t-att-class">{'hosny-numpad-open': isHosnyNumpadVisible}</attribute>
+    </xpath>
+
+    <xpath expr="//Numpad" position="before">
+      <button type="button"
+              class="hosny-numpad-toggle"
+              t-att-class="isHosnyNumpadVisible ? 'is-open' : ''"
+              t-on-click="() => this.toggleHosnyNumpad()">
+        <i class="fa fa-calculator" aria-hidden="true" />
+        <span>Numpad</span>
+      </button>
+    </xpath>
+
+    <xpath expr="//Numpad" position="attributes">
+      <attribute name="t-if">isHosnyNumpadVisible</attribute>
+      <attribute name="class">'d-grid hosny-order-numpad'</attribute>
+      <attribute name="buttons">getHosnyNumpadButtons()</attribute>
+    </xpath>
+
+    <xpath expr="//ActionpadWidget" position="replace">
+      <div class="hosny-footer-actions">
+        <button type="button"
+                class="hosny-footer-action hosny-pay-action"
+                t-att-disabled="currentOrder?.isEmpty() || doSubmitOrder?.status === 'loading'"
+                t-on-click="directHosnyPayment">
+          <i class="oi oi-chevron-right" aria-hidden="true" />
+          <span>Payment</span>
+        </button>
+        <t t-set="hosnySend" t-value="hosnySendState"/>
+        <button type="button"
+                class="hosny-footer-action hosny-send-action"
+                t-att-class="{ 'is-sent': hosnySend.sent }"
+                t-att-disabled="currentOrder?.isEmpty() || hosnySend.sent || doSubmitOrder?.status === 'loading'"
+                t-on-click="sendHosnyOrder">
+          <t t-if="hosnySend.sent">
+            <i class="fa fa-check" aria-hidden="true" />
+            <span>تم الإرسال</span>
+          </t>
+          <t t-else="">
+            <i class="fa fa-cutlery" aria-hidden="true" />
+            <span>إرسال الطلب</span>
+            <span t-if="hosnySend.count" class="hosny-send-count" t-esc="hosnySend.count"/>
+          </t>
+        </button>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.HideProductNavbarSearch"
+     t-inherit="point_of_sale.Navbar"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//Input[@tModel=&quot;[pos, 'searchProductWord']&quot;]" position="attributes">
+      <attribute name="t-if">pos.showSearchButton() and pos.router.state.current !== 'ProductScreen'</attribute>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.ProductScreenCategorySelectorVisibility"
+     t-inherit="point_of_sale.ProductScreen"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//CategorySelector" position="attributes">
+      <attribute name="t-if">!pos.scanning</attribute>
+    </xpath>
+    <xpath expr="//div[@t-elif=&quot;pos.productToDisplayByCateg.length > 0&quot;]" position="attributes">
+      <attribute name="t-att-class">{
+        'hosny-has-letter-filter': this.getHosnyAvailableLetters().length
+      }</attribute>
+    </xpath>
+    <xpath expr="//div[@t-foreach=&quot;pos.productToDisplayByCateg&quot;]" position="before">
+      <t t-set="hosnyLetters" t-value="this.getHosnyAvailableLetters()" />
+      <div t-if="hosnyLetters.length"
+           class="hosny-letter-filter"
+           t-att-class="pos.hosnyProductLetterFilter ? 'has-active-letter' : ''">
+        <button t-if="pos.hosnyProductLetterFilter"
+                type="button"
+                class="hosny-letter-filter-clear"
+                t-on-click="clearHosnyProductLetterFilter"
+                aria-label="Clear letter filter">
+          <i class="fa fa-times" aria-hidden="true" />
+        </button>
+        <button t-foreach="hosnyLetters"
+                t-as="letter"
+                t-key="letter"
+                type="button"
+                class="hosny-letter-filter-button"
+                t-att-class="this.isHosnyProductLetterActive(letter) ? 'is-active' : ''"
+                t-on-click="() => this.selectHosnyProductLetter(letter)">
+          <t t-esc="letter" />
+        </button>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.CategorySelectorSearch"
+     t-inherit="point_of_sale.CategorySelector"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//button[hasclass('category-button')]" position="attributes">
+      <attribute name="t-on-click">() => this.hosnyToggleCategory(category.id)</attribute>
+      <attribute name="t-att-class">{
+                        'border-0': category.isChildren and !this.isAncestorOrSelected(category),
+                        'opacity-75 border-0': !category.isChildren and !category.isSelected,
+                        'justify-content-center': ui.isSmall,
+                        'hosny-category-active': this.hosnyIsCategorySelected(category.id)
+                    }</attribute>
+    </xpath>
+    <xpath expr="//div[contains(@t-attf-class, 'category-list')]" position="inside">
+      <div class="hosny-category-search">
+        <div class="hosny-category-search-box">
+          <input type="search"
+                 t-att-value="this.pos.searchProductWord"
+                 t-on-input="onHosnyCategorySearchInput"
+                 placeholder="البحث عن المنتجات..." />
+          <button t-if="this.pos.searchProductWord"
+                  type="button"
+                  class="hosny-category-search-clear"
+                  t-on-click="clearHosnyCategorySearch">
+            <i class="fa fa-times" aria-hidden="true" />
+          </button>
+          <i class="fa fa-search hosny-category-search-icon" aria-hidden="true" />
+        </div>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.OrderDisplayEmptyCart"
+     t-inherit="point_of_sale.OrderDisplay"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//div[hasclass('order-summary')]//div[hasclass('fs-3')]/span[1]" position="replace">
+      <span>الإجمالي</span>
+    </xpath>
+    <xpath expr="//t[@t-elif=&quot;props.mode !== 'receipt'&quot;]/div" position="replace">
+      <div t-if="!props.slots?.emptyCart"
+           class="hosny-empty-cart d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-3">
+        <i class="fa fa-shopping-cart" aria-hidden="true" />
+        <strong>ابدأ بإضافة المنتجات</strong>
+        <span class="hosny-empty-cart-hint">أو احجز الطاولة لوقت لاحق</span>
+        <t t-slot="details"/>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.ControlButtonsInline"
+     t-inherit="point_of_sale.ControlButtons"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//button[hasclass('more-btn')]" position="before">
+      <button type="button"
+              t-if="!props.showRemainingButtons"
+              class="control-button hosny-action-keep hosny-print-bill-button btn btn-light fw-bolder"
+              t-att-disabled="!pos.getOrder()?.getOrderlines()?.length"
+              t-on-click="clickPrintBill">
+        <i class="fa fa-print" aria-hidden="true" />
+        <span>فاتورة</span>
+      </button>
+      <button type="button"
+              t-if="!props.showRemainingButtons"
+              class="control-button hosny-action-keep hosny-new-invoice-button btn btn-light fw-bolder"
+              t-on-click="clickHosnyNewInvoice">
+        <i class="fa fa-file-text-o" aria-hidden="true" />
+        <span>فاتورة جديدة</span>
+      </button>
+      <button type="button"
+              t-if="!props.showRemainingButtons"
+              class="control-button hosny-action-keep hosny-transfer-button btn btn-light fw-bolder"
+              t-on-click.stop="() => this.clickTransferOrder()">
+        <i class="oi oi-arrow-right" aria-hidden="true" />
+        <span>تحويل</span>
+      </button>
+      <button type="button"
+              t-if="!props.showRemainingButtons"
+              class="control-button hosny-action-keep hosny-refund-button btn btn-light fw-bolder"
+              t-on-click="() => this.clickRefund()">
+        <i class="fa fa-undo" aria-hidden="true" />
+        <span>استرداد الأموال</span>
+      </button>
+      <button type="button"
+              t-if="!props.showRemainingButtons"
+              class="control-button hosny-action-keep hosny-split-button btn btn-light fw-bolder"
+              t-att-disabled="pos.getOrder()?.getOrderlines()?.filter((line) => line.isGlobalDiscountApplicable()).reduce((sum, line) => sum + line.qty, 0) lt 2"
+              t-on-click="openSplitPage">
+        <i class="fa fa-files-o" aria-hidden="true" />
+        <span>تقسيم</span>
+      </button>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.NumberPopupArabicLayout"
+     t-inherit="point_of_sale.NumberPopup"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//Dialog" position="attributes">
+      <attribute name="contentClass">'hosny-pos-popup hosny-number-popup'</attribute>
+    </xpath>
+    <xpath expr="//button[contains(@class, 'btn-secondary')]" position="replace">
+      <button class="btn btn-secondary btn-lg lh-lg o-default-button flex-fill"
+              tabindex="1"
+              t-on-click="cancel">
+        إهمال
+      </button>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.ProductConfiguratorArabicLayout"
+     t-inherit="point_of_sale.ProductConfiguratorPopup"
+     t-inherit-mode="extension"
+     owl="1">
+    <xpath expr="//Dialog" position="attributes">
+      <attribute name="contentClass">'hosny-pos-popup hosny-product-configurator-popup product-configurator-popup'</attribute>
+      <attribute name="bodyClass">'hosny-product-configurator-body'</attribute>
+    </xpath>
+    <xpath expr="//t[@t-set-slot='footer']/div" position="replace">
+      <div class="hosny-product-configurator-footer d-flex flex-row gap-2 w-100" dir="rtl">
+        <button class="btn btn-primary btn-lg lh-lg w-50"
+                t-att-class="{'disabled': isArchivedCombination() or !this.isValidCombination()}"
+                t-on-click="confirm">
+          إضافة
+        </button>
+        <button class="btn btn-secondary btn-lg lh-lg w-50" t-on-click="props.close">
+          إهمال
+        </button>
+      </div>
+    </xpath>
+  </t>
+
+</templates>

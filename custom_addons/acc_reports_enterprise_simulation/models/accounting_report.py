@@ -1,0 +1,61 @@
+import ast
+
+from odoo import fields, models
+
+
+class AccountingReport(models.TransientModel):
+    _inherit = "accounting.report"
+
+    hierarchy_subtotals = fields.Boolean(default=True)
+    unfold_all = fields.Boolean(default=False)
+    cash_basis = fields.Boolean(default=False)
+
+    def check_report(self):
+        res = super().check_report()
+        extra = self.read(['hierarchy_subtotals', 'unfold_all', 'cash_basis'])[0]
+        extra.pop('id', None)
+        form = res.get('data', {}).get('form', {})
+        form.update(extra)
+        if extra.get('cash_basis'):
+            form.setdefault('used_context', {})['cash_basis'] = True
+            form.setdefault('comparison_context', {})['cash_basis'] = True
+        else:
+            if form.get('used_context'):
+                form['used_context'].pop('cash_basis', None)
+            if form.get('comparison_context'):
+                form['comparison_context'].pop('cash_basis', None)
+        return res
+
+
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
+    def _normalize_report_analytic_context(self):
+        analytic_account_ids = self.env.context.get('analytic_account_ids')
+        if not analytic_account_ids or hasattr(analytic_account_ids, 'ids'):
+            return self
+        if isinstance(analytic_account_ids, (int, str)):
+            analytic_account_ids = [analytic_account_ids]
+        normalized_ids = []
+        for account_id in analytic_account_ids or []:
+            try:
+                account_id = int(account_id)
+            except (TypeError, ValueError):
+                continue
+            if account_id not in normalized_ids:
+                normalized_ids.append(account_id)
+        return self.with_context(
+            analytic_account_ids=self.env['account.analytic.account'].browse(normalized_ids)
+        )
+
+    def _query_get(self, domain=None):
+        move_lines = self._normalize_report_analytic_context()
+        if self.env.context.get('cash_basis'):
+            if not domain:
+                domain = []
+            elif not isinstance(domain, (list, tuple)):
+                domain = ast.literal_eval(domain)
+            else:
+                domain = list(domain)
+            domain += self._get_tax_exigible_domain()
+        return super(AccountMoveLine, move_lines)._query_get(domain=domain)

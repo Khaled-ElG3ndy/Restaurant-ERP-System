@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_modern_ui.CategorySearch"
+       t-inherit="point_of_sale.ProductScreen"
+       t-inherit-mode="extension">
+
+        <xpath expr="//div[hasclass('rightpane')]"
+               position="inside">
+
+            <div class="category-search-wrapper">
+
+                <div class="custom-pos-search">
+
+                    <i class="fa fa-search"/>
+
+                    <input type="text"
+                           placeholder="البحث عن المنتجات..." />
+
+                </div>
+
+            </div>
+
+        </xpath>
+
+    </t>
+
+</templates>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="hosny_pos_receipt.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr='//div[@class="after-footer"]' position="before">
+            <t t-set="hosnyReceiptNote" t-value="order.hosny_invoice_note or order.general_customer_note"/>
+            <div t-if="hosnyReceiptNote" class="pos-receipt-order-note pt-3">
+                <div class="pos-receipt-order-note-title text-center fw-bold">ملاحظات</div>
+                <div class="pos-receipt-order-note-text text-center" t-esc="hosnyReceiptNote"/>
+            </div>
+            <t t-set="hosnyTaxQrCode" t-value="order.generateQrcode?.() || header.qr_code"/>
+            <div t-if="hosnyTaxQrCode" class="hosny-receipt-tax-qr pt-3">
+                <img id="qrcode" t-att-src="hosnyTaxQrCode" class="pos-receipt-qrcode hosny-receipt-tax-qr-image"/>
+            </div>
+        </xpath>
+        <xpath expr='//div[@t-if="order.company.point_of_sale_use_ticket_qr_code and order.finalized"]' position="replace">
+        </xpath>
+    </t>
+    <t t-name="hosny_pos_receipt.OrderReceiptTotalSuffix" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'pos-receipt-amount receipt-total')]/span[@class='pos-receipt-right-align font-monospace']" position="replace">
+            <span t-out="formatCurrency(order.priceIncl)" class="pos-receipt-right-align font-monospace"/>
+        </xpath>
+    </t>
+</templates>

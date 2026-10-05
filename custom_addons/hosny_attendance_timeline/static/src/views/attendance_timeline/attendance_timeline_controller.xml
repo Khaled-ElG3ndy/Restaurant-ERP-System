@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_attendance_timeline.ControlButtons">
+        <button
+            t-if="canCreate"
+            class="btn btn-primary o_at_new_button"
+            type="button"
+            t-on-click="onNewButtonClicked">
+            New
+        </button>
+    </t>
+
+    <t t-name="hosny_attendance_timeline.AttendanceTimelineView">
+        <div
+            t-attf-class="o_attendance_timeline_view {{ props.className }}"
+            t-att-dir="this.direction"
+            t-att-style="'direction:' + this.direction + ' !important;'"
+            t-ref="root">
+            <Layout
+                className="'o_at_layout'"
+                display="props.display">
+                <t t-set-slot="control-panel-additional-actions">
+                    <CogMenu/>
+                </t>
+                <t t-set-slot="layout-buttons">
+                    <t t-call="{{ props.buttonTemplate }}"/>
+                </t>
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler"/>
+                </t>
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="searchBarToggler.component"
+                        t-props="searchBarToggler.props"/>
+                </t>
+
+                <div class="o_at_shell">
+                    <div class="o_at_toolbar">
+                        <div
+                            class="btn-group o_at_navigation"
+                            role="group"
+                            aria-label="Timeline navigation">
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                title="Previous"
+                                aria-label="Previous"
+                                t-on-click="() => this.navigate(-1)">
+                                <i class="oi oi-arrow-left"/>
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                title="Next"
+                                aria-label="Next"
+                                t-on-click="() => this.navigate(1)">
+                                <i class="oi oi-arrow-right"/>
+                            </button>
+                        </div>
+
+                        <label class="o_at_date_control">
+                            <i class="fa fa-calendar"/>
+                            <input
+                                type="date"
+                                class="form-control"
+                                t-att-value="state.focusDate"
+                                t-on-change="onDateChanged"/>
+                        </label>
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary o_at_today"
+                            t-on-click="goToday">
+                            Today
+                        </button>
+
+                        <h5
+                            class="o_at_range_label"
+                            t-esc="rangeLabel"/>
+
+                        <div class="o_at_employee_search" dir="rtl">
+                            <i
+                                class="fa fa-search"
+                                aria-hidden="true"/>
+                            <input
+                                t-ref="employeeSearch"
+                                type="search"
+                                class="o_at_employee_search_input"
+                                placeholder="البحث عن موظفين..."
+                                aria-label="البحث عن موظفين"
+                                dir="rtl"
+                                autocomplete="off"
+                                t-att-value="state.employeeSearch"
+                                t-on-input="onEmployeeSearchInput"/>
+                            <button
+                                t-if="state.employeeSearch"
+                                type="button"
+                                class="o_at_search_clear"
+                                title="مسح البحث"
+                                aria-label="مسح البحث"
+                                t-on-click="clearEmployeeSearch">
+                                <i class="fa fa-times"/>
+                            </button>
+                            <span
+                                class="o_at_search_count"
+                                aria-live="polite">
+                                <t t-esc="filteredEmployees.length"/>
+                                /
+                                <t t-esc="state.employees.length"/>
+                            </span>
+                        </div>
+
+                        <div
+                            class="o_at_filter_wrap"
+                            t-on-click.stop="">
+                            <button
+                                type="button"
+                                t-att-class="activeFilterCount ? 'btn btn-primary o_at_filter_button' : 'btn btn-secondary o_at_filter_button'"
+                                t-att-aria-expanded="state.filterOpen ? 'true' : 'false'"
+                                aria-haspopup="true"
+                                t-on-click="toggleFilterPanel">
+                                <i class="fa fa-sliders me-1"/>
+                                عوامل التصفية
+                                <span
+                                    t-if="activeFilterCount"
+                                    class="badge rounded-pill"
+                                    t-esc="activeFilterCount"/>
+                            </button>
+
+                            <div
+                                t-if="state.filterOpen"
+                                class="o_at_filter_panel"
+                                role="dialog"
+                                aria-label="عوامل تصفية الموظفين">
+                                <div class="o_at_filter_header">
+                                    <strong>عوامل تصفية الموظفين</strong>
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        t-att-disabled="!activeFilterCount"
+                                        t-on-click="resetEmployeeFilters">
+                                        إعادة تعيين عوامل التصفية
+                                    </button>
+                                </div>
+
+                                <label class="o_at_filter_field">
+                                    <span>القسم</span>
+                                    <select
+                                        class="form-select"
+                                        t-on-change="(event) => this.setEmployeeFilter('departmentId', event.target.value)">
+                                        <option
+                                            value=""
+                                            t-att-selected="!state.employeeFilters.departmentId">
+                                            كل الأقسام
+                                        </option>
+                                        <option
+                                            t-foreach="departmentOptions"
+                                            t-as="option"
+                                            t-key="option.id"
+                                            t-att-value="option.id"
+                                            t-att-selected="option.id.toString() === state.employeeFilters.departmentId"
+                                            t-esc="option.name"/>
+                                    </select>
+                                </label>
+
+                                <label class="o_at_filter_field">
+                                    <span>الفرع</span>
+                                    <select
+                                        class="form-select"
+                                        t-on-change="(event) => this.setEmployeeFilter('workLocationId', event.target.value)">
+                                        <option
+                                            value=""
+                                            t-att-selected="!state.employeeFilters.workLocationId">
+                                            كل الفروع
+                                        </option>
+                                        <option
+                                            t-foreach="workLocationOptions"
+                                            t-as="option"
+                                            t-key="option.filter_key"
+                                            t-att-value="option.filter_key"
+                                            t-att-selected="option.filter_key === state.employeeFilters.workLocationId"
+                                            t-esc="option.name"/>
+                                    </select>
+                                </label>
+
+                                <div class="o_at_filter_checks">
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            t-att-checked="state.employeeFilters.checkedIn"
+                                            t-on-change="(event) => this.toggleEmployeeFilter('checkedIn', event)"/>
+                                        <span>مسجل الحضور حاليًا</span>
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            t-att-checked="state.employeeFilters.late"
+                                            t-on-change="(event) => this.toggleEmployeeFilter('late', event)"/>
+                                        <span>الموظفون المتأخرون</span>
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            t-att-checked="state.employeeFilters.missingCheckout"
+                                            t-on-change="(event) => this.toggleEmployeeFilter('missingCheckout', event)"/>
+                                        <span>تسجيل خروج مفقود</span>
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            t-att-checked="state.employeeFilters.overtime"
+                                            t-on-change="(event) => this.toggleEmployeeFilter('overtime', event)"/>
+                                        <span>لديهم وقت إضافي</span>
+                                    </label>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            t-att-checked="state.employeeFilters.attendanceToday"
+                                            t-on-change="(event) => this.toggleEmployeeFilter('attendanceToday', event)"/>
+                                        <span>حضور التاريخ</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            t-if="state.selectedEmployeeIds.length"
+                            type="button"
+                            class="btn btn-light o_at_selection_count"
+                            title="Clear selection"
+                            t-on-click="clearEmployeeSelection">
+                            <i class="fa fa-check-square-o me-1"/>
+                            <t t-esc="state.selectedEmployeeIds.length"/>
+                            selected
+                            <i class="fa fa-times ms-1"/>
+                        </button>
+
+                        <div
+                            class="btn-group o_at_scale_switcher"
+                            role="group"
+                            aria-label="Timeline scale">
+                            <button
+                                type="button"
+                                t-att-class="state.scale === 'day' ? 'btn btn-primary' : 'btn btn-secondary'"
+                                t-on-click="() => this.changeScale('day')">
+                                Day
+                            </button>
+                            <button
+                                type="button"
+                                t-att-class="state.scale === 'week' ? 'btn btn-primary' : 'btn btn-secondary'"
+                                t-on-click="() => this.changeScale('week')">
+                                Week
+                            </button>
+                            <button
+                                type="button"
+                                t-att-class="state.scale === 'month' ? 'btn btn-primary' : 'btn btn-secondary'"
+                                t-on-click="() => this.changeScale('month')">
+                                Month
+                            </button>
+                        </div>
+
+                        <div
+                            class="btn-group o_at_zoom"
+                            role="group"
+                            aria-label="Timeline zoom">
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                title="Zoom out"
+                                aria-label="Zoom out"
+                                t-att-disabled="state.zoom &lt;= 0.6"
+                                t-on-click="() => this.changeZoom(-0.2)">
+                                <i class="fa fa-search-minus"/>
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                title="Zoom in"
+                                aria-label="Zoom in"
+                                t-att-disabled="state.zoom &gt;= 2"
+                                t-on-click="() => this.changeZoom(0.2)">
+                                <i class="fa fa-search-plus"/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <t
+                        t-component="props.Renderer"
+                        t-props="rendererProps"/>
+                </div>
+            </Layout>
+
+            <div
+                t-if="state.contextMenu"
+                class="o_at_context_menu dropdown-menu show"
+                role="menu"
+                t-att-style="'left:' + state.contextMenu.x + 'px;top:' + state.contextMenu.y + 'px;'"
+                t-on-click.stop="">
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-on-click="() => this.openAttendance(state.contextMenu.attendance)">
+                    <i class="fa fa-external-link me-2"/>
+                    Open
+                </button>
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-att-disabled="!state.contextMenu.attendance.can_write"
+                    t-on-click="() => this.editAttendance(state.contextMenu.attendance)">
+                    <i class="fa fa-pencil me-2"/>
+                    Edit
+                </button>
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-att-disabled="!canCreate"
+                    t-on-click="() => this.duplicateAttendance(state.contextMenu.attendance)">
+                    <i class="fa fa-clone me-2"/>
+                    Duplicate
+                </button>
+                <div class="dropdown-divider"/>
+                <button
+                    type="button"
+                    class="dropdown-item text-danger"
+                    role="menuitem"
+                    t-att-disabled="!state.contextMenu.attendance.can_unlink"
+                    t-on-click="() => this.deleteAttendance(state.contextMenu.attendance)">
+                    <i class="fa fa-trash me-2"/>
+                    Delete
+                </button>
+            </div>
+
+            <div
+                t-if="state.employeeContextMenu"
+                class="o_at_context_menu o_at_employee_context_menu dropdown-menu show"
+                role="menu"
+                t-att-style="'left:' + state.employeeContextMenu.x + 'px;top:' + state.employeeContextMenu.y + 'px;'"
+                t-on-click.stop="">
+                <div class="o_at_context_heading">
+                    <span
+                        class="o_at_status_dot"
+                        t-att-class="'o_at_employee_status_' + state.employeeContextMenu.employee.status"/>
+                    <strong
+                        t-esc="state.employeeContextMenu.employee.name"/>
+                </div>
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-att-disabled="!state.employeeContextMenu.employee.can_open"
+                    t-on-click="() => this.openEmployee(state.employeeContextMenu.employee)">
+                    <i class="fa fa-user me-2"/>
+                    Open Employee
+                </button>
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-on-click="() => this.viewEmployeeAttendanceHistory(state.employeeContextMenu.employee)">
+                    <i class="fa fa-history me-2"/>
+                    View Attendance History
+                </button>
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    role="menuitem"
+                    t-att-disabled="!canCreate"
+                    t-on-click="() => this.createEmployeeAttendance(state.employeeContextMenu.employee)">
+                    <i class="fa fa-plus-circle me-2"/>
+                    Create Attendance
+                </button>
+                <div
+                    t-if="state.employeeContextMenu.employee.can_check_in || state.employeeContextMenu.employee.can_check_out"
+                    class="dropdown-divider"/>
+                <button
+                    t-if="state.employeeContextMenu.employee.can_check_in"
+                    type="button"
+                    class="dropdown-item text-success"
+                    role="menuitem"
+                    t-on-click="() => this.confirmEmployeeAttendanceAction(state.employeeContextMenu.employee, 'check_in')">
+                    <i class="fa fa-sign-in me-2"/>
+                    Check In
+                </button>
+                <button
+                    t-if="state.employeeContextMenu.employee.can_check_out"
+                    type="button"
+                    class="dropdown-item text-primary"
+                    role="menuitem"
+                    t-on-click="() => this.confirmEmployeeAttendanceAction(state.employeeContextMenu.employee, 'check_out')">
+                    <i class="fa fa-sign-out me-2"/>
+                    Check Out
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>

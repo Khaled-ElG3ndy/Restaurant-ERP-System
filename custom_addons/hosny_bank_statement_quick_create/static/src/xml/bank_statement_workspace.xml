@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_bank_statement_quick_create.BankStatementWorkspace">
+        <div class="o_action o_hosny_bank_workspace">
+            <ControlPanel>
+                <t t-set-slot="control-panel-create-button">
+                    <button type="button" class="btn btn-primary" t-on-click="newEntry" t-out="labels.new"/>
+                </t>
+            </ControlPanel>
+
+            <div class="o_content overflow-auto">
+                <t t-if="state.loading">
+                    <div class="p-4 text-center"><i class="fa fa-spinner fa-spin me-2"/><t t-out="labels.loading"/></div>
+                </t>
+                <t t-else="">
+                    <div class="o_hosny_balance d-flex justify-content-between align-items-center px-3 py-2">
+                        <strong t-out="labels.currentBalance"/>
+                        <strong class="text-primary" dir="ltr" t-out="formatAmount(state.currentBalance)"/>
+                    </div>
+
+                    <section t-if="state.entryOpen" class="o_hosny_quick_entry p-2 border-bottom">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-12 col-lg-2">
+                                <label class="form-label" t-out="labels.date"/>
+                                <input type="date" class="form-control" t-model="state.date"/>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <label class="form-label" t-out="labels.label"/>
+                                <input type="text" class="form-control" t-att-placeholder="labels.writeLabel" t-model="state.label"/>
+                            </div>
+                            <div class="col-12 col-lg-2">
+                                <label class="form-label" t-out="labels.partner"/>
+                                <Many2XAutocomplete
+                                    activeActions="relationActions"
+                                    resModel="'res.partner'"
+                                    value="state.partnerName"
+                                    update.bind="updateEntryPartner"
+                                    getDomain.bind="getPartnerDomain"
+                                    fieldString="labels.partner"
+                                    placeholder="labels.partner"
+                                    context="relationContext"
+                                />
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <label class="form-label" t-out="labels.account"/>
+                                <Many2XAutocomplete
+                                    activeActions="relationActions"
+                                    resModel="'account.account'"
+                                    value="state.accountName"
+                                    update.bind="updateEntryAccount"
+                                    getDomain.bind="getAccountDomain"
+                                    fieldString="labels.account"
+                                    placeholder="labels.account"
+                                    context="relationContext"
+                                />
+                            </div>
+                            <div class="col-12 col-lg-2">
+                                <label class="form-label" t-out="labels.amount"/>
+                                <input type="number" step="any" class="form-control text-end" dir="ltr" t-att-value="state.amount" t-on-input="onAmountInput"/>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-1 mt-2">
+                            <button type="button" class="btn btn-primary" t-att-disabled="state.saving" t-on-click="() => this.saveEntry(true)" t-out="labels.addNew"/>
+                            <button type="button" class="btn btn-secondary" t-att-disabled="state.saving" t-on-click="() => this.saveEntry(false)" t-out="labels.addClose"/>
+                            <button type="button" class="btn btn-secondary" t-att-disabled="state.saving" t-on-click="discardEntry" t-out="labels.discard"/>
+                        </div>
+                    </section>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 o_hosny_transaction_table">
+                            <thead>
+                                <tr>
+                                    <th t-out="labels.date"/>
+                                    <th t-out="labels.label"/>
+                                    <th t-out="labels.partner"/>
+                                    <th t-out="labels.accountStatus"/>
+                                    <th class="text-end" t-out="labels.amount"/>
+                                    <th class="o_hosny_expand_col"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.lines" t-as="line" t-key="line.id">
+                                    <tr t-att-class="line.processing_state === 'error' ? 'table-danger' : ''">
+                                        <td t-out="line.date"/>
+                                        <td t-out="line.label"/>
+                                        <td>
+                                            <t t-if="line.editPartner">
+                                                <div class="d-flex align-items-center gap-1 o_hosny_inline_edit">
+                                                    <Many2XAutocomplete
+                                                        activeActions="relationActions"
+                                                        resModel="'res.partner'"
+                                                        value="line.editPartnerName"
+                                                        update="(records) => this.updateLinePartner(line, records)"
+                                                        getDomain.bind="getPartnerDomain"
+                                                        fieldString="labels.partner"
+                                                        placeholder="labels.partner"
+                                                        context="relationContext"
+                                                    />
+                                                    <button class="btn btn-sm btn-primary" t-on-click="() => this.saveLinePartner(line)"><i class="fa fa-check"/></button>
+                                                    <button class="btn btn-sm btn-light" t-on-click="() => line.editPartner = false"><i class="fa fa-times"/></button>
+                                                </div>
+                                            </t>
+                                            <t t-elif="line.partner_name">
+                                                <button class="btn btn-link p-0 text-body" t-on-click="() => this.startPartnerEdit(line)" t-out="line.partner_name"/>
+                                            </t>
+                                            <button t-else="" class="btn btn-sm btn-primary" t-on-click="() => this.startPartnerEdit(line)" t-out="labels.setPartner"/>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <i t-if="line.is_reconciled" class="fa fa-check-circle text-success" t-att-title="labels.reconciledProcessed"/>
+                                                <i t-elif="line.processing_state === 'error'" class="fa fa-exclamation-circle text-danger" t-att-title="labels.accountError"/>
+                                                <i t-else="" class="fa fa-clock-o text-warning" t-att-title="labels.pending"/>
+                                                <t t-if="line.editAccount">
+                                                    <div class="d-flex align-items-center gap-1 flex-grow-1 o_hosny_inline_edit">
+                                                        <Many2XAutocomplete
+                                                            activeActions="relationActions"
+                                                            resModel="'account.account'"
+                                                            value="line.editAccountName"
+                                                            update="(records) => this.updateLineAccount(line, records)"
+                                                            getDomain.bind="getAccountDomain"
+                                                            fieldString="labels.account"
+                                                            placeholder="labels.account"
+                                                            context="relationContext"
+                                                        />
+                                                        <button class="btn btn-sm btn-primary" t-on-click="() => this.saveLineAccount(line)"><i class="fa fa-check"/></button>
+                                                        <button class="btn btn-sm btn-light" t-on-click="() => line.editAccount = false"><i class="fa fa-times"/></button>
+                                                    </div>
+                                                </t>
+                                                <button t-elif="line.account_name" class="btn btn-link p-0 text-body" t-on-click="() => this.startAccountEdit(line)" t-out="line.account_name"/>
+                                                <button t-else="" class="btn btn-sm btn-primary" t-on-click="() => this.startAccountEdit(line)" t-out="labels.setAccount"/>
+                                                <span t-if="line.processing_state === 'pending'" class="badge text-bg-warning" t-out="labels.pending"/>
+                                                <span t-elif="line.processing_state === 'processed'" class="badge text-bg-success" t-out="labels.processed"/>
+                                                <span t-elif="line.processing_state === 'reconciled'" class="badge text-bg-success" t-out="labels.reconciled"/>
+                                                <span t-elif="line.processing_state === 'assigned_pending'" class="badge text-bg-warning" t-out="labels.assignedPending"/>
+                                                <span t-elif="line.processing_state === 'error'" class="badge text-bg-danger" t-out="labels.accountError"/>
+                                            </div>
+                                        </td>
+                                        <td class="text-end fw-semibold" dir="ltr" t-att-class="line.amount &lt; 0 ? 'text-danger' : ''" t-out="formatAmount(line.amount, line.currency_id)"/>
+                                        <td class="text-center">
+                                            <button class="btn btn-link text-body" t-att-title="labels.details" t-on-click="() => this.toggleDetails(line)">
+                                                <i t-att-class="line.expanded ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="line.expanded" class="o_hosny_details_row">
+                                        <td colspan="6">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <strong t-out="line.move_name"/>
+                                                <button class="btn btn-sm btn-outline-primary" t-on-click="() => this.openJournalEntry(line)" t-out="labels.openJournalEntry"/>
+                                            </div>
+                                            <table class="table table-sm mb-0">
+                                                <thead><tr><th t-out="labels.account"/><th t-out="labels.partner"/><th class="text-end" t-out="labels.debit"/><th class="text-end" t-out="labels.credit"/></tr></thead>
+                                                <tbody>
+                                                    <tr t-foreach="line.journal_items" t-as="item" t-key="item.id">
+                                                        <td t-out="item.account"/>
+                                                        <td t-out="item.partner"/>
+                                                        <td class="text-end" dir="ltr" t-out="formatAmount(item.debit, line.currency_id)"/>
+                                                        <td class="text-end" dir="ltr" t-out="formatAmount(item.credit, line.currency_id)"/>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr t-if="!state.lines.length">
+                                    <td colspan="6" class="text-center text-muted py-5" t-out="labels.noTransactions"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

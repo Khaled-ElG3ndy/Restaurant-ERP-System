@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_hosny_receipt" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hosny_pos_receipt</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="pos_bills_and_receipts_section" position="inside">
+                <setting id="hosny_receipt_branch" string="بيانات فاتورة العميل"
+                         help="تظهر في رأس الفاتورة وآخرها (تصميم FERP). الفارغ يُؤخذ من بيانات الشركة.">
+                    <div class="content-group">
+                        <div class="row mt8">
+                            <label string="اسم المطعم" for="pos_hosny_receipt_title" class="col-lg-4 o_light_label"/>
+                            <field name="pos_hosny_receipt_title" placeholder="مطاعم حسنى - المدينة"/>
+                        </div>
+                        <div class="row">
+                            <label string="الرقم الضريبي" for="pos_hosny_receipt_vat" class="col-lg-4 o_light_label"/>
+                            <field name="pos_hosny_receipt_vat"/>
+                        </div>
+                        <div class="row">
+                            <label string="العنوان" for="pos_hosny_receipt_address" class="col-lg-4 o_light_label"/>
+                            <field name="pos_hosny_receipt_address"/>
+                        </div>
+                        <div class="row">
+                            <label string="الجوال" for="pos_hosny_receipt_phone" class="col-lg-4 o_light_label"/>
+                            <field name="pos_hosny_receipt_phone"/>
+                        </div>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

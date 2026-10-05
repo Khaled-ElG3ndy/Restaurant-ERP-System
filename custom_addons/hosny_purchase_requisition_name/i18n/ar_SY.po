@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * hosny_purchase_requisition_name
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-27 00:00+0000\n"
+"PO-Revision-Date: 2026-06-27 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar_SY\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hosny_purchase_requisition_name
+msgid "Last 3 Purchase Bills"
+msgstr "آخر 3 فواتير شراء"
+
+#. module: hosny_purchase_requisition_name
+msgid "Bill Number"
+msgstr "رقم الفاتورة"
+
+#. module: hosny_purchase_requisition_name
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: hosny_purchase_requisition_name
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: hosny_purchase_requisition_name
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: hosny_purchase_requisition_name
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: hosny_purchase_requisition_name
+msgid "Currency"
+msgstr "العملة"
+
+#. module: hosny_purchase_requisition_name
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: hosny_purchase_requisition_name
+msgid "No posted purchase bills found"
+msgstr "لا توجد فواتير شراء مرحلة"

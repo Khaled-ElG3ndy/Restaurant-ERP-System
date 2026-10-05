@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_move_tree_pos_adjustment" model="ir.ui.view">
+        <field name="name">account.move.tree.pos.adjustment</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="pos_session_id" optional="hide"/>
+                <field name="pos_payment_method_id" optional="hide"/>
+                <field name="pos_adjustment_amount" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_form_pos_adjustment" model="ir.ui.view">
+        <field name="name">account.move.form.pos.adjustment</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group[.//field[@name='journal_id']]" position="inside">
+                <field name="is_pos_payment_adjustment" invisible="1"/>
+                <field name="pos_session_id" invisible="not is_pos_payment_adjustment"/>
+                <field name="pos_payment_method_id" invisible="not is_pos_payment_adjustment"/>
+                <field name="pos_expected_amount" invisible="not is_pos_payment_adjustment"/>
+                <field name="pos_counted_amount" invisible="not is_pos_payment_adjustment"/>
+                <field name="pos_adjustment_amount" invisible="not is_pos_payment_adjustment"/>
+                <field name="pos_adjustment_reason" invisible="not is_pos_payment_adjustment"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_filter_pos_adjustment" model="ir.ui.view">
+        <field name="name">account.move.search.pos.adjustment</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="pos_session_id"/>
+                <field name="pos_payment_method_id"/>
+            </field>
+            <filter name="misc_filter" position="after">
+                <filter
+                    string="POS Adjustments"
+                    name="pos_payment_adjustments"
+                    domain="[('is_pos_payment_adjustment', '=', True)]"
+                />
+            </filter>
+            <filter name="journal" position="after">
+                <filter string="POS Session" name="group_by_pos_session" domain="[]" context="{'group_by': 'pos_session_id'}"/>
+                <filter string="POS Payment Method" name="group_by_pos_payment_method" domain="[]" context="{'group_by': 'pos_payment_method_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,27 @@
+{
+    'name': 'Hosny POS Receipt - Arabic',
+    'version': '19.0.4.1.0',
+    'category': 'Point of Sale',
+    'summary': 'Customer receipt in the FERP design (Hosny branches)',
+    'depends': ['point_of_sale', 'pos_restaurant', 'l10n_gcc_pos', 'l10n_sa_pos', 'hosny_pos_controls'],
+    'data': [
+        'views/res_config_settings_views.xml',
+        'views/pos_order_views.xml',
+    ],
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'hosny_pos_receipt/static/src/js/order_note_button.js',
+            'hosny_pos_receipt/static/src/css/receipt.css',
+            'hosny_pos_receipt/static/src/xml/hosny_receipt.xml',
+            'hosny_pos_receipt/static/src/xml/order_note_button.xml',
+            'hosny_pos_receipt/static/src/css/invoice_note.css',
+            'hosny_pos_receipt/static/src/js/payment_orders_note.js',
+            'hosny_pos_receipt/static/src/xml/payment_orders_note.xml',
+            'hosny_pos_receipt/static/src/js/ferp_receipt.js',
+            'hosny_pos_receipt/static/src/xml/ferp_receipt.xml',
+            'hosny_pos_receipt/static/src/css/ferp_receipt.css',
+        ],
+    },
+    'installable': True,
+    'license': 'LGPL-3',
+}

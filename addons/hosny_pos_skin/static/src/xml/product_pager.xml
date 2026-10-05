@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="hosny_pos_skin.ProductScreenPager"
+       t-inherit="point_of_sale.ProductScreen"
+       t-inherit-mode="extension"
+       owl="1">
+
+        <!-- Render a measured page of cards while leaving the original groups
+             and all ProductCard handlers intact. -->
+        <xpath expr="//div[@t-foreach='pos.productToDisplayByCateg']" position="attributes">
+            <attribute name="t-foreach">hosnyPagedProductGroups</attribute>
+        </xpath>
+
+        <xpath expr="//div[@t-elif=&quot;pos.productToDisplayByCateg.length &gt; 0&quot;]" position="attributes">
+            <attribute name="t-ref">hosnyProductScroller</attribute>
+        </xpath>
+
+        <!-- The controls must stay *inside* the non-empty branch.  Putting a
+             sibling between t-elif and t-else breaks Owl's conditional chain:
+             cards and «لا توجد منتجات» then render together while a category
+             is changing, which looks like a jitter. -->
+        <xpath expr="//div[@t-elif=&quot;pos.productToDisplayByCateg.length &gt; 0&quot;]" position="inside">
+            <nav t-if="hosnyTotalProductPages &gt; 1"
+                 class="hosny-product-pager"
+                 dir="rtl"
+                 aria-label="صفحات المنتجات">
+                <button type="button"
+                        class="hosny-product-pager__arrow"
+                        t-att-disabled="hosnyCurrentProductPage === 0"
+                        t-on-click="previousHosnyProductPage"
+                        aria-label="الصفحة السابقة"
+                        title="الصفحة السابقة">
+                    <i class="fa fa-chevron-right" aria-hidden="true"/>
+                </button>
+
+                <button t-foreach="hosnyVisibleProductPages"
+                        t-as="page"
+                        t-key="page"
+                        type="button"
+                        class="hosny-product-pager__page"
+                        t-att-class="{ 'is-active': page === hosnyCurrentProductPage }"
+                        t-att-aria-current="page === hosnyCurrentProductPage ? 'page' : null"
+                        t-on-click="() => this.goToHosnyProductPage(page)">
+                    <t t-esc="page + 1"/>
+                </button>
+
+                <button type="button"
+                        class="hosny-product-pager__arrow"
+                        t-att-disabled="hosnyCurrentProductPage === hosnyTotalProductPages - 1"
+                        t-on-click="nextHosnyProductPage"
+                        aria-label="الصفحة التالية"
+                        title="الصفحة التالية">
+                    <i class="fa fa-chevron-left" aria-hidden="true"/>
+                </button>
+            </nav>
+        </xpath>
+    </t>
+
+</templates>

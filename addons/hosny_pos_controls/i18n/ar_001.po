@@ -1,0 +1,173 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hosny_pos_controls
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/views/pos_hospitality_views.xml:0
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Hospitality"
+msgstr "الضيافة"
+
+#. module: hosny_pos_controls
+#: code:addons/hosny_pos_controls/views/pos_hospitality_views.xml:0
+msgid "Hospitality Products"
+msgstr "منتجات الضيافة"
+
+#. module: hosny_pos_controls
+#: model:ir.model.fields,field_description:hosny_pos_controls.field_pos_order_line__hospitality_original_price
+msgid "Hospitality Original Price"
+msgstr "السعر الأصلي للضيافة"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/js/hospitality_popup.js:0
+msgid "Hospitality products added"
+msgstr "تمت إضافة منتجات الضيافة"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/js/hospitality_popup.js:0
+msgid "Hospitality - %s"
+msgstr "ضيافة - %s"
+
+#. module: hosny_pos_controls
+#: model:ir.model.fields,field_description:hosny_pos_controls.field_pos_hospitality_config__pos_config_ids
+msgid "Point of Sales"
+msgstr "نقاط البيع"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Search hospitality products..."
+msgstr "ابحث في منتجات الضيافة..."
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "No hospitality products are enabled for this branch"
+msgstr "لا توجد منتجات ضيافة مفعلة لهذا الفرع"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Please ask a POS manager to configure hospitality products."
+msgstr "يرجى طلب إعداد منتجات الضيافة من مدير نقطة البيع."
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "No matching products"
+msgstr "لا توجد منتجات مطابقة"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Original price:"
+msgstr "السعر الأصلي:"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "selected"
+msgstr "محدد"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Clear selection"
+msgstr "إلغاء اختيار الكل"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Select all"
+msgstr "اختيار الكل"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Add selected"
+msgstr "إضافة المختار"
+
+#. module: hosny_pos_controls
+#: code:addons/hosny_pos_controls/views/pos_hospitality_views.xml:0
+msgid "Create your first hospitality configuration"
+msgstr "أنشئ أول إعداد للضيافة"
+
+#. module: hosny_pos_controls
+#: code:addons/hosny_pos_controls/views/pos_hospitality_views.xml:0
+msgid "Select the POS branches and products that cashiers can add as complimentary items."
+msgstr "حدد فروع نقطة البيع والمنتجات التي يمكن للكاشير إضافتها كضيافة."
+
+#. module: hosny_pos_controls
+#: code:addons/hosny_pos_controls/views/pos_hospitality_views.xml:0
+msgid "e.g. Jeddah Hospitality"
+msgstr "مثال: ضيافة جدة"
+
+#. module: hosny_pos_controls
+#: code:addons/hosny_pos_controls/models/hospitality.py:0
+msgid "Hospitality products must be active, saleable, and available in Point of Sale: %s"
+msgstr "يجب أن تكون منتجات الضيافة نشطة وقابلة للبيع ومتاحة في نقطة البيع: %s"
+
+#. module: hosny_pos_controls
+#: model:ir.model.fields,help:hosny_pos_controls.field_pos_order_line__hospitality_original_price
+msgid "Original unit price retained for control and reporting before the line was made complimentary."
+msgstr "السعر الأصلي للوحدة محفوظ للرقابة والتقارير قبل تحويل السطر إلى ضيافة."
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Hospitality service"
+msgstr "خدمة الضيافة"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Choose complimentary products"
+msgstr "اختر منتجات الضيافة"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Select one or more items to add to the order at no charge."
+msgstr "حدد منتجًا أو أكثر لإضافته إلى الطلب مجانًا."
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Clear search"
+msgstr "مسح البحث"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "products available"
+msgstr "منتج متاح"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Selected"
+msgstr "تم الاختيار"
+
+#. module: hosny_pos_controls
+#. odoo-javascript
+#: code:addons/hosny_pos_controls/static/src/xml/hospitality_popup.xml:0
+msgid "Original price"
+msgstr "السعر الأصلي"

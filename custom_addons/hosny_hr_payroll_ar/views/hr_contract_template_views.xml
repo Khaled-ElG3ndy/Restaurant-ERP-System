@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_template_view_hosny_payroll_ar" model="ir.ui.view">
+        <field name="name">hr.contract.template.hosny.payroll.ar</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_contract_form_inherit"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='information']" position="attributes">
+                <attribute name="string">بيانات الراتب</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//group[@name='contract']" position="attributes">
+                <attribute name="string">نظرة عامة على العقد</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//label[@for='wage']" position="before">
+                <field name="hosny_wage_type"/>
+            </xpath>
+            <xpath expr="//page[@name='information']//label[@for='wage']" position="attributes">
+                <attribute name="string">الأجر</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//div[@name='wage_period_label']" position="replace">
+                <div name="wage_period_label">
+                    <span invisible="hosny_wage_type != 'fixed'">/ شهر</span>
+                    <span invisible="hosny_wage_type != 'hourly'">/ ساعة</span>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='information']//field[@name='contract_type_id']" position="attributes">
+                <attribute name="string">نوع العقد</attribute>
+                <attribute name="placeholder">اختر نوع العقد</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//field[@name='structure_type_id']" position="attributes">
+                <attribute name="string">فئة الأجر</attribute>
+                <attribute name="placeholder">سيُستبعد الموظف من دفعات الرواتب</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//field[@name='structure_type_id']" position="after">
+                <field name="hosny_payroll_reference"/>
+            </xpath>
+            <xpath expr="//field[@name='struct_id']" position="attributes">
+                <attribute name="string">هيكل الراتب</attribute>
+            </xpath>
+            <xpath expr="//field[@name='schedule_pay']" position="attributes">
+                <attribute name="string">دورية صرف الراتب</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//separator[@name='schedule']" position="attributes">
+                <attribute name="string">جدولة</attribute>
+            </xpath>
+            <xpath expr="//page[@name='information']//field[@name='resource_calendar_id']" position="attributes">
+                <attribute name="string">ساعات العمل</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='information']//group[@name='contract']" position="after">
+                <group name="hosny_template_payroll_components" string="بيانات الاستحقاق">
+                    <separator string="البدلات"/>
+                    <field name="hosny_housing_allowance"/>
+                    <field name="hosny_transport_allowance"/>
+                    <field name="hosny_other_allowance"/>
+                    <field name="hosny_total_allowances" readonly="1"/>
+                    <field name="hosny_total_fixed_compensation" readonly="1"/>
+                    <separator string="الإجازة السنوية"/>
+                    <field name="hosny_annual_leave_type_id" options="{'no_create': True}"/>
+                    <field name="hosny_annual_leave_days"/>
+                    <separator string="التأمينات الاجتماعية"/>
+                    <field name="hosny_social_insurance_reference"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_mrp_source_profile_user,pos.mrp.source.profile user,model_pos_mrp_source_profile,base.group_user,1,0,0,0
+access_pos_mrp_source_profile_route_user,pos.mrp.source.profile.route user,model_pos_mrp_source_profile_route,base.group_user,1,0,0,0
+access_pos_mrp_source_profile_manager,pos.mrp.source.profile manager,model_pos_mrp_source_profile,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_mrp_source_profile_route_manager,pos.mrp.source.profile.route manager,model_pos_mrp_source_profile_route,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_auto_mrp_return_allocation_user,pos.auto.mrp.return.allocation user,model_pos_auto_mrp_return_allocation,base.group_user,1,0,0,0
+access_pos_auto_mrp_return_allocation_stock,pos.auto.mrp.return.allocation stock,model_pos_auto_mrp_return_allocation,stock.group_stock_user,1,1,1,0
+access_pos_auto_mrp_return_allocation_mrp,pos.auto.mrp.return.allocation mrp,model_pos_auto_mrp_return_allocation,mrp.group_mrp_user,1,1,1,0
+access_pos_auto_mrp_return_allocation_pos,pos.auto.mrp.return.allocation pos,model_pos_auto_mrp_return_allocation,point_of_sale.group_pos_user,1,1,1,0
+access_pos_auto_mrp_return_allocation_manager,pos.auto.mrp.return.allocation manager,model_pos_auto_mrp_return_allocation,mrp.group_mrp_manager,1,1,1,1

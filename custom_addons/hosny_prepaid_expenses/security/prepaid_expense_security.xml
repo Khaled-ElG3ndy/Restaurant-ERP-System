@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="prepaid_schedule_company_rule" model="ir.rule">
+        <field name="name">Prepaid expense schedules by company</field>
+        <field name="model_id" ref="model_prepaid_expense_schedule"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="prepaid_schedule_line_company_rule" model="ir.rule">
+        <field name="name">Prepaid expense installments by company</field>
+        <field name="model_id" ref="model_prepaid_expense_schedule_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="prepaid_refund_allocation_company_rule" model="ir.rule">
+        <field name="name">Prepaid expense refund allocations by company</field>
+        <field name="model_id" ref="model_prepaid_expense_refund_allocation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
+

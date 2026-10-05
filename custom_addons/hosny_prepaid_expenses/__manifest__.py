@@ -1,0 +1,20 @@
+{
+    "name": "Hosny Prepaid Expenses",
+    "version": "19.0.2.1.0",
+    "category": "Accounting/Accounting",
+    "summary": "Vendor bill prepaid expense schedules and periodic recognition",
+    "author": "Hosny",
+    "license": "LGPL-3",
+    "depends": ["account", "analytic", "hosny_account_analytic_header"],
+    "data": [
+        "security/prepaid_expense_security.xml",
+        "security/ir.model.access.csv",
+        "data/ir_cron_data.xml",
+        "views/account_move_views.xml",
+        "views/account_payment_views.xml",
+        "views/prepaid_wizard_views.xml",
+        "views/prepaid_expense_views.xml",
+    ],
+    "installable": True,
+    "application": False,
+}

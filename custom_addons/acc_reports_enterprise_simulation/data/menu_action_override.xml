@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_menu_account_report_bs_preview" model="ir.actions.server">
+            <field name="name">Balance Sheet Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_balance_sheet_preview()</field>
+        </record>
+
+        <record id="action_menu_account_report_pl_preview" model="ir.actions.server">
+            <field name="name">Profit and Loss Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_profit_and_loss_preview()</field>
+        </record>
+
+        <record id="action_menu_cash_flow_statement_preview" model="ir.actions.server">
+            <field name="name">Cash Flow Statement Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_cash_flow_statement_preview()</field>
+        </record>
+
+        <record id="action_menu_general_ledger_preview" model="ir.actions.server">
+            <field name="name">General Ledger Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_general_ledger_preview()</field>
+        </record>
+
+        <record id="action_menu_partner_ledger_preview" model="ir.actions.server">
+            <field name="name">Partner Ledger Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_partner_ledger_preview()</field>
+        </record>
+
+        <record id="action_menu_trial_balance_preview" model="ir.actions.server">
+            <field name="name">معاينة ميزان المراجعة</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_trial_balance_preview()</field>
+        </record>
+
+        <record id="action_menu_tax_report_preview" model="ir.actions.server">
+            <field name="name">Tax Report Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_tax_report_preview()</field>
+        </record>
+
+        <record id="action_menu_aged_partner_balance_preview" model="ir.actions.server">
+            <field name="name">Aged Partner Balance Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_aged_partner_balance_preview()</field>
+        </record>
+
+        <record id="action_menu_aged_receivable_preview" model="ir.actions.server">
+            <field name="name">Aged Receivable Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_aged_receivable_preview()</field>
+        </record>
+
+        <record id="action_menu_aged_payable_preview" model="ir.actions.server">
+            <field name="name">Aged Payable Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_aged_payable_preview()</field>
+        </record>
+
+        <record id="action_menu_journal_audit_preview" model="ir.actions.server">
+            <field name="name">Journal Audit Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_journal_audit_preview()</field>
+        </record>
+
+        <record id="action_menu_daybook_preview" model="ir.actions.server">
+            <field name="name">Day Book Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_daybook_preview()</field>
+        </record>
+
+        <record id="action_menu_cashbook_preview" model="ir.actions.server">
+            <field name="name">Cash Book Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_cashbook_preview()</field>
+        </record>
+
+        <record id="action_menu_bankbook_preview" model="ir.actions.server">
+            <field name="name">Bank Book Preview</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_bankbook_preview()</field>
+        </record>
+
+        <record id="action_menu_financial_report" model="ir.actions.server">
+            <field name="name">Financial Report</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = env['ir.actions.act_window']._for_xml_id('accounting_pdf_reports.action_account_financial_report_tree')
+action['name'] = 'التقرير المالي'
+action['display_name'] = 'التقرير المالي'</field>
+        </record>
+
+        <record id="action_menu_executive_summary" model="ir.actions.server">
+            <field name="name">Executive Summary</field>
+            <field name="model_id" ref="model_acc_report_preview_helper"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_open_executive_summary_preview()</field>
+        </record>
+
+        <record id="account.account_reports_legal_statements_menu" model="ir.ui.menu">
+            <field name="name">تقارير كشف الحساب</field>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_finance_entries_accounting_ledgers" model="ir.ui.menu">
+            <field name="name">دفاتر الأستاذ</field>
+            <field name="parent_id" ref="account.menu_finance_reports"/>
+            <field name="sequence" eval="2"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="account.account_reports_partners_reports_menu" model="ir.ui.menu">
+            <field name="name">تقارير الشركاء</field>
+            <field name="sequence" eval="3"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="account.account_reports_taxes_and_fiscal_menu" model="ir.ui.menu">
+            <field name="name">الضرائب والشؤون المالية</field>
+            <field name="sequence" eval="4"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="account.account_reports_management_menu" model="ir.ui.menu">
+            <field name="name">الإدارة</field>
+            <field name="sequence" eval="5"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_account_report_bs" model="ir.ui.menu">
+            <field name="name">الميزانية العمومية</field>
+            <field name="parent_id" ref="account.account_reports_legal_statements_menu"/>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_account_report_bs_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_account_report_pl" model="ir.ui.menu">
+            <field name="name">الربح والخسارة</field>
+            <field name="parent_id" ref="account.account_reports_legal_statements_menu"/>
+            <field name="sequence" eval="2"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_account_report_pl_preview"/>
+        </record>
+
+        <menuitem id="menu_cash_flow_statement"
+                  name="كشف التدفقات النقدية"
+                  parent="account.account_reports_legal_statements_menu"
+                  action="action_menu_cash_flow_statement_preview"
+                  sequence="3"
+                  groups="account.group_account_readonly"/>
+
+        <record id="accounting_pdf_reports.menu_general_ledger" model="ir.ui.menu">
+            <field name="name">دفتر الأستاذ العام</field>
+            <field name="parent_id" ref="accounting_pdf_reports.menu_finance_entries_accounting_ledgers"/>
+            <field name="sequence" eval="2"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_general_ledger_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_partner_ledger" model="ir.ui.menu">
+            <field name="name">دفتر الأستاذ العام للشركاء</field>
+            <field name="parent_id" ref="account.account_reports_partners_reports_menu"/>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_partner_ledger_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_general_balance_report" model="ir.ui.menu">
+            <field name="name">ميزان المراجعة</field>
+            <field name="parent_id" ref="accounting_pdf_reports.menu_finance_entries_accounting_ledgers"/>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_trial_balance_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_account_report" model="ir.ui.menu">
+            <field name="name">التقرير الضريبي</field>
+            <field name="parent_id" ref="account.account_reports_taxes_and_fiscal_menu"/>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_tax_report_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_aged_trial_balance" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_aged_partner_balance_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_aged_receivable" model="ir.ui.menu">
+            <field name="name">المتأخر المدين</field>
+            <field name="parent_id" ref="account.account_reports_partners_reports_menu"/>
+            <field name="sequence" eval="2"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_aged_receivable_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_aged_payable" model="ir.ui.menu">
+            <field name="name">حسابات دائنة مستحقة متأخرة</field>
+            <field name="parent_id" ref="account.account_reports_partners_reports_menu"/>
+            <field name="sequence" eval="3"/>
+            <field name="active" eval="True"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_aged_payable_preview"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_print_journal" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_journal_audit_preview"/>
+        </record>
+
+        <menuitem id="menu_financial_report"
+                  name="التقرير المالي"
+                  parent="account.account_reports_taxes_and_fiscal_menu"
+                  action="action_menu_financial_report"
+                  sequence="2"
+                  groups="account.group_account_readonly"/>
+
+        <record id="account.menu_action_account_invoice_report_all" model="ir.ui.menu">
+            <field name="name">تحليل الفواتير</field>
+            <field name="sequence" eval="1"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="account.menu_action_analytic_reporting" model="ir.ui.menu">
+            <field name="name">إعداد التقارير تحليلية</field>
+            <field name="sequence" eval="2"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <menuitem id="menu_executive_summary"
+                  name="الملخص التنفيذي"
+                  parent="account.account_reports_management_menu"
+                  action="action_menu_executive_summary"
+                  sequence="3"
+                  groups="account.group_account_readonly"/>
+
+        <record id="accounting_pdf_reports.menu_finance_legal_statement" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_finance_partner_reports" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_finance_audit_reports" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_action_account_moves_ledger_general" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="accounting_pdf_reports.menu_action_account_moves_ledger_partner" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="account.menu_account_report_config" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="om_account_budget.menu_act_crossovered_budget_lines_view" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="om_account_asset.menu_action_asset_asset_report" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="om_account_daily_reports.menu_finance_daily_reports" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="om_account_daily_reports.menu_daybook" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_daybook_preview"/>
+        </record>
+
+        <record id="om_account_daily_reports.menu_cashbook" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_cashbook_preview"/>
+        </record>
+
+        <record id="om_account_daily_reports.menu_bankbook" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+            <field name="action" ref="acc_reports_enterprise_simulation.action_menu_bankbook_preview"/>
+        </record>
+
+        <function model="acc.report.preview.helper" name="sync_report_menu_labels"/>
+    </data>
+</odoo>

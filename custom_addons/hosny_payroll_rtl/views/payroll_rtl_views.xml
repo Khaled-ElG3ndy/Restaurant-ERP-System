@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payroll_structure_form_rtl" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.form.rtl</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_employee_grade_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_form" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/notebook[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_category_form_rtl" model="ir.ui.view">
+        <field name="name">hr.salary.rule.category.form.rtl</field>
+        <field name="model">hr.salary.rule.category</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_salary_rule_category_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_form" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[2]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_form_rtl" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.rtl</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_salary_rule_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_form" separator=" "/>
+            </xpath>
+            <xpath expr="//form/label[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/h1[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/label[2]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/h2[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/notebook[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_contribution_register_form_rtl" model="ir.ui.view">
+        <field name="name">hr.contribution.register.form.rtl</field>
+        <field name="model">hr.contribution.register</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_contribution_register_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_form" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[1]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+            <xpath expr="//form/group[2]" position="attributes">
+                <attribute name="class" add="o_hosny_payroll_rtl_section" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

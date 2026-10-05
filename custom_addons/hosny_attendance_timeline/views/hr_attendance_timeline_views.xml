@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_attendance_timeline" model="ir.ui.view">
+        <field name="name">hr.attendance.timeline</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <attendance_timeline
+                string="Attendance Timeline"
+                create="1"
+                edit="1"
+                delete="1">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="company_id"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <field name="worked_hours"/>
+                <field name="overtime_hours"/>
+                <field name="color"/>
+            </attendance_timeline>
+        </field>
+    </record>
+
+    <record id="hr_attendance_search_company" model="ir.ui.view">
+        <field name="name">hr.attendance.search.hosny.company</field>
+        <field name="model">hr.attendance</field>
+        <field
+            name="inherit_id"
+            ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <field name="department_id" position="after">
+                <field name="company_id"/>
+            </field>
+            <filter name="departement" position="after">
+                <filter
+                    string="Company"
+                    name="group_company"
+                    context="{'group_by': 'company_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record
+        id="hr_attendance.hr_attendance_action"
+        model="ir.actions.act_window">
+        <field name="view_mode">attendance_timeline,list,form</field>
+        <field name="mobile_view_mode">attendance_timeline</field>
+    </record>
+
+    <record
+        id="action_attendance_timeline_view"
+        model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">attendance_timeline</field>
+        <field name="view_id" ref="view_attendance_timeline"/>
+        <field
+            name="act_window_id"
+            ref="hr_attendance.hr_attendance_action"/>
+    </record>
+</odoo>

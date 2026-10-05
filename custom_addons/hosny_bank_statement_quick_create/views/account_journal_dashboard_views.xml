@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_journal_dashboard_quick_statement_line" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.quick.statement.line</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='bank_cash_buttons']/button[@id='all_transactions_btn']" position="before">
+                <button
+                    t-if="journal_type == 'bank' or journal_type == 'cash'"
+                    type="object"
+                    name="action_quick_create_statement_line"
+                    class="btn btn-primary"
+                    groups="account.group_account_basic"
+                >New</button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_journal_form_quick_statement_branch" model="ir.ui.view">
+        <field name="name">account.journal.form.quick.statement.branch</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='suspense_account_id']" position="after">
+                <field
+                    name="analytic_account_id"
+                    string="Branch"
+                    invisible="type not in ('bank', 'cash')"
+                    required="type in ('bank', 'cash')"
+                    options="{'no_create': True, 'no_open': True}"
+                    groups="account.group_account_manager"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

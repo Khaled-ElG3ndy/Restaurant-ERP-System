@@ -1,0 +1,797 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hosny_prepaid_expenses
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-11 21:39+0000\n"
+"PO-Revision-Date: 2026-07-11 21:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid "A future prepaid refund allocation must reference an installment."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "A prepaid expense schedule already exists for line '%s'."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.constraint,message:hosny_prepaid_expenses.constraint_prepaid_expense_schedule_unique_invoice_line
+msgid "A prepaid expense schedule already exists for this vendor bill line."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid ""
+"A prepaid expense schedule containing posted entries cannot be deleted."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_actual_account_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__actual_account_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__actual_account_id
+msgid "Actual Expense Account"
+msgstr "حساب المصروف الفعلي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__adjustment_move_id
+msgid "Adjustment Entry"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__amount
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__net_amount
+msgid "Amount"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__amount_currency
+msgid "Amount Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__net_amount_currency
+msgid "Amount in Invoice Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__analytic_distribution
+msgid "Analytic Distribution"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__analytic_account_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__analytic_account_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_form
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_list
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Branch"
+msgstr "الفرع"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_installment_amount
+msgid "Calculated Installment"
+msgstr "قيمة القسط المحسوبة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__cancel
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule__state__cancel
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule_line__state__cancel
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__company_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__company_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__company_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Company"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__company_currency_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__company_currency_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__company_currency_id
+msgid "Company Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"Configure the company's currency exchange gain/loss accounts before posting "
+"this credit note."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__create_uid
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__create_uid
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__create_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__create_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__refund_allocation_ids
+msgid "Credit Note Allocations"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__refund_line_id
+msgid "Credit Note Line"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_list
+msgid "Currency Total"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_distribution_method__custom
+msgid "Custom Installments"
+msgstr "عدد أقساط مخصص"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_distribution_method__daily
+msgid "Daily"
+msgstr "يومي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move__display_name
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__display_name
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__display_name
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_distribution_method
+msgid "Distribution Method"
+msgstr "طريقة التوزيع"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__draft
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule__state__draft
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule_line__state__draft
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__draft_installment_count
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+msgid "Draft Installments"
+msgstr "الأقساط المسودة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__due_date
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Due Month"
+msgstr "شهر الاستحقاق"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Due Today"
+msgstr "مستحق اليوم"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_end_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__end_date
+msgid "End Date"
+msgstr "تاريخ النهاية"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__name
+msgid "Expense"
+msgstr "المصروف"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Expense Account"
+msgstr "حساب المصروف"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__posted
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule__state__posted
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Fully Recognized"
+msgstr "معترف به بالكامل"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_refund_allocation__kind__future
+msgid "Future Prepaid Balance"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move__id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__id
+msgid "ID"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__schedule_line_id
+msgid "Installment"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__sequence
+msgid "Installment Number"
+msgstr "رقم القسط"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.constraint,message:hosny_prepaid_expenses.constraint_prepaid_expense_schedule_line_unique_sequence
+msgid "Installment numbers must be unique inside a prepaid expense schedule."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__line_ids
+msgid "Installments"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Invoice"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__currency_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__currency_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__currency_id
+msgid "Invoice Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Invoice Month"
+msgstr "شهر الفاتورة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__invoice_date
+msgid "Invoice/Bill Date"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+#: model:ir.model,name:hosny_prepaid_expenses.model_account_move
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__accrual_move_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_form
+msgid "Journal Entry"
+msgstr "القيد المحاسبي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model,name:hosny_prepaid_expenses.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__kind
+msgid "Kind"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__last_error
+msgid "Last Posting Error"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__write_uid
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__write_uid
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__write_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__write_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,help:hosny_prepaid_expenses.field_account_move_line__prepaid_monthly_due_day
+msgid ""
+"Leave zero to use the period end date. Values 1-31 are adjusted to the month"
+" length."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "Missing prepaid expense values: %s"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_distribution_method__monthly
+msgid "Monthly"
+msgstr "شهري"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_monthly_due_day
+msgid "Monthly Due Day"
+msgstr "يوم الاستحقاق الشهري"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__none
+msgid "Not Generated"
+msgstr "لم يُنشأ"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_installment_count
+msgid "Number of Installments"
+msgstr "عدد الأقساط"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__original_amount
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__amount
+msgid "Original Amount"
+msgstr "المبلغ الأصلي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__original_amount_currency
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__amount_currency
+msgid "Original Amount in Invoice Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_origin_line_id
+msgid "Original Prepaid Expense Line"
+msgstr "سطر المصروف المقدم الأصلي"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_move_form_prepaid_expenses
+msgid "Original Prepaid Line"
+msgstr "سطر المصروف المقدم الأصلي"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Overdue"
+msgstr "متأخر"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__partial
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule__state__partial
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Partially Recognized"
+msgstr "معترف به جزئيًا"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__period_start
+msgid "Period From"
+msgstr "الفترة من"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__period_end
+msgid "Period To"
+msgstr "الفترة إلى"
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_move_form_prepaid_expenses
+msgid "Post Due Entries"
+msgstr "ترحيل الأقساط المستحقة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,help:hosny_prepaid_expenses.field_account_move_line__is_prepaid_expense
+msgid ""
+"Post this vendor bill line to a prepaid account and recognize it "
+"periodically."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule_line__state__posted
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Posted"
+msgstr "مرحل"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__posted_installment_count
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+msgid "Posted Installments"
+msgstr "الأقساط المرحلة"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid "Posted prepaid expense entries cannot be modified."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid "Posted prepaid expense installments cannot be deleted."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Prepaid Account"
+msgstr "حساب المصروفات المقدمة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__is_prepaid_expense
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__schedule_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_move_form_prepaid_expenses
+msgid "Prepaid Expense"
+msgstr "مصروف مقدم"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_account_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__prepaid_account_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__prepaid_account_id
+msgid "Prepaid Expense Account"
+msgstr "حساب المصروفات المقدمة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model,name:hosny_prepaid_expenses.model_prepaid_expense_refund_allocation
+msgid "Prepaid Expense Credit Note Allocation"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model,name:hosny_prepaid_expenses.model_prepaid_expense_schedule_line
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_form
+msgid "Prepaid Expense Installment"
+msgstr "قسط المصروف المقدم"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.actions.act_window,name:hosny_prepaid_expenses.action_prepaid_expense_report
+#: model:ir.ui.menu,name:hosny_prepaid_expenses.menu_prepaid_expense_report
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_pivot
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Prepaid Expense Report"
+msgstr "تقرير المصروفات المقدمة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model,name:hosny_prepaid_expenses.model_prepaid_expense_schedule
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_schedule_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_move_form_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_list
+msgid "Prepaid Expense Schedule"
+msgstr "جدول المصروفات المقدمة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_bank_statement_line__prepaid_schedule_count
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move__prepaid_schedule_count
+msgid "Prepaid Expense Schedule Count"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_bank_statement_line__prepaid_schedule_ids
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move__prepaid_schedule_ids
+msgid "Prepaid Expense Schedules"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.actions.act_window,name:hosny_prepaid_expenses.action_prepaid_schedule_lines
+#: model:ir.ui.menu,name:hosny_prepaid_expenses.menu_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Prepaid Expenses"
+msgstr "المصروفات المقدمة"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.actions.server,name:hosny_prepaid_expenses.ir_cron_post_due_prepaid_expenses_ir_actions_server
+msgid "Prepaid Expenses: Post Due Entries"
+msgstr "المصروفات المقدمة: ترحيل الأقساط المستحقة"
+
+#. module: hosny_prepaid_expenses
+msgid "Create Prepaid Expense"
+msgstr "إنشاء مصروف مقدم"
+
+#. module: hosny_prepaid_expenses
+msgid "Vendor Payment"
+msgstr "دفعة مورد"
+
+#. module: hosny_prepaid_expenses
+msgid "Prepaid Expense Source"
+msgstr "مصدر المصروف المقدم"
+
+#. module: hosny_prepaid_expenses
+msgid "Prepaid Expense Amount"
+msgstr "مبلغ المصروف المقدم"
+
+#. module: hosny_prepaid_expenses
+msgid "Available Amount"
+msgstr "المبلغ المتاح"
+
+#. module: hosny_prepaid_expenses
+msgid "Payment Amount"
+msgstr "مبلغ الدفعة"
+
+#. module: hosny_prepaid_expenses
+msgid "Prepaid Expense Used Amount"
+msgstr "المبلغ المستخدم"
+
+#. module: hosny_prepaid_expenses
+msgid "Prepaid Expense Remaining Amount"
+msgstr "المبلغ المتبقي"
+
+#. module: hosny_prepaid_expenses
+msgid "Initial Reclassification Entry"
+msgstr "قيد إعادة التصنيف الأولي"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid "Prepaid expense %(invoice)s - installment %(number)s"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "Prepaid expense exchange difference"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"Prepaid expenses are only available on vendor bills and vendor credit notes."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "Prepaid refund adjustment - %s"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+msgid "Recognized"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_recognized_amount
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__recognized_amount
+msgid "Recognized Amount"
+msgstr "المبلغ المعترف به"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_refund_allocation__kind__recognized
+msgid "Recognized Expense Reversal"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_refund_allocation_ids
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__refund_allocation_ids
+msgid "Refund Allocations"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__account_move_line__prepaid_schedule_state__refunded
+#: model:ir.model.fields.selection,name:hosny_prepaid_expenses.selection__prepaid_expense_schedule__state__refunded
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Refunded"
+msgstr "مردود"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__refunded_amount
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__refunded_amount
+msgid "Refunded Amount"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__refunded_amount_currency
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__refunded_amount_currency
+msgid "Refunded Amount in Invoice Currency"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+msgid "Remaining"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_remaining_amount
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__remaining_amount
+msgid "Remaining Amount"
+msgstr "المبلغ المتبقي"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,help:hosny_prepaid_expenses.field_account_move_line__prepaid_origin_line_id
+msgid ""
+"Required on a prepaid vendor credit note so the remaining original schedule "
+"can be reduced safely."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "Reverse recognized prepaid expense"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_refund_allocation__schedule_id
+msgid "Schedule"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_schedule_state
+msgid "Schedule Status"
+msgstr "حالة جدول الاستحقاق"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"Select the original prepaid expense line on every prepaid vendor credit note"
+" line."
+msgstr ""
+"اختر سطر المصروف المقدم الأصلي لكل سطر مصروف مقدم في إشعار المورد الدائن."
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_account_move_line__prepaid_start_date
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__start_date
+msgid "Start Date"
+msgstr "تاريخ البداية"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__state
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__state
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"The actual expense account and prepaid expense account must be different."
+msgstr "يجب أن يختلف حساب المصروف الفعلي عن حساب المصروفات المقدمة."
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"The credit note amount exceeds the unrefunded amount of the original prepaid"
+" expense."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The monthly due day must be between 1 and 31, or zero for period end."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"The number of custom installments cannot exceed the number of days in the "
+"prepaid period."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The number of installments must be greater than zero."
+msgstr "يجب أن يكون عدد الأقساط أكبر من صفر."
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"The original prepaid expense and credit note must belong to the same "
+"company."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The original prepaid expense line has no schedule."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The prepaid expense accounts must be available to the invoice company."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The prepaid expense amount must be greater than zero."
+msgstr "يجب أن يكون مبلغ المصروف المقدم أكبر من صفر."
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid "The prepaid expense end date cannot be before the start date."
+msgstr "لا يمكن أن يكون تاريخ نهاية المصروف المقدم قبل تاريخ البداية."
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid ""
+"The prepaid schedule total (%(actual)s) does not equal the expected amount "
+"(%(expected)s)."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/prepaid_expense.py:0
+msgid "The refund allocation installment belongs to a different schedule."
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_list
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_list
+msgid "Total"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+msgid "Upcoming"
+msgstr "قادم"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__partner_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__partner_id
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_line_search
+#: model_terms:ir.ui.view,arch_db:hosny_prepaid_expenses.view_prepaid_schedule_search
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__move_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__invoice_id
+msgid "Vendor Bill"
+msgstr "فاتورة المورد"
+
+#. module: hosny_prepaid_expenses
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule__invoice_line_id
+#: model:ir.model.fields,field_description:hosny_prepaid_expenses.field_prepaid_expense_schedule_line__invoice_line_id
+msgid "Vendor Bill Line"
+msgstr ""
+
+#. module: hosny_prepaid_expenses
+#. odoo-python
+#: code:addons/hosny_prepaid_expenses/models/account_move.py:0
+msgid ""
+"You cannot reset or cancel this document because prepaid expense entries "
+"have already been posted. Create an explicit reversing journal entry or "
+"credit note instead."
+msgstr ""
+"لا يمكن إعادة هذا المستند إلى المسودة أو إلغاؤه لأن قيودًا للمصروفات المقدمة"
+" قد رُحّلت بالفعل. أنشئ قيد عكس واضحًا أو إشعارًا دائنًا بدلًا من ذلك."

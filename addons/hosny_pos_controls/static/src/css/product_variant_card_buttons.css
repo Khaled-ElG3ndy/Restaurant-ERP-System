@@ -1,0 +1,1267 @@
+.pos .product-screen .rightpane .category-list,
+.pos .product-screen .rightpane .categories,
+.pos .product-screen .rightpane .category-simple-button-list {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 54px !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 7px 10px !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(218, 226, 236, 0.82) !important;
+    border-radius: 0 !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.035) !important;
+    overflow: visible !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    direction: ltr !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .rightpane .category-list::-webkit-scrollbar,
+.pos .product-screen .rightpane .categories::-webkit-scrollbar,
+.pos .product-screen .rightpane .category-simple-button-list::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button,
+.pos .product-screen .rightpane .category-button,
+.pos .product-screen .rightpane .category-simple-button {
+    box-sizing: border-box !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 82px !important;
+    max-width: 132px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 13px !important;
+    border: 1px solid rgba(217, 225, 235, 0.96) !important;
+    border-radius: 13px !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    color: #172337 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 2px 7px rgba(15, 23, 42, 0.035) !important;
+    font-size: 12px !important;
+    font-weight: 760 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    direction: rtl !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .rightpane .category-button span,
+.pos .product-screen .rightpane .category-simple-button span,
+.pos .product-screen .rightpane .category-button .label,
+.pos .product-screen .rightpane .category-simple-button .label {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button:hover,
+.pos .product-screen .rightpane .category-button:hover,
+.pos .product-screen .rightpane .category-simple-button:hover {
+    border-color: rgba(207, 166, 74, 0.52) !important;
+    background: #fffaf0 !important;
+    transform: translateY(-1px) !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button.btn-primary,
+.pos .product-screen .rightpane .category-list .category-button.hosny-category-active,
+.pos .product-screen .rightpane .category-button.active,
+.pos .product-screen .rightpane .category-button.selected,
+.pos .product-screen .rightpane .category-simple-button.active,
+.pos .product-screen .rightpane .category-simple-button.selected {
+    border-color: rgba(202, 150, 34, 0.54) !important;
+    background: linear-gradient(180deg, #fff8df 0%, #fffdf7 100%) !important;
+    color: #87620b !important;
+    box-shadow: inset 0 0 0 1px rgba(202, 150, 34, 0.12), 0 5px 12px rgba(139, 107, 37, 0.08) !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    flex: 0 0 clamp(190px, 25vw, 280px) !important;
+    width: clamp(190px, 25vw, 280px) !important;
+    min-width: 190px !important;
+    max-width: 280px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    margin: 0 0 0 auto !important;
+    position: static !important;
+    inset: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 0 12px !important;
+    border: 1px solid rgba(217, 225, 235, 0.96) !important;
+    border-radius: 13px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 2px 7px rgba(15, 23, 42, 0.035) !important;
+    direction: rtl !important; /*rtl:ignore*/
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    min-width: 0 !important;
+    height: 100% !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1 !important;
+    direction: rtl !important; /*rtl:ignore*/
+    text-align: right !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-icon {
+    font-size: 14px !important;
+    color: #93a0b2 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-clear {
+    width: 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+}
+
+/* rtl:raw:
+.pos .product-screen .rightpane .category-list,
+.pos .product-screen .rightpane .categories,
+.pos .product-screen .rightpane .category-simple-button-list {
+    direction: ltr !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    margin: 0 0 0 auto !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box,
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    direction: rtl !important;
+}
+*/
+
+.pos .product-screen .rightpane .product-list,
+.pos .product-screen .rightpane .products,
+.pos .product-screen .rightpane .products-widget,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    --hosny-product-card-min-width: 174px;
+    --hosny-product-card-height: 156px;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    grid-auto-rows: var(--hosny-product-card-height) !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    padding: 10px 12px 14px !important;
+    overflow-x: hidden !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto > .product-list {
+    display: contents !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .rightpane .product,
+.pos .product-screen .rightpane .product-list .product,
+.pos .product-screen .rightpane .products .product,
+.pos .product-screen .rightpane .products-widget .product {
+    container-type: inline-size;
+    position: relative !important;
+    isolation: isolate !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: var(--hosny-product-card-height) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;
+    padding: 0 !important;
+    border: 1px solid transparent !important;
+    border-radius: 16px !important;
+    background:
+        linear-gradient(165deg, #fffdf8 0%, #fff8ea 45%, #fef4df 100%) padding-box,
+        linear-gradient(145deg, rgba(238, 211, 142, 0.78), rgba(190, 141, 35, 0.22) 44%, rgba(255, 255, 255, 0.86) 100%) border-box !important;
+    color: #17202b !important;
+    box-shadow:
+        0 10px 26px rgba(95, 70, 24, 0.085),
+        0 2px 7px rgba(15, 23, 42, 0.045),
+        inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+    overflow: hidden !important;
+    transform: translateY(0) !important;
+    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background 150ms ease !important;
+    touch-action: manipulation !important;
+}
+
+.pos .product-screen .rightpane .product::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16) 48%, rgba(255, 246, 223, 0.32)),
+        linear-gradient(25deg, rgba(255, 255, 255, 0) 48%, rgba(255, 255, 255, 0.42) 49%, rgba(255, 255, 255, 0) 64%);
+    pointer-events: none;
+}
+
+.pos .product-screen .rightpane .product::after {
+    content: "";
+    position: absolute;
+    inset-inline: 18px;
+    bottom: -9px;
+    height: 18px;
+    z-index: -1;
+    border-radius: 999px;
+    background: rgba(202, 151, 42, 0.18);
+    filter: blur(13px);
+    opacity: 0.42;
+    pointer-events: none;
+}
+
+.pos .product-screen .rightpane .product:hover {
+    background:
+        linear-gradient(165deg, #fffefd 0%, #fff9ec 44%, #fef1d8 100%) padding-box,
+        linear-gradient(145deg, rgba(232, 196, 105, 0.88), rgba(184, 130, 18, 0.34) 48%, rgba(255, 255, 255, 0.9) 100%) border-box !important;
+    box-shadow:
+        0 15px 34px rgba(95, 70, 24, 0.13),
+        0 4px 12px rgba(15, 23, 42, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+    transform: translateY(-2px) !important;
+}
+
+.pos .product-screen .rightpane .product:active {
+    box-shadow:
+        0 8px 18px rgba(95, 70, 24, 0.10),
+        0 2px 7px rgba(15, 23, 42, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+    transform: translateY(-1px) !important;
+}
+
+.pos .product-screen .rightpane .product:focus-visible {
+    outline: 0 !important;
+    box-shadow:
+        0 0 0 3px rgba(212, 170, 71, 0.20),
+        0 13px 28px rgba(95, 70, 24, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
+}
+
+.pos .product-screen .rightpane .product .product-img,
+.pos .product-screen .rightpane .product .product-img img,
+.pos .product-screen .rightpane .product > img {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    flex: 0 0 0 !important;
+}
+
+/*
+ * No padding and no gap of its own: the footer strip has to reach both edges of
+ * the card, so the name block below carries the inset instead.
+ *
+ * pos_modern_ui pads this element from
+ * `article.product.o-text-first-product-card .product-content`, so the override
+ * has to match that selector's weight; it wins on order, which the manifest
+ * dependency on pos_modern_ui guarantees.
+ */
+.pos .product-screen .rightpane .product .product-content,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    overflow: hidden !important;
+}
+
+/*
+ * One layout for every card: the name block takes the space that is left and
+ * centres the name in it, the footer strip below is a fixed height, and the row
+ * height comes from the grid — so a product sold in variants and a product sold
+ * as-is are exactly the same shape. The footer itself lives in
+ * product_variant_picker.css.
+ */
+.pos .product-screen .rightpane .product .o-text-product-main,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-text-product-main {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 10px 10px 8px !important;
+    overflow: hidden !important;
+    text-align: center !important;
+}
+
+.pos .product-screen .rightpane .product .product-name {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    max-height: calc(2 * 1.24em) !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    padding: 0 3px !important;
+    margin: 0 !important;
+    color: #152033 !important;
+    font-size: 15px !important;
+    font-weight: 760 !important;
+    line-height: 1.24 !important;
+    letter-spacing: 0 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    overflow-wrap: anywhere !important;
+}
+
+.pos .product-screen .rightpane .product .o-product-card-actions {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(54px, 1fr)) !important;
+    gap: 4px !important;
+    width: 100% !important;
+    padding: 0 8px 8px !important;
+}
+
+.pos .product-screen .rightpane .product .o-product-card-actions:empty {
+    display: none !important;
+}
+
+
+.pos .product-screen .rightpane .product .product-cart-qty {
+    min-width: 22px !important;
+    height: 22px !important;
+    padding: 0 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, #e0b94d 0%, #c9900d 100%) !important;
+    color: #271a02 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    box-shadow: 0 5px 12px rgba(176, 119, 9, 0.22) !important;
+}
+
+@media (max-width: 1380px) {
+    .pos .product-screen .rightpane .product-list,
+    .pos .product-screen .rightpane .products,
+    .pos .product-screen .rightpane .products-widget,
+    .pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+        --hosny-product-card-min-width: 160px;
+        --hosny-product-card-height: 150px;
+        gap: 9px !important;
+        padding: 9px 10px 12px !important;
+    }
+
+    .pos .product-screen .rightpane .product .o-text-product-main {
+        padding: 9px 9px 7px !important;
+    }
+
+    .pos .product-screen .rightpane .product .product-name {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .pos .product-screen .rightpane .product-list,
+    .pos .product-screen .rightpane .products,
+    .pos .product-screen .rightpane .products-widget,
+    .pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+        --hosny-product-card-min-width: 142px;
+        --hosny-product-card-height: 146px;
+        gap: 8px !important;
+        padding: 8px !important;
+    }
+
+    .pos .product-screen .rightpane .product {
+        border-radius: 14px !important;
+    }
+
+    .pos .product-screen .rightpane .product .product-name {
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 980px) {
+    .pos .product-screen .rightpane .category-list,
+    .pos .product-screen .rightpane .categories,
+    .pos .product-screen .rightpane .category-simple-button-list {
+        height: auto !important;
+        min-height: 50px !important;
+        max-height: none !important;
+        gap: 6px !important;
+        padding: 6px 8px !important;
+    }
+
+    .pos .product-screen .rightpane .category-list .category-button,
+    .pos .product-screen .rightpane .category-button,
+    .pos .product-screen .rightpane .category-simple-button {
+        min-width: 74px !important;
+        max-width: 118px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        padding: 0 10px !important;
+        font-size: 11px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex-basis: 180px !important;
+        width: 180px !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-box {
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+    }
+}
+
+/* rtl:begin:ignore */
+/* Final responsive category/search bar lock: filters left, search right, space between. */
+.pos .product-screen .rightpane .category-list,
+.pos .product-screen .rightpane .categories,
+.pos .product-screen .rightpane .category-simple-button-list {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 54px !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    align-content: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 7px 10px !important;
+    overflow: visible !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button,
+.pos .product-screen .rightpane .category-button,
+.pos .product-screen .rightpane .category-simple-button {
+    order: 0 !important;
+    flex: 0 1 132px !important;
+    width: auto !important;
+    min-width: 76px !important;
+    max-width: 132px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search {
+    order: 999 !important;
+    flex: 0 1 320px !important;
+    width: auto !important;
+    min-width: min(100%, 210px) !important;
+    max-width: 320px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    margin: 0 0 0 auto !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+@media (max-width: 1180px) {
+    .pos .product-screen .rightpane .category-list .category-button,
+    .pos .product-screen .rightpane .category-button,
+    .pos .product-screen .rightpane .category-simple-button {
+        flex-basis: 122px !important;
+        min-width: 72px !important;
+        max-width: 122px !important;
+        padding-inline: 9px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex-basis: 280px !important;
+        min-width: min(100%, 190px) !important;
+        max-width: 280px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .pos .product-screen .rightpane .category-list,
+    .pos .product-screen .rightpane .categories,
+    .pos .product-screen .rightpane .category-simple-button-list {
+        min-height: 50px !important;
+        gap: 6px !important;
+        padding: 6px 8px !important;
+    }
+
+    .pos .product-screen .rightpane .category-list .category-button,
+    .pos .product-screen .rightpane .category-button,
+    .pos .product-screen .rightpane .category-simple-button {
+        flex: 0 1 132px !important;
+        min-width: 68px !important;
+        max-width: 132px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex: 0 1 260px !important;
+        width: auto !important;
+        min-width: min(100%, 190px) !important;
+        max-width: 260px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        margin: 0 0 0 auto !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .pos .product-screen .rightpane .category-list,
+    .pos .product-screen .rightpane .categories,
+    .pos .product-screen .rightpane .category-simple-button-list {
+        align-content: flex-start !important;
+        gap: 6px !important;
+    }
+
+    .pos .product-screen .rightpane .category-list .category-button,
+    .pos .product-screen .rightpane .category-button,
+    .pos .product-screen .rightpane .category-simple-button {
+        flex: 1 1 84px !important;
+        min-width: 72px !important;
+        max-width: none !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search {
+        flex: 0 0 42px !important;
+        width: 42px !important;
+        min-width: 42px !important;
+        max-width: 42px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        margin: 0 0 0 auto !important;
+        transition: none !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-box {
+        position: relative !important;
+        width: 42px !important;
+        min-width: 42px !important;
+        max-width: 42px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-box input {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        opacity: 0 !important;
+        cursor: text !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-icon {
+        pointer-events: none !important;
+        margin: 0 !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search-clear {
+        display: none !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search:focus-within {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search:focus-within .hosny-category-search-box {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        justify-content: stretch !important;
+        gap: 7px !important;
+        padding: 0 12px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search:focus-within .hosny-category-search-box input {
+        position: static !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-category-search:focus-within .hosny-category-search-clear {
+        display: inline-flex !important;
+    }
+}
+
+.pos .product-screen .rightpane .hosny-has-letter-filter {
+    display: block !important;
+    position: relative !important;
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+    --hosny-letter-filter-column: 96px;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto.hosny-has-letter-filter {
+    display: block !important;
+}
+
+.pos .product-screen .rightpane .hosny-has-letter-filter .product-list {
+    box-sizing: border-box !important;
+    width: calc(100% - var(--hosny-letter-filter-column)) !important;
+    max-width: calc(100% - var(--hosny-letter-filter-column)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto.hosny-has-letter-filter > .product-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    width: calc(100% - var(--hosny-letter-filter-column)) !important;
+    max-width: calc(100% - var(--hosny-letter-filter-column)) !important;
+}
+
+@keyframes hosnyProductLetterFilterIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.pos .product-screen .rightpane .hosny-has-letter-filter .product-list > * {
+    transition: opacity 160ms ease, transform 160ms ease, filter 160ms ease !important;
+    will-change: opacity, transform !important;
+}
+
+.pos .product-screen .rightpane.hosny-letter-filter-switching .hosny-has-letter-filter .product-list > * {
+    animation: hosnyProductLetterFilterIn 190ms ease-out both !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    z-index: 12 !important;
+    width: 38px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 5px !important;
+    margin: 0 !important;
+    padding: 6px 5px !important;
+    border: 1px solid rgba(230, 190, 98, 0.58) !important;
+    border-radius: 18px !important;
+    background: rgba(255, 253, 248, 0.96) !important;
+    box-shadow: 0 8px 20px rgba(67, 49, 14, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    overflow: visible !important;
+    scrollbar-width: none !important;
+    direction: rtl !important;
+    transform: translateZ(0) !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter-button,
+.pos .product-screen .rightpane .hosny-letter-filter-clear {
+    box-sizing: border-box !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter-button {
+    border: 1px solid rgba(230, 190, 98, 0.32) !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+    color: #263548 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88) !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter-button:hover,
+.pos .product-screen .rightpane .hosny-letter-filter-button.is-active {
+    border-color: rgba(202, 150, 34, 0.74) !important;
+    background: linear-gradient(180deg, #f7d46a 0%, #e7bb45 100%) !important;
+    color: #5f4100 !important;
+    box-shadow: 0 4px 10px rgba(139, 107, 37, 0.16), inset 0 1px 0 rgba(255, 245, 184, 0.72) !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter-clear {
+    border: 1px solid rgba(225, 51, 75, 0.24) !important;
+    background: rgba(255, 246, 248, 0.86) !important;
+    color: #d82b48 !important;
+}
+
+.pos .product-screen .rightpane .hosny-letter-filter-clear i {
+    font-size: 12px !important;
+}
+
+@media (max-width: 1180px) {
+    .pos .product-screen .rightpane .hosny-has-letter-filter {
+        --hosny-letter-filter-column: 84px;
+    }
+
+    .pos .product-screen .rightpane .hosny-has-letter-filter .product-list {
+        padding-right: 0 !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-letter-filter {
+        width: 34px !important;
+        right: 6px !important;
+        gap: 4px !important;
+        padding: 5px 4px !important;
+        border-radius: 16px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-letter-filter-button,
+    .pos .product-screen .rightpane .hosny-letter-filter-clear {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        border-radius: 9px !important;
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .pos .product-screen .rightpane .hosny-has-letter-filter {
+        --hosny-letter-filter-column: 70px;
+    }
+
+    .pos .product-screen .rightpane .hosny-has-letter-filter .product-list {
+        padding-right: 0 !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-letter-filter {
+        width: 32px !important;
+    }
+
+    .pos .product-screen .rightpane .hosny-letter-filter-button,
+    .pos .product-screen .rightpane .hosny-letter-filter-clear {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        font-size: 12px !important;
+    }
+}
+/* rtl:end:ignore */
+
+/*
+ * Product card visual refresh.
+ *
+ * Warm champagne cards on a deeper sand ground, each carrying an antique-gold
+ * price capsule at its foot. The card is lit along its top edge and seated by
+ * a soft shadow, so the surface reads as a material rather than a rectangle —
+ * that, plus the capsules lining up on one baseline across every row, is what
+ * makes the grid look considered instead of generic.
+ *
+ * The card body lives here; the price capsule lives in
+ * product_variant_picker.css, which loads after this file.
+ *
+ * pos_modern_ui styles the same card through
+ * `article.product.o-text-first-product-card`, which outweighs a plain
+ * `.product` selector however the files are ordered, so every rule that has
+ * to beat it repeats that selector — the same thing the `.product-content`
+ * rule further up this file already does.
+ */
+
+.pos .product-screen .rightpane .product-list,
+.pos .product-screen .rightpane .products,
+.pos .product-screen .rightpane .products-widget,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    --hosny-product-card-min-width: 178px;
+    --hosny-product-card-height: 160px;
+    gap: 14px !important;
+}
+
+/*
+ * One ground for the whole screen.
+ *
+ * The gradient is painted once on `.product-screen` and every pane inside it
+ * is transparent, so the light falls across both halves continuously instead
+ * of each pane carrying its own copy and meeting the other in a seam. Two
+ * soft blooms over a diagonal sand: light off the top corner, a faint gold
+ * lift from the bottom.
+ */
+.pos .product-screen {
+    background:
+        radial-gradient(1200px 560px at 50% -14%, rgba(255, 253, 246, 0.95), transparent 64%),
+        radial-gradient(1000px 560px at 50% 116%, rgba(178, 140, 52, 0.20), transparent 66%),
+        linear-gradient(180deg, #f5efe3 0%, #e9e1d2 46%, #d5c9b0 100%) !important;
+}
+
+.pos .product-screen .rightpane,
+.pos .product-screen .rightpane .position-relative,
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    background: transparent !important;
+}
+
+.pos .product-screen .rightpane .position-relative > .overflow-y-auto {
+    padding: 16px 16px 24px !important;
+}
+
+.pos .product-screen .rightpane .product,
+.pos .product-screen .rightpane .product-list .product,
+.pos .product-screen .rightpane .products .product,
+.pos .product-screen .rightpane .products-widget .product,
+.pos .product-screen .rightpane article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .product-list article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .products article.product.o-text-first-product-card,
+.pos .product-screen .rightpane .products-widget article.product.o-text-first-product-card {
+    border: 1px solid rgba(130, 95, 40, 0.08) !important;
+    border-radius: 16px !important;
+    /* A hair of a gradient rather than one flat fill: it gives the champagne
+       some depth without reading as a gradient. */
+    background: linear-gradient(180deg, #f6efe0 0%, #f1e9d6 100%) !important;
+    box-shadow:
+        0 1px 2px rgba(70, 50, 20, 0.05),
+        0 6px 18px rgba(70, 50, 20, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease !important;
+}
+
+/* The gloss sheen and the blurred glow the older card drew underneath it. */
+.pos .product-screen .rightpane .product::before,
+.pos .product-screen .rightpane .product::after {
+    content: none !important;
+    display: none !important;
+}
+
+.pos .product-screen .rightpane .product:hover,
+.pos .product-screen .rightpane article.product.o-text-first-product-card:hover {
+    border-color: rgba(130, 95, 40, 0.14) !important;
+    box-shadow:
+        0 12px 28px rgba(70, 50, 20, 0.13),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+    transform: translateY(-4px) !important;
+}
+
+.pos .product-screen .rightpane .product:active,
+.pos .product-screen .rightpane article.product.o-text-first-product-card:active {
+    box-shadow:
+        0 1px 3px rgba(70, 50, 20, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.40) !important;
+    transform: translateY(0) !important;
+}
+
+.pos .product-screen .rightpane .product:focus-visible,
+.pos .product-screen .rightpane article.product.o-text-first-product-card:focus-visible {
+    outline: 0 !important;
+    border-color: rgba(135, 100, 32, 0.42) !important;
+    box-shadow:
+        0 0 0 3px rgba(177, 143, 56, 0.30),
+        0 6px 18px rgba(70, 50, 20, 0.07) !important;
+}
+
+/*
+ * Name at the top, capsule at the foot. Both edges line up across a row
+ * whether a name ran to one line or two.
+ */
+.pos .product-screen .rightpane .product .product-content,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 20px 14px 18px !important;
+    background: transparent !important;
+}
+
+.pos .product-screen .rightpane .product .o-text-product-main,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .o-text-product-main {
+    flex: 0 1 auto !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+}
+
+/*
+ * The clamp has to leave room below the second baseline: Arabic descenders
+ * sit lower than the line box `line-height` alone reserves, and a max-height
+ * of exactly two lines slices them off.
+ */
+.pos .product-screen .rightpane .product .product-name,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+    color: #2b2723 !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.34 !important;
+    max-height: calc(2 * 1.34em + 0.35em) !important;
+}
+
+/*
+ * The quantity badge is pinned to a top corner, and the name now starts at
+ * the top of the card rather than floating in the middle of it, so a long
+ * name runs straight under the badge. Padding on both sides keeps the name
+ * clear of it without having to know which corner the badge landed in, and
+ * keeps the text centred while it does.
+ */
+.pos .product-screen .rightpane .product:has(.product-cart-qty) .product-name,
+.pos .product-screen .rightpane article.product.o-text-first-product-card:has(.product-cart-qty) .product-name {
+    padding-inline: 26px !important;
+}
+
+/* Quantity badge: the same antique gold as the capsule, so they read as a set. */
+.pos .product-screen .rightpane .product .product-cart-qty,
+.pos .product-screen .rightpane article.product.o-text-first-product-card .product-cart-qty {
+    border: 1px solid rgba(135, 100, 32, 0.32) !important;
+    background: linear-gradient(180deg, #cbae5c 0%, #b18f38 100%) !important;
+    color: #fffdf6 !important;
+    font-weight: 700 !important;
+    box-shadow:
+        0 2px 4px rgba(150, 110, 30, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+}
+
+@media (max-width: 1380px) {
+    .pos .product-screen .rightpane .product .product-name,
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .product-name {
+        font-size: 14.5px !important;
+    }
+
+    .pos .product-screen .rightpane .product .product-content,
+    .pos .product-screen .rightpane article.product.o-text-first-product-card .product-content {
+        padding: 16px 12px 15px !important;
+    }
+}
+
+/* rtl:begin:ignore */
+/* Final fixed-height letter rail: preserve the original product card grid. */
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter,
+.pos .product-screen .rightpane .position-relative > div.overflow-y-auto.hosny-has-letter-filter {
+    display: grid !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    position: relative !important;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    grid-auto-rows: var(--hosny-product-card-height) !important;
+    align-content: start !important;
+    align-items: stretch !important;
+    gap: 9px !important;
+    padding: 9px 48px 12px 10px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .product-list,
+.pos .product-screen .rightpane .position-relative > div.overflow-y-auto.hosny-has-letter-filter > .product-list {
+    display: contents !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter,
+.pos .product-screen .rightpane .position-relative > div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter {
+    position: absolute !important;
+    top: 9px !important;
+    right: 9px !important;
+    z-index: 20 !important;
+    width: 34px !important;
+    height: max-content !important;
+    min-height: max-content !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 5px 4px !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scrollbar-width: none !important;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter .hosny-letter-filter-button,
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter .hosny-letter-filter-clear {
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+}
+
+@media (min-width: 1381px) {
+    .pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter,
+    .pos .product-screen .rightpane .position-relative > div.overflow-y-auto.hosny-has-letter-filter {
+        gap: 10px !important;
+        padding: 10px 50px 14px 12px !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter,
+    .pos .product-screen .rightpane .position-relative > div.overflow-y-auto.hosny-has-letter-filter {
+        gap: 8px !important;
+        padding: 8px 42px 8px 8px !important;
+    }
+}
+/* rtl:end:ignore */
+
+/* rtl:begin:ignore */
+/* Final letter filter layout lock: no inner scroll, no card overlap. */
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter,
+.pos .product-screen .rightpane .position-relative.d-flex.flex-column.flex-grow-1.overflow-hidden > div.overflow-y-auto.hosny-has-letter-filter {
+    display: block !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: 9px 0 12px 10px !important;
+    --hosny-letter-filter-column: 52px;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .product-list,
+.pos .product-screen .rightpane .position-relative.d-flex.flex-column.flex-grow-1.overflow-hidden > div.overflow-y-auto.hosny-has-letter-filter > .product-list {
+    display: grid !important;
+    box-sizing: border-box !important;
+    width: calc(100% - var(--hosny-letter-filter-column)) !important;
+    max-width: calc(100% - var(--hosny-letter-filter-column)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    margin: 0 !important;
+    padding-right: 0 !important;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter,
+.pos .product-screen .rightpane .position-relative.d-flex.flex-column.flex-grow-1.overflow-hidden > div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter {
+    position: absolute !important;
+    top: 8px !important;
+    right: 4px !important;
+    width: 38px !important;
+    height: max-content !important;
+    min-height: max-content !important;
+    max-height: none !important;
+    gap: 15px !important;
+    padding: 4px 4px !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scrollbar-width: none !important;
+}
+
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter .hosny-letter-filter-button,
+.pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .hosny-letter-filter .hosny-letter-filter-clear {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    font-size: 16px !important;
+    border-radius: 8px !important;
+}
+
+@media (max-width: 1180px) {
+    .pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter,
+    .pos .product-screen .rightpane .position-relative.d-flex.flex-column.flex-grow-1.overflow-hidden > div.overflow-y-auto.hosny-has-letter-filter {
+        --hosny-letter-filter-column: 52px;
+    }
+
+    .pos .product-screen .rightpane div.overflow-y-auto.hosny-has-letter-filter > .product-list,
+    .pos .product-screen .rightpane .position-relative.d-flex.flex-column.flex-grow-1.overflow-hidden > div.overflow-y-auto.hosny-has-letter-filter > .product-list {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--hosny-product-card-min-width)), 1fr)) !important;
+    }
+}
+/* rtl:end:ignore */
+
+/*
+ * Category bar and search — warm surface refresh.
+ *
+ * Appearance only: placement, order and the RTL locks above still own where
+ * these sit. The bar shares the champagne of the cards so it reads as part of
+ * the same pane, and the selected category is struck in the same antique gold
+ * as the price capsules below it.
+ */
+.pos .product-screen .rightpane .category-list,
+.pos .product-screen .rightpane .categories,
+.pos .product-screen .rightpane .category-simple-button-list {
+    min-height: 62px !important;
+    padding: 11px 16px !important;
+    border-bottom: 1px solid rgba(130, 95, 40, 0.10) !important;
+    background: rgba(252, 248, 239, 0.62) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button,
+.pos .product-screen .rightpane .category-button,
+.pos .product-screen .rightpane .category-simple-button {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    max-width: 148px !important;
+    padding-inline: 16px !important;
+    border: 1px solid rgba(130, 95, 40, 0.14) !important;
+    border-radius: 999px !important;
+    background: #fdfaf2 !important;
+    color: #5a5147 !important;
+    box-shadow: none !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        color 160ms ease !important;
+}
+
+.pos .product-screen .rightpane .category-list .category-button:hover,
+.pos .product-screen .rightpane .category-button:hover,
+.pos .product-screen .rightpane .category-simple-button:hover {
+    border-color: rgba(130, 95, 40, 0.26) !important;
+    background: #fffdf6 !important;
+    color: #3a342c !important;
+    transform: none !important;
+}
+
+/* Selected: the same gold as the price capsules, so the two read as one set. */
+.pos .product-screen .rightpane .category-list .category-button.btn-primary,
+.pos .product-screen .rightpane .category-list .category-button.hosny-category-active,
+.pos .product-screen .rightpane .category-button.active,
+.pos .product-screen .rightpane .category-button.selected,
+.pos .product-screen .rightpane .category-simple-button.active,
+.pos .product-screen .rightpane .category-simple-button.selected {
+    border-color: rgba(135, 100, 32, 0.32) !important;
+    background: linear-gradient(180deg, #cbae5c 0%, #b18f38 100%) !important;
+    color: #fffdf6 !important;
+    box-shadow:
+        0 2px 4px rgba(150, 110, 30, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+    text-shadow: 0 1px 1px rgba(95, 68, 8, 0.28) !important;
+    font-weight: 700 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search,
+.pos .product-screen .rightpane .hosny-category-search-box {
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box {
+    padding-inline: 16px !important;
+    border: 1px solid rgba(130, 95, 40, 0.14) !important;
+    border-radius: 999px !important;
+    background: #fdfaf2 !important;
+    box-shadow: none !important;
+    transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box:focus-within {
+    border-color: rgba(135, 100, 32, 0.40) !important;
+    background: #fffdf6 !important;
+    box-shadow: 0 0 0 3px rgba(177, 143, 56, 0.18) !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input {
+    color: #2b2723 !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-box input::placeholder {
+    color: #ab9f8c !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-icon {
+    color: #ab9f8c !important;
+}
+
+.pos .product-screen .rightpane .hosny-category-search-clear {
+    background: #eee4d0 !important;
+    color: #6b6154 !important;
+}

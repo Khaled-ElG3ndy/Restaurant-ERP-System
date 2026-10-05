@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_attendance_timeline.AttendanceTimelineRenderer">
+        <div class="o_at_renderer">
+            <div
+                t-if="props.loading"
+                class="o_at_loading"
+                role="status"
+                aria-live="polite">
+                <i class="fa fa-spinner fa-spin"/>
+                <span>Loading attendances…</span>
+            </div>
+
+            <div
+                t-elif="!rows.length"
+                class="o_at_empty">
+                <i class="fa fa-calendar-times-o"/>
+                <h4>No employee found</h4>
+                <p t-if="props.hasEmployeeQuery">
+                    Change the employee search or reset the filters.
+                </p>
+                <p t-else="">
+                    Change the filters or date range to display attendances.
+                </p>
+            </div>
+
+            <div
+                t-else=""
+                class="o_at_scroll"
+                t-ref="scroll"
+                t-on-scroll="onScroll">
+                <div
+                    class="o_at_header"
+                    t-att-style="timelineVariables">
+                    <div class="o_at_employee_header">
+                        <span>Employees</span>
+                        <small>
+                            <t t-esc="props.employees.length"/>
+                            <t
+                                t-if="props.employees.length !== props.totalEmployees">
+                                /
+                                <t t-esc="props.totalEmployees"/>
+                            </t>
+                        </small>
+                    </div>
+                    <div
+                        class="o_at_timeline_header"
+                        t-att-style="'width:' + timelineWidth + 'px;'">
+                        <div class="o_at_day_header">
+                            <div
+                                t-foreach="slots.days"
+                                t-as="day"
+                                t-key="day.key"
+                                t-att-class="day.isWeekend ? 'o_at_day_label o_at_weekend' : 'o_at_day_label'"
+                                t-att-style="dayBandStyle(day)">
+                                <span
+                                    t-if="props.scale === 'month'"
+                                    t-esc="day.date.toLocaleString({ month: 'long', year: 'numeric' })"/>
+                                <span
+                                    t-else=""
+                                    t-esc="day.date.toLocaleString({ weekday: 'short', day: 'numeric', month: props.scale === 'month' ? 'short' : undefined })"/>
+                            </div>
+                        </div>
+                        <div class="o_at_hour_header">
+                            <div
+                                t-foreach="slots.hours"
+                                t-as="hour"
+                                t-key="hour.key"
+                                t-att-class="'o_at_hour_label' + (hour.isWeekend &amp;&amp; props.scale === 'month' ? ' o_at_weekend' : '') + (hour.isToday &amp;&amp; props.scale === 'month' ? ' o_at_today' : '')"
+                                t-att-title="hour.title"
+                                t-att-style="'width:' + hour.width + 'px;'">
+                                <span t-esc="hour.label"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="o_at_spacer"
+                    t-att-style="'height:' + topSpacerHeight + 'px;'"/>
+
+                <t
+                    t-foreach="visibleRows"
+                    t-as="row"
+                    t-key="row.key">
+                    <div
+                        t-if="row.type === 'group'"
+                        class="o_at_row o_at_group_row"
+                        t-att-style="timelineVariables">
+                        <div class="o_at_group_label">
+                            <i class="fa fa-folder-open-o"/>
+                            <span t-esc="row.name || this.unassignedLabel()"/>
+                            <small>(<t t-esc="row.count"/>)</small>
+                        </div>
+                        <div
+                            class="o_at_group_track"
+                            t-att-style="'width:' + timelineWidth + 'px;'"/>
+                    </div>
+
+                    <div
+                        t-else=""
+                        t-att-class="rowClass(row.employee)"
+                        t-att-style="timelineVariables"
+                        t-att-data-employee-row-id="row.employee.id"
+                        t-att-aria-selected="isEmployeeSelected(row.employee) ? 'true' : 'false'"
+                        t-att-aria-label="employeeAriaLabel(row.employee)"
+                        role="row"
+                        tabindex="0"
+                        t-on-click="(event) => this.onEmployeeClick(row.employee, event)"
+                        t-on-dblclick="(event) => this.onEmployeeDoubleClick(row.employee, event)"
+                        t-on-contextmenu="(event) => this.onEmployeeContextMenu(row.employee, event)"
+                        t-on-keydown="(event) => this.onEmployeeKeydown(row.employee, event)">
+                        <div
+                            class="o_at_employee_cell"
+                            t-on-click="(event) => this.onEmployeeCellClick(row.employee, event)">
+                            <span
+                                class="o_at_avatar"
+                                t-att-style="employeeAvatarStyle(row.employee)"
+                                t-esc="employeeInitials(row.employee)"/>
+                            <span
+                                class="o_at_employee_status_dot"
+                                t-att-class="'o_at_employee_status_' + row.employee.status"
+                                t-att-title="employeeStatusLabel(row.employee)"
+                                aria-hidden="true"/>
+                            <span class="o_at_employee_text">
+                                <strong
+                                    t-att-title="row.employee.name">
+                                    <t
+                                        t-foreach="employeeNameParts(row.employee)"
+                                        t-as="part"
+                                        t-key="part.key">
+                                        <mark
+                                            t-if="part.match"
+                                            t-esc="part.text"/>
+                                        <t
+                                            t-else=""
+                                            t-esc="part.text"/>
+                                    </t>
+                                </strong>
+                            </span>
+                        </div>
+
+                        <div
+                            class="o_at_track"
+                            t-att-data-employee-id="row.employee.id"
+                            t-att-style="'width:' + timelineWidth + 'px;'"
+                            t-on-dblclick="(event) => this.onTrackDoubleClick(row.employee, event)">
+                            <div
+                                t-foreach="slots.highlightBands"
+                                t-as="day"
+                                t-key="day.key"
+                                t-att-class="'o_at_day_band' + (day.isWeekend ? ' o_at_weekend' : '') + (day.isToday &amp;&amp; props.scale === 'month' ? ' o_at_today' : '')"
+                                t-att-style="dayBandStyle(day)"/>
+
+                            <div
+                                t-if="props.scale !== 'month'"
+                                class="o_at_now_line"
+                                t-att-style="currentTimeStyle">
+                                <span/>
+                            </div>
+
+                            <t t-if="props.scale === 'month'">
+                                <div
+                                    t-foreach="monthlyCellsFor(row.employee.id)"
+                                    t-as="monthCell"
+                                    t-key="monthCell.key"
+                                    t-att-class="monthCellClass(monthCell)"
+                                    t-att-style="monthCellStyle(monthCell)"
+                                    t-att-title="monthCellTitle(monthCell)"
+                                    t-att-aria-label="monthCellTitle(monthCell)"
+                                    t-att-data-month-date="monthCell.key"
+                                    t-att-data-attendance-ids="monthCell.attendances.map((attendance) => attendance.id).join(',')"
+                                    role="button"
+                                    tabindex="0"
+                                    t-on-click="(event) => this.openMonthCell(monthCell, event)"
+                                    t-on-contextmenu="(event) => this.onMonthCellContextMenu(monthCell, event)"
+                                    t-on-keydown="(event) => this.onMonthCellKeydown(monthCell, event)">
+                                    <span
+                                        class="o_at_month_cell_label"
+                                        t-esc="monthCellLabel(monthCell)"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div
+                                    t-foreach="attendancesFor(row.employee.id)"
+                                    t-as="attendance"
+                                    t-key="attendance.id"
+                                    t-att-class="barClass(attendance)"
+                                    t-att-style="barStyle(attendance)"
+                                    t-att-aria-label="attendanceTitle(attendance)"
+                                    role="button"
+                                    tabindex="0"
+                                    t-on-pointerdown="(event) => this.startInteraction(event, attendance, 'move')"
+                                    t-on-contextmenu="(event) => this.onBlockContextMenu(attendance, event)"
+                                    t-on-mouseenter="(event) => this.showTooltip(attendance, event)"
+                                    t-on-mouseleave="hideTooltip"
+                                    t-on-focus="(event) => this.showKeyboardTooltip(attendance, event)"
+                                    t-on-blur="hideTooltip"
+                                    t-on-keydown="(event) => this.onBarKeydown(attendance, event)">
+                                    <span
+                                        t-if="attendance.can_write"
+                                        class="o_at_resize_handle o_at_resize_start"
+                                        aria-hidden="true"
+                                        t-on-pointerdown="(event) => this.startInteraction(event, attendance, 'resize-start')"/>
+                                    <span
+                                        class="o_at_block_label"
+                                        t-esc="attendanceLabel(attendance)"/>
+                                    <span
+                                        t-if="attendance.can_write"
+                                        class="o_at_resize_handle o_at_resize_end"
+                                        aria-hidden="true"
+                                        t-on-pointerdown="(event) => this.startInteraction(event, attendance, 'resize-end')"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+
+                <div
+                    class="o_at_spacer"
+                    t-att-style="'height:' + bottomSpacerHeight + 'px;'"/>
+            </div>
+
+            <div
+                t-if="state.tooltip"
+                class="o_at_tooltip"
+                role="tooltip"
+                t-att-style="'left:' + state.tooltip.x + 'px;top:' + state.tooltip.y + 'px;'">
+                <div class="o_at_tooltip_header">
+                    <span
+                        class="o_at_tooltip_dot"
+                        t-att-class="'o_at_status_' + state.tooltip.attendance.status"/>
+                    <strong
+                        t-esc="state.tooltip.attendance.employee_name"/>
+                </div>
+                <dl>
+                    <dt>Attendance ID</dt>
+                    <dd t-esc="state.tooltip.attendance.id"/>
+                    <dt>Check In</dt>
+                    <dd
+                        t-esc="formatDateTime(state.tooltip.attendance.check_in)"/>
+                    <dt>Check Out</dt>
+                    <dd>
+                        <t
+                            t-if="state.tooltip.attendance.check_out"
+                            t-esc="formatDateTime(state.tooltip.attendance.check_out)"/>
+                        <t t-else="">Currently working</t>
+                    </dd>
+                    <dt>Worked Time</dt>
+                    <dd
+                        t-esc="formatDuration(state.tooltip.attendance.worked_hours)"/>
+                    <dt>Overtime</dt>
+                    <dd
+                        t-esc="formatDuration(state.tooltip.attendance.overtime_hours)"/>
+                    <dt>Work Location</dt>
+                    <dd
+                        t-esc="state.tooltip.attendance.work_location || '—'"/>
+                </dl>
+            </div>
+
+            <div
+                t-if="state.employeePopover"
+                class="o_at_tooltip o_at_employee_popover"
+                dir="rtl"
+                role="dialog"
+                aria-modal="false"
+                t-att-aria-label="state.employeePopover.employee.name"
+                t-att-style="'left:' + state.employeePopover.x + 'px;top:' + state.employeePopover.y + 'px;'">
+                <div class="o_at_tooltip_header" dir="rtl">
+                    <span
+                        class="o_at_tooltip_dot"
+                        t-att-class="'o_at_employee_status_' + state.employeePopover.employee.status"/>
+                    <strong
+                        t-esc="state.employeePopover.employee.name"/>
+                    <button
+                        type="button"
+                        class="o_at_popover_close"
+                        title="إغلاق"
+                        aria-label="إغلاق"
+                        t-on-click="closeEmployeePopover">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+                <dl dir="rtl">
+                    <dt>القسم</dt>
+                    <dd
+                        t-esc="state.employeePopover.employee.department?.name || '—'"/>
+                    <dt>موقع العمل</dt>
+                    <dd
+                        t-esc="state.employeePopover.employee.work_location?.name || '—'"/>
+                    <dt>الحالة الحالية</dt>
+                    <dd
+                        t-esc="employeeStatusLabel(state.employeePopover.employee)"/>
+                    <dt>آخر تسجيل حضور</dt>
+                    <dd
+                        t-esc="formatOptionalDateTime(state.employeePopover.employee.last_check_in)"/>
+                    <dt>آخر تسجيل خروج</dt>
+                    <dd
+                        t-esc="formatOptionalDateTime(state.employeePopover.employee.last_check_out)"/>
+                    <dt>وقت العمل اليوم</dt>
+                    <dd
+                        t-esc="formatDuration(state.employeePopover.employee.worked_today)"/>
+                    <dt>الوقت الإضافي اليوم</dt>
+                    <dd
+                        t-esc="formatDuration(state.employeePopover.employee.overtime_today)"/>
+                </dl>
+            </div>
+        </div>
+    </t>
+</templates>

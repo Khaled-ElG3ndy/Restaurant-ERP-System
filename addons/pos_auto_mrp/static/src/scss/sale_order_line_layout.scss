@@ -1,0 +1,68 @@
+.o_form_view.o_sale_order {
+    .o_field_x2many_list_row_add {
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        white-space: normal;
+        text-align: start;
+
+        > a,
+        > button {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        > button.btn-link {
+            padding: 0 !important;
+            border: 0;
+            vertical-align: baseline;
+        }
+
+        > button.btn-link > span {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    .o_pos_auto_mrp_mo_button {
+        min-width: 2.25rem;
+        padding-inline: 0.25rem !important;
+        text-align: center;
+        white-space: nowrap;
+    }
+}
+
+[dir="rtl"] .o_form_view.o_sale_order .o_field_x2many_list_row_add,
+.o_rtl .o_form_view.o_sale_order .o_field_x2many_list_row_add {
+    direction: rtl;
+    justify-content: flex-start;
+    text-align: right;
+}
+
+[dir="ltr"] .o_form_view.o_sale_order .o_field_x2many_list_row_add {
+    direction: ltr;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .o_form_view.o_sale_order {
+        .o_field_x2many_list_row_add {
+            gap: 8px 10px;
+
+            > a,
+            > button {
+                margin-block: 0.125rem !important;
+            }
+        }
+
+        .o_pos_auto_mrp_mo_button {
+            min-width: 2rem;
+        }
+    }
+}

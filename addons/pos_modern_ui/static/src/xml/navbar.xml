@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_modern_ui.NavbarExtension"
+       t-inherit="point_of_sale.Navbar"
+       t-inherit-mode="extension">
+
+        <!-- REMOVE LEFT BUTTONS -->
+
+        <xpath expr="//div[contains(@class, 'pos-leftheader')]"
+               position="replace">
+
+            <div class="pos-leftheader d-flex align-items-center">
+            </div>
+
+        </xpath>
+
+        
+
+        <!-- WORKPLACE BUTTON -->
+
+        <xpath expr="//div[contains(@class, 'pos-rightheader')]"
+               position="inside">
+
+            <t t-if="env.services.pos &amp;&amp; shouldShowWorkplaceButton">
+
+                <div class="navbar-button btn btn-light rounded-pill d-flex align-items-center px-3 cursor-pointer pos-workplace-btn"
+                     t-on-click="goToWorkplaceSelector">
+
+                    <i class="fa fa-home me-2"/>
+
+                    <span>
+                        اختر المكان
+                    </span>
+
+                </div>
+
+            </t>
+
+        </xpath>
+
+    </t>
+
+</templates>

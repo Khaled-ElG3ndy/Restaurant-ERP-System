@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_purchase_packaging.PurchasePackagingDetailsButton">
+        <button type="button"
+                class="btn btn-link btn-sm p-0 o_hosny_packaging_details_button"
+                t-att-class="props.record.data[props.name] ? 'o_hosny_packaging_used' : 'o_hosny_packaging_unused'"
+                title="Open Packaging Details"
+                aria-label="Packaging Details"
+                t-on-click.stop.prevent="openDetails">
+            <i class="fa fa-cube" aria-hidden="true"/>
+        </button>
+    </t>
+
+    <t t-name="hosny_purchase_packaging.AddPackagingLevelButton">
+        <div class="o_hosny_add_level_wrap">
+            <button type="button"
+                    class="btn btn-outline-primary o_hosny_add_level_button"
+                    t-on-click.prevent="addLevel">
+                Add Internal Level
+            </button>
+            <small class="text-muted d-block mt-1">You can add up to 10 internal levels</small>
+        </div>
+    </t>
+
+    <t t-name="hosny_purchase_packaging.PackagingTemplateDetailsButton">
+        <button type="button"
+                class="btn btn-link btn-sm o_hosny_template_details_button"
+                title="Packaging Details"
+                aria-label="Packaging Details"
+                t-on-click.stop.prevent="openDetails">
+            <i class="fa fa-cube" aria-hidden="true"/>
+            <span>Packaging Details</span>
+        </button>
+    </t>
+
+    <t t-name="hosny_purchase_packaging.SavedPackagingCards">
+        <div t-if="templates.length" class="o_hosny_saved_packaging_cards" dir="rtl">
+            <div class="o_hosny_saved_packaging_grid">
+                <button t-foreach="templates"
+                        t-as="template"
+                        t-key="template.id"
+                        type="button"
+                        class="o_hosny_saved_packaging_card hosny-packaging-template-button"
+                        t-att-class="selectedId === template.id ? 'o_hosny_saved_packaging_selected hosny-packaging-template-button-active' : ''"
+                        t-on-click.prevent="() => this.selectTemplate(template)">
+                    <i t-if="selectedId === template.id" class="fa fa-check" aria-hidden="true"/>
+                    <span t-esc="template.name"/>
+                </button>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="hosny_purchase_packaging.PackagingSentenceLevels">
+        <div class="o_hosny_sentence_levels" dir="rtl">
+            <div t-if="!orderedRecords.length" class="o_hosny_sentence_empty">
+                Add the final content unit, then insert internal packaging levels before it.
+            </div>
+
+            <div t-foreach="orderedRecords"
+                 t-as="level"
+                 t-key="level.id"
+                 class="o_hosny_sentence_row"
+                 t-att-class="{
+                    'o_hosny_sentence_final': isFinal(level),
+                    'o_hosny_sentence_editing': list.editedRecord === level,
+                }"
+                 t-on-click="() => this.editRecord(level)">
+                <div class="o_hosny_sentence_text">
+                    <span class="o_hosny_sentence_lead">Each</span>
+                    <span class="o_hosny_sentence_subject" t-esc="containerName(level_index)"/>
+                    <span class="o_hosny_sentence_verb">contains</span>
+                    <div class="o_hosny_sentence_quantity">
+                        <Field t-if="list.editedRecord === level"
+                               name="'quantity'"
+                               record="level"
+                               trailingZeros="false"/>
+                        <span t-else="" class="o_hosny_sentence_number" t-esc="formatNumber(level.data.quantity)"/>
+                    </div>
+                    <div class="o_hosny_sentence_content">
+                        <Field t-if="!isFinal(level)"
+                               name="'packaging_type_id'"
+                               record="level"
+                               canOpen="false"/>
+                        <Field t-else=""
+                               name="'final_uom_id'"
+                               record="level"
+                               canOpen="false"
+                               canCreate="false"
+                               canCreateEdit="false"
+                               canQuickCreate="false"/>
+                    </div>
+                    <span t-if="isFinal(level)" class="badge rounded-pill text-bg-success o_hosny_final_badge">
+                        Final content
+                    </span>
+                </div>
+
+                <div class="o_hosny_sentence_actions">
+                    <button type="button"
+                            class="btn btn-link btn-sm"
+                            title="Move up"
+                            aria-label="Move up"
+                            t-att-disabled="!canMoveUp(level, level_index)"
+                            t-on-click.stop="() => this.moveLevel(level, level_index, 'up')">
+                        <i class="fa fa-arrow-up" aria-hidden="true"/>
+                    </button>
+                    <button type="button"
+                            class="btn btn-link btn-sm"
+                            title="Move down"
+                            aria-label="Move down"
+                            t-att-disabled="!canMoveDown(level, level_index)"
+                            t-on-click.stop="() => this.moveLevel(level, level_index, 'down')">
+                        <i class="fa fa-arrow-down" aria-hidden="true"/>
+                    </button>
+                    <button type="button"
+                            class="btn btn-link btn-sm text-danger"
+                            title="Delete packaging level"
+                            aria-label="Delete packaging level"
+                            t-att-disabled="isReadonly"
+                            t-on-click.stop="() => this.deleteLevel(level)">
+                        <i class="fa fa-trash" aria-hidden="true"/>
+                    </button>
+                </div>
+            </div>
+
+            <div class="o_hosny_sentence_add_wrap" t-if="!isReadonly">
+                <button type="button"
+                        class="btn btn-outline-primary o_hosny_add_level_button"
+                        t-on-click="addInternalLevel">
+                    Add Internal Level
+                </button>
+                <small class="text-muted">The new level is inserted before the final content automatically.</small>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="hosny_purchase_packaging.PackagingCalculationSummary">
+        <div t-if="props.mode === 'template'" class="o_hosny_calc_summary o_hosny_template_calc_summary" dir="rtl">
+            <div class="o_hosny_calc_block o_hosny_calc_content">
+                <div class="o_hosny_calc_heading">
+                    <strong>Single Package Content</strong>
+                </div>
+                <t t-if="factors.length">
+                    <div class="o_hosny_template_outer_name">
+                        <strong>1 <t t-esc="outerName"/></strong>
+                    </div>
+                    <div class="o_hosny_factor_chain">
+                        <t t-foreach="factors" t-as="factor" t-key="factor_index">
+                            <span class="o_hosny_factor"><t t-esc="formatNumber(factor.quantity)"/> <t t-esc="factor.name"/></span>
+                            <span t-if="!factor_last" class="o_hosny_operator">×</span>
+                        </t>
+                    </div>
+                    <div class="o_hosny_calc_equals">=</div>
+                    <div class="o_hosny_calc_result">
+                        <t t-esc="formatNumber(basePerPackage)"/> <t t-esc="baseUnitName"/>
+                    </div>
+                </t>
+                <div t-else="" class="o_hosny_calc_empty">No packaging details have been added yet</div>
+            </div>
+        </div>
+
+        <div t-elif="props.mode === 'summary'" class="o_hosny_calc_summary" dir="rtl">
+            <div class="o_hosny_calc_block o_hosny_calc_content">
+                <div class="o_hosny_calc_heading">
+                    <strong>Single Package Content</strong>
+                </div>
+                <t t-if="factors.length">
+                    <div class="o_hosny_factor_chain">
+                        <t t-foreach="factors" t-as="factor" t-key="factor_index">
+                            <span class="o_hosny_factor"><t t-esc="formatNumber(factor.quantity)"/> <t t-esc="factor.name"/></span>
+                            <span t-if="!factor_last" class="o_hosny_operator">×</span>
+                        </t>
+                    </div>
+                    <div class="o_hosny_math_line">
+                        <t t-foreach="factors" t-as="factor" t-key="factor_index">
+                            <strong t-esc="formatNumber(factor.quantity)"/>
+                            <span t-if="!factor_last" class="o_hosny_operator_inline">×</span>
+                        </t>
+                    </div>
+                    <div class="o_hosny_calc_equals">=</div>
+                    <div class="o_hosny_calc_intermediate">
+                        <t t-esc="formatNumber(rawFinalQuantity)"/> <t t-esc="finalUnitName"/>
+                    </div>
+                    <t t-if="showsBaseConversion">
+                        <div class="o_hosny_calc_equals">=</div>
+                    </t>
+                    <div class="o_hosny_calc_result">
+                        <t t-esc="formatNumber(basePerPackage)"/> <t t-esc="baseUnitName"/>
+                    </div>
+                </t>
+                <div t-else="" class="o_hosny_calc_empty">No packaging details have been added yet</div>
+            </div>
+
+            <div class="o_hosny_calc_block o_hosny_calc_total_quantity">
+                <div class="o_hosny_calc_heading">
+                    <strong>Total Quantity</strong>
+                </div>
+                <div class="o_hosny_equation">
+                    <span><t t-esc="formatNumber(outerQuantity)"/> <t t-esc="outerName"/></span>
+                    <span class="o_hosny_operator">×</span>
+                    <span><t t-esc="formatNumber(basePerPackage)"/> <t t-esc="baseUnitName"/></span>
+                    <span class="o_hosny_calc_equals">=</span>
+                    <strong><t t-esc="formatNumber(totalBaseQuantity)"/> <t t-esc="baseUnitName"/></strong>
+                </div>
+            </div>
+
+            <div class="o_hosny_calc_block o_hosny_calc_price">
+                <div class="o_hosny_calc_heading">
+                    <strong>Equivalent Base Unit Price</strong>
+                </div>
+                <div t-if="isPackagePricing" class="o_hosny_equation">
+                    <span class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(inputPrice)"/> <t t-esc="currencyName"/></span>
+                    <span class="o_hosny_operator">÷</span>
+                    <span><t t-esc="formatNumber(basePerPackage)"/> <t t-esc="baseUnitName"/></span>
+                    <span class="o_hosny_calc_equals">=</span>
+                    <strong><span class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(equivalentPrice)"/> <t t-esc="currencyName"/></span> / <t t-esc="baseUnitName"/></strong>
+                </div>
+                <div t-else="" class="o_hosny_equation o_hosny_equation_direct">
+                    <strong><span class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(equivalentPrice)"/> <t t-esc="currencyName"/></span> / <t t-esc="baseUnitName"/></strong>
+                </div>
+            </div>
+        </div>
+
+        <div t-else="" class="o_hosny_operation_preview" dir="rtl">
+            <div class="o_hosny_preview_title">
+                <strong>Operation Summary</strong>
+            </div>
+            <div class="o_hosny_preview_grid">
+                <div class="o_hosny_preview_item">
+                    <span class="o_hosny_preview_label">Will be purchased:</span>
+                    <strong><t t-esc="formatNumber(outerQuantity)"/> <t t-esc="outerName"/></strong>
+                </div>
+                <div class="o_hosny_preview_item">
+                    <span class="o_hosny_preview_label">Will be received:</span>
+                    <strong><t t-esc="formatNumber(totalBaseQuantity)"/> <t t-esc="baseUnitName"/></strong>
+                </div>
+                <div class="o_hosny_preview_item">
+                    <span class="o_hosny_preview_label">Pricing method:</span>
+                    <strong><span class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(inputPrice)"/> <t t-esc="currencyName"/></span> <span>per</span> <t t-esc="pricingUnitName"/></strong>
+                </div>
+                <div class="o_hosny_preview_item">
+                    <span class="o_hosny_preview_label">Subtotal before tax:</span>
+                    <strong class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(subtotal)"/> <t t-esc="currencyName"/></strong>
+                </div>
+                <div class="o_hosny_preview_item o_hosny_preview_total">
+                    <span class="o_hosny_preview_label">Total including tax:</span>
+                    <strong class="o_hosny_money" dir="ltr"><t t-esc="formatNumber(total)"/> <t t-esc="currencyName"/></strong>
+                </div>
+                <div class="o_hosny_preview_item o_hosny_preview_chain">
+                    <span class="o_hosny_preview_label">Packaging content:</span>
+                    <div t-if="factors.length" class="o_hosny_preview_chain_content">
+                        <div t-foreach="factors" t-as="factor" t-key="factor_index" class="o_hosny_preview_chain_line">
+                            <span>Each</span>
+                            <strong t-esc="containerName(factor_index)"/>
+                            <span>contains</span>
+                            <strong><t t-esc="formatNumber(factor.quantity)"/> <t t-esc="factor.name"/></strong>
+                        </div>
+                    </div>
+                    <span t-else="" class="text-muted">No packaging details have been added yet</span>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

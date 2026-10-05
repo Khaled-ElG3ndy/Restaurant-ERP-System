@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="packaging_type_carton" model="hosny.packaging.type">
+        <field name="name">Carton</field>
+        <field name="sequence">10</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="packaging_type_sack" model="hosny.packaging.type">
+        <field name="name">Sack</field>
+        <field name="sequence">20</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="packaging_type_package" model="hosny.packaging.type">
+        <field name="name">Package</field>
+        <field name="sequence">30</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="packaging_type_pack" model="hosny.packaging.type">
+        <field name="name">Pack</field>
+        <field name="sequence">40</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="packaging_type_pallet" model="hosny.packaging.type">
+        <field name="name">Pallet</field>
+        <field name="sequence">50</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="packaging_type_bag" model="hosny.packaging.type">
+        <field name="name">Bag</field>
+        <field name="sequence">60</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

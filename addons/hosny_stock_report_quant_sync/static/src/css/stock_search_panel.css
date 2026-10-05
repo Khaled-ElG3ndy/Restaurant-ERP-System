@@ -1,0 +1,19 @@
+/* Hide Odoo's synthetic "All" row; the real root product category remains visible. */
+.o_hosny_product_category_search_panel
+    section.o_search_panel_category
+    > ul.o_search_panel_field
+    > li.o_search_panel_category_value:first-child {
+    display: none !important;
+}
+
+.o_search_panel_warehouse .o_search_panel_filter_value .o_search_panel_label_title {
+    display: block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.o_search_panel_warehouse .o_search_panel_filter_value .o_search_panel_label_title:hover {
+    background-color: var(--SearchPanel-filter-background-color, var(--o-gray-200));
+}

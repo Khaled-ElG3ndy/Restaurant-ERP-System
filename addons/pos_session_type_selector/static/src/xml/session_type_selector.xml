@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!--
+        ══════════════════════════════════════════════════════════════════════
+        OrderTypeSelector — Full-screen RTL overlay
+        ══════════════════════════════════════════════════════════════════════
+        Rendered by Chrome whenever pos.showOrderSelector is true.
+        Uses position:fixed + z-index:99999 so it sits above every POS element.
+    -->
+    <t t-name="pos_session_type_selector.OrderTypeSelector" owl="1">
+
+        <!-- ── Backdrop ─────────────────────────────────────────────────── -->
+        <div class="ots-overlay" dir="rtl">
+
+            <!-- ── Modal card ──────────────────────────────────────────── -->
+            <div class="ots-modal">
+
+                <!-- Header -->
+                <div class="ots-header">
+                    <div class="ots-brand-icon">
+                        <i class="fa fa-concierge-bell"/>
+                    </div>
+                    <h1 class="ots-title">اختر نوع الطلب</h1>
+                    <p class="ots-subtitle">حدد إذا كان الطلب سفري أو محلي</p>
+                </div>
+
+                <!-- ── Selection cards ─────────────────────────────────── -->
+                <div class="ots-cards">
+
+                    <!-- ① سفري — Takeout -->
+                    <div class="ots-card ots-takeout"
+                         t-on-click="() => this.selectType('takeout')">
+
+                        <div class="ots-card-icon">
+                            <i class="fa fa-shopping-bag"/>
+                        </div>
+
+                        <div class="ots-card-body">
+                            <h2>سفري</h2>
+                            <p>طلب خارج المقر</p>
+                        </div>
+
+                        <div class="ots-card-arrow">
+                            <i class="fa fa-chevron-left"/>
+                        </div>
+                    </div>
+
+                    <!-- ② محلي — Dine-in -->
+                    <div class="ots-card ots-dinein"
+                         t-on-click="() => this.selectType('dine-in')">
+
+                        <div class="ots-card-icon">
+                            <i class="fa fa-utensils"/>
+                        </div>
+
+                        <div class="ots-card-body">
+                            <h2>محلي</h2>
+                            <p>طلب داخل المقر</p>
+                        </div>
+
+                        <div class="ots-card-arrow">
+                            <i class="fa fa-chevron-left"/>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /ots-cards -->
+
+                <!-- Footer watermark -->
+                <div class="ots-footer">
+                    <span>Hosny POS · نظام البيع</span>
+                </div>
+
+            </div>
+            <!-- /ots-modal -->
+
+        </div>
+        <!-- /ots-overlay -->
+
+    </t>
+
+
+    <!--
+        ══════════════════════════════════════════════════════════════════════
+        Chrome template extension
+        ══════════════════════════════════════════════════════════════════════
+        Appends <OrderTypeSelector/> inside the root .pos div.
+        Because the component uses position:fixed it does not affect layout.
+
+        Condition:
+          pos.isReady            – POS store has finished initialisation
+          pos.showOrderSelector  – our reactive flag (set in patched setup)
+    -->
+    <t t-inherit="point_of_sale.Chrome" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos')]" position="inside">
+            <OrderTypeSelector
+                t-if="pos.isReady and pos.showOrderSelector"
+                pos="pos"/>
+        </xpath>
+    </t>
+
+</templates>

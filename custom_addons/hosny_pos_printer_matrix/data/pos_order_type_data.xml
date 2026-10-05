@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- أنواع الفواتير كما هي في نظام FERP. الأسماء قابلة للتعديل من الشاشة
+         والكود ثابت حتى لا يتأثر التوجيه بأي إعادة تسمية. -->
+    <record id="pos_order_type_local" model="pos.order.type">
+        <field name="name">محلي</field>
+        <field name="code">local</field>
+        <field name="sequence">10</field>
+        <field name="is_default" eval="True"/>
+    </record>
+    <record id="pos_order_type_safari" model="pos.order.type">
+        <field name="name">سفري</field>
+        <field name="code">safari</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="pos_order_type_takeaway" model="pos.order.type">
+        <field name="name">Take Away</field>
+        <field name="code">takeaway</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="pos_order_type_delivery" model="pos.order.type">
+        <field name="name">توصيل</field>
+        <field name="code">delivery</field>
+        <field name="sequence">40</field>
+    </record>
+</odoo>

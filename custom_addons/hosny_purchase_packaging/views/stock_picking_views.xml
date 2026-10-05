@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_form_purchase_packaging" model="ir.ui.view">
+        <field name="name">stock.picking.form.purchase.packaging</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids']//list/field[@name='packaging_uom_qty']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids']//list/field[@name='packaging_uom_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids']//list/field[@name='packaging_uom_id']" position="after">
+                <field name="hosny_line_packaging_summary"
+                       string="ملخص تعبئة الشراء"
+                       optional="show"
+                       readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

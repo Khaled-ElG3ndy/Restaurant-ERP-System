@@ -1,0 +1,102 @@
+/* Enhanced New Invoice Button Styling */
+
+.pos .control-button.pos-new-invoice-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+    color: #fff;
+    border: none;
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 16px !important;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.pos .control-button.pos-new-invoice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.pos .control-button.pos-new-invoice-btn:hover::before {
+    left: 100%;
+}
+
+.pos .control-button.pos-new-invoice-btn:hover {
+    background: linear-gradient(135deg, #E5C158 0%, #C9972D 100%);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.pos .control-button.pos-new-invoice-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.pos .control-button.pos-new-invoice-btn i {
+    font-size: 16px;
+    margin-right: 8px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.pos .control-button.pos-new-invoice-btn:hover i {
+    transform: scale(1.15);
+}
+
+.pos .control-button.pos-new-invoice-btn span {
+    display: inline-block;
+    white-space: nowrap;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pos .control-button.pos-new-invoice-btn {
+        min-width: 100px;
+        padding: 10px 12px !important;
+        font-size: 12px;
+    }
+
+    .pos .control-button.pos-new-invoice-btn i {
+        font-size: 14px;
+        margin-right: 6px;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .pos .control-button.pos-new-invoice-btn {
+        background: linear-gradient(135deg, #E5C158 0%, #D4AF37 100%);
+        color: #1a1a1a;
+    }
+
+    .pos .control-button.pos-new-invoice-btn:hover {
+        background: linear-gradient(135deg, #F0D76F 0%, #E5C158 100%);
+    }
+}
+
+/* RTL (Arabic) layout adjustments */
+.o_pos_rtl .pos .control-button.pos-new-invoice-btn {
+    direction: rtl;
+}
+
+.o_pos_rtl .pos .control-button.pos-new-invoice-btn i {
+    margin-left: 8px;
+    margin-right: 0;
+    order: 2;
+}
+
+.o_pos_rtl .pos .control-button.pos-new-invoice-btn span {
+    order: 1;
+}

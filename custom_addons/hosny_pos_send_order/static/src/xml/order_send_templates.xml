@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="hosny_pos_send_order.FloorScreen"
+        t-inherit="pos_restaurant.FloorScreen"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div[hasclass('order-count')]" position="after">
+            <span
+                t-if="hasTableSentPreparation(table)"
+                class="preparation-timer position-absolute start-50 translate-middle-x rounded-pill"
+                t-esc="getTableSentElapsedDisplay(table)"
+            />
+        </xpath>
+    </t>
+</templates>

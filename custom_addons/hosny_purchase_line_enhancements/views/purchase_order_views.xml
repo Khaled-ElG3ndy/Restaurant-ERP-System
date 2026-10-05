@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_hosny_line_enhancements" model="ir.ui.view">
+        <field name="name">purchase.order.form.hosny.line.enhancements</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//list/field[@name='product_qty']" position="after">
+                <field name="hosny_free_qty" optional="show" readonly="is_downpayment"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='tax_ids']" position="after">
+                <field name="hosny_tax_amount" optional="show" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='discount']" position="after">
+                <field name="hosny_discount_amount" optional="show" readonly="qty_invoiced != 0"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='discount']" position="attributes">
+                <attribute name="string">الخصم (النسبة)</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='hosny_discount_amount']" position="attributes">
+                <attribute name="string">الخصم (قيمة)</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_qty']" position="after">
+                <field name="hosny_free_qty"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='discount']" position="after">
+                <field name="hosny_discount_amount"/>
+                <field name="hosny_tax_amount" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='discount']" position="attributes">
+                <attribute name="string">الخصم (النسبة)</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='hosny_discount_amount']" position="attributes">
+                <attribute name="string">الخصم (قيمة)</attribute>
+            </xpath>
+            <xpath expr="//group[contains(@class, 'oe_subtotal_footer')]/field[@name='tax_totals']" position="before">
+                <field name="hosny_global_discount_type" invisible="1"/>
+                <field name="hosny_global_discount_base_amount" readonly="1"/>
+                <field name="hosny_global_discount_percent" readonly="state in ['cancel', 'purchase']"/>
+                <field name="hosny_global_discount_amount" readonly="state in ['cancel', 'purchase']"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_hosny_tax_included_line_total_last" model="ir.ui.view">
+        <field name="name">purchase.order.form.hosny.tax.included.line.total.last</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//list" position="inside">
+                <field name="price_total" string="السعر شامل الضريبه" optional="show" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

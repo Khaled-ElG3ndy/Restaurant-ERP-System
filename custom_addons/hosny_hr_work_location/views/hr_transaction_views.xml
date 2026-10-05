@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Contract / employee version: the Odoo 19 standard field is reused. -->
+    <record id="hr_version_list_work_location" model="ir.ui.view">
+        <field name="name">hr.version.list.hosny.work.location</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_version_list_view"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_version_search_work_location" model="ir.ui.view">
+        <field name="name">hr.version.search.hosny.work.location</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_version_search_view"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_by_department" position="after">
+                <filter name="group_by_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_version_pivot_work_location" model="ir.ui.view">
+        <field name="name">hr.version.pivot.hosny.work.location</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_version_pivot_view"/>
+        <field name="arch" type="xml">
+            <pivot position="inside">
+                <field name="work_location_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Time off -->
+    <record id="hr_leave_list_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.list.hosny.work.location</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_leave_form_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.form.hosny.work.location</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <field name="holiday_status_id" position="after">
+                <field name="work_location_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_leave_search_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.search.hosny.work.location</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_employee" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_leave_pivot_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.pivot.hosny.work.location</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_holiday_pivot"/>
+        <field name="arch" type="xml">
+            <pivot position="inside">
+                <field name="work_location_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Time off allocations -->
+    <record id="hr_leave_allocation_list_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.list.hosny.work.location</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_leave_allocation_form_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.form.hosny.work.location</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="(//field[@name='employee_id'])[1]" position="after">
+                <field name="work_location_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_allocation_search_work_location" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.search.hosny.work.location</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_leave_allocation_filter"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_employee" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- Work entries -->
+    <record id="hr_work_entry_list_work_location" model="ir.ui.view">
+        <field name="name">hr.work.entry.list.hosny.work.location</field>
+        <field name="model">hr.work.entry</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_form_work_location" model="ir.ui.view">
+        <field name="name">hr.work.entry.form.hosny.work.location</field>
+        <field name="model">hr.work.entry</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_search_work_location" model="ir.ui.view">
+        <field name="name">hr.work.entry.search.hosny.work.location</field>
+        <field name="model">hr.work.entry</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_search"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_employee" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_work_entry_pivot_work_location" model="ir.ui.view">
+        <field name="name">hr.work.entry.pivot.hosny.work.location</field>
+        <field name="model">hr.work.entry</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_view_pivot"/>
+        <field name="arch" type="xml">
+            <pivot position="inside">
+                <field name="work_location_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Payslips and their report lines -->
+    <record id="hr_payslip_list_work_location" model="ir.ui.view">
+        <field name="name">hr.payslip.list.hosny.work.location</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_payslip_form_work_location" model="ir.ui.view">
+        <field name="name">hr.payslip.form.hosny.work.location</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_payslip_search_work_location" model="ir.ui.view">
+        <field name="name">hr.payslip.search.hosny.work.location</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="employee_id" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="hr_payslip_line_list_work_location" model="ir.ui.view">
+        <field name="name">hr.payslip.line.list.hosny.work.location</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_payslip_line_search_work_location" model="ir.ui.view">
+        <field name="name">hr.payslip.line.search.hosny.work.location</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_line_filter"/>
+        <field name="arch" type="xml">
+            <field name="slip_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="employee_id" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- Custom additions and deductions -->
+    <record id="salary_adjustment_list_work_location" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.list.work.location</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="inherit_id"
+               ref="hosny_hr_payroll_ar.hosny_hr_salary_adjustment_view_list"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="salary_adjustment_form_work_location" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.form.work.location</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="inherit_id"
+               ref="hosny_hr_payroll_ar.hosny_hr_salary_adjustment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="salary_adjustment_search_work_location" model="ir.ui.view">
+        <field name="name">hosny.hr.salary.adjustment.search.work.location</field>
+        <field name="model">hosny.hr.salary.adjustment</field>
+        <field name="inherit_id"
+               ref="hosny_hr_payroll_ar.hosny_hr_salary_adjustment_view_search"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="work_location_id"/>
+            </field>
+            <filter name="group_employee" position="after">
+                <filter name="group_work_location"
+                        string="Work Location"
+                        context="{'group_by': 'work_location_id'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

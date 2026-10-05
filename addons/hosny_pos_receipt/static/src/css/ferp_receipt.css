@@ -1,0 +1,333 @@
+/*
+ * فاتورة العميل بتصميم FERP — نسخة من فاتورة فرع المدينة المصوَّرة (10/2/2026 10:58 PM).
+ *
+ * ملف مولَّد: tools/receipt_calibration/ferp_css.py من spec.json. كل رقم هنا بكسل = نقطة طابعة،
+ * مأخوذ من صورة FERP بعد تصحيح المنظور وتحجيمها حتى يملأ الجدول عرض الطباعة 576 نقطة (72 مم
+ * على TM-T20III، مثل FERP). المعايرة تمت داخل نقاط البيع نفسها (htmlToCanvas) لا في صفحة.
+ *
+ * - الجذر بوزن id حتى لا تغلبه قواعد الثيم؛ font-family كلها !important لأن hosny_pos_theme
+ *   يفرض «.pos * { font-family: Cairo !important }» و body نفسه يحمل class="pos".
+ * - html-to-image يكتب كل font-size كـ floor(x) - 0.1، فالأحجام أعداد صحيحة.
+ * - الاتجاه RTL ثابت في الحزمتين؛ الخصائص المنطقية لا يلمسها rtlcss، وكل خاصية فيزيائية
+ *   يسبقها تعليق rtl:ignore على نفس السطر.
+ * - scaleX يضبط عرض الخط على عرض خط FERP (الخطوط هنا بدائل حرة لخطوط ويندوز).
+ * - كل النصوص سوداء #000 حتى تطبع واضحة (الرمادي الوحيد خلفية رأس الجدول، يُطبع نقاطاً كـ FERP).
+ */
+@font-face { font-family: "Hosny Receipt Arabic Light"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-ArabicCondensedLight.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Arabic Medium"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-ArabicCondensedMedium.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Arabic SemiBold"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-ArabicSemiCondensedSemiBold.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Arabic Bold"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-ArabicSemiCondensedBold.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Arabic Heavy"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-ArabicSemiCondensedExtraBold.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Naskh"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-NaskhSemiBold.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Sans"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-Sans-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Sans"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-Sans-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Narrow"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-SansNarrow-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "Hosny Receipt Narrow"; src: url("/hosny_pos_receipt/static/fonts/HosnyReceipt-SansNarrow-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: block; }
+:is(#hosny-fr, .hosny-ferp-receipt) {
+    width: 576px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff;
+    color: #000 !important;
+    /*rtl:ignore*/direction: rtl;
+    text-align: start;
+    font-family: "Hosny Receipt Arabic Bold", "Hosny Receipt Sans" !important;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: 0;
+    word-spacing: 0;
+    text-transform: none;
+    text-rendering: geometricPrecision;
+    font-synthesis: none;
+    overflow: hidden;
+}
+/* أرقام وتواريخ بترتيبها اللاتيني داخل الفاتورة العربية */
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-ltr {
+    /*rtl:ignore*/direction: ltr;
+    unicode-bidi: isolate;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #000 !important;
+    font-family: inherit !important;
+    text-shadow: none !important;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-logo {
+    display: block;
+    width: 222px !important;
+    height: 178.2px !important;
+    max-width: none !important;
+    margin-top: 7px;
+    margin-inline-start: 198.5px;
+    object-fit: fill;
+    filter: grayscale(1) contrast(1.6);
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-title {
+    font-family: "Hosny Receipt Arabic Light", "Hosny Receipt Sans" !important; font-size: 46px; font-weight: 400; line-height: 62px;
+    margin-top: 9.4px;
+    padding-inline-start: 54px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-title > span { display: inline-block; transform: scaleX(1.085); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-status {
+    font-family: "Hosny Receipt Arabic SemiBold", "Hosny Receipt Sans" !important; font-size: 32px; font-weight: 700; line-height: 44px;
+    margin-top: 43.1px;
+    padding-inline-start: 24px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-status > span { display: inline-block; transform: none; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-address {
+    font-family: "Hosny Receipt Arabic Medium", "Hosny Receipt Sans" !important; font-size: 32px; font-weight: 400; line-height: 44px;
+    margin-top: 15.3px;
+    padding-inline-start: 10px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-address > span { display: inline-block; transform: scaleX(0.952); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-doc-title {
+    font-family: "Hosny Receipt Naskh", "Hosny Receipt Sans" !important; font-size: 42px; font-weight: 700; line-height: 50px;
+    margin-top: 18.1px;
+    padding-inline-start: 10px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-doc-title > span { display: inline-block; transform: scaleX(0.805); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-vat-row { position: relative; height: 44px; margin-top: 40.1px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-vat {
+    position: absolute;
+    top: 0px;
+    inset-inline-start: 8.4px;
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 36px; font-weight: 700; line-height: 40px;
+    white-space: nowrap;
+    transform: scaleX(0.941); /*rtl:ignore*/transform-origin: 100% 50%;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-vat-label {
+    position: absolute;
+    top: -2.7px;
+    inset-inline-start: 400px;
+    font-family: "Hosny Receipt Arabic Bold", "Hosny Receipt Sans" !important; font-size: 17px; font-weight: 700; line-height: 30px;
+    white-space: nowrap;
+    transform: scaleX(1.250); /*rtl:ignore*/transform-origin: 100% 50%;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta { margin-top: 81.1px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row { position: relative; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-label {
+    position: absolute;
+    inset-inline-start: 6px;
+    font-family: "Hosny Receipt Arabic Bold", "Hosny Receipt Sans" !important; font-size: 20px; font-weight: 700; line-height: 30px;
+    white-space: nowrap;
+    transform: none;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-value > span { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-invoice { min-height: 49.4px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-invoice .hfr-label { top: 0px; transform: scaleX(1.069); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-invoice .hfr-value {
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 39px; font-weight: 700; line-height: 42px;
+    padding-inline-start: 154.6px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-invoice .hfr-value > span { position: relative; top: -5.5px; transform: scaleX(0.899); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-type { min-height: 43.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-type .hfr-label { top: 0px; transform: scaleX(1.187); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-type .hfr-value {
+    font-family: "Hosny Receipt Arabic Heavy", "Hosny Receipt Sans" !important; font-size: 22px; font-weight: 700; line-height: 40px;
+    padding-inline-start: 150.8px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-type .hfr-value > span { position: relative; top: -7px; transform: scaleX(1.250); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment { min-height: 38.6px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment .hfr-label { top: 0px; transform: scaleX(1.136); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment .hfr-value {
+    font-family: "Hosny Receipt Arabic Heavy", "Hosny Receipt Sans" !important; font-size: 15px; font-weight: 700; line-height: 30px;
+    padding-inline-start: 154.8px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment .hfr-value > span { position: relative; top: -0.5px; transform: scaleX(1.145); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-serial { min-height: 38.2px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-serial .hfr-label { top: 0px; transform: scaleX(0.954); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-serial .hfr-value {
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 28px; font-weight: 700; line-height: 34px;
+    padding-inline-start: 153.6px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-serial .hfr-value > span { position: relative; top: -2.5px; transform: scaleX(0.963); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-date { min-height: 39.2px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-date .hfr-label { top: 0px; transform: scaleX(1.099); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-date .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Medium" !important; font-size: 33px; font-weight: 400; line-height: 36px;
+    padding-inline-start: 235px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-date .hfr-value > span { position: relative; top: 0px; transform: scaleX(1.012); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-closed { min-height: 47.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-closed .hfr-label { top: 0px; transform: scaleX(1.094); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-closed .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Medium" !important; font-size: 29px; font-weight: 400; line-height: 36px;
+    padding-inline-start: 233.5px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-closed .hfr-value > span { position: relative; top: 0.5px; transform: scaleX(1.148); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note { min-height: 49.9px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note .hfr-label { top: 0px; transform: scaleX(1.071); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note .hfr-value {
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 25px; font-weight: 700; line-height: 30px;
+    padding-inline-start: 233.5px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note .hfr-value > span { position: relative; top: -0.4px; transform: scaleX(1.024); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-customer { min-height: 47.3px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-customer .hfr-label { top: 0px; transform: scaleX(0.837); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-customer .hfr-value {
+    font-family: "Hosny Receipt Arabic Bold", "Hosny Receipt Sans" !important; font-size: 21px; font-weight: 700; line-height: 32px;
+    padding-inline-start: 78px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-customer .hfr-value > span { position: relative; top: -0.5px; transform: scaleX(0.957); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-phone { min-height: 41.5px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-phone .hfr-label { top: 0px; transform: scaleX(1.099); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-phone .hfr-value {
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 26px; font-weight: 700; line-height: 30px;
+    padding-inline-start: 77.2px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-phone .hfr-value > span { position: relative; top: 0px; transform: scaleX(0.994); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) table.hfr-table {
+    width: 576px;
+    margin-top: 0px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    background: transparent;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table col.hfr-col-name { width: 181.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table col.hfr-col-qty { width: 80.1px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table col.hfr-col-unit { width: 95.9px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table col.hfr-col-tax { width: 98.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table col.hfr-col-total { width: 118.9px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table th,
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table td {
+    padding: 0;
+    border: 2px solid #000;
+    vertical-align: middle;
+    text-align: center;
+    background-clip: padding-box;
+}
+/* FERP: no outer border on the left (the total column), only the row lines */
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table .hfr-c-total {
+    /*rtl:ignore*/border-left: 0;
+    padding-inline-start: 29.4px;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table thead th {
+    height: 65px;
+    background: #e4e4e4;
+    font-family: "Hosny Receipt Arabic Heavy", "Hosny Receipt Sans" !important; font-size: 20px; font-weight: 700; line-height: 23px;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table thead th span { display: block; transform: scaleX(0.973); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table tbody td {
+    height: 44px;
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 22px; font-weight: 700; line-height: 26px;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table tbody td > span { display: inline-block; transform: scaleX(1.016); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table tbody td.hfr-c-name {
+    padding-block: 4px;
+    padding-inline-start: 1.8px;
+    padding-inline-end: 0;
+    text-align: start;
+    font-family: "Hosny Receipt Arabic Medium", "Hosny Receipt Sans" !important; font-size: 19px; font-weight: 400; line-height: 21px;
+    overflow-wrap: anywhere;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table tbody td.hfr-c-name > span { display: block; width: 148.9px; transform: scaleX(1.108); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-table .hfr-line-detail { font-size: 16px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals { margin-top: 14.9px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row { position: relative; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-label {
+    position: absolute;
+    inset-inline-start: 11px;
+    font-family: "Hosny Receipt Arabic SemiBold", "Hosny Receipt Sans" !important; font-size: 25px; font-weight: 700; line-height: 30px;
+    white-space: nowrap;
+    transform: none;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-value > span { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-net { min-height: 47.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-net .hfr-label { top: 0px; transform: scaleX(0.914); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-net .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Bold" !important; font-size: 32px; font-weight: 700; line-height: 34px;
+    padding-inline-start: 300px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-net .hfr-value > span { position: relative; top: -3.6px; transform: scaleX(0.991); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-discount { min-height: 54.9px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-discount .hfr-label { top: 0px; transform: scaleX(0.865); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-discount .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Bold" !important; font-size: 29px; font-weight: 700; line-height: 34px;
+    padding-inline-start: 299.6px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-discount .hfr-value > span { position: relative; top: -2.9px; transform: scaleX(1.091); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-tax { min-height: 68.2px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-tax .hfr-label { top: 0px; transform: scaleX(0.912); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-tax .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Bold" !important; font-size: 32px; font-weight: 700; line-height: 34px;
+    padding-inline-start: 300px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-tax .hfr-value > span { position: relative; top: -0.1px; transform: scaleX(0.968); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-total { min-height: 56px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-total .hfr-label { top: 0px; transform: scaleX(1.084); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-total .hfr-value {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Bold" !important; font-size: 39px; font-weight: 700; line-height: 40px;
+    padding-inline-start: 300.9px; padding-inline-end: 0; text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-totals .hfr-row-total .hfr-value > span { position: relative; top: -3.5px; transform: scaleX(0.994); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-cashier { position: relative; margin-top: 0px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-cashier .hfr-label {
+    position: absolute;
+    top: 20px;
+    inset-inline-start: 14.5px;
+    font-family: "Hosny Receipt Arabic Medium", "Hosny Receipt Sans" !important; font-size: 22px; font-weight: 400; line-height: 30px;
+    white-space: nowrap;
+    transform: scaleX(1.083); /*rtl:ignore*/transform-origin: 100% 50%;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-cashier-name {
+    font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Medium" !important; font-size: 22px; font-weight: 400; line-height: 26px;
+    padding-inline-start: 225.6px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-cashier-name > span { display: inline-block; transform: scaleX(1.200); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-printed-at {
+    font-family: "Hosny Receipt Narrow", "Hosny Receipt Arabic Medium" !important; font-size: 32px; font-weight: 400; line-height: 34px;
+    padding-inline-start: 226.4px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-printed-at > span { display: inline-block; transform: scaleX(1.053); /*rtl:ignore*/transform-origin: center; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-phone {
+    margin-top: 21.8px;
+    line-height: 46px;
+    padding-inline-start: 33px; padding-inline-end: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-phone-label { display: inline-block; font-family: "Hosny Receipt Arabic Bold", "Hosny Receipt Sans" !important; font-size: 30px; font-weight: 700; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-phone-number { display: inline-block; font-family: "Hosny Receipt Sans", "Hosny Receipt Arabic Bold" !important; font-size: 40px; font-weight: 700; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-qr {
+    display: block;
+    width: 319.1px !important;
+    height: 319.1px !important;
+    max-width: none !important;
+    margin-top: 27.9px;
+    margin-bottom: 24px;
+    margin-inline-start: 136.6px;
+    image-rendering: pixelated;
+}
+/* طباعة المتصفح (بدون طابعة ePOS): نفس مقاس فاتورة أودو هناك (266px) */
+@media print {
+    :is(#hosny-fr, .hosny-ferp-receipt) { zoom: 0.4618; }
+}
+
+/* ملاحظات الفاتورة: السطر الواحد القصير يبقى بجانب «ملاحظة» كما في FERP؛
+   الأطول أو متعدد الأسطر ينزل تحت العنوان بعرض الفاتورة كله، بأسطره كما كُتبت. */
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note .hfr-value > span { white-space: pre-line; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note.is-block { min-height: 0; padding-bottom: 8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note.is-block .hfr-value {
+    font-size: 24px; line-height: 31px;
+    padding-top: 32px; padding-inline-start: 6px; padding-inline-end: 6px;
+    text-align: start;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-note.is-block .hfr-value > span { top: 0; transform: none; }

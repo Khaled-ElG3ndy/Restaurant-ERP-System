@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hosny_purchase_packaging_company_rule" model="ir.rule">
+        <field name="name">Purchase packaging multi-company</field>
+        <field name="model_id" ref="model_hosny_purchase_packaging"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="hosny_packaging_type_company_rule" model="ir.rule">
+        <field name="name">Packaging type multi-company</field>
+        <field name="model_id" ref="model_hosny_packaging_type"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="hosny_purchase_packaging_template_company_rule" model="ir.rule">
+        <field name="name">Purchase packaging template multi-company</field>
+        <field name="model_id" ref="model_hosny_purchase_packaging_template"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="hosny_purchase_packaging_template_line_company_rule" model="ir.rule">
+        <field name="name">Purchase packaging template level multi-company</field>
+        <field name="model_id" ref="model_hosny_purchase_packaging_template_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

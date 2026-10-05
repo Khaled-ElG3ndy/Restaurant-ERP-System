@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- الإعدادات ← المستخدمون: من يعتمد إلغاء الأصناف المرسلة، وكلمة سر الإلغاء. -->
+    <record id="view_users_form_hosny_pos_void" model="ir.ui.view">
+        <field name="name">res.users.form.hosny.pos.void</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']" position="after">
+                <page name="hosny_pos_void" string="إلغاء الأصناف (نقاط البيع)"
+                      groups="base.group_erp_manager" invisible="share">
+                    <div class="alert alert-info" role="alert">
+                        بعد «إرسال الطلب» لا يُحذف صنف ولا تُنقص كميته في نقطة البيع إلا باعتماد حساب
+                        مفعّل هنا وبكلمة سر الإلغاء الخاصة به (غير كلمة سر الدخول). الكاشير يكتب سبب
+                        الإلغاء، وكل اعتماد يُسجَّل في نقاط البيع ← سجل الإلغاءات.
+                    </div>
+                    <group>
+                        <field name="hosny_pos_void_approver"/>
+                        <field name="hosny_pos_void_password_set" readonly="1"
+                               invisible="not hosny_pos_void_approver"/>
+                        <field name="hosny_pos_void_password" password="True"
+                               invisible="not hosny_pos_void_approver"
+                               required="hosny_pos_void_approver and not hosny_pos_void_password_set"
+                               placeholder="اكتب كلمة سر جديدة لتعيينها أو تغييرها"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- طلب نقاط البيع: زر يفتح إلغاءاته المعتمدة. -->
+    <record id="view_pos_order_form_hosny_void" model="ir.ui.view">
+        <field name="name">pos.order.form.hosny.void</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_hosny_void_logs" type="object" class="oe_stat_button"
+                        icon="fa-ban" groups="point_of_sale.group_pos_manager"
+                        invisible="not hosny_void_count">
+                    <field name="hosny_void_count" widget="statinfo" string="إلغاءات معتمدة"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

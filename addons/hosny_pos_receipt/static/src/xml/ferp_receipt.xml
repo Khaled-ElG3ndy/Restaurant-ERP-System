@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+        فاتورة العميل بتصميم FERP. النصوص الثابتة مكتوبة بإملاء فاتورة FERP
+        نفسها عن قصد («نوع الفاتوره»، «الكميه»، «سعر الوحده»، «ضريبه القيمة
+        المضافة»، «الاجمالي» في الجدول و«الإجمالي» تحته).
+        البيانات كلها من buildFerpReceipt (ferp_receipt.js).
+    -->
+    <t t-name="hosny_pos_receipt.OrderReceipt">
+        <t t-if="props.basic_receipt" t-call="point_of_sale.OrderReceipt"/>
+        <t t-else="">
+            <t t-set="r" t-value="ferp"/>
+            <t t-call="hosny_pos_receipt.FerpReceiptBody"/>
+        </t>
+    </t>
+
+    <t t-name="hosny_pos_receipt.FerpReceiptBody">
+        <div class="pos-receipt hosny-ferp-receipt" dir="rtl" t-ref="ferpRoot">
+            <img t-if="r.logoUrl" class="hfr-logo" t-att-src="r.logoUrl" alt=""/>
+            <div class="hfr-title"><span t-esc="r.title"/></div>
+            <div class="hfr-status"><span t-esc="r.status"/></div>
+            <div class="hfr-vat-row">
+                <span class="hfr-vat"><span class="hfr-ltr" t-esc="r.vat"/></span>
+                <span class="hfr-vat-label">الرقم الضريبي</span>
+            </div>
+            <div class="hfr-address"><span t-esc="r.address"/></div>
+            <div class="hfr-doc-title"><span t-esc="r.docTitle"/></div>
+
+            <div class="hfr-meta">
+                <div class="hfr-row hfr-row-invoice">
+                    <span class="hfr-label">رقم الفاتورة</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.invoiceNumber"/></div>
+                </div>
+                <div class="hfr-row hfr-row-type">
+                    <span class="hfr-label">نوع الفاتوره</span>
+                    <div class="hfr-value"><span t-esc="r.orderType"/></div>
+                </div>
+                <div class="hfr-row hfr-row-payment">
+                    <span class="hfr-label">نوع الدفع</span>
+                    <div class="hfr-value"><span t-esc="r.paymentType"/></div>
+                </div>
+                <div class="hfr-row hfr-row-serial">
+                    <span class="hfr-label">الرقم التسلسلي</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.serial"/></div>
+                </div>
+                <div class="hfr-row hfr-row-date">
+                    <span class="hfr-label">التاريخ</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.date"/></div>
+                </div>
+                <div class="hfr-row hfr-row-closed">
+                    <span class="hfr-label">وقت الإغلاق</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.closedAt"/></div>
+                </div>
+                <div class="hfr-row hfr-row-note" t-att-class="{ 'is-block': r.noteIsBlock }">
+                    <span class="hfr-label">ملاحظة</span>
+                    <div class="hfr-value"><span dir="auto" t-esc="r.note"/></div>
+                </div>
+                <div class="hfr-row hfr-row-customer">
+                    <span class="hfr-label">العميل</span>
+                    <div class="hfr-value"><span t-esc="r.customer"/></div>
+                </div>
+                <div class="hfr-row hfr-row-phone">
+                    <span class="hfr-label">رقم الهاتف</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.customerPhone"/></div>
+                </div>
+            </div>
+
+            <table class="hfr-table">
+                <colgroup>
+                    <col class="hfr-col-name"/>
+                    <col class="hfr-col-qty"/>
+                    <col class="hfr-col-unit"/>
+                    <col class="hfr-col-tax"/>
+                    <col class="hfr-col-total"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="hfr-c-name"><span>الوجبة</span></th>
+                        <th class="hfr-c-qty"><span>الكميه</span></th>
+                        <th class="hfr-c-unit"><span>سعر</span><span>الوحده</span></th>
+                        <th class="hfr-c-tax"><span>الضريبة</span></th>
+                        <th class="hfr-c-total"><span>الاجمالي</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="r.lines" t-as="line" t-key="line.key">
+                        <td class="hfr-c-name">
+                            <span class="hfr-line-name" t-esc="line.name"/>
+                            <span t-foreach="line.details" t-as="detail" t-key="detail_index"
+                                  class="hfr-line-detail" t-esc="detail"/>
+                        </td>
+                        <td class="hfr-c-qty"><span class="hfr-ltr" t-esc="line.qty"/></td>
+                        <td class="hfr-c-unit"><span class="hfr-ltr" t-esc="line.unit"/></td>
+                        <td class="hfr-c-tax"><span class="hfr-ltr" t-esc="line.tax"/></td>
+                        <td class="hfr-c-total"><span class="hfr-ltr" t-esc="line.total"/></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="hfr-totals">
+                <div class="hfr-row hfr-row-net">
+                    <span class="hfr-label">صافي المبلغ</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.net"/></div>
+                </div>
+                <div class="hfr-row hfr-row-discount">
+                    <span class="hfr-label">الخصم</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.discount"/></div>
+                </div>
+                <div class="hfr-row hfr-row-tax">
+                    <span class="hfr-label">ضريبه القيمة المضافة</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.tax"/></div>
+                </div>
+                <div class="hfr-row hfr-row-total">
+                    <span class="hfr-label">الإجمالي</span>
+                    <div class="hfr-value"><span class="hfr-ltr" t-esc="r.total"/></div>
+                </div>
+            </div>
+
+            <div class="hfr-cashier">
+                <span class="hfr-label">الكاشير:</span>
+                <div class="hfr-cashier-name"><span t-esc="r.cashier"/></div>
+                <div class="hfr-printed-at"><span class="hfr-ltr" t-esc="r.printedAt"/></div>
+            </div>
+
+            <div class="hfr-phone">
+                <span class="hfr-phone-label">الجوال:</span><span class="hfr-phone-number hfr-ltr" t-esc="r.phone"/>
+            </div>
+
+            <img t-if="r.qrCode" class="hfr-qr" t-att-src="r.qrCode" alt=""/>
+        </div>
+    </t>
+
+</templates>

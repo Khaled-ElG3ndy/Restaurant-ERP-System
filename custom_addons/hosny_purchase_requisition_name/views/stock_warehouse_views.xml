@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_warehouse_form_hosny_branch" model="ir.ui.view">
+        <field name="name">stock.warehouse.form.hosny.branch</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hosny_analytic_account_id" string="Branch" options="{'no_create': True}"/>
+                <field name="hosny_purchase_receipt_location_ids"
+                       widget="many2many_tags"
+                       options="{'no_create': True}"
+                       context="{'formatted_display_name': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_warehouse_tree_hosny_branch" model="ir.ui.view">
+        <field name="name">stock.warehouse.list.hosny.branch</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hosny_analytic_account_id" string="Branch" optional="show"/>
+                <field name="hosny_purchase_receipt_location_ids" widget="many2many_tags" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <function model="stock.warehouse" name="_hosny_seed_warehouse_branch_mapping"/>
+</odoo>

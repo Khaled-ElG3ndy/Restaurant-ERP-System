@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_leave_allocation_view_hosny_contract_version" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.hosny.contract.version</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="hosny_contract_version_id"
+                       string="نسخة عقد الموظف"
+                       readonly="state == 'validate'"
+                       options="{'no_create': True}"
+                       domain="[('employee_id', '=', employee_id)]"
+                       groups="hr.group_hr_manager"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

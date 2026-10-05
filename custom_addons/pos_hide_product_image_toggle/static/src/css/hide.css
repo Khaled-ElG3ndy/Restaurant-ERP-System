@@ -1,0 +1,4 @@
+/* Hide product image toggle button */
+.pos .dropdown-menu .dropdown-item:has(i.fa-image) {
+    display: none !important;
+}

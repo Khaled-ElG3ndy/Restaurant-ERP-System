@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_bom_form_view_line_cost" model="ir.ui.view">
+        <field name="name">mrp.bom.form.line.cost</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_line_ids']//field[@name='attachments_count']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']//field[@name='product_qty']" position="after">
+                <field name="hosny_currency_id" column_invisible="True"/>
+                <field name="hosny_bom_line_cost" readonly="1" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

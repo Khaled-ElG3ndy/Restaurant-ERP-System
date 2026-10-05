@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="bi_hr_payroll.BASIC" model="hr.salary.rule.category">
+        <field name="name">الراتب الأساسي</field>
+    </record>
+    <record id="bi_hr_payroll.ALW" model="hr.salary.rule.category">
+        <field name="name">البدلات</field>
+    </record>
+    <record id="bi_hr_payroll.GROSS" model="hr.salary.rule.category">
+        <field name="name">الإجمالي</field>
+    </record>
+    <record id="bi_hr_payroll.DED" model="hr.salary.rule.category">
+        <field name="name">الاستقطاعات</field>
+    </record>
+    <record id="bi_hr_payroll.NET" model="hr.salary.rule.category">
+        <field name="name">صافي الراتب</field>
+    </record>
+    <record id="bi_hr_payroll.COMP" model="hr.salary.rule.category">
+        <field name="name">مساهمات جهة العمل</field>
+    </record>
+
+    <record id="hosny_salary_rule_category_addition" model="hr.salary.rule.category">
+        <field name="name">الإضافات</field>
+        <field name="code">ADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_social_insurance_register" model="hr.contribution.register">
+        <field name="name">التأمينات الاجتماعية</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_basic" model="hr.salary.rule">
+        <field name="name">الراتب الأساسي</field>
+        <field name="sequence" eval="10"/>
+        <field name="code">BASIC</field>
+        <field name="category_id" ref="bi_hr_payroll.BASIC"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract._hosny_get_salary_rule_amount('base')</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_housing" model="hr.salary.rule">
+        <field name="name">بدل السكن</field>
+        <field name="sequence" eval="20"/>
+        <field name="code">HOSNY_HOUSING</field>
+        <field name="category_id" ref="bi_hr_payroll.ALW"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract._hosny_get_salary_rule_amount('housing')</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_transport" model="hr.salary.rule">
+        <field name="name">بدل النقل</field>
+        <field name="sequence" eval="30"/>
+        <field name="code">HOSNY_TRANSPORT</field>
+        <field name="category_id" ref="bi_hr_payroll.ALW"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract._hosny_get_salary_rule_amount('transport')</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_other_allowance" model="hr.salary.rule">
+        <field name="name">بدلات أخرى</field>
+        <field name="sequence" eval="40"/>
+        <field name="code">HOSNY_OTHER</field>
+        <field name="category_id" ref="bi_hr_payroll.ALW"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract._hosny_get_salary_rule_amount('other')</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_additions" model="hr.salary.rule">
+        <field name="name">الإضافات المعتمدة</field>
+        <field name="sequence" eval="50"/>
+        <field name="code">HOSNY_ADD</field>
+        <field name="category_id" ref="hosny_salary_rule_category_addition"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = inputs.HOSNY_ADD.amount</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="hosny_rule_input_additions" model="hr.rule.input">
+        <field name="name">إجمالي الإضافات المعتمدة</field>
+        <field name="code">HOSNY_ADD</field>
+        <field name="input_id" ref="hosny_rule_additions"/>
+    </record>
+
+    <record id="hosny_rule_gross" model="hr.salary.rule">
+        <field name="name">إجمالي الراتب</field>
+        <field name="sequence" eval="100"/>
+        <field name="code">GROSS</field>
+        <field name="category_id" ref="bi_hr_payroll.GROSS"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.ADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_deductions" model="hr.salary.rule">
+        <field name="name">الاستقطاعات المعتمدة</field>
+        <field name="sequence" eval="110"/>
+        <field name="code">HOSNY_DED</field>
+        <field name="category_id" ref="bi_hr_payroll.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -inputs.HOSNY_DED.amount</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="hosny_rule_input_deductions" model="hr.rule.input">
+        <field name="name">إجمالي الاستقطاعات المعتمدة</field>
+        <field name="code">HOSNY_DED</field>
+        <field name="input_id" ref="hosny_rule_deductions"/>
+    </record>
+
+    <record id="hosny_rule_employee_insurance" model="hr.salary.rule">
+        <field name="name">حصة الموظف في التأمينات الاجتماعية</field>
+        <field name="sequence" eval="120"/>
+        <field name="code">HOSNY_INS_EMP</field>
+        <field name="category_id" ref="bi_hr_payroll.DED"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -contract._hosny_get_salary_rule_amount('employee_insurance')</field>
+        <field name="register_id" ref="hosny_social_insurance_register"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_net" model="hr.salary.rule">
+        <field name="name">صافي الراتب</field>
+        <field name="sequence" eval="200"/>
+        <field name="code">NET</field>
+        <field name="category_id" ref="bi_hr_payroll.NET"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = categories.GROSS + categories.DED</field>
+        <field name="register_id" ref="bi_hr_payroll.contrib_register_employees"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_rule_employer_insurance" model="hr.salary.rule">
+        <field name="name">حصة جهة العمل في التأمينات الاجتماعية</field>
+        <field name="sequence" eval="210"/>
+        <field name="code">HOSNY_INS_COMP</field>
+        <field name="category_id" ref="bi_hr_payroll.COMP"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = contract._hosny_get_salary_rule_amount('employer_insurance')</field>
+        <field name="register_id" ref="hosny_social_insurance_register"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hosny_payroll_structure_ar" model="hr.payroll.structure">
+        <field name="name">هيكل الرواتب العربي</field>
+        <field name="code">HOSNY_AR</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="parent_id" eval="False"/>
+        <field name="rule_ids" eval="[(6, 0, [
+            ref('hosny_rule_basic'),
+            ref('hosny_rule_housing'),
+            ref('hosny_rule_transport'),
+            ref('hosny_rule_other_allowance'),
+            ref('hosny_rule_additions'),
+            ref('hosny_rule_gross'),
+            ref('hosny_rule_deductions'),
+            ref('hosny_rule_employee_insurance'),
+            ref('hosny_rule_net'),
+            ref('hosny_rule_employer_insurance')
+        ])]"/>
+    </record>
+
+    <function model="hr.version" name="_hosny_assign_default_salary_structure"/>
+</odoo>

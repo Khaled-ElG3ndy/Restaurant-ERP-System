@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*secret*
+*password*
+*credential*
+
+# Odoo / runtime
+*.log
+*.pid
+*.sock
+filestore/
+sessions/
+attachments/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Backups / dumps
+*.sql
+*.dump
+*.zip
+*.tar
+*.tar.gz
+*.bak
+*.backup
+tools/staging/
+tools/backups/
+
+# More archives / databases / keys
+*.gz
+*.tgz
+*.7z
+*.rar
+*.sqlite
+*.sqlite3
+*.db
+id_rsa*
+id_ed25519*
+*.ovpn
+
+# Odoo server config (holds admin_passwd / db_password)
+odoo*.conf
+*.conf.bak
+
+# Tooling caches / editor temp
+node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.swp
+*~

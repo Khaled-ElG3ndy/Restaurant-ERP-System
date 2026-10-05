@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_purchase_packaging" model="ir.ui.view">
+        <field name="name">purchase.order.form.purchase.packaging</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Odoo's native x2many open-form icon is the packaging popup.  It
+                 also works for a new, unsaved RFQ line. -->
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="open_form_view">1</attribute>
+                <attribute name="class">o_hosny_purchase_packaging_lines</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="string">Packaging Details</attribute>
+                <attribute name="widget">hosny_purchase_packaging_lines</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//list/field[@name='product_qty']" position="attributes">
+                <attribute name="string">Base Quantity</attribute>
+                <attribute name="readonly">is_downpayment or hosny_line_packaging_enabled</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='product_id']" position="after">
+                <field name="hosny_duplicate_warning_acknowledged" column_invisible="True"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='product_uom_id']" position="attributes">
+                <attribute name="string">Final Unit</attribute>
+                <attribute name="readonly">state in ('purchase', 'cancel') or is_downpayment or hosny_line_packaging_enabled</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//list/field[@name='price_unit']" position="attributes">
+                <attribute name="string">Base Unit Price</attribute>
+                <attribute name="readonly">qty_invoiced != 0 or hosny_line_packaging_enabled</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form" position="replace">
+                <form string="Packaging Details" class="o_hosny_packaging_dialog_form">
+                    <sheet class="o_hosny_packaging_dialog o_hosny_purchase_packaging_dialog">
+                        <field name="tax_calculation_rounding_method" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <field name="display_type" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="is_downpayment" invisible="1"/>
+                        <field name="hosny_purchase_packaging_id" invisible="1"/>
+                        <field name="hosny_available_purchase_packaging_template_ids" invisible="1"/>
+                        <field name="hosny_allowed_content_uom_ids" invisible="1"/>
+                        <field name="hosny_line_packaging_enabled" invisible="1"/>
+                        <field name="hosny_duplicate_warning_acknowledged" invisible="1"/>
+                        <field name="hosny_line_base_qty" invisible="1"/>
+                        <field name="hosny_main_package_base_qty" invisible="1"/>
+                        <field name="hosny_packaging_equivalent_unit_price" invisible="1"/>
+                        <field name="hosny_line_packaging_summary" invisible="1"/>
+                        <field name="product_qty" invisible="1"/>
+                        <field name="price_unit" invisible="1"/>
+                        <field name="price_subtotal" invisible="1"/>
+                        <field name="price_total" invisible="1"/>
+                        <field name="tax_ids" invisible="1"/>
+
+                        <div class="o_hosny_packaging_header hosny-packaging-dialog-header">
+                            <div class="o_hosny_header_meta" dir="ltr">
+                                <div class="o_hosny_saved_packaging_selector hosny-packaging-template-buttons" dir="rtl">
+                                    <field name="hosny_purchase_packaging_template_id"
+                                           nolabel="1"
+                                           widget="hosny_saved_packaging_cards"
+                                           domain="[('id', 'in', hosny_available_purchase_packaging_template_ids)]"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                </div>
+                                <div class="o_hosny_header_unit" dir="rtl">
+                                    <span class="text-muted">Base Unit</span>
+                                    <field name="product_uom_id" nolabel="1" readonly="1"/>
+                                </div>
+                                <div class="o_hosny_header_product" dir="rtl">
+                                    <span class="text-muted">Product</span>
+                                    <field name="product_id" nolabel="1" readonly="1"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="o_hosny_packaging_body" dir="ltr">
+                            <aside class="o_hosny_packaging_summary summary_panel" dir="rtl">
+                                <h3>Packaging and Calculations Summary</h3>
+                                <field name="hosny_packaging_level_count"
+                                       nolabel="1"
+                                       readonly="1"
+                                       widget="hosny_packaging_calculation_summary"
+                                       options="{'mode': 'summary'}"/>
+                            </aside>
+
+                            <div class="o_hosny_packaging_main main_form_panel" dir="rtl">
+                                <section class="o_hosny_packaging_card">
+                                    <h3 data-section-number="1">Purchase Quantity and Main Packaging</h3>
+                                    <group col="4" class="o_hosny_rtl_group">
+                                        <field name="hosny_outer_package_qty"
+                                               string="Purchased Package Count"
+                                               options="{'hide_trailing_zeros': True}"
+                                               required="hosny_line_packaging_enabled"/>
+                                        <field name="hosny_outer_packaging_type_id"
+                                               string="Main Packaging Type"
+                                               required="hosny_line_packaging_enabled"
+                                               domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                                               context="{'default_company_id': company_id}"/>
+                                    </group>
+                                </section>
+
+                                <section class="o_hosny_packaging_card o_hosny_components_card">
+                                    <h3 data-section-number="2">Packaging Components (Largest to Smallest)</h3>
+                                    <field name="hosny_packaging_level_ids"
+                                           nolabel="1"
+                                           class="o_hosny_packaging_levels"
+                                           widget="hosny_packaging_sentence_levels"
+                                           context="{'default_company_id': company_id, 'default_final_uom_id': product_uom_id}">
+                                        <list editable="bottom" create="0" delete="1" string="Packaging Levels">
+                                            <field name="company_id" column_invisible="True"/>
+                                            <field name="is_final_level" column_invisible="True"/>
+                                            <field name="level_number" column_invisible="True" readonly="1"/>
+                                            <!-- Keep the discriminator writable in the client model.
+                                                 It remains hidden, but Odoo must serialize it in
+                                                 CREATE commands for new one2many rows. -->
+                                            <field name="content_type" column_invisible="True"/>
+                                            <field name="quantity"
+                                                   string="Contains"
+                                                   options="{'hide_trailing_zeros': True}"/>
+                                            <field name="packaging_type_id"
+                                                   string="Packaging Type"
+                                                   invisible="content_type != 'packaging'"
+                                                   required="content_type == 'packaging'"
+                                                   domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                                                   context="{'default_company_id': parent.company_id}"/>
+                                            <field name="final_uom_id"
+                                                   string="Final Content"
+                                                   invisible="content_type != 'base_uom'"
+                                                   required="content_type == 'base_uom'"
+                                                   domain="[('id', 'in', parent.hosny_allowed_content_uom_ids)]"
+                                                   options="{'no_create': True, 'no_open': True}"/>
+                                            <field name="sequence" widget="handle" column_invisible="True"/>
+                                        </list>
+                                    </field>
+                                </section>
+
+                                <section class="o_hosny_packaging_card">
+                                    <h3 data-section-number="3">Packaging Pricing</h3>
+                                    <group col="4" class="o_hosny_rtl_group">
+                                        <field name="hosny_packaging_price_method"
+                                               string="Pricing Method"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                        <field name="hosny_packaging_input_price"
+                                               string="Package / Base Unit Price"
+                                               options="{'hide_trailing_zeros': True}"/>
+                                    </group>
+                                </section>
+
+                                <section class="o_hosny_packaging_card o_hosny_operation_preview_card">
+                                    <field name="hosny_packaging_level_count"
+                                           nolabel="1"
+                                           readonly="1"
+                                           widget="hosny_packaging_calculation_summary"
+                                           options="{'mode': 'preview'}"/>
+                                </section>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_packaging_icon_after_history" model="ir.ui.view">
+        <field name="name">purchase.order.form.packaging.icon.after.history</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="hosny_purchase_requisition_name.purchase_order_form_hosny_branch"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//list/button[@name='action_hosny_open_price_history']" position="before">
+                <field name="hosny_line_packaging_enabled"
+                       string=" "
+                       widget="hosny_packaging_details_button"
+                       readonly="1"
+                       invisible="display_type or is_downpayment"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

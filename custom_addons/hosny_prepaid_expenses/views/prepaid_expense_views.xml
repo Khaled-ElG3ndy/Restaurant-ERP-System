@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_prepaid_schedule_line_list" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.line.list</field>
+        <field name="model">prepaid.expense.schedule.line</field>
+        <field name="arch" type="xml">
+            <list string="Prepaid Expense Schedule" create="false" edit="false"
+                  decoration-success="state == 'posted'"
+                  decoration-muted="state == 'cancel'"
+                  decoration-danger="state == 'draft' and due_date &lt; current_date">
+                <field name="sequence"/>
+                <field name="due_date"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="partner_id" optional="show"/>
+                <field name="invoice_id" optional="show"/>
+                <field name="actual_account_id" optional="show"/>
+                <field name="prepaid_account_id" optional="show"/>
+                <field name="net_amount" sum="Total"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="net_amount_currency" optional="hide" sum="Currency Total"/>
+                <field name="accrual_move_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'posted'"
+                       decoration-info="state == 'draft'"
+                       decoration-muted="state == 'cancel'"/>
+                <field name="analytic_account_id" string="Branch" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="last_error" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_line_form" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.line.form</field>
+        <field name="model">prepaid.expense.schedule.line</field>
+        <field name="arch" type="xml">
+            <form string="Prepaid Expense Installment" create="false" edit="false">
+                <header>
+                    <button name="action_open_journal_entry" type="object" string="Journal Entry"
+                            invisible="not accrual_move_id"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted,cancel"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="invoice_id"/>
+                            <field name="partner_id"/>
+                            <field name="sequence"/>
+                            <field name="due_date"/>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                        </group>
+                        <group>
+                            <field name="actual_account_id"/>
+                            <field name="prepaid_account_id"/>
+                            <field name="amount"/>
+                            <field name="refunded_amount"/>
+                            <field name="net_amount"/>
+                            <field name="accrual_move_id"/>
+                            <field name="analytic_account_id" string="Branch"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group invisible="not last_error">
+                        <field name="last_error"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_line_search" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.line.search</field>
+        <field name="model">prepaid.expense.schedule.line</field>
+        <field name="arch" type="xml">
+            <search string="Prepaid Expenses">
+                <field name="invoice_id"/>
+                <field name="partner_id"/>
+                <field name="actual_account_id"/>
+                <field name="prepaid_account_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter name="due_today" string="Due Today" domain="[('state', '=', 'draft'), ('due_date', '=', 'today')]"/>
+                <filter name="overdue" string="Overdue" domain="[('state', '=', 'draft'), ('due_date', '&lt;', 'today')]"/>
+                <filter name="upcoming" string="Upcoming" domain="[('state', '=', 'draft'), ('due_date', '&gt;', 'today')]"/>
+                <separator/>
+                <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                <group>
+                    <filter name="group_by_invoice" string="Invoice" context="{'group_by': 'invoice_id'}"/>
+                    <filter name="group_by_vendor" string="Vendor" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_actual_account" string="Expense Account" context="{'group_by': 'actual_account_id'}"/>
+                    <filter name="group_by_prepaid_account" string="Prepaid Account" context="{'group_by': 'prepaid_account_id'}"/>
+                    <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter name="group_by_month" string="Due Month" context="{'group_by': 'due_date:month'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_list" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.list</field>
+        <field name="model">prepaid.expense.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Prepaid Expense Report" create="false" edit="false">
+                <field name="source_type" string="مصدر المصروف المقدم"/>
+                <field name="partner_id"/>
+                <field name="vendor_bill_id" string="مستند الشراء" optional="show"/>
+                <field name="vendor_payment_id" string="إيصال الصرف" optional="show"/>
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="actual_account_id"/>
+                <field name="prepaid_account_id" optional="hide"/>
+                <field name="original_amount" sum="Total"/>
+                <field name="recognized_amount" sum="Recognized"/>
+                <field name="remaining_amount" sum="Remaining"/>
+                <field name="draft_installment_count" sum="Draft Installments"/>
+                <field name="posted_installment_count" sum="Posted Installments"/>
+                <field name="state" widget="badge"/>
+                <field name="analytic_account_id" string="Branch" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_form" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.form</field>
+        <field name="model">prepaid.expense.schedule</field>
+        <field name="arch" type="xml">
+            <form string="المصروف المقدم" create="false" edit="false">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,partial,posted,refunded,cancel"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="source_type" string="مصدر المصروف المقدم"/>
+                            <field name="vendor_bill_id" string="مستند الشراء" invisible="source_type != 'vendor_bill'"/>
+                            <field name="vendor_bill_line_id" string="سطر مستند الشراء" invisible="source_type != 'vendor_bill'"/>
+                            <field name="vendor_payment_id" string="إيصال الصرف" invisible="source_type != 'vendor_payment'"/>
+                            <field name="reclassification_move_id" string="قيد إعادة التصنيف" invisible="not reclassification_move_id"/>
+                            <field name="partner_id" string="المورد"/>
+                            <field name="name" string="البيان"/>
+                        </group>
+                        <group>
+                            <field name="start_date" string="تاريخ البداية"/>
+                            <field name="end_date" string="تاريخ النهاية"/>
+                            <field name="actual_account_id" string="حساب المصروف"/>
+                            <field name="prepaid_account_id" string="حساب المصروفات المقدمة"/>
+                            <field name="original_amount" string="مبلغ المصروف المقدم"/>
+                            <field name="recognized_amount" string="المبلغ المستهلك"/>
+                            <field name="remaining_amount" string="المبلغ المتبقي"/>
+                            <field name="analytic_account_id" string="الفرع"/>
+                            <field name="company_id" string="الشركة" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="جدول الاستهلاك">
+                            <field name="line_ids" readonly="1">
+                                <list create="false" edit="false">
+                                    <field name="sequence" string="رقم القسط"/>
+                                    <field name="period_start" string="من"/>
+                                    <field name="period_end" string="إلى"/>
+                                    <field name="due_date" string="تاريخ الاستحقاق"/>
+                                    <field name="net_amount" string="المبلغ"/>
+                                    <field name="accrual_move_id" string="قيد اليومية"/>
+                                    <field name="state" string="الحالة" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_pivot" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.pivot</field>
+        <field name="model">prepaid.expense.schedule</field>
+        <field name="arch" type="xml">
+            <pivot string="Prepaid Expense Report" sample="1">
+                <field name="actual_account_id" type="row"/>
+                <field name="partner_id" type="row"/>
+                <field name="invoice_date" interval="month" type="col"/>
+                <field name="original_amount" type="measure"/>
+                <field name="recognized_amount" type="measure"/>
+                <field name="remaining_amount" type="measure"/>
+                <field name="draft_installment_count" type="measure"/>
+                <field name="posted_installment_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_prepaid_schedule_search" model="ir.ui.view">
+        <field name="name">prepaid.expense.schedule.search</field>
+        <field name="model">prepaid.expense.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Prepaid Expense Report">
+                <field name="move_id"/>
+                <field name="partner_id"/>
+                <field name="actual_account_id"/>
+                <field name="prepaid_account_id"/>
+                <field name="analytic_account_id" string="Branch"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="partial" string="Partially Recognized" domain="[('state', '=', 'partial')]"/>
+                <filter name="posted" string="Fully Recognized" domain="[('state', '=', 'posted')]"/>
+                <filter name="refunded" string="Refunded" domain="[('state', '=', 'refunded')]"/>
+                <group>
+                    <filter name="group_by_vendor" string="Vendor" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_by_account" string="Expense Account" context="{'group_by': 'actual_account_id'}"/>
+                    <filter name="group_by_prepaid" string="Prepaid Account" context="{'group_by': 'prepaid_account_id'}"/>
+                    <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter name="group_by_branch" string="Branch" context="{'group_by': 'analytic_account_id'}"/>
+                    <filter name="group_by_month" string="Invoice Month" context="{'group_by': 'invoice_date:month'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_prepaid_schedule_lines" model="ir.actions.act_window">
+        <field name="name">Prepaid Expenses</field>
+        <field name="res_model">prepaid.expense.schedule.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_prepaid_schedule_line_search"/>
+        <field name="context">{'search_default_group_by_invoice': 1}</field>
+    </record>
+
+    <record id="action_prepaid_expense_report" model="ir.actions.act_window">
+        <field name="name">Prepaid Expense Report</field>
+        <field name="res_model">prepaid.expense.schedule</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="view_prepaid_schedule_search"/>
+    </record>
+
+    <menuitem id="menu_prepaid_expenses"
+              name="Prepaid Expenses"
+              parent="account.menu_finance_payables"
+              action="action_prepaid_schedule_lines"
+              groups="account.group_account_readonly"
+              sequence="25"/>
+    <menuitem id="menu_prepaid_expense_report"
+              name="Prepaid Expense Report"
+              parent="account.menu_finance_reports"
+              action="action_prepaid_expense_report"
+              groups="account.group_account_readonly"
+              sequence="15"/>
+</odoo>

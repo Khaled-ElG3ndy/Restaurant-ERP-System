@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pos_hospitality_config_list" model="ir.ui.view">
+        <field name="name">pos.hospitality.config.list</field>
+        <field name="model">pos.hospitality.config</field>
+        <field name="arch" type="xml">
+            <list string="الضيافة">
+                <field name="name"/>
+                <field name="pos_config_ids" widget="many2many_tags"/>
+                <field name="product_ids" widget="many2many_tags"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pos_hospitality_config_form" model="ir.ui.view">
+        <field name="name">pos.hospitality.config.form</field>
+        <field name="model">pos.hospitality.config</field>
+        <field name="arch" type="xml">
+            <form string="الضيافة">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Jeddah Hospitality"/></h1>
+                    </div>
+                    <group>
+                        <field name="active"/>
+                        <field name="pos_config_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group string="Hospitality Products">
+                        <field name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pos_hospitality_config" model="ir.actions.act_window">
+        <field name="name">الضيافة</field>
+        <field name="res_model">pos.hospitality.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first hospitality configuration</p>
+            <p>Select the POS branches and products that cashiers can add as complimentary items.</p>
+        </field>
+    </record>
+
+    <record id="view_pos_order_line_hospitality_list" model="ir.ui.view">
+        <field name="name">pos.order.line.hospitality.list</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="is_hospitality" optional="show"/>
+                <field name="hospitality_original_price" widget="monetary" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_line_hospitality_form" model="ir.ui.view">
+        <field name="name">pos.order.line.hospitality.form</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line_form"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="is_hospitality" readonly="1"/>
+                <field name="hospitality_original_price" widget="monetary" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_hospitality_root"
+              name="الضيافة"
+              parent="point_of_sale.menu_point_root"
+              action="action_pos_hospitality_config"
+              sequence="80"
+              groups="point_of_sale.group_pos_manager"/>
+</odoo>

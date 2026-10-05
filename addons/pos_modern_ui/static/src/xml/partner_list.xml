@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_modern_ui.PartnerListModern" t-inherit="point_of_sale.PartnerList" t-inherit-mode="extension">
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="size">'xl'</attribute>
+            <attribute name="bodyClass">'partner-list hosny-partner-list p-0'</attribute>
+            <attribute name="contentClass">'hosny-partner-list-dialog h-100'</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set-slot='header']" position="attributes">
+            <attribute name="class">hosny-partner-list-header</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set-slot='header']/button[contains(@class, 'btn-primary')]" position="replace">
+            <t/>
+        </xpath>
+        <xpath expr="//span[contains(@class, 'modal-title')]" position="replace">
+            <div class="hosny-partner-heading">
+                <span class="hosny-partner-header-icon"><i class="fa fa-user-o"/></span>
+                <div class="hosny-partner-title">
+                    <span class="hosny-partner-title-main">اختر العميل</span>
+                    <span class="hosny-partner-title-sub">اضغط على صف العميل للاختيار</span>
+                </div>
+            </div>
+            <div t-if="hosnyFavoritePartners.length" class="hosny-partner-favorites" aria-label="العملاء المفضلون">
+                <button t-foreach="hosnyFavoritePartners"
+                    t-as="favorite"
+                    t-key="favorite.id"
+                    type="button"
+                    class="hosny-favorite-chip"
+                    t-att-title="favorite.name or ''"
+                    t-on-click="() => this.clickPartner(favorite)">
+                    <span class="hosny-favorite-avatar"><i class="fa fa-star"/></span>
+                    <span class="hosny-favorite-copy">
+                        <span class="hosny-favorite-name" t-esc="favorite.name or ''"/>
+                        <span t-if="favorite.phone or favorite.mobile" class="hosny-favorite-meta" t-esc="favorite.phone or favorite.mobile"/>
+                        <span t-elif="favorite.parent_name" class="hosny-favorite-meta" t-esc="favorite.parent_name"/>
+                    </span>
+                </button>
+            </div>
+        </xpath>
+        <xpath expr="//PartnerLine" position="attributes">
+            <attribute name="isFavorite">hosnyIsFavoritePartner(partner)</attribute>
+            <attribute name="onToggleFavorite.bind">(p) => this.hosnyToggleFavoritePartner(p)</attribute>
+        </xpath>
+        <xpath expr="//Input" position="attributes">
+            <attribute name="class">'hosny-partner-search'</attribute>
+            <attribute name="placeholder.translate">البحث عن العملاء...</attribute>
+        </xpath>
+        <xpath expr="//div[@class='h-100']" position="attributes">
+            <attribute name="class">hosny-partner-list-shell h-100</attribute>
+        </xpath>
+        <xpath expr="//table" position="attributes">
+            <attribute name="class">table hosny-partner-table</attribute>
+        </xpath>
+        <xpath expr="//table/tbody" position="before">
+            <colgroup>
+                <col class="hosny-col-actions"/>
+                <col class="hosny-col-contact"/>
+                <col class="hosny-col-address"/>
+                <col class="hosny-col-name"/>
+            </colgroup>
+            <thead class="hosny-partner-table-head">
+                <tr>
+                    <th class="hosny-partner-actions-head">الإجراءات</th>
+                    <th>التواصل</th>
+                    <th>العنوان</th>
+                    <th>العميل</th>
+                </tr>
+            </thead>
+        </xpath>
+        <xpath expr="//t[@t-set-slot='footer']/div" position="replace">
+            <div class="hosny-partner-footer-actions">
+                <button t-if="this.pos.cashier._role !== 'minimal'"
+                    class="btn btn-primary btn-lg lh-lg"
+                    role="img"
+                    aria-label="إنشاء عميل"
+                    t-on-click="() => this.editPartner()"
+                    title="إنشاء عميل">
+                    إنشاء
+                </button>
+                <button class="btn btn-secondary btn-lg lh-lg"
+                    t-on-click="() => this.clickPartner(this.props.partner)">
+                    إهمال
+                </button>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="pos_modern_ui.PartnerLineModern" t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <xpath expr="//t[@t-else='']/tr" position="replace">
+            <tr class="partner-line hosny-partner-row partner-info" role="button"
+                t-att-class="{'selected': props.isSelected}"
+                t-att-data-id="props.partner.id"
+                t-on-click="() => this.props.onClickPartner(props.partner)">
+                <td class="hosny-partner-cell hosny-partner-actions-cell" data-label="الإجراءات" t-on-click.stop="() => {}">
+                    <div class="hosny-partner-actions">
+                        <button t-if="props.isSelected"
+                            t-on-click.stop="props.onClickUnselect"
+                            class="hosny-unselect btn btn-light"
+                            title="إلغاء الاختيار">
+                            <i class="fa fa-times"/>
+                        </button>
+                        <Dropdown t-if="this.pos.cashier._role !== 'minimal'">
+                            <button class="hosny-action-menu btn btn-light" title="إجراءات العميل">
+                                <i class="fa fa-ellipsis-v"/>
+                            </button>
+                            <t t-set-slot="content">
+                                <DropdownItem onSelected="() => props.onToggleFavorite(props.partner)">
+                                    <i t-att-class="props.isFavorite ? 'fa fa-star me-2 hosny-favorite-menu-icon active' : 'fa fa-star-o me-2 hosny-favorite-menu-icon'"/>
+                                    <span t-esc="props.isFavorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'"/>
+                                </DropdownItem>
+                                <DropdownItem onSelected="() => props.onClickEdit(props.partner)">
+                                    <i class="fa fa-pencil me-2"/>
+                                    <span>تعديل البيانات</span>
+                                </DropdownItem>
+                                <DropdownItem onSelected="() => props.onClickOrders(props.partner)">
+                                    <i class="fa fa-list-ul me-2"/>
+                                    <span>كل الطلبات</span>
+                                </DropdownItem>
+                            </t>
+                        </Dropdown>
+                    </div>
+                </td>
+                <td class="hosny-partner-cell hosny-partner-contact-cell" data-label="التواصل">
+                    <div class="hosny-partner-contact">
+                        <div t-if="props.partner.phone" class="hosny-contact-line">
+                            <i class="fa fa-phone"/>
+                            <span t-esc="props.partner.phone"/>
+                        </div>
+                        <div t-if="props.partner.email" class="hosny-contact-line">
+                            <i class="fa fa-paper-plane-o"/>
+                            <span t-esc="props.partner.email"/>
+                        </div>
+                        <div t-if="!props.partner.phone and !props.partner.email" class="hosny-contact-line hosny-muted">
+                            <i class="fa fa-address-card-o"/>
+                            <span>لا توجد بيانات تواصل</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="hosny-partner-cell hosny-partner-address-cell" data-label="العنوان">
+                    <div class="hosny-partner-detail">
+                        <i class="fa fa-map-marker"/>
+                        <t t-if="props.partner.pos_contact_address">
+                            <span t-esc="props.partner.pos_contact_address"/>
+                        </t>
+                        <t t-else="">
+                            <span class="hosny-muted">لا يوجد عنوان</span>
+                        </t>
+                    </div>
+                </td>
+                <td class="hosny-partner-cell hosny-partner-name-cell" data-label="العميل">
+                    <div class="hosny-partner-identity">
+                        <span class="hosny-partner-avatar"><i class="fa fa-user-o"/></span>
+                        <div class="hosny-partner-text">
+                            <b class="hosny-partner-name" t-esc="props.partner.name or ''"/>
+                            <div class="company-field" t-if="props.partner.parent_name">
+                                <i class="fa fa-building-o"/>
+                                <span t-esc="props.partner.parent_name"/>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </xpath>
+
+        <xpath expr="//t[@t-if='ui.isSmall']/div" position="replace">
+            <div class="partner-info hosny-partner-mobile-card" role="button"
+                t-att-class="{'selected': props.isSelected}"
+                t-att-data-id="props.partner.id"
+                t-on-click="() => this.props.onClickPartner(props.partner)">
+                <div class="hosny-partner-mobile-main">
+                    <span class="hosny-partner-avatar"><i class="fa fa-user-o"/></span>
+                    <div class="hosny-partner-text">
+                        <b class="hosny-partner-name" t-esc="props.partner.name or ''"/>
+                        <div class="company-field" t-if="props.partner.parent_name">
+                            <i class="fa fa-building-o"/>
+                            <span t-esc="props.partner.parent_name"/>
+                        </div>
+                    </div>
+                    <div class="hosny-mobile-actions" t-on-click.stop="() => {}">
+                        <Dropdown t-if="this.pos.cashier._role !== 'minimal'">
+                            <button class="hosny-action-menu btn btn-light" title="إجراءات العميل">
+                                <i class="fa fa-ellipsis-v"/>
+                            </button>
+                            <t t-set-slot="content">
+                                <DropdownItem onSelected="() => props.onToggleFavorite(props.partner)">
+                                    <i t-att-class="props.isFavorite ? 'fa fa-star me-2 hosny-favorite-menu-icon active' : 'fa fa-star-o me-2 hosny-favorite-menu-icon'"/>
+                                    <span t-esc="props.isFavorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'"/>
+                                </DropdownItem>
+                                <DropdownItem onSelected="() => props.onClickEdit(props.partner)">
+                                    <i class="fa fa-pencil me-2"/>
+                                    <span>تعديل البيانات</span>
+                                </DropdownItem>
+                                <DropdownItem onSelected="() => props.onClickOrders(props.partner)">
+                                    <i class="fa fa-list-ul me-2"/>
+                                    <span>كل الطلبات</span>
+                                </DropdownItem>
+                            </t>
+                        </Dropdown>
+                    </div>
+                </div>
+                <div class="hosny-partner-mobile-details">
+                    <div t-if="props.partner.pos_contact_address">
+                        <i class="fa fa-map-marker"/>
+                        <span t-esc="props.partner.pos_contact_address"/>
+                    </div>
+                    <div t-if="props.partner.phone">
+                        <i class="fa fa-phone"/>
+                        <span t-esc="props.partner.phone"/>
+                    </div>
+                    <div t-if="props.partner.email">
+                        <i class="fa fa-paper-plane-o"/>
+                        <span t-esc="props.partner.email"/>
+                    </div>
+                </div>
+                <button t-if="props.isSelected"
+                    t-on-click.stop="props.onClickUnselect"
+                    class="hosny-unselect btn btn-light"
+                    title="إلغاء الاختيار">
+                    <i class="fa fa-times"/>
+                    <span>إلغاء الاختيار</span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

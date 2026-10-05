@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hosny_purchase_return_wizard_form" model="ir.ui.view">
+        <field name="name">hosny.purchase.return.wizard.form</field>
+        <field name="model">hosny.purchase.return.wizard</field>
+        <field name="arch" type="xml">
+            <form string="إنشاء مرتجع مورد / إشعار دائن">
+                <group>
+                    <group>
+                        <field name="purchase_id" readonly="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="available_bill_ids" invisible="1"/>
+                        <field name="available_picking_ids" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="original_bill_id" options="{'no_create': True}"/>
+                        <field name="return_picking_id" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <field name="line_ids" nolabel="1">
+                    <list editable="bottom" create="0" delete="0">
+                        <field name="purchase_line_id" column_invisible="1"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="ordered_quantity" readonly="1"/>
+                        <field name="available_refund_quantity" readonly="1"/>
+                        <field name="refund_quantity"/>
+                        <field name="available_return_quantity" readonly="1"/>
+                        <field name="return_quantity"/>
+                        <field name="product_uom_id" readonly="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_create_return_documents" type="object" string="إنشاء المرتجع / الإشعار الدائن" class="btn-primary"/>
+                    <button string="إلغاء" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

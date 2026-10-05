@@ -1,0 +1,42 @@
+/*rtl:begin:ignore*/
+body.o_rtl .o_form_renderer.o_hosny_payroll_rtl_form,
+body.o_rtl .o_form_renderer .o_hosny_payroll_rtl_section {
+    direction: rtl;
+    text-align: right;
+
+    &.o_group,
+    &.o_inner_group,
+    > .o_group,
+    .o_notebook .tab-pane > .o_group {
+        direction: rtl;
+    }
+
+    &.o_notebook,
+    .o_inner_group {
+        direction: rtl;
+    }
+
+    .o_wrap_label,
+    .o_form_label,
+    .o_horizontal_separator,
+    .nav-tabs {
+        text-align: right;
+    }
+
+    &.o_notebook .nav-tabs,
+    .o_notebook .nav-tabs {
+        justify-content: flex-start;
+        direction: rtl;
+    }
+
+    .o_field_widget[name="code"],
+    .o_field_widget[name="condition_python"],
+    .o_field_widget[name="condition_range"],
+    .o_field_widget[name="amount_percentage_base"],
+    .o_field_widget[name="amount_python_compute"] {
+        direction: ltr;
+        text-align: left;
+        unicode-bidi: plaintext;
+    }
+}
+/*rtl:end:ignore*/

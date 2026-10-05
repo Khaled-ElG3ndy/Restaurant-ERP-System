@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_purchase_packaging" model="ir.ui.view">
+        <field name="name">product.template.form.purchase.packaging</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="before">
+                <page string="Purchase Packagings" name="hosny_purchase_packagings" invisible="1">
+                    <field name="product_variant_id" invisible="1"/>
+                    <field name="product_variant_count" invisible="1"/>
+                    <field name="hosny_purchase_packaging_ids"
+                           widget="hosny_purchase_packaging_x2many"
+                           context="{'default_product_id': product_variant_id, 'default_product_tmpl_id': id, 'default_company_id': company_id}"
+                           nolabel="1">
+                        <list editable="bottom" string="Purchase Packagings">
+                            <field name="id" column_invisible="True"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id"
+                                   column_invisible="parent.product_variant_count == 1"
+                                   required="parent.product_variant_count &gt; 1"/>
+                            <field name="packaging_type_id"
+                                   context="{'default_company_id': company_id}"
+                                   domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                            <field name="name" column_invisible="True"/>
+                            <field name="content_qty"/>
+                            <field name="content_type"/>
+                            <field name="content_uom_id"
+                                   string="Base Product Unit"
+                                   readonly="1"
+                                   invisible="content_type != 'base_uom'"
+                                   options="{'no_open': True}"/>
+                            <field name="inner_packaging_id"
+                                   invisible="content_type != 'packaging'"
+                                   required="content_type == 'packaging'"
+                                   domain="[('id', '!=', id), ('product_id', '=', product_id), ('company_id', '=', company_id)]"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="final_content_qty" readonly="1"/>
+                            <field name="final_content_uom_id" readonly="1" options="{'no_open': True}"/>
+                            <field name="hierarchy_display" optional="hide" readonly="1"/>
+                            <field name="uom_id" column_invisible="True"/>
+                            <field name="managed_uom" column_invisible="True"/>
+                            <field name="barcode" optional="show"/>
+                            <field name="sale_ok" optional="hide"/>
+                            <field name="purchase_ok" optional="show"/>
+                            <field name="purchase_default" optional="show"/>
+                            <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                        </list>
+                        <form string="Purchase Packaging">
+                            <group>
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="packaging_type_id"
+                                           context="{'default_company_id': company_id}"
+                                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="managed_uom" invisible="1"/>
+                                    <field name="barcode"/>
+                                    <field name="company_id" groups="base.group_multi_company"/>
+                                </group>
+                                <group>
+                                    <field name="content_qty"/>
+                                    <field name="content_type"/>
+                                    <field name="content_uom_id"
+                                           string="Base Product Unit"
+                                           readonly="1"
+                                           invisible="content_type != 'base_uom'"
+                                           options="{'no_open': True}"/>
+                                    <field name="inner_packaging_id"
+                                           invisible="content_type != 'packaging'"
+                                           required="content_type == 'packaging'"
+                                           domain="[('id', '!=', id), ('product_id', '=', product_id), ('company_id', '=', company_id)]"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="final_content_qty" readonly="1"/>
+                                    <field name="final_content_uom_id" readonly="1" options="{'no_open': True}"/>
+                                    <field name="hierarchy_display" readonly="1"/>
+                                    <field name="sale_ok"/>
+                                    <field name="purchase_ok"/>
+                                    <field name="purchase_default"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                    <div class="text-muted mt-2">
+                        A packaging may contain the product's base unit or another packaging of the same product and company. Final base content and the technical conversion unit are calculated automatically.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="supplierinfo_purchase_packaging_labels" model="ir.ui.view">
+        <field name="name">product.supplierinfo.purchase.packaging.labels</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="product_uom_id" position="attributes">
+                <attribute name="string">Purchase Packaging / Unit</attribute>
+            </field>
+            <field name="price" position="attributes">
+                <attribute name="string">Packaging Price / Unit Price</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

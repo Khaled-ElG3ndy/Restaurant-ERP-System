@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_salary_rule_form_hosny_account" model="ir.ui.view">
+        <field name="name">hr.salary.rule.form.hosny.account</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_salary_rule_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general']" position="after">
+                <page name="hosny_accounting" string="المحاسبة">
+                    <group>
+                        <field name="account_debit"
+                               options="{'no_create': True}"/>
+                        <field name="account_credit"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <div class="text-muted">
+                        القيمة الموجبة تُسجَّل في الطرف المحدد، والقيمة السالبة
+                        تُقلب تلقائيًا إلى الطرف المقابل. لذلك تُحدَّد للاستقطاعات
+                        — وقيمتها سالبة — حساباتها في خانة «الحساب المدين»
+                        وتُرحَّل دائنةً.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_tree_hosny_account" model="ir.ui.view">
+        <field name="name">hr.salary.rule.list.hosny.account</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="bi_hr_payroll.hr_salary_rule_tree"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="account_debit" optional="show"/>
+                <field name="account_credit" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

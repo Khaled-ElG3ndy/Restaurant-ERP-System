@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- ملاحظات الفاتورة (order_note_button.js): تُكتب في مرحلة الدفع فقط —
+         زر في شاشة الدفع، وتذكير عند تصديق فاتورة أجل، وتعديل بعد الدفع من
+         شاشة الإيصال. لا زر لها في شبكة أزرار الطلب (طلب خالد 2026-10-05:
+         الثمانية في صفين). الشكل في invoice_note.css. -->
+    <!-- الملاحظة ظاهرة في قائمة الطلب (وفي تفاصيل الطلب بشاشة الطلبات). -->
+    <t t-name="hosny_pos_receipt.OrderDisplayInvoiceNote"
+       t-inherit="point_of_sale.OrderDisplay"
+       t-inherit-mode="extension">
+        <!-- قبل مكان زر التكبير (hosny_pos_controls)، أي بعد الأصناف وملاحظات المطبخ -->
+        <xpath expr="//t[@t-slot='hosnyTail']" position="before">
+            <div t-if="order.hosny_invoice_note and props.mode !== 'receipt'"
+                 class="hosny-invoice-note-strip" dir="rtl">
+                <span class="hosny-invoice-note-strip-label">
+                    <i class="fa fa-file-text-o" aria-hidden="true"/> ملاحظات الفاتورة
+                </span>
+                <span class="hosny-invoice-note-strip-text" t-esc="order.hosny_invoice_note"/>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_receipt.PaymentScreenInvoiceNote"
+       t-inherit="point_of_sale.PaymentScreenButtons"
+       t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'payment-buttons')]" position="inside">
+            <t t-set="hosnyNote" t-value="currentOrder.hosnyInvoiceNote"/>
+            <button type="button"
+                    class="button hosny-invoice-note-pay-btn btn btn-light"
+                    t-att-class="{
+                        'has-note': hosnyNote,
+                        'is-wanted': !hosnyNote and currentOrder.hosnyIsPayLater,
+                    }"
+                    t-att-title="hosnyNote or 'ملاحظات تُطبع على فاتورة العميل'"
+                    t-on-click="() => this.openHosnyInvoiceNote()">
+                <i t-attf-class="fa {{ hosnyNote ? 'fa-check-square' : 'fa-pencil-square-o' }}" aria-hidden="true"/>
+                <span class="hosny-invoice-note-pay-copy">
+                    <span class="hosny-invoice-note-pay-title">ملاحظات الفاتورة</span>
+                    <span t-if="hosnyNote" class="hosny-invoice-note-pay-preview" t-esc="hosnyNote"/>
+                    <span t-elif="currentOrder.hosnyIsPayLater" class="hosny-invoice-note-pay-preview">فاتورة أجل — أضف الملاحظة</span>
+                </span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_receipt.OrderReceiptNoteButton"
+       t-inherit="point_of_sale.ReceiptScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'receipt-options')]" position="inside">
+            <button type="button"
+                    class="btn btn-secondary btn-lg w-100 py-3 hosny-receipt-note-btn"
+                    t-on-click="() => this.openReceiptNotePopup()">
+                <i class="fa fa-pencil-square-o me-1" aria-hidden="true"/>
+                <span>ملاحظات الفاتورة</span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_receipt.InvoiceNoteDialog">
+        <Dialog title="props.atValidation ? 'فاتورة أجل — ملاحظات الفاتورة' : 'ملاحظات الفاتورة'"
+                size="'lg'" contentClass="'hosny-invoice-note-content'">
+            <div dir="rtl" class="hosny-invoice-note-dialog">
+                <p class="hosny-ind-help">
+                    <t t-if="props.atValidation">هذه فاتورة أجل. اكتب ما يلزم للعميل أو لشركة التوصيل قبل الإغلاق، أو تابع بدون ملاحظة.</t>
+                    <t t-else="">تُطبع على فاتورة العميل وتُحفظ مع الطلب وفاتورة المحاسبة. لا تُرسل للمطبخ.</t>
+                </p>
+                <div t-if="props.customerName" class="hosny-ind-customer">
+                    <i class="fa fa-user" aria-hidden="true"/>
+                    <span>العميل:</span>
+                    <strong t-esc="props.customerName"/>
+                </div>
+                <div class="hosny-ind-hints">
+                    <span class="hosny-ind-hints-label">إضافة سريعة:</span>
+                    <button t-foreach="hints" t-as="hint" t-key="hint_index"
+                            type="button" class="hosny-ind-hint"
+                            t-on-click="() => this.addHint(hint)">
+                        <i class="fa fa-plus" aria-hidden="true"/>
+                        <span t-esc="hint.replace(': ', '')"/>
+                    </button>
+                </div>
+                <textarea t-ref="noteInput"
+                          class="form-control hosny-ind-input"
+                          rows="5"
+                          dir="auto"
+                          t-att-maxlength="maxLength"
+                          t-model="state.note"
+                          t-on-keydown="onKeydown"
+                          placeholder="مثال: رقم طلب التطبيق 12345 — المستلم محمد"/>
+                <div class="hosny-ind-foot">
+                    <button t-if="state.note" type="button" class="hosny-ind-clear" t-on-click="clear">
+                        <i class="fa fa-eraser" aria-hidden="true"/> مسح الملاحظة
+                    </button>
+                    <span class="hosny-ind-count"><t t-esc="state.note.length"/> / <t t-esc="maxLength"/></span>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary btn-lg lh-lg hosny-ind-save" t-on-click="confirm">
+                    <t t-if="props.atValidation">حفظ ومتابعة الدفع</t>
+                    <t t-else="">حفظ</t>
+                </button>
+                <button t-if="props.atValidation" class="btn btn-secondary btn-lg lh-lg hosny-ind-skip" t-on-click="skip">متابعة بدون ملاحظة</button>
+                <button t-if="props.atValidation" class="btn btn-light btn-lg lh-lg hosny-ind-back" t-on-click="props.close">رجوع للدفع</button>
+                <button t-else="" class="btn btn-secondary btn-lg lh-lg hosny-ind-cancel" t-on-click="props.close">إلغاء</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

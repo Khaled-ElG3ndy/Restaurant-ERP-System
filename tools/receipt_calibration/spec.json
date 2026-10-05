@@ -1,0 +1,310 @@
+{
+ "width": 576,
+ "line": 2,
+ "header_gray": "#e4e4e4",
+ "logo": {
+  "mt": 7.0,
+  "w": 222.0,
+  "h": 178.2,
+  "cx": 266.5
+ },
+ "title": {
+  "font": "ar-light",
+  "size": 46.24,
+  "lh": 62,
+  "mt": 9.4,
+  "cx": 261.0,
+  "sx": 1.085
+ },
+ "status": {
+  "font": "ar-semibold",
+  "size": 32.04,
+  "lh": 44,
+  "mt": 43.1,
+  "cx": 276.0,
+  "sx": 0.997
+ },
+ "vatrow": {
+  "h": 44,
+  "mt": 40.1
+ },
+ "vat": {
+  "font": "sans-bold",
+  "size": 36.48,
+  "lh": 40,
+  "top": 0,
+  "right": 567.6,
+  "sx": 0.941
+ },
+ "vat_label": {
+  "font": "ar-bold",
+  "size": 16.54,
+  "lh": 30,
+  "top": -2.7,
+  "right": 176.0,
+  "sx": 1.25
+ },
+ "address": {
+  "font": "ar-medium",
+  "size": 31.83,
+  "lh": 44,
+  "mt": 15.3,
+  "cx": 283.0,
+  "sx": 0.952
+ },
+ "simplified": {
+  "font": "naskh",
+  "size": 41.56,
+  "lh": 50,
+  "mt": 18.1,
+  "cx": 283.0,
+  "sx": 0.805
+ },
+ "meta": {
+  "mt": 81.1
+ },
+ "label": {
+  "font": "ar-bold",
+  "size": 20.33,
+  "lh": 30,
+  "right": 570.0,
+  "sx": 1.0
+ },
+ "rows": {
+  "invoice": {
+   "h": 49.4,
+   "lt": 0,
+   "vt": -5.5,
+   "font": "sans-bold",
+   "size": 39.16,
+   "lh": 42,
+   "cx": 210.7,
+   "sx": 0.899,
+   "lsx": 1.069
+  },
+  "type": {
+   "h": 43.8,
+   "lt": 0,
+   "vt": -7.0,
+   "font": "ar-heavy",
+   "size": 22.21,
+   "lh": 40,
+   "cx": 212.6,
+   "sx": 1.25,
+   "lsx": 1.187
+  },
+  "payment": {
+   "h": 38.6,
+   "lt": 0,
+   "vt": -0.5,
+   "font": "ar-heavy",
+   "size": 15.49,
+   "lh": 30,
+   "cx": 210.6,
+   "sx": 1.145,
+   "lsx": 1.136
+  },
+  "serial": {
+   "h": 38.2,
+   "lt": 0,
+   "vt": -2.5,
+   "font": "sans-bold",
+   "size": 27.59,
+   "lh": 34,
+   "cx": 211.2,
+   "sx": 0.963,
+   "lsx": 0.954
+  },
+  "date": {
+   "h": 39.2,
+   "lt": 0,
+   "vt": 0.0,
+   "font": "narrow",
+   "size": 33.18,
+   "lh": 36,
+   "right": 341.0,
+   "sx": 1.012,
+   "lsx": 1.099
+  },
+  "closed": {
+   "h": 47.8,
+   "lt": 0,
+   "vt": 0.5,
+   "font": "narrow",
+   "size": 29.14,
+   "lh": 36,
+   "right": 342.5,
+   "sx": 1.148,
+   "lsx": 1.094
+  },
+  "note": {
+   "h": 49.9,
+   "lt": 0,
+   "vt": -0.4,
+   "font": "sans-bold",
+   "size": 24.96,
+   "lh": 30,
+   "right": 342.5,
+   "sx": 1.024,
+   "lsx": 1.071
+  },
+  "customer": {
+   "h": 47.3,
+   "lt": 0,
+   "vt": -0.5,
+   "font": "ar-bold",
+   "size": 21.43,
+   "lh": 32,
+   "cx": 249.0,
+   "sx": 0.957,
+   "lsx": 0.837
+  },
+  "phone": {
+   "h": 41.5,
+   "lt": 0,
+   "vt": 0.0,
+   "font": "sans-bold",
+   "size": 25.77,
+   "lh": 30,
+   "cx": 249.4,
+   "sx": 0.994,
+   "lsx": 1.099
+  }
+ },
+ "table": {
+  "mt": 0,
+  "cols": [
+   181.8,
+   80.1,
+   95.9,
+   98.8,
+   118.9
+  ],
+  "head_h": 65,
+  "row_h": 44,
+  "th": {
+   "font": "ar-heavy",
+   "size": 19.55,
+   "lh": 23,
+   "sx": 0.973
+  },
+  "name": {
+   "font": "ar-medium",
+   "size": 19.21,
+   "lh": 21,
+   "pad": 1.8,
+   "pad_v": 4,
+   "sx": 1.108,
+   "wrap": 148.9
+  },
+  "num": {
+   "font": "sans-bold",
+   "size": 22.0,
+   "lh": 26,
+   "sx": 1.016
+  },
+  "total_pad": 29.4
+ },
+ "totals": {
+  "mt": 14.9
+ },
+ "tlabel": {
+  "font": "ar-semibold",
+  "size": 25.33,
+  "lh": 30,
+  "right": 565.0,
+  "sx": 1.0
+ },
+ "trows": {
+  "net": {
+   "h": 47.8,
+   "lt": 0,
+   "vt": -3.6,
+   "font": "narrow-bold",
+   "size": 31.75,
+   "lh": 34,
+   "right": 276.0,
+   "sx": 0.991,
+   "lsx": 0.914
+  },
+  "discount": {
+   "h": 54.9,
+   "lt": 0,
+   "vt": -2.9,
+   "font": "narrow-bold",
+   "size": 29.16,
+   "lh": 34,
+   "right": 276.4,
+   "sx": 1.091,
+   "lsx": 0.865
+  },
+  "tax": {
+   "h": 68.2,
+   "lt": 0,
+   "vt": -0.1,
+   "font": "narrow-bold",
+   "size": 32.35,
+   "lh": 34,
+   "right": 276.0,
+   "sx": 0.968,
+   "lsx": 0.912
+  },
+  "total": {
+   "h": 56,
+   "lt": 0,
+   "vt": -3.5,
+   "font": "narrow-bold",
+   "size": 39.4,
+   "lh": 40,
+   "right": 275.1,
+   "sx": 0.994,
+   "lsx": 1.084
+  }
+ },
+ "cashier": {
+  "mt": 0,
+  "label": {
+   "font": "ar-medium",
+   "size": 21.71,
+   "lh": 30,
+   "top": 20,
+   "right": 561.5,
+   "sx": 1.083
+  },
+  "name": {
+   "font": "sans",
+   "size": 22,
+   "lh": 26,
+   "cx": 175.2,
+   "sx": 1.2
+  },
+  "printed": {
+   "font": "narrow",
+   "size": 32,
+   "lh": 34,
+   "cx": 174.8,
+   "sx": 1.053
+  }
+ },
+ "phone": {
+  "mt": 21.8,
+  "lh": 46,
+  "cx": 271.5,
+  "label": {
+   "font": "ar-bold",
+   "size": 29.65,
+   "sx": 1.0
+  },
+  "number": {
+   "font": "sans-bold",
+   "size": 40.49,
+   "sx": 1.0
+  }
+ },
+ "qr": {
+  "mt": 27.9,
+  "size": 319.1,
+  "cx": 279.8,
+  "mb": 24
+ }
+}

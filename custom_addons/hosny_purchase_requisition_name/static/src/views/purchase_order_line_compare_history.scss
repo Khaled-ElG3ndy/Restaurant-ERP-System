@@ -1,0 +1,107 @@
+.o_hosny_purchase_invoice_history_row > td {
+    padding: 0.35rem 0.75rem 0.7rem 2rem;
+    background: var(--o-view-background-color);
+}
+
+.o_hosny_purchase_invoice_history {
+    border-inline-start: 3px solid var(--o-brand-primary);
+    padding-inline-start: 0.75rem;
+}
+
+.o_hosny_purchase_invoice_history_title {
+    color: var(--o-main-text-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.o_hosny_purchase_invoice_history table {
+    width: 100%;
+    max-width: 760px;
+}
+
+.o_hosny_purchase_invoice_history th,
+.o_hosny_purchase_invoice_history td {
+    white-space: nowrap;
+}
+
+.o_hosny_lowest_price_filter {
+    white-space: nowrap;
+    margin-left: 0.5rem;
+}
+
+.o_hosny_lowest_price_filter.active {
+    background-color: var(--o-brand-primary);
+    border-color: var(--o-brand-primary);
+    color: #fff;
+}
+
+.o_hosny_price_history_line_button {
+    --btn-size: 28px;
+    width: var(--btn-size);
+    height: var(--btn-size);
+    min-width: var(--btn-size);
+    padding: 0;
+    border-radius: 6px;
+    color: var(--o-brand-primary);
+    opacity: 0.85;
+}
+
+.o_hosny_price_history_line_button:hover,
+.o_hosny_price_history_line_button:focus {
+    background: color-mix(in srgb, var(--o-brand-primary) 12%, transparent);
+    color: var(--o-brand-primary);
+    opacity: 1;
+}
+
+.o_hosny_price_history_form_button {
+    width: fit-content;
+    margin-top: 0.25rem;
+}
+
+.o_hosny_price_history_modal .modal-dialog {
+    width: calc(100vw - 2rem);
+    max-width: 980px;
+}
+
+.o_hosny_price_history_modal .o_form_sheet_bg,
+.o_hosny_price_history_modal .o_form_sheet {
+    max-width: none;
+}
+
+.o_hosny_price_history_summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.o_hosny_price_history_stat {
+    border: 1px solid var(--border-color, #dee2e6);
+    border-radius: 8px;
+    padding: 0.75rem;
+    background: var(--o-view-background-color);
+}
+
+.o_hosny_price_history_stat > span {
+    display: block;
+    color: var(--o-main-text-color);
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+}
+
+.o_hosny_price_history_stat .o_field_widget {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.o_hosny_price_history_lines th,
+.o_hosny_price_history_lines td {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .o_hosny_price_history_summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

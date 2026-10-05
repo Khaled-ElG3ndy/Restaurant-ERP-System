@@ -1,0 +1,927 @@
+.o_hosny_purchase_packaging_lines {
+    .o_list_open_form_view,
+    .o_list_record_open_form_view {
+        display: none !important;
+    }
+
+    .o_hosny_packaging_details_button {
+        display: inline-grid;
+        place-items: center;
+        height: 28px;
+        width: 28px;
+        min-width: 28px;
+        max-width: 28px;
+        line-height: 1;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+
+        &.o_hosny_packaging_unused {
+            color: var(--o-gray-500, #adb5bd);
+            opacity: 0.8;
+        }
+
+        &.o_hosny_packaging_used {
+            color: var(--o-brand-primary);
+            opacity: 1;
+        }
+
+        &:hover,
+        &:focus {
+            background: color-mix(in srgb, var(--o-brand-primary) 12%, transparent);
+        }
+    }
+
+    th[data-name="hosny_line_packaging_enabled"] {
+        width: 28px !important;
+        min-width: 28px !important;
+        max-width: 28px !important;
+        padding-inline: 0 !important;
+
+        .o_column_title {
+            display: none;
+        }
+    }
+
+    th[data-name="hosny_line_packaging_enabled"] + th.o_list_button {
+        width: 28px !important;
+        min-width: 28px !important;
+        max-width: 28px !important;
+        padding-inline: 0 !important;
+    }
+
+    td[name="hosny_line_packaging_enabled"] + td.o_list_button {
+        width: 28px !important;
+        min-width: 28px !important;
+        max-width: 28px !important;
+        padding-inline: 0 !important;
+        vertical-align: middle;
+    }
+
+    td:has(.o_hosny_price_history_line_button) {
+        width: 28px !important;
+        min-width: 28px !important;
+        max-width: 28px !important;
+        padding-inline: 0 !important;
+        vertical-align: middle;
+    }
+
+    td:has(.o_hosny_packaging_details_button) {
+        width: 28px !important;
+        min-width: 28px !important;
+        max-width: 28px !important;
+        padding-inline: 0 !important;
+        vertical-align: middle;
+
+        .o_field_widget {
+            display: grid;
+            width: 28px;
+            height: 28px;
+            place-items: center;
+        }
+    }
+}
+
+.o_hosny_purchase_packaging_template_lines {
+    .o_list_open_form_view,
+    .o_list_record_open_form_view {
+        display: none !important;
+    }
+
+    .o_hosny_template_details_button {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        color: var(--o-brand-primary);
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+
+        &:hover,
+        &:focus {
+            border-radius: 7px;
+            background: color-mix(in srgb, var(--o-brand-primary) 10%, transparent);
+        }
+    }
+
+    th[data-name="details_button"],
+    td[name="details_button"] {
+        width: 130px !important;
+        min-width: 130px !important;
+        text-align: center;
+    }
+}
+
+.modal:has(.o_hosny_packaging_dialog_form) {
+    .modal-dialog {
+        width: calc(100vw - 24px);
+        max-width: 1320px;
+        margin-block: 8px;
+    }
+
+    .modal-content {
+        --hosny-dialog-header-gradient: linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fafc 55%,
+            #eef4f9 100%
+        );
+        max-height: calc(100vh - 16px);
+        border-radius: 12px;
+        background: var(--hosny-dialog-header-gradient);
+        overflow: hidden;
+    }
+
+    .modal-body {
+        padding: 0;
+        background: transparent;
+        overflow: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        min-height: 44px;
+        padding: 7px 16px;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+
+        .modal-title {
+            margin: 0;
+            color: #1f2937;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-align: start;
+        }
+
+        .btn-close,
+        .o_expand_button {
+            margin: 0;
+        }
+        .o_expand_button {
+           display: none !important;
+        }
+    }
+
+    .modal-footer {
+        min-height: 68px;
+        padding: 12px 16px;
+        gap: 8px;
+        justify-content: flex-start;
+        background: #fff;
+    }
+}
+
+.o_hosny_packaging_dialog_form,
+.o_hosny_packaging_dialog {
+    text-align: start;
+}
+
+.o_hosny_packaging_dialog {
+    --hosny-border: #e3e7ee;
+    --hosny-soft-blue: #f5f9ff;
+    --hosny-soft-green: #f1faf3;
+    max-width: none !important;
+    padding: 0 16px 10px !important;
+    background: transparent !important;
+
+    label,
+    .o_form_label,
+    .o_field_widget,
+    .o_field_widget input,
+    .o_field_widget textarea,
+    .o_field_widget select,
+    .o_input,
+    .form-check-label,
+    .text-muted {
+        text-align: start;
+    }
+
+    .o_hosny_packaging_header {
+        margin-inline: -16px;
+        padding: 4px 16px 7px;
+        border: 0;
+        background: transparent;
+    }
+
+    // Physical layout only: template buttons left, base unit center,
+    // product right. The explicit LTR shell preserves this placement in RTL.
+    .o_hosny_header_meta[dir="ltr"] {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(130px, 0.55fr) minmax(220px, 1fr);
+        gap: 12px;
+        align-items: center;
+
+        > * {
+            min-width: 0;
+        }
+
+        .o_hosny_header_product,
+        .o_hosny_header_unit {
+            display: grid;
+            gap: 1px;
+            text-align: start;
+
+            > .text-muted {
+                font-size: 0.78rem;
+                line-height: 1.2;
+            }
+        }
+
+        .o_hosny_header_product {
+            grid-column: 3;
+        }
+
+        .o_hosny_header_unit {
+            grid-column: 2;
+        }
+
+        .o_hosny_saved_packaging_selector {
+            display: block;
+            grid-column: 1;
+            min-width: 0;
+            padding: 0;
+            text-align: left;
+
+            &:not(:has(.o_hosny_saved_packaging_card)) {
+                display: none;
+            }
+        }
+
+        .o_hosny_saved_packaging_selector > .o_field_widget {
+            min-height: 0;
+            font-size: inherit;
+            font-weight: inherit;
+        }
+
+        .o_field_widget {
+            min-height: 0;
+            font-size: 0.98rem;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+    }
+
+    // The DOM order is summary then main. LTR is intentionally limited to
+    // this physical two-column shell; both panels themselves remain RTL.
+    .o_hosny_packaging_body[dir="ltr"] {
+        display: grid;
+        grid-template-columns: 340px minmax(0, 1fr);
+        width: 100%;
+        border: 1px solid var(--hosny-border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+
+        > .summary_panel {
+            grid-column: 1;
+        }
+
+        > .main_form_panel {
+            grid-column: 2;
+        }
+    }
+
+    .main_form_panel,
+    .summary_panel {
+        min-width: 0;
+        text-align: start;
+    }
+
+    .o_hosny_packaging_card {
+        padding: 28px 30px;
+        border-bottom: 1px solid var(--hosny-border);
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        h3 {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            margin: 0 0 20px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            text-align: start;
+
+            &::before {
+                content: attr(data-section-number);
+                display: inline-grid;
+                place-items: center;
+                flex: 0 0 26px;
+                width: 26px;
+                height: 26px;
+                margin: 0;
+                color: var(--o-brand-primary);
+                background: color-mix(in srgb, var(--o-brand-primary) 12%, white);
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .o_hosny_rtl_group,
+    .o_hosny_rtl_group .o_inner_group {
+        width: 100%;
+        margin: 0;
+        text-align: start;
+
+        .o_wrap_label,
+        .o_form_label {
+            min-width: 135px;
+            text-align: start;
+        }
+
+        .o_field_widget:not(.o_field_radio) {
+            width: 100%;
+            min-height: 36px;
+        }
+
+        .o_field_radio {
+            padding-block: 5px;
+        }
+    }
+
+    .o_hosny_packaging_levels {
+        max-width: 100%;
+        text-align: start;
+        overflow-x: auto;
+
+        .o_list_table {
+            width: 100%;
+            min-width: 760px;
+            margin-bottom: 0;
+            text-align: start;
+        }
+
+        th,
+        td {
+            height: 48px;
+            padding-inline: 10px;
+            vertical-align: middle;
+            text-align: start;
+        }
+
+        th[data-name="level_number"],
+        td[data-name="level_number"] {
+            width: 82px;
+            min-width: 82px;
+            text-align: center;
+        }
+
+        th[data-name="content_type"],
+        td[data-name="content_type"] {
+            width: 155px;
+            min-width: 140px;
+        }
+
+        th[data-name="quantity"],
+        td[data-name="quantity"] {
+            width: 145px;
+            min-width: 125px;
+        }
+
+        th[data-name="packaging_type_id"],
+        td[data-name="packaging_type_id"],
+        th[data-name="final_uom_id"],
+        td[data-name="final_uom_id"] {
+            min-width: 180px;
+        }
+
+        th[data-name="sequence"],
+        td[data-name="sequence"] {
+            width: 42px;
+            min-width: 42px;
+            text-align: center;
+        }
+
+        td[data-name="level_number"] .o_field_widget {
+            display: inline-grid;
+            place-items: center;
+            min-width: 28px;
+            height: 28px;
+            color: var(--o-brand-primary);
+            background: var(--hosny-soft-blue);
+            border-radius: 50%;
+        }
+    }
+
+    .o_hosny_sentence_levels {
+        display: grid;
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        text-align: start;
+    }
+
+    .o_hosny_sentence_row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        min-height: 66px;
+        padding: 12px 14px;
+        border: 1px solid var(--hosny-border);
+        border-radius: 9px;
+        background: #fff;
+        transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+
+        &:hover {
+            border-color: color-mix(in srgb, var(--o-brand-primary) 38%, var(--hosny-border));
+        }
+    }
+
+    .o_hosny_sentence_editing {
+        border-color: var(--o-brand-primary);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--o-brand-primary) 10%, transparent);
+    }
+
+    .o_hosny_sentence_icon {
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+    }
+
+    .o_hosny_sentence_text {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        align-items: center;
+        min-width: 0;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .o_hosny_sentence_subject {
+        font-weight: 700;
+        color: var(--o-gray-900, #212529);
+    }
+
+    .o_hosny_sentence_lead,
+    .o_hosny_sentence_verb {
+        flex: 0 0 auto;
+        color: var(--o-gray-700, #495057);
+        font-weight: 600;
+    }
+
+    .o_hosny_sentence_quantity {
+        flex: 0 1 105px;
+        min-width: 72px;
+
+        .o_field_widget,
+        input {
+            width: 100%;
+            min-height: 34px;
+        }
+    }
+
+    .o_hosny_sentence_number {
+        display: inline-flex;
+        min-width: 66px;
+        min-height: 34px;
+        padding: 5px 12px;
+        align-items: center;
+        justify-content: center;
+        color: var(--o-gray-900, #212529);
+        background: #f8fafc;
+        border: 1px solid #d8dee8;
+        border-radius: 7px;
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+    }
+
+    .o_hosny_sentence_content {
+        flex: 1 1 210px;
+        min-width: 180px;
+
+        .o_field_widget,
+        .o_input_dropdown,
+        input {
+            width: 100%;
+            min-height: 34px;
+        }
+    }
+
+    .o_hosny_final_badge {
+        flex: 0 0 auto;
+        display: inline-flex;
+        gap: 4px;
+        align-items: center;
+        font-size: 0.75rem;
+    }
+
+    .o_hosny_sentence_actions {
+        display: inline-flex;
+        gap: 2px;
+        align-items: center;
+
+        .btn {
+            display: inline-grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+        }
+    }
+
+    .o_hosny_sentence_add_wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 14px;
+        align-items: center;
+        margin-top: 8px;
+        text-align: start;
+
+        small {
+            flex: 1 1 260px;
+        }
+    }
+
+    .o_hosny_sentence_empty {
+        padding: 18px;
+        color: var(--o-gray-600, #6c757d);
+        border: 1px dashed var(--hosny-border);
+        border-radius: 9px;
+        background: #fbfcfe;
+    }
+
+    .o_hosny_saved_packaging_cards {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .o_hosny_saved_packaging_grid {
+        display: flex;
+        direction: ltr;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: 100%;
+    }
+
+    .o_hosny_saved_packaging_card,
+    .hosny-packaging-template-button {
+        display: inline-flex;
+        direction: rtl;
+        flex: 0 1 auto;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        min-height: 30px;
+        padding: 4px 10px;
+        color: var(--o-gray-900, #212529);
+        border: 1px solid #d8e0e8;
+        border-radius: 7px;
+        background: #fff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: center;
+        transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
+
+        span {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:hover,
+        &:focus {
+            border-color: color-mix(in srgb, var(--o-brand-primary) 55%, #cbd5e1);
+            background: #f8fbfe;
+            box-shadow: none;
+        }
+    }
+
+    .o_hosny_saved_packaging_selected,
+    .hosny-packaging-template-button-active {
+        border-color: color-mix(in srgb, var(--o-brand-primary) 72%, #94a3b8);
+        color: color-mix(in srgb, var(--o-brand-primary) 80%, #1e3a5f);
+        background: color-mix(in srgb, var(--o-brand-primary) 8%, #ffffff);
+        box-shadow: none;
+        font-weight: 700;
+    }
+
+    .o_hosny_add_level_wrap {
+        margin-top: 16px;
+        text-align: start;
+    }
+
+    .o_hosny_add_level_button {
+        min-width: 230px;
+        min-height: 38px;
+        border-style: dashed;
+    }
+
+    .summary_panel {
+        padding: 28px 22px;
+        border-inline-end: 1px solid var(--hosny-border);
+        background: linear-gradient(180deg, #fbfcfe 0%, #f7fbf8 100%);
+
+        h3 {
+            margin: 0 0 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--hosny-border);
+            font-size: 1.08rem;
+            font-weight: 700;
+            text-align: start;
+        }
+    }
+
+    .o_hosny_calc_summary {
+        display: grid;
+        gap: 16px;
+        width: 100%;
+        text-align: start;
+    }
+
+    .o_hosny_calc_block {
+        display: grid;
+        gap: 12px;
+        padding: 16px;
+        border: 1px solid #e1e7ef;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    .o_hosny_calc_heading {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #d5dce6;
+
+        strong {
+            font-size: 0.96rem;
+        }
+    }
+
+    .o_hosny_calc_icon,
+    .o_hosny_math_icon {
+        flex: 0 0 auto;
+        font-size: 1.12rem;
+    }
+
+    .o_hosny_factor_chain,
+    .o_hosny_math_line,
+    .o_hosny_equation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .o_hosny_factor {
+        padding: 5px 8px;
+        border-radius: 7px;
+        background: #f5f8fc;
+        font-weight: 600;
+    }
+
+    .o_hosny_operator,
+    .o_hosny_operator_inline,
+    .o_hosny_calc_equals {
+        color: var(--o-gray-600, #6c757d);
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .o_hosny_calc_equals,
+    .o_hosny_calc_intermediate,
+    .o_hosny_calc_result {
+        text-align: center;
+    }
+
+    .o_hosny_calc_intermediate,
+    .o_hosny_calc_result {
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+    }
+
+    .o_hosny_calc_result,
+    .o_hosny_equation > strong {
+        color: #21833a;
+        font-size: 1.12rem;
+    }
+
+    .o_hosny_calc_empty {
+        color: #21833a;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .o_hosny_template_outer_name {
+        text-align: center;
+    }
+
+    .o_hosny_operation_preview_card {
+        padding-block: 22px;
+        background: #fbfcfe;
+
+        > .o_field_widget {
+            width: 100%;
+        }
+    }
+
+    .o_hosny_operation_preview {
+        display: grid;
+        gap: 12px;
+        width: 100%;
+        text-align: start;
+    }
+
+    .o_hosny_preview_title {
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--hosny-border);
+
+        strong {
+            margin: 0;
+            font-size: 1.08rem;
+        }
+    }
+
+    .o_hosny_preview_grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+    }
+
+    .o_hosny_preview_item {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+        min-height: 76px;
+        padding: 10px 12px;
+        border: 1px solid #e1e7ef;
+        border-radius: 9px;
+        background: #fff;
+
+        strong {
+            color: #21833a;
+            font-size: 1rem;
+        }
+    }
+
+    .o_hosny_preview_label {
+        color: var(--o-gray-600, #6c757d);
+        font-size: 0.86rem;
+        font-weight: 600;
+    }
+
+    .o_hosny_preview_chain {
+        grid-column: 1 / -1;
+        min-height: auto;
+    }
+
+    .o_hosny_preview_chain_content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+    }
+
+    .o_hosny_preview_chain_line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        padding-block: 4px;
+    }
+
+    .o_hosny_money {
+        display: inline-flex;
+        gap: 0.25ch;
+        align-items: baseline;
+        unicode-bidi: isolate;
+        white-space: nowrap;
+    }
+
+    .o_hosny_preview_total {
+        background: #f0f6ff;
+
+        strong {
+            color: var(--o-brand-primary);
+            font-size: 1.12rem;
+        }
+    }
+}
+
+@media (max-width: 899.98px) {
+    .o_hosny_packaging_dialog {
+        padding: 0 12px 8px !important;
+
+        .o_hosny_packaging_header {
+            margin-inline: -12px;
+            padding: 3px 12px 6px;
+        }
+
+        .o_hosny_header_meta[dir="ltr"] {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px 10px;
+
+            .o_hosny_header_product {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .o_hosny_header_unit {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .o_hosny_saved_packaging_selector {
+                grid-column: 1 / -1;
+                grid-row: 2;
+            }
+        }
+
+        .o_hosny_saved_packaging_grid {
+            gap: 5px;
+        }
+
+        .o_hosny_packaging_body[dir="ltr"] {
+            grid-template-columns: minmax(0, 1fr);
+
+            > .main_form_panel {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            > .summary_panel {
+                grid-column: 1;
+                grid-row: 2;
+                border-inline-end: 0;
+                border-top: 1px solid var(--hosny-border);
+            }
+        }
+
+        .o_hosny_packaging_card {
+            padding: 20px 16px;
+        }
+
+        .o_hosny_sentence_row {
+            grid-template-columns: minmax(0, 1fr);
+
+            .o_hosny_sentence_actions {
+                grid-column: 1;
+                justify-self: end;
+            }
+        }
+
+        .o_hosny_preview_grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .o_hosny_sentence_subject {
+            min-width: auto;
+        }
+
+        .o_hosny_sentence_quantity {
+            flex-basis: 90px;
+        }
+
+        .o_hosny_sentence_content {
+            flex-basis: 170px;
+            min-width: 150px;
+        }
+    }
+}
+.o_hosny_duplicate_warning_form {
+    .o_hosny_duplicate_warning_alert {
+        background: #fff8e1;
+        border: 1px solid #e2b54a;
+        border-inline-start-width: 6px;
+        color: #5c4510;
+        margin: 0;
+        padding: 1.25rem;
+    }
+
+    .o_hosny_duplicate_warning_icon {
+        color: #d39b17;
+        margin-top: 0.15rem;
+    }
+
+    .o_hosny_duplicate_warning_message {
+        white-space: pre-line;
+    }
+}

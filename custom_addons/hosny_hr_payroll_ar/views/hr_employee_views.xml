@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_view_form_hosny_payroll_ar" model="ir.ui.view">
+        <field name="name">hr.employee.form.hosny.payroll.ar</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_work_entry.hr_employee_view_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='payroll_information']" position="attributes">
+                <attribute name="string">العقد والراتب</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='payroll_information']//group[@name='contract']/div[1]/span[1]" position="replace">
+                <span>نظرة عامة على العقد</span>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//button[@name='%(hr.hr_version_wizard_action)d']" position="attributes">
+                <attribute name="string">تحميل قالب</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//label[@for='contract_date_start']" position="attributes">
+                <attribute name="string">العقد</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='contract_date_start']" position="attributes">
+                <attribute name="string">تاريخ البداية</attribute>
+                <attribute name="placeholder">لا يوجد عقد فعال</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//div[@name='contract_dates']/span" position="replace">
+                <span invisible="not contract_date_start">إلى</span>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='contract_date_end']" position="attributes">
+                <attribute name="string">تاريخ النهاية</attribute>
+                <attribute name="placeholder">غير محدد</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='payroll_information']//label[@for='wage']" position="before">
+                <field name="hosny_wage_type"/>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//label[@for='wage']" position="attributes">
+                <attribute name="string">الأجر</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//div[@name='wage']/field[@name='wage']" position="after">
+                <span invisible="hosny_wage_type != 'fixed'">/ شهر</span>
+                <span invisible="hosny_wage_type != 'hourly'">/ ساعة</span>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='employee_type']" position="attributes">
+                <attribute name="string">نوع الموظف</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='contract_type_id']" position="attributes">
+                <attribute name="string">نوع العقد</attribute>
+                <attribute name="placeholder">اختر نوع العقد</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='structure_type_id']" position="attributes">
+                <attribute name="string">فئة الأجر</attribute>
+                <attribute name="placeholder">سيُستبعد الموظف من دفعات الرواتب</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='structure_type_id']" position="after">
+                <field name="struct_id"
+                       string="هيكل الراتب"
+                       options="{'no_create': True}"/>
+                <field name="schedule_pay" string="دورية صرف الراتب"/>
+                <field name="hosny_payroll_reference"/>
+            </xpath>
+
+            <xpath expr="//page[@name='payroll_information']//separator[@name='schedule']" position="attributes">
+                <attribute name="string">الجدول</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='work_entry_source']" position="attributes">
+                <attribute name="string">مصدر قيد العمل</attribute>
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='resource_calendar_id']" position="attributes">
+                <attribute name="string">ساعات العمل</attribute>
+                <attribute name="help">ساعات العمل الافتراضية المحددة للموظف.</attribute>
+            </xpath>
+            <xpath expr="//page[@name='payroll_information']//field[@name='resource_calendar_id']" position="after">
+                <button name="action_hosny_open_salary_adjustments"
+                        type="object"
+                        string="إضافة مدخلات"
+                        icon="fa-plus"
+                        class="btn-secondary mt-3"/>
+                <separator string="التأمينات الاجتماعية"/>
+                <field name="hosny_social_insurance_reference"/>
+            </xpath>
+
+            <xpath expr="//page[@name='payroll_information']//group[@name='contract']" position="after">
+                <group name="hosny_payroll_components" groups="hr.group_hr_manager">
+                    <separator string="البدلات"/>
+                    <label for="hosny_housing_allowance"/>
+                    <div class="o_row">
+                        <field name="hosny_housing_allowance" class="oe_inline o_hr_narrow_field"/>
+                        <span>/ شهر</span>
+                    </div>
+                    <label for="hosny_transport_allowance"/>
+                    <div class="o_row">
+                        <field name="hosny_transport_allowance" class="oe_inline o_hr_narrow_field"/>
+                        <span>/ شهر</span>
+                    </div>
+                    <label for="hosny_other_allowance"/>
+                    <div class="o_row">
+                        <field name="hosny_other_allowance" class="oe_inline o_hr_narrow_field"/>
+                        <span>/ شهر</span>
+                    </div>
+                    <separator string="مخصص الإجازة السنوية"/>
+                    <field name="hosny_annual_leave_type_id"
+                           options="{'no_create': True}"/>
+                    <label for="hosny_annual_leave_days"/>
+                    <div class="o_row">
+                        <field name="hosny_annual_leave_days" class="oe_inline o_hr_narrow_field"/>
+                        <span>يومًا</span>
+                    </div>
+                    <field name="hosny_allocated_annual_leave_days" readonly="1"/>
+                    <field name="hosny_pending_annual_leave_days" readonly="1"/>
+                    <field name="hosny_remaining_annual_leave_days" readonly="1"/>
+                    <div colspan="2" class="d-flex flex-wrap gap-2 mt-2">
+                        <button name="action_hosny_sync_annual_leave"
+                                type="object"
+                                string="تخصيص / تحديث الرصيد"
+                                icon="fa-refresh"
+                                class="btn-primary"/>
+                        <button name="action_hosny_open_annual_leave_allocations"
+                                type="object"
+                                string="فتح التخصيصات"
+                                icon="fa-external-link"
+                                class="btn-secondary"/>
+                    </div>
+
+                    <separator string="ملخص الشهر الحالي"/>
+                    <field name="hosny_estimated_monthly_wage"
+                           string="الراتب الأساسي"
+                           readonly="1"/>
+                    <field name="hosny_total_allowances"
+                           string="إجمالي البدلات"
+                           readonly="1"/>
+                    <field name="hosny_current_additions"
+                           string="إجمالي الإضافات المعتمدة"
+                           readonly="1"/>
+                    <field name="hosny_current_deductions"
+                           string="إجمالي الاستقطاعات المعتمدة"
+                           readonly="1"/>
+                    <field name="hosny_current_net_compensation"
+                           string="صافي الراتب قبل الضرائب والتأمينات"
+                           readonly="1"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//page[@name='payroll_information']" position="after">
+                <page name="hosny_salary_adjustments"
+                      string="تعديلات الرواتب"
+                      groups="hr.group_hr_manager">
+                    <field name="hosny_salary_adjustment_ids"
+                           context="{
+                               'default_employee_id': id,
+                               'default_version_id': version_id,
+                               'default_company_id': company_id
+                           }">
+                        <list string="تعديلات الرواتب"
+                              decoration-success="state == 'approved'"
+                              decoration-muted="state == 'cancelled'">
+                            <field name="date_start"/>
+                            <field name="name"/>
+                            <field name="adjustment_type"/>
+                            <field name="category"/>
+                            <field name="recurrence"/>
+                            <field name="date_end" optional="show"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="amount" sum="الإجمالي"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

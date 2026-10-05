@@ -1,0 +1,186 @@
+/* ملاحظات الفاتورة (order_note_button.js / order_note_button.xml).
+ *
+ * rtlcss يقلب هذا الملف في حزمة RTL، فكل الاتجاهات هنا منطقية
+ * (inline-start/end) أو متماثلة.  المحددات تبدأ بـ :is(#hs,.pos) وتزيد عن
+ * قواعد hosny_pos_skin المقابلة بصنف واحد على الأقل، لأن ترتيب تحميل الملفين
+ * في الحزمة غير مضمون. */
+
+/* ── 2. الملاحظة في قائمة الطلب، بعد آخر صنف ── */
+:is(#hs,.pos) .order-container > .hosny-invoice-note-strip {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    margin: 6px 0 0 !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    border: 1px solid #B9D3F0 !important;
+    background: #EEF5FD !important;
+    color: #17395F !important;
+    text-align: start !important;
+}
+:is(#hs,.pos) .order-container > .hosny-invoice-note-strip .hosny-invoice-note-strip-label {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    color: #2B5DA0 !important;
+}
+:is(#hs,.pos) .order-container > .hosny-invoice-note-strip .hosny-invoice-note-strip-text {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+    white-space: pre-line !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* ── 3. شاشة الدفع: الزر بجانب «إدخال كود» ── */
+:is(#hs,.pos) .payment-screen .payment-buttons:has(> .hosny-invoice-note-pay-btn) {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons:has(> .hosny-invoice-note-pay-btn) > div:first-child {
+    grid-column: 1 / -1 !important;
+}
+/* «إدخال كود» تمدّه قاعدة سابقة على الصف كله؛ هنا يتقاسم الصف مع الملاحظات */
+:is(#hs,.pos) .payment-screen .payment-buttons:has(> .hosny-invoice-note-pay-btn) > .hosny-payment-action-btn {
+    grid-column: auto !important;
+    margin: 0 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 6px 10px !important;
+    border-radius: 12px !important;
+    border: 1px solid #D5DEE9 !important;
+    background: #FFFFFF !important;
+    color: #24374B !important;
+    font-weight: 700 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn i {
+    flex: 0 0 auto !important;
+    width: 20px !important;
+    font-size: 16px !important;
+    color: #2B5DA0 !important;
+}
+:is(#hs,.pos) .payment-screen .hosny-invoice-note-pay-btn .hosny-invoice-note-pay-copy {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    line-height: 1.2 !important;
+    text-align: start !important;
+}
+:is(#hs,.pos) .payment-screen .hosny-invoice-note-pay-btn .hosny-invoice-note-pay-title {
+    font-size: 14px !important;
+}
+:is(#hs,.pos) .payment-screen .hosny-invoice-note-pay-btn .hosny-invoice-note-pay-preview {
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    opacity: .85 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn.has-note {
+    background: #E8F7EE !important;
+    border-color: #159A55 !important;
+    color: #107541 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn.has-note i {
+    color: #159A55 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn.is-wanted {
+    background: #FFF4DC !important;
+    border-color: #E0A93B !important;
+    color: #6E4A00 !important;
+}
+:is(#hs,.pos) .payment-screen .payment-buttons > .hosny-invoice-note-pay-btn.is-wanted i {
+    color: #B7791F !important;
+}
+
+/* ── 4. النافذة ── */
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: start;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-help {
+    margin: 0;
+    color: #4A5D73;
+    font-size: 14px;
+    line-height: 1.6;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-customer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #EEF5FD;
+    color: #17395F;
+    font-size: 15px;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-hints {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-hints-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4A5D73;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #B9C7D8;
+    background: #FFFFFF;
+    color: #17395F;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-hint:hover {
+    background: #EAF1FA;
+    border-color: #2B5DA0;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-hint i {
+    font-size: 11px;
+    opacity: .7;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-input {
+    min-height: 140px;
+    font-size: 18px;
+    line-height: 1.6;
+    border-radius: 12px;
+    resize: vertical;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 32px;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-clear {
+    border: 0;
+    background: transparent;
+    color: #B42318;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 0;
+}
+:is(#hs,body:has(.pos)) .hosny-invoice-note-dialog .hosny-ind-count {
+    margin-inline-start: auto;
+    color: #8A99AB;
+    font-size: 12px;
+}

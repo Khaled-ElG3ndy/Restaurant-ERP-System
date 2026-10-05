@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="hosny_pos_controls.PaymentOrdersButton">
+        <button type="button" class="control-button payment-orders-button btn btn-light rounded-0 fw-bolder"
+            t-on-click="() => this.openPaymentOrders()">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span>تسديد الفواتير</span>
+        </button>
+    </t>
+
+    <t t-name="hosny_pos_controls.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension"
+       owl="1">
+        <xpath expr="//button[hasclass('more-btn')]" position="before">
+            <button t-if="!props.showRemainingButtons"
+                    t-att-class="buttonClass"
+                    class="control-button payment-orders-button btn btn-light rounded-0 fw-bolder"
+                    t-on-click="() => this.openPaymentOrders()">
+                <i class="fa fa-money me-1" aria-hidden="true"/>
+                <span>تسديد الفواتير</span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_controls.PaymentOrdersScreen">
+        <div class="pos-screen payment-orders-screen screen h-100">
+            <div class="contents d-flex flex-column flex-nowrap h-100">
+                <div class="payment-orders-shell d-flex flex-column flex-nowrap h-100">
+                    <div class="payment-orders-header">
+                        <div class="payment-orders-header-top">
+                            <div class="payment-orders-header-main">
+                                <div class="payment-orders-title-block">
+                                    <h2 class="mb-0">تسديد الفواتير</h2>
+                                </div>
+                                <div class="payment-orders-header-side">
+                                    <div class="payment-orders-stats">
+                                        <t t-foreach="summaryCards" t-as="summaryCard" t-key="summaryCard.key">
+                                            <div class="payment-orders-stat">
+                                                <span class="stat-label" t-esc="summaryCard.label" />
+                                                <strong class="stat-value" t-esc="summaryCard.value" />
+                                            </div>
+                                        </t>
+                                    </div>
+
+                                    <!-- ✦ Unified button group: Refresh + Back side by side -->
+                                    <div class="payment-orders-btn-group">
+                                        <button
+                                            class="btn-action btn-refresh"
+                                            t-att-disabled="state.refreshing"
+                                            t-on-click="() => this.refreshOrders()"
+                                        >
+                                            <i t-att-class="state.refreshing ? 'fa fa-refresh fa-spin' : 'fa fa-refresh'" />
+                                            <span>تحديث</span>
+                                        </button>
+                                        <button class="btn-action btn-back" t-on-click="() => this.back()">
+                                            <i class="fa fa-chevron-right" />
+                                            <span>رجوع</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-orders-toolbar">
+                            <div class="payment-orders-search">
+                                <i class="fa fa-search" />
+                                <input
+                                    type="search"
+                                    t-model="state.searchTerm"
+                                    placeholder="ابحث برقم الطلب أو الطاولة أو اسم العميل"
+                                />
+                                <button
+                                    t-if="state.searchTerm"
+                                    class="search-clear"
+                                    t-on-click="() => this.clearSearch()"
+                                >
+                                    <i class="fa fa-times" />
+                                </button>
+                            </div>
+                            <div class="payment-orders-sort">
+                                <select id="payment-orders-sort-select" t-model="state.sortBy" aria-label="ترتيب">
+                                    <option value="recent">الأحدث</option>
+                                    <option value="due_desc">الأعلى استحقاقاً</option>
+                                    <option value="amount_desc">الأعلى قيمة</option>
+                                    <option value="name">الاسم</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="payment-orders-statusbar">
+                            <span t-if="lastRefreshLabel">
+                                آخر تحديث:
+                                <t t-esc="lastRefreshLabel" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="orders-list p-3 overflow-auto flex-grow-1">
+                        <t t-if="allPendingOrders.length === 0">
+                            <div class="payment-orders-empty-state">
+                                <div class="empty-icon">
+                                    <i class="fa fa-check-circle" />
+                                </div>
+                                <h3>لا توجد فواتير مفتوحة حالياً</h3>
+                                <p class="mb-0">كل الطلبات تمت تسويتها أو لا توجد طلبات تحتاج إلى دفع الآن.</p>
+                            </div>
+                        </t>
+                        <t t-elif="pendingOrders.length === 0">
+                            <div class="payment-orders-empty-state is-filtered">
+                                <div class="empty-icon">
+                                    <i class="fa fa-search" />
+                                </div>
+                                <h3>لا توجد نتائج مطابقة</h3>
+                                <p class="mb-0">جرّب تعديل البحث أو تغيير الفلتر للوصول إلى الطلب المطلوب.</p>
+                            </div>
+                        </t>
+                        <t t-foreach="pendingOrders" t-as="pendingOrder" t-key="pendingOrder.key">
+                            <article class="order-card">
+                                <div class="order-card-main">
+                                    <div class="order-card-top">
+                                        <div class="order-card-identity">
+                                            <span class="order-receipt-label">
+                                                <i class="fa fa-file-text-o" />
+                                                رقم الإيصال
+                                            </span>
+                                            <div class="order-card-name-row">
+                                                <div
+                                                    class="order-name fw-bold"
+                                                    t-esc="pendingOrder.posReference || pendingOrder.name"
+                                                />
+                                                <span t-attf-class="order-status-badge {{ pendingOrder.statusClass }}">
+                                                    <t t-esc="pendingOrder.statusLabel" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="order-card-side">
+                                            <div class="order-card-totals">
+                                                <span class="totals-label">المتبقي</span>
+                                                <strong t-esc="formatCurrency(pendingOrder.dueAmount)" />
+                                            </div>
+                                            <div class="order-card-actions">
+                                                <button class="btn btn-primary btn-lg" t-on-click="() => this.payOrder(pendingOrder)">
+                                                    <span>فتح وتسديد</span>
+                                                    <i class="fa fa-angle-left" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="order-card-meta">
+                                        <span class="meta-chip">
+                                            <i class="fa fa-shopping-basket" />
+                                            <span class="meta-label">عدد الأصناف</span>
+                                            <t t-esc="pendingOrder.lineCount" />
+                                        </span>
+                                        <span class="meta-chip" t-if="pendingOrder.name and pendingOrder.posReference and pendingOrder.posReference !== pendingOrder.name">
+                                            <i class="fa fa-tag" />
+                                            <span class="meta-label">اسم الطلب</span>
+                                            <t t-esc="pendingOrder.name" />
+                                        </span>
+                                        <span class="meta-chip" t-if="pendingOrder.tableName">
+                                            <i class="fa fa-cutlery" />
+                                            <span class="meta-label">الطاولة</span>
+                                            <t t-esc="pendingOrder.tableName" />
+                                        </span>
+                                        <span class="meta-chip" t-if="pendingOrder.partnerName">
+                                            <i class="fa fa-user" />
+                                            <span class="meta-label">العميل</span>
+                                            <t t-esc="pendingOrder.partnerName" />
+                                        </span>
+                                        <span class="meta-chip" t-if="pendingOrder.dateLabel">
+                                            <i class="fa fa-clock-o" />
+                                            <t t-esc="pendingOrder.dateLabel" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </article>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

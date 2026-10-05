@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+    <t
+        t-name="hosny_backend_theme.AppsBarToggle"
+        t-inherit="muk_web_appsbar.AppsBar"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div[contains(concat(' ', normalize-space(@class), ' '), ' mk_apps_sidebar ')]" position="inside">
+            <div class="hosny_appsbar_toggle_wrap">
+                <button
+                    type="button"
+                    class="hosny_appsbar_toggle"
+                    t-att-data-state="this.hosnyGetAppsbarState()"
+                    t-att-title="this.hosnyGetAppsbarToggleTitle()"
+                    t-att-aria-label="this.hosnyGetAppsbarToggleTitle()"
+                    t-on-click="this.hosnyCycleAppsbar"
+                >
+                    <span class="hosny_appsbar_toggle__ring" aria-hidden="true">
+                        <svg
+                            class="hosny_appsbar_toggle__icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path class="hosny_appsbar_toggle__arrow" d="M9 6L15 12L9 18" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

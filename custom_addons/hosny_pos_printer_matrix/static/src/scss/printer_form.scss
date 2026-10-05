@@ -1,0 +1,82 @@
+// شاشة الطابعة — توزيع الأصناف على ثلاثة أعمدة.
+//
+// لماذا عدد ثابت وليس auto-fill؟ لأن auto-fill يحسب الأعمدة من العرض
+// المتاح، وإن ضاقت الحاوية لأي سبب ينهار إلى عمود واحد. الطلب ثلاثة
+// أعمدة، فنفرضها فرضاً: repeat(3, …) يعطي ثلاثة دائماً.
+//
+// ملاحظتان عن البنية:
+//  • جذر الودجت (web.Many2ManyCheckboxesField) هو نفسه حاوية العناصر،
+//    فالكلاس يقع على الحاوية وأبناؤها هي الخلايا.
+//  • ‎.o-checkbox عليه width: fit-content من أودو، فنعيد ضبطه.
+//
+// نستخدم `order` لتبديل مكان الاسم والمربّع بدل flex-direction أو
+// left/right، لأن rtlcss يقلب الخصائص الاتجاهية ولا يمسّ order.
+
+.o_field_widget.hs_checkbox_grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 4px;
+    align-items: stretch;
+
+    // الخليّة
+    > div {
+        min-width: 0;
+        border: 1px solid var(--o-gray-300, #d8dadd);
+        border-radius: 2px;
+        background-color: var(--o-view-background-color, #fff);
+        padding: 3px 8px;
+
+        &:hover {
+            background-color: var(--o-gray-100, #f4f5f6);
+        }
+    }
+
+    .o-checkbox.form-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        min-height: 22px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-check-input {
+        order: 1;          // المربّع في الطرف المقابل
+        float: none;
+        flex: 0 0 auto;
+        margin: 0;
+    }
+
+    .form-check-label {
+        order: -1;         // الاسم أولاً
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0;
+        line-height: 1.35;
+        cursor: pointer;
+        overflow-wrap: anywhere;
+    }
+}
+
+// صفحة التبويب تأخذ العرض الكامل مهما كان ما حولها
+.tab-pane.hs_wide_page {
+    width: 100%;
+    min-width: 0;
+}
+
+// تابلت: عمودان — موبايل: عمود
+@media (max-width: 991px) {
+    .o_field_widget.hs_checkbox_grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .o_field_widget.hs_checkbox_grid {
+        grid-template-columns: 1fr !important;
+    }
+}

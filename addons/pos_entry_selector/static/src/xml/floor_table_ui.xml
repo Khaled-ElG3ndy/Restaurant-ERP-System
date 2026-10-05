@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="pos_entry_selector.FloorTableStyle"
+       t-inherit="pos_restaurant.FloorScreen"
+       t-inherit-mode="extension"
+       owl="1">
+
+        <xpath expr="//div[hasclass('floor-table') and hasclass('table')]" position="attributes">
+            <attribute name="class" add="custom-floor-table" separator=" "/>
+        </xpath>
+
+        <xpath expr="//div[hasclass('floor-table') and hasclass('table')]" position="attributes">
+            <attribute name="t-att-class">{
+                'position-relative m-0': isKanban,
+                'position-absolute': pos.floorPlanStyle !== 'kanban',
+                'selected': state.selectedTableIds.includes(table.id),
+                'occupied': isOccupied,
+                'table-occupied': isOccupied,
+                'table-free': !isOccupied,
+            }</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('info')]" position="inside">
+            <div class="pos-floor-indicator" aria-hidden="true"/>
+            <t t-set="amount" t-value="this.getTableAmount(table)"/>
+            <t t-if="isOccupied and amount">
+                <div class="table-amount-badge">
+                    <div class="badge-icon">
+                        <i class="fa fa-credit-card"/>
+                    </div>
+                    <div class="badge-value" t-esc="amount"/>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('label')]" position="replace">
+            <div class="custom-floor-table-content">
+                <div class="custom-floor-table-inner">
+                    <div class="custom-floor-table-number" t-esc="table.getName ? table.getName() : (table.table_number || table.name)"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

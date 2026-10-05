@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_meal_combo_costs_form" model="ir.ui.view">
+        <field name="name">pos.order.meal.combo.costs.form</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lines']/list/field[@name='product_id']" position="after">
+                <field name="ui_cost_role"
+                       string=" "
+                       readonly="1"
+                       optional="show"
+                       widget="badge"
+                       decoration-info="ui_cost_role"/>
+                <field name="ui_has_additional_products" column_invisible="True"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/list/field[@name='total_cost']" position="before">
+                <field name="ui_product_cost"
+                       string="Product Cost"
+                       optional="show"
+                       readonly="1"
+                       width="105px"/>
+                <field name="ui_additional_products_cost"
+                       string="Additional Products Cost"
+                       optional="show"
+                       readonly="1"
+                       widget="pos_additional_cost"
+                       width="165px"/>
+                <field name="ui_total_cost"
+                       string="Total Cost"
+                       optional="show"
+                       readonly="1"
+                       width="105px"/>
+                <field name="ui_margin"
+                       string="Margin"
+                       optional="hide"
+                       readonly="1"
+                       width="95px"/>
+                <field name="ui_margin_percent"
+                       string="Margin %"
+                       optional="hide"
+                       readonly="1"
+                       width="85px"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/list/field[@name='total_cost']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lines']/list/field[@name='margin']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lines']/list/field[@name='margin_percent']" position="attributes">
+                <attribute name="column_invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lines']/form/group/field[@name='full_product_name']" position="after">
+                <field name="ui_cost_role" readonly="1" widget="badge" invisible="not ui_cost_role"/>
+                <field name="ui_product_cost" string="Product Cost" readonly="1"/>
+                <field name="ui_additional_products_cost"
+                       string="Additional Products Cost"
+                       readonly="1"
+                       widget="pos_additional_cost"/>
+                <field name="ui_has_additional_products" invisible="1"/>
+                <field name="ui_total_cost" string="Total Cost" readonly="1"/>
+                <field name="ui_margin" string="Margin" readonly="1"/>
+                <field name="ui_margin_percent" string="Margin %" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_line_meal_combo_list" model="ir.ui.view">
+        <field name="name">pos.order.line.meal.combo.list</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="is_meal_parent" optional="hide"/>
+                <field name="is_meal_component" optional="hide"/>
+                <field name="meal_parent_uuid" optional="hide"/>
+                <field name="meal_component_product_id" optional="hide"/>
+                <field name="is_additional_final_parent" optional="hide"/>
+                <field name="is_additional_final_product" optional="hide"/>
+                <field name="additional_final_parent_uuid" optional="hide"/>
+                <field name="additional_final_line_id" optional="hide"/>
+                <field name="ui_cost_role" string=" " optional="show" readonly="1" widget="badge" decoration-info="ui_cost_role"/>
+                <field name="ui_has_additional_products" column_invisible="True"/>
+                <field name="ui_product_cost" string="Product Cost" optional="show" readonly="1"/>
+                <field name="ui_additional_products_cost"
+                       string="Additional Products Cost"
+                       optional="show"
+                       readonly="1"
+                       widget="pos_additional_cost"/>
+                <field name="ui_total_cost" string="Total Cost" optional="show" readonly="1"/>
+                <field name="ui_margin" string="Margin" optional="hide" readonly="1"/>
+                <field name="ui_margin_percent" string="Margin %" optional="hide" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_line_meal_combo_form" model="ir.ui.view">
+        <field name="name">pos.order.line.meal.combo.form</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line_form"/>
+        <field name="arch" type="xml">
+            <group position="inside">
+                <group string="Meal Combo">
+                    <field name="is_meal_parent" readonly="1"/>
+                    <field name="is_meal_component" readonly="1"/>
+                    <field name="meal_parent_uuid" readonly="1"/>
+                    <field name="meal_component_product_id" readonly="1"/>
+                    <field name="meal_component_display_mode" readonly="1"/>
+                    <field name="is_additional_final_parent" readonly="1"/>
+                    <field name="is_additional_final_product" readonly="1"/>
+                    <field name="additional_final_parent_uuid" readonly="1"/>
+                    <field name="additional_final_line_id" readonly="1"/>
+                </group>
+                <group string="Cost Summary">
+                    <field name="ui_cost_role" readonly="1" widget="badge" invisible="not ui_cost_role"/>
+                    <field name="ui_product_cost" string="Product Cost" readonly="1"/>
+                    <field name="ui_additional_products_cost"
+                           string="Additional Products Cost"
+                           readonly="1"
+                           widget="pos_additional_cost"/>
+                    <field name="ui_has_additional_products" invisible="1"/>
+                    <field name="ui_total_cost" string="Total Cost" readonly="1"/>
+                    <field name="ui_margin" string="Margin" readonly="1"/>
+                    <field name="ui_margin_percent" string="Margin %" readonly="1"/>
+                </group>
+                <group string="Cost Audit" groups="point_of_sale.group_pos_manager">
+                    <field name="mrp_direct_cost" readonly="1" widget="monetary"/>
+                    <field name="additional_final_products_cost" readonly="1" widget="monetary"/>
+                    <field name="total_cost" readonly="1" widget="monetary"/>
+                    <field name="margin" readonly="1" widget="monetary"/>
+                    <field name="margin_percent" readonly="1" widget="percentage"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

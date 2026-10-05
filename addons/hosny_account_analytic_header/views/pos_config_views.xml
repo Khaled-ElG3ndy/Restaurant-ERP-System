@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config_view_form_analytic_header" model="ir.ui.view">
+        <field name="name">pos.config.form.analytic.header</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='title']" position="after">
+                <group>
+                    <field name="analytic_account_id"
+                           string="الحساب التحليلي"
+                           options="{'no_create': True}"
+                           readonly="has_active_session"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_config_tree_analytic_header" model="ir.ui.view">
+        <field name="name">pos.config.list.analytic.header</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="analytic_account_id" string="الحساب التحليلي"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

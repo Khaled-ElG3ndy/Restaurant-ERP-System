@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_type_list" model="ir.ui.view">
+        <field name="name">pos.order.type.list</field>
+        <field name="model">pos.order.type</field>
+        <field name="arch" type="xml">
+            <list string="أنواع الفواتير" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="is_default"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pos_order_type" model="ir.actions.act_window">
+        <field name="name">أنواع الفواتير</field>
+        <field name="res_model">pos.order.type</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_pos_order_type"
+              name="أنواع الفواتير"
+              parent="point_of_sale.menu_point_config_product"
+              action="action_pos_order_type"
+              sequence="25"/>
+</odoo>

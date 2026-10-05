@@ -1,0 +1,7 @@
+<t t-set="amount" t-value="this.getTableAmount ? this.getTableAmount(props.table) : null"/>
+<t t-if="amount">
+    <div class="table-amount-badge">
+        <i class="fa fa-money-bill-wave"/>
+        <span t-esc="amount"/>
+    </div>
+</t>

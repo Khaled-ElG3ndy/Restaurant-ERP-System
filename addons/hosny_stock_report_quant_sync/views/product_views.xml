@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_product_stock_tree_exact_unit_cost" model="ir.ui.view">
+        <field name="name">product.product.stock.list.exact.unit.cost</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock_account.product_product_stock_tree_inherit_stock_account"/>
+        <field name="arch" type="xml">
+            <field name="avg_cost" position="replace">
+                <field name="hosny_stock_report_unit_cost"
+                       string="تكلفة الوحدة"
+                       optional="show"
+                       widget="monetary"
+                       options="{
+                           'currency_field': 'company_currency_id',
+                           'field_digits': True,
+                       }"/>
+            </field>
+            <field name="categ_id" position="attributes">
+                <attribute name="string">تصنيف المخزون</attribute>
+                <attribute name="optional">show</attribute>
+                <attribute name="context">{'hierarchical_naming': True}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_search_form_view_stock_report_open_categories" model="ir.ui.view">
+        <field name="name">product.product.search.stock.report.open.categories</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_search_form_view_stock_report"/>
+        <field name="arch" type="xml">
+            <xpath expr="//searchpanel" position="attributes">
+                <attribute name="class">o_hosny_product_category_search_panel</attribute>
+            </xpath>
+            <xpath expr="//searchpanel/field[@name='categ_id']" position="attributes">
+                <attribute name="expand">1</attribute>
+                <attribute name="depth">10</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_view_search_catalog_open_categories" model="ir.ui.view">
+        <field name="name">product.product.search.catalog.open.categories</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_view_search_catalog"/>
+        <field name="arch" type="xml">
+            <xpath expr="//searchpanel" position="attributes">
+                <attribute name="class">o_hosny_product_category_search_panel</attribute>
+            </xpath>
+            <xpath expr="//searchpanel/field[@name='categ_id']" position="attributes">
+                <attribute name="expand">1</attribute>
+                <attribute name="depth">10</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_editable_full_category" model="ir.ui.view">
+        <field name="name">stock.quant.list.editable.full.category</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+            <field name="product_categ_id" position="attributes">
+                <attribute name="string">تصنيف المخزون</attribute>
+                <attribute name="optional">show</attribute>
+                <attribute name="context">{'hierarchical_naming': True}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_simple_full_category" model="ir.ui.view">
+        <field name="name">stock.quant.list.full.category</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_simple"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="product_categ_id"
+                       string="تصنيف المخزون"
+                       optional="show"
+                       context="{'hierarchical_naming': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_inventory_editable_full_category" model="ir.ui.view">
+        <field name="name">stock.quant.inventory.list.editable.full.category</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <field name="product_categ_id" position="attributes">
+                <attribute name="string">تصنيف المخزون</attribute>
+                <attribute name="optional">show</attribute>
+                <attribute name="context">{'hierarchical_naming': True}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

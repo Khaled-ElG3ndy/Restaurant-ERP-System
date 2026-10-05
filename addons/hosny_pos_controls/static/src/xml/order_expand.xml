@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!--
+    «عرض الطلب كاملاً»: زر تكبير في ركن قائمة الأصناف (order_expand.js).
+    OrderDisplay تستخدمه شاشات كثيرة (الفاتورة، التذاكر، التقسيم…)، فالزر
+    لا يُكتب فيه مباشرة: نفتح له مكاناً باسم hosnyTail، ولا يملؤه إلا
+    OrderSummary في شاشة المنتجات. الشكل كله في hosny_pos_skin (قسم 38).
+  -->
+  <t t-name="hosny_pos_controls.OrderDisplayExpandSlot"
+     t-inherit="point_of_sale.OrderDisplay"
+     t-inherit-mode="extension">
+    <xpath expr="//div[hasclass('order-container')]" position="inside">
+      <t t-if="props.slots?.hosnyTail" t-slot="hosnyTail"/>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.OrderSummaryExpandButton"
+     t-inherit="point_of_sale.OrderSummary"
+     t-inherit-mode="extension">
+    <xpath expr="//OrderDisplay" position="inside">
+      <t t-set-slot="hosnyTail">
+        <div class="hosny-order-expand-dock">
+          <button type="button"
+                  class="hosny-order-expand"
+                  title="عرض الطلب كاملاً والملاحظات"
+                  aria-label="عرض الطلب كاملاً والملاحظات"
+                  t-on-click.stop="openHosnyOrderExpand">
+            <i class="fa fa-expand" aria-hidden="true"/>
+          </button>
+        </div>
+      </t>
+    </xpath>
+  </t>
+
+  <!-- ملاحظات المطبخ تحت اسم الصنف في قائمة الطلب: قائمة أودو التي كانت
+       تعرضها (info-list) مخفية في هذه النقطة كلها (orderline_layout.css). -->
+  <t t-name="hosny_pos_controls.OrderlineKitchenNotes"
+     t-inherit="point_of_sale.Orderline"
+     t-inherit-mode="extension">
+    <xpath expr="//div[hasclass('hosny-orderline-head')]" position="after">
+      <div t-if="vals.isDisplay and vals.internalNote and vals.internalNote.length"
+           class="hosny-orderline-notes"
+           dir="rtl">
+        <span t-foreach="vals.internalNote" t-as="note" t-key="note_index" class="hosny-orderline-note">
+          <i class="fa fa-sticky-note-o" aria-hidden="true"/>
+          <span t-esc="note.text or note"/>
+        </span>
+      </div>
+    </xpath>
+  </t>
+
+  <t t-name="hosny_pos_controls.OrderExpandDialog">
+    <Dialog size="'xl'"
+            header="false"
+            footer="false"
+            withBodyPadding="false"
+            contentClass="'hosny-oe-content'"
+            bodyClass="'hosny-oe-body'">
+      <t t-set="oeOrder" t-value="this.order"/>
+      <t t-set="oeKitchen" t-value="this.kitchen"/>
+      <t t-set="oeInfo" t-value="this.sendInfo(oeKitchen)"/>
+      <div class="hosny-oe" dir="rtl">
+
+        <header class="hosny-oe-header">
+          <div class="hosny-oe-heading">
+            <span class="hosny-oe-heading-icon" aria-hidden="true"><i class="fa fa-list-alt"/></span>
+            <div class="hosny-oe-heading-copy">
+              <h4 class="hosny-oe-title">تفاصيل الطلب</h4>
+              <div class="hosny-oe-meta">
+                <span t-foreach="placeLabels" t-as="label" t-key="label_index"
+                      class="hosny-oe-meta-chip" t-esc="label"/>
+                <span class="hosny-oe-meta-chip" t-esc="itemCountLabel"/>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="hosny-oe-close" title="إغلاق" aria-label="إغلاق"
+                  t-on-click="() => this.close()">
+            <i class="fa fa-times" aria-hidden="true"/>
+          </button>
+        </header>
+
+        <div class="hosny-oe-main">
+          <section class="hosny-oe-lines" aria-label="الأصناف">
+            <div t-if="!rows.length" class="hosny-oe-empty">
+              <i class="fa fa-shopping-cart" aria-hidden="true"/>
+              <span>لا توجد أصناف في هذا الطلب</span>
+            </div>
+            <t t-foreach="rows" t-as="row" t-key="row.line.uuid">
+              <t t-set="line" t-value="row.line"/>
+              <t t-set="view" t-value="this.lineView(line)"/>
+              <t t-set="status" t-value="this.lineStatus(line, oeKitchen)"/>
+              <t t-set="isEditing" t-value="state.editing === line.uuid"/>
+              <article class="hosny-oe-line"
+                       t-att-class="{'is-child': row.child, 'is-editing': isEditing, 'has-notes': view.notes.length}">
+                <div class="hosny-oe-line-top">
+                  <span t-if="!row.child" class="hosny-oe-index" t-esc="row.index"/>
+                  <span t-else="" class="hosny-oe-index is-child" aria-hidden="true"/>
+                  <div class="hosny-oe-line-name">
+                    <strong class="hosny-oe-name" t-esc="view.name"/>
+                    <div class="hosny-oe-line-tags">
+                      <span t-if="view.attributes" class="hosny-oe-tag is-variant" t-esc="view.attributes"/>
+                      <span t-if="view.hospitality" class="hosny-oe-tag is-hospitality">ضيافة</span>
+                      <span t-if="view.discount" class="hosny-oe-tag is-discount">خصم <bdi t-esc="view.discount"/></span>
+                      <span t-if="status" class="hosny-oe-status" t-attf-class="is-{{status.key}}">
+                        <i t-attf-class="fa {{status.icon}}" aria-hidden="true"/>
+                        <span t-esc="status.label"/>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="hosny-oe-figures">
+                    <span class="hosny-oe-qty" title="الكمية"><bdi t-esc="view.qty"/><small>×</small></span>
+                    <div class="hosny-oe-amounts">
+                      <bdi t-if="view.total" class="hosny-oe-total" t-esc="view.total"/>
+                      <span t-if="view.unitPrice" class="hosny-oe-unit"><bdi t-esc="view.unitPrice"/> للوحدة</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div t-if="view.notes.length or editable" class="hosny-oe-notes">
+                  <span t-foreach="view.notes" t-as="note" t-key="note_index" class="hosny-oe-note">
+                    <i class="fa fa-sticky-note-o" aria-hidden="true"/>
+                    <span class="hosny-oe-note-text" t-esc="note.text"/>
+                    <button t-if="editable" type="button" class="hosny-oe-note-remove"
+                            title="حذف الملاحظة" aria-label="حذف الملاحظة"
+                            t-on-click="() => this.removeNote(line.uuid, note_index)">
+                      <i class="fa fa-times" aria-hidden="true"/>
+                    </button>
+                  </span>
+                  <button t-if="editable" type="button" class="hosny-oe-add-note"
+                          t-att-class="{'is-open': isEditing}"
+                          t-on-click="() => this.toggleEditor(line)">
+                    <i class="fa" t-att-class="isEditing ? 'fa-check' : 'fa-plus'" aria-hidden="true"/>
+                    <span t-esc="isEditing ? 'تم' : (view.notes.length ? 'ملاحظة أخرى' : 'إضافة ملاحظة')"/>
+                  </button>
+                </div>
+
+                <div t-if="editable and isEditing" class="hosny-oe-editor">
+                  <div class="hosny-oe-input-row">
+                    <input t-ref="lineNoteInput"
+                           type="text"
+                           class="hosny-oe-input"
+                           placeholder="اكتب ملاحظة للمطبخ… مثل: بدون بصل"
+                           t-att-maxlength="maxLength"
+                           t-att-value="state.drafts[line.uuid] or ''"
+                           t-on-input="(ev) => this.onDraftInput(line.uuid, ev)"
+                           t-on-keydown="(ev) => this.onDraftKeydown(line.uuid, ev)"/>
+                    <button type="button" class="hosny-oe-input-add"
+                            t-att-disabled="!(state.drafts[line.uuid] or '').trim()"
+                            t-on-click="() => this.addNote(line.uuid, state.drafts[line.uuid])">
+                      <i class="fa fa-plus" aria-hidden="true"/>
+                      <span>إضافة</span>
+                    </button>
+                  </div>
+                  <t t-set="quick" t-value="this.quickNotes(view.notes)"/>
+                  <div t-if="quick.length" class="hosny-oe-quick">
+                    <span class="hosny-oe-quick-label">ملاحظات جاهزة</span>
+                    <button t-foreach="quick" t-as="q" t-key="q.text" type="button"
+                            class="hosny-oe-quick-chip"
+                            t-on-click="() => this.addNote(line.uuid, q.text, q.colorIndex)"
+                            t-esc="q.text"/>
+                  </div>
+                </div>
+              </article>
+            </t>
+          </section>
+
+          <aside class="hosny-oe-side">
+            <section class="hosny-oe-card hosny-oe-order-note">
+              <h5 class="hosny-oe-card-title">
+                <i class="fa fa-comment-o" aria-hidden="true"/>
+                <span>ملاحظة على الطلب كامل</span>
+                <span t-if="oeKitchen.orderNotePending" class="hosny-oe-status is-changed">
+                  <i class="fa fa-pencil" aria-hidden="true"/>
+                  <span>لم تُرسل بعد</span>
+                </span>
+              </h5>
+              <p class="hosny-oe-card-hint">تُطبع في تذكرة المطبخ مع الأصناف.</p>
+              <div t-if="orderNotes.length" class="hosny-oe-notes">
+                <span t-foreach="orderNotes" t-as="note" t-key="note_index" class="hosny-oe-note">
+                  <i class="fa fa-sticky-note-o" aria-hidden="true"/>
+                  <span class="hosny-oe-note-text" t-esc="note.text"/>
+                  <button t-if="editable" type="button" class="hosny-oe-note-remove"
+                          title="حذف الملاحظة" aria-label="حذف الملاحظة"
+                          t-on-click="() => this.removeNote('order', note_index)">
+                    <i class="fa fa-times" aria-hidden="true"/>
+                  </button>
+                </span>
+              </div>
+              <t t-if="editable">
+                <div class="hosny-oe-input-row">
+                  <input type="text"
+                         class="hosny-oe-input hosny-oe-order-input"
+                         placeholder="مثل: الطلب مستعجل"
+                         t-att-maxlength="maxLength"
+                         t-att-value="state.drafts.order or ''"
+                         t-on-input="(ev) => this.onDraftInput('order', ev)"
+                         t-on-keydown="(ev) => this.onDraftKeydown('order', ev)"/>
+                  <button type="button" class="hosny-oe-input-add"
+                          t-att-disabled="!(state.drafts.order or '').trim()"
+                          t-on-click="() => this.addNote('order', state.drafts.order)">
+                    <i class="fa fa-plus" aria-hidden="true"/>
+                    <span>إضافة</span>
+                  </button>
+                </div>
+                <t t-set="orderQuick" t-value="this.quickNotes(orderNotes, false)"/>
+                <div t-if="orderQuick.length" class="hosny-oe-quick">
+                  <button t-foreach="orderQuick" t-as="q" t-key="q.text" type="button"
+                          class="hosny-oe-quick-chip"
+                          t-on-click="() => this.addNote('order', q.text, q.colorIndex)"
+                          t-esc="q.text"/>
+                </div>
+              </t>
+            </section>
+
+            <section t-if="oeOrder" class="hosny-oe-card hosny-oe-summary">
+              <div t-if="oeOrder.config_id.iface_tax_included != 'total' and oeOrder.prices.taxDetails.has_tax_groups"
+                   class="hosny-oe-summary-row">
+                <span>قبل الضريبة</span>
+                <bdi t-esc="oeOrder.currencyDisplayPriceExcl"/>
+              </div>
+              <div t-if="oeOrder.prices.taxDetails.has_tax_groups" class="hosny-oe-summary-row">
+                <span>الضرائب</span>
+                <bdi t-esc="oeOrder.currencyAmountTaxes"/>
+              </div>
+              <div class="hosny-oe-summary-row is-total">
+                <span>الإجمالي</span>
+                <bdi t-esc="oeOrder.currencyDisplayPriceIncl"/>
+              </div>
+            </section>
+
+            <div class="hosny-oe-kitchen" t-att-class="oeInfo.pending ? 'is-pending' : (oeInfo.sent ? 'is-sent' : '')">
+              <i class="fa" t-att-class="oeInfo.pending ? 'fa-clock-o' : (oeInfo.sent ? 'fa-check-circle' : 'fa-cutlery')" aria-hidden="true"/>
+              <span t-if="oeInfo.pending">تعديلات لم تصل المطبخ بعد — اضغط «إرسال للمطبخ».</span>
+              <span t-elif="oeInfo.sent">كل الأصناف والملاحظات وصلت المطبخ.</span>
+              <span t-else="">لم يُرسل الطلب للمطبخ بعد.</span>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="hosny-oe-footer">
+          <button type="button" class="hosny-oe-btn is-send"
+                  t-att-class="{'is-sent': oeInfo.sent and !hasDrafts}"
+                  t-att-disabled="!canSend(oeInfo)"
+                  t-on-click="send">
+            <t t-if="oeInfo.sent and !hasDrafts">
+              <i class="fa fa-check" aria-hidden="true"/>
+              <span>تم الإرسال</span>
+            </t>
+            <t t-else="">
+              <i class="fa fa-cutlery" aria-hidden="true"/>
+              <span>إرسال للمطبخ</span>
+              <span t-if="oeInfo.count" class="hosny-oe-send-count" t-esc="oeInfo.count"/>
+            </t>
+          </button>
+          <button type="button" class="hosny-oe-btn is-close" t-on-click="() => this.close()">
+            <span>إغلاق</span>
+          </button>
+        </footer>
+      </div>
+    </Dialog>
+  </t>
+
+</templates>

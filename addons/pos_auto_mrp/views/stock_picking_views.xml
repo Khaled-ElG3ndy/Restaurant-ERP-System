@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_form_inherit_auto_return_unbuild" model="ir.ui.view">
+        <field name="name">stock.picking.form.auto.return.unbuild</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="before">
+                <field name="pos_auto_mrp_unbuild_count" invisible="1"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_pos_auto_mrp_unbuilds"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-undo"
+                        invisible="pos_auto_mrp_unbuild_count == 0">
+                    <field name="pos_auto_mrp_unbuild_count" widget="statinfo" string="Automatic Unbuilds"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

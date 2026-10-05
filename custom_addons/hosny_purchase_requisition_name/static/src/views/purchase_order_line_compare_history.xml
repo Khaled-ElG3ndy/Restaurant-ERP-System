@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hosny_purchase_requisition_name.PurchaseOrderLineCompareListView" t-inherit="web.ListView" t-inherit-mode="primary">
+        <xpath expr="//t[@t-set-slot='layout-actions']/SearchBar" position="after">
+            <button type="button"
+                    class="btn btn-secondary o_hosny_lowest_price_filter ms-1"
+                    t-att-class="{ active: isLowestPriceFilterActive }"
+                    t-on-click="toggleLowestPriceFilter">
+                أقل سعر
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
+        <xpath expr="//tr[hasclass('o_data_row')]" position="after">
+            <tr t-if="hasCompareLineProduct(record)" class="o_hosny_purchase_invoice_history_row">
+                <td t-att-colspan="nbCols">
+                    <div class="o_hosny_purchase_invoice_history">
+                        <div class="o_hosny_purchase_invoice_history_title">Last 3 Purchase Bills</div>
+                        <table class="table table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Bill Number</th>
+                                    <th>Date</th>
+                                    <th>Vendor</th>
+                                    <th class="text-end">Quantity</th>
+                                    <th class="text-end">Unit Price</th>
+                                    <th>Currency</th>
+                                    <th>Unit of Measure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="historyLines" t-value="getPurchaseInvoiceHistory(record)"/>
+                                <tr t-foreach="historyLines" t-as="line" t-key="line_index">
+                                    <td t-esc="line.bill_number"/>
+                                    <td t-esc="line.bill_date"/>
+                                    <td t-esc="line.vendor_name"/>
+                                    <td class="text-end" t-esc="line.quantity"/>
+                                    <td class="text-end" t-esc="line.price_unit"/>
+                                    <td t-esc="line.currency_name"/>
+                                    <td t-esc="line.uom_name"/>
+                                </tr>
+                                <tr t-if="!historyLines.length">
+                                    <td colspan="7" class="text-muted text-center">No posted purchase bills found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </xpath>
+    </t>
+</templates>

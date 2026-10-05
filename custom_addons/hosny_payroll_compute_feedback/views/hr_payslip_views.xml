@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_form_compute_feedback" model="ir.ui.view">
+        <field name="name">hr.payslip.form.compute.feedback</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_form"/>
+        <field name="priority" eval="120"/>
+        <field name="arch" type="xml">
+            <!-- يُدرَج أولًا: الخطوة التالية تُعيد تسمية الزر الأصلي،
+                 فلن يطابقه هذا الـ xpath بعدها. -->
+            <xpath expr="//button[@name='compute_sheet']" position="after">
+                <button string="إعادة الاحتساب"
+                        name="action_hosny_compute_sheet"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="state != 'draft' or not hosny_is_computed"/>
+            </xpath>
+
+            <xpath expr="//button[@name='compute_sheet']" position="attributes">
+                <attribute name="name">action_hosny_compute_sheet</attribute>
+                <attribute name="string">احتساب القسيمة</attribute>
+                <attribute name="invisible">state != 'draft' or hosny_is_computed</attribute>
+            </xpath>
+
+            <!-- تضع hosny_hr_work_location موقعَ العمل داخل عنوان النموذج
+                 مباشرةً بعد اسم الموظف بلا أي فاصل، فيظهران ملتصقين
+                 («تست» + «جدة» = «تستجدة»). نفصلهما بشرطة ومسافة. -->
+            <xpath expr="//h1/field[@name='work_location_id']" position="before">
+                <span class="mx-2 text-muted"
+                      invisible="not work_location_id or not employee_id">-</span>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="before">
+                <widget name="web_ribbon"
+                        title="محتسبة"
+                        bg_color="text-bg-success"
+                        invisible="not hosny_is_computed or state != 'draft'"/>
+            </xpath>
+
+            <field name="struct_id" position="after">
+                <field name="hosny_currency_id" invisible="1"/>
+                <field name="hosny_is_computed" invisible="1"/>
+                <field name="hosny_line_count" invisible="1"/>
+                <field name="hosny_net_amount"
+                       widget="monetary"
+                       options="{'currency_field': 'hosny_currency_id'}"
+                       invisible="not hosny_is_computed"
+                       readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_compute_feedback" model="ir.ui.view">
+        <field name="name">hr.payslip.list.compute.feedback</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="hosny_currency_id" column_invisible="True"/>
+                <field name="hosny_net_amount" optional="show"
+                       widget="monetary"
+                       options="{'currency_field': 'hosny_currency_id'}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

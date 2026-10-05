@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Assets registration for Hosny POS Table Merge -->
+        
+        <!-- Production Assets -->
+        <template id="hosny_pos_table_merge_assets_prod" inherit_id="point_of_sale.assets_prod" name="Hosny POS Table Merge Assets">
+            <xpath expr="//script[contains(@src, 'point_of_sale')]" position="after">
+                <!-- Main Module -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/pos_table_merge.js"></script>
+                
+                <!-- Popup Component -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/merge_popup.js"></script>
+                
+                <!-- Merge Logic Handler -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/merge_handler.js"></script>
+            </xpath>
+            
+            <xpath expr="//link[contains(@href, 'point_of_sale')]" position="after">
+                <!-- Popup Styling -->
+                <link rel="stylesheet" href="/hosny_pos_table_merge/static/src/scss/merge_popup.scss"/>
+            </xpath>
+        </template>
+
+        <!-- Debug Assets -->
+        <template id="hosny_pos_table_merge_assets_debug" inherit_id="point_of_sale.assets_debug" name="Hosny POS Table Merge Debug Assets">
+            <xpath expr="//script[contains(@src, 'point_of_sale')]" position="after">
+                <!-- Main Module -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/pos_table_merge.js"></script>
+                
+                <!-- Popup Component -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/merge_popup.js"></script>
+                
+                <!-- Merge Logic Handler -->
+                <script type="text/javascript" src="/hosny_pos_table_merge/static/src/js/merge_handler.js"></script>
+            </xpath>
+            
+            <xpath expr="//link[contains(@href, 'point_of_sale')]" position="after">
+                <!-- Popup Styling -->
+                <link rel="stylesheet" href="/hosny_pos_table_merge/static/src/scss/merge_popup.scss"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

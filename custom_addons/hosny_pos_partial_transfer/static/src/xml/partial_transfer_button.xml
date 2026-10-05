@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+        BUG FIX 3: This file previously also contained a second, simplified
+        t-name="hosny_pos_partial_transfer.PartialTransferPopup" template.
+        OWL registers templates by name; whichever loaded last overwrote the real
+        full-featured popup in partial_transfer_popup.xml, replacing it with the
+        stripped-down version. The popup appeared to open (the service call
+        succeeded) but rendered with no body content. Keep the popup template
+        ONLY in partial_transfer_popup.xml.
+    -->
+
+    <!-- Button rendered inside the control-buttons bar -->
+    <t t-name="hosny_pos_partial_transfer.PartialTransferButton">
+        <button class="control-button partial-transfer-button btn btn-light rounded-0 fw-bolder"
+            t-att-class="{ 'disabled': isDisabled }"
+            t-on-click="() => this.click()">
+            <i class="fa fa-exchange me-1" />
+            <span>تحويل جزئي</span>
+        </button>
+    </t>
+
+    <!-- Inject the button into the existing ControlButtons template -->
+    <t t-name="hosny_pos_partial_transfer.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension"
+       owl="1">
+        <xpath expr="//button[hasclass('more-btn')]" position="before">
+            <PartialTransferButton t-if="pos.config.module_pos_restaurant and !props.showRemainingButtons"/>
+        </xpath>
+        <xpath expr="//t[@t-if='props.showRemainingButtons']/div" position="inside">
+            <PartialTransferButton t-if="pos.config.module_pos_restaurant"/>
+        </xpath>
+    </t>
+
+</templates>

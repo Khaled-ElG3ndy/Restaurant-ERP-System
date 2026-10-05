@@ -1,0 +1,334 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hosny_tax_zakat_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-23 20:36+0000\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Account"
+msgstr "الحساب"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Company"
+msgstr "الشركة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Credit Notes"
+msgstr "الإشعارات الدائنة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Current Quarter"
+msgstr "الربع الحالي"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Current Year"
+msgstr "السنة الحالية"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Customer Invoices"
+msgstr "فواتير العملاء"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__display_name
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_document_type
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Document Type"
+msgstr "نوع المستند"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,help:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_account_ids
+msgid ""
+"Explicit Zakat control accounts to include. Select only the accounts whose "
+"movement represents the Zakat amount; names are never used for detection."
+msgstr ""
+"حسابات تحكم الزكاة المراد تضمينها صراحةً. اختر فقط الحسابات التي تمثل "
+"حركتها مبلغ الزكاة؛ ولا تُستخدم الأسماء مطلقًا للاكتشاف."
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__id
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__id
+msgid "ID"
+msgstr "المعرّف"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields.selection,name:hosny_tax_zakat_dashboard.selection__account_move_line__tax_zakat_kind__input
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Input Tax"
+msgstr "ضريبة المدخلات"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model,name:hosny_tax_zakat_dashboard.model_account_journal
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Journal"
+msgstr "دفتر اليومية"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Journal Entry"
+msgstr "رقم القيد"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model,name:hosny_tax_zakat_dashboard.model_account_move_line
+msgid "Journal Item"
+msgstr "بند القيد"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Manual Entries"
+msgstr "القيود اليدوية"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Month"
+msgstr "الشهر"
+
+#. module: hosny_tax_zakat_dashboard
+#. odoo-python
+#: code:addons/hosny_tax_zakat_dashboard/models/account_journal.py:0
+msgid "Monthly net tax and Zakat movement"
+msgstr "صافي حركة الضريبة والزكاة شهريًا"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Net Due"
+msgstr "صافي المستحق"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_report_amount
+msgid "Net Tax/Zakat Amount"
+msgstr "المبلغ المحتسب للضريبة/الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#. odoo-python
+#: code:addons/hosny_tax_zakat_dashboard/models/account_journal.py:0
+msgid "Net due"
+msgstr "صافي المستحق"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.actions.act_window,help:hosny_tax_zakat_dashboard.action_tax_zakat_move_lines
+msgid ""
+"No tax or configured Zakat movements were found for the selected filters."
+msgstr "لم يتم العثور على حركات ضريبة أو زكاة معرّفة ضمن الفلاتر المختارة."
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields.selection,name:hosny_tax_zakat_dashboard.selection__account_move_line__tax_zakat_kind__other
+msgid "Other Tax"
+msgstr "ضريبة أخرى"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields.selection,name:hosny_tax_zakat_dashboard.selection__account_move_line__tax_zakat_kind__output
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Output Tax"
+msgstr "ضريبة المخرجات"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Partner"
+msgstr "العميل/المورد"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Period:"
+msgstr "الفترة:"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Point of Sale"
+msgstr "نقاط البيع"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Posted"
+msgstr "مرحّل"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Purchase Taxes"
+msgstr "ضرائب المشتريات"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Recoverable Tax"
+msgstr "ضريبة قابلة للاسترداد"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Sales Taxes"
+msgstr "ضرائب المبيعات"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__is_tax_zakat_dashboard
+msgid "Saudi Tax and Zakat Dashboard"
+msgstr "لوحة الضريبة والزكاة السعودية"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,help:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_report_amount
+msgid "Signed contribution to net due in company currency."
+msgstr "المساهمة الموقّعة في صافي المستحق بعملة الشركة."
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Tax"
+msgstr "الضريبة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Tax Amount"
+msgstr "مبلغ الضريبة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Tax Due"
+msgstr "ضريبة مستحقة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_dashboard_data
+msgid "Tax Zakat Dashboard Data"
+msgstr "بيانات لوحة الضريبة والزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_dashboard_graph
+msgid "Tax Zakat Dashboard Graph"
+msgstr "الرسم البياني للوحة الضريبة والزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.actions.act_window,name:hosny_tax_zakat_dashboard.action_tax_zakat_move_lines
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Tax and Zakat Movements"
+msgstr "حركات الضريبة والزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_label
+msgid "Tax or Zakat"
+msgstr "اسم الضريبة أو الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,help:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_tag_ids
+msgid ""
+"Tax-grid tags explicitly dedicated to Zakat. Do not select ordinary VAT base "
+"tags because they identify the taxable base, not the tax amount."
+msgstr ""
+"وسوم الشبكة الضريبية المخصصة صراحةً للزكاة. لا تختر وسوم أساس ضريبة القيمة "
+"المضافة العادية؛ فهي تحدد الوعاء الخاضع للضريبة لا مبلغ الضريبة."
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_kind
+msgid "Tax/Zakat Classification"
+msgstr "تصنيف الضريبة/الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_move_line__tax_zakat_is_reportable
+msgid "Tax/Zakat Movement"
+msgstr "حركة ضريبة/زكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Taxable Base"
+msgstr "الوعاء الضريبي"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,help:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_tax_ids
+msgid "Taxes explicitly configured as Zakat or withholding movements."
+msgstr "الضرائب المحددة صراحةً كحركات زكاة أو استقطاع."
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "This Month"
+msgstr "هذا الشهر"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Total Balance"
+msgstr "إجمالي الرصيد"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Total Credit"
+msgstr "إجمالي الدائن"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_list
+msgid "Total Debit"
+msgstr "إجمالي المدين"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Transactions"
+msgstr "المعاملات"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_account_journal_form_tax_zakat
+msgid ""
+"VAT is detected from actual tax repartition lines. Zakat is never\n"
+"                        inferred from a journal or account name; select its "
+"authoritative\n"
+"                        taxes, control accounts, or dedicated tax-grid tags "
+"below."
+msgstr ""
+"يتم اكتشاف ضريبة القيمة المضافة من سطور توزيع الضريبة الفعلية. لا تُستنتج "
+"الزكاة من اسم الدفتر أو الحساب؛ حدد أدناه ضرائبها أو حسابات التحكم أو وسوم "
+"الشبكة الضريبية المخصصة لها."
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Vendor Bills"
+msgstr "فواتير الموردين"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields.selection,name:hosny_tax_zakat_dashboard.selection__account_move_line__tax_zakat_kind__zakat
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_tax_zakat_move_line_search
+msgid "Zakat"
+msgstr "الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_account_ids
+msgid "Zakat Accounts"
+msgstr "حسابات الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.view_account_journal_form_tax_zakat
+msgid "Zakat Detection"
+msgstr "إعداد اكتشاف الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_tag_ids
+msgid "Zakat Tags"
+msgstr "وسوم الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model:ir.model.fields,field_description:hosny_tax_zakat_dashboard.field_account_journal__tax_zakat_tax_ids
+msgid "Zakat Taxes"
+msgstr "ضرائب الزكاة"
+
+#. module: hosny_tax_zakat_dashboard
+#: model_terms:ir.ui.view,arch_db:hosny_tax_zakat_dashboard.account_journal_dashboard_kanban_tax_zakat
+msgid "Zakat appears after explicit configuration."
+msgstr "تظهر الزكاة بعد تحديد إعداداتها صراحةً."

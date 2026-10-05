@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="hosny_pos_table_merge.MergeTablesButton">
+        <button class="control-button hosny-merge-button btn btn-light rounded-0 fw-bolder"
+            t-att-class="{ 'disabled': isDisabled }"
+            t-on-click="() => this.click()">
+            <i class="fa fa-object-group me-1" />
+            <span>دمج الطاولات</span>
+        </button>
+    </t>
+
+    <t t-name="hosny_pos_table_merge.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension"
+       owl="1">
+        <xpath expr="//button[hasclass('more-btn')]" position="before">
+            <MergeTablesButton t-if="pos.config.module_pos_restaurant and !props.showRemainingButtons"/>
+        </xpath>
+        <xpath expr="//t[@t-if='props.showRemainingButtons']/div" position="inside">
+            <MergeTablesButton t-if="pos.config.module_pos_restaurant"/>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_table_merge.MergeTablesPopup">
+        <Dialog header="false" contentClass="'hosny-table-merge-dialog-content'" bodyClass="'p-0'">
+           <div class="popup hosny-table-merge-popup" dir="rtl">
+            <div class="modal-header drag-handle hosny-table-merge-header">
+                <div>
+                    <h4 class="modal-title" t-esc="props.title" />
+                    <div class="hosny-table-merge-subtitle">
+                        <span t-if="destinationTable">
+                            <span>الدمج داخل:</span>
+                            <t t-esc="destinationFloorName" />
+                            <span class="mx-1">/</span>
+                            <t t-esc="destinationTableName" />
+                        </span>
+                    </div>
+                </div>
+                <div class="hosny-table-merge-badge">
+                    <i class="fa fa-layer-group me-1" />
+                    <span t-esc="mergeSummary.tablesCount" />
+                    <span>طاولة محددة</span>
+                </div>
+            </div>
+
+            <div class="hosny-table-merge-body">
+                <aside class="hosny-merge-summary-panel">
+                    <section class="hosny-merge-panel-card destination">
+                        <div class="hosny-merge-panel-title-row">
+                            <h5 class="hosny-merge-panel-title">الطاولة الحالية</h5>
+                            <span class="hosny-merge-status-chip success">وجهة الدمج</span>
+                        </div>
+                        <div class="hosny-merge-destination-name">
+                            <i class="fa fa-map-pin" />
+                            <span t-esc="destinationTableName" />
+                        </div>
+                        <div class="hosny-merge-metrics-grid">
+                            <div class="hosny-merge-metric-card">
+                                <span class="label">الطلبات</span>
+                                <strong t-esc="destinationSummary.ordersCount" />
+                            </div>
+                            <div class="hosny-merge-metric-card">
+                                <span class="label">العناصر</span>
+                                <strong t-esc="destinationSummary.itemsCount" />
+                            </div>
+                            <div class="hosny-merge-metric-card">
+                                <span class="label">الضيوف</span>
+                                <strong t-esc="destinationSummary.guestsCount" />
+                            </div>
+                            <div class="hosny-merge-metric-card emphasis">
+                                <span class="label">الإجمالي</span>
+                                <strong t-esc="formatCurrency(destinationSummary.totalAmount)" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="hosny-merge-panel-card summary">
+                        <div class="hosny-merge-panel-title-row">
+                            <h5 class="hosny-merge-panel-title">ملخص الدمج</h5>
+                            <span class="hosny-merge-status-chip"
+                                t-att-class="mergeSummary.tablesCount ? 'active' : 'muted'">
+                                <t t-esc="mergeSummary.tablesCount || 0" />
+                                محددة
+                            </span>
+                        </div>
+                        <div class="hosny-merge-summary-rows">
+                            <div class="hosny-merge-summary-row">
+                                <span>عدد الطلبات المنقولة</span>
+                                <strong t-esc="mergeSummary.ordersCount" />
+                            </div>
+                            <div class="hosny-merge-summary-row">
+                                <span>إجمالي العناصر</span>
+                                <strong t-esc="mergeSummary.itemsCount" />
+                            </div>
+                            <div class="hosny-merge-summary-row">
+                                <span>إجمالي الضيوف</span>
+                                <strong t-esc="mergeSummary.guestsCount" />
+                            </div>
+                            <div class="hosny-merge-summary-row">
+                                <span>إجمالي الطاولات المحددة</span>
+                                <strong t-esc="mergeSummary.tablesCount" />
+                            </div>
+                            <div class="hosny-merge-summary-row">
+                                <span>قيمة الطاولات المنقولة</span>
+                                <strong t-esc="formatCurrency(mergeSummary.totalAmount)" />
+                            </div>
+                        </div>
+                        <div class="hosny-merge-total-preview">
+                            <span>الإجمالي المتوقع بعد الدمج</span>
+                            <strong t-esc="formatCurrency(mergeSummary.projectedAmount)" />
+                        </div>
+                    </section>
+
+                </aside>
+
+                <section class="hosny-merge-source-panel">
+                    <div class="hosny-merge-panel-title-row source-head">
+                        <h5 class="hosny-merge-panel-title">اختر الطاولات المراد دمجها</h5>
+                        <div class="hosny-merge-head-tools">
+                            <span class="hosny-merge-inline-note">
+                                الطاولات التي تحتوي على طلبات نشطة فقط
+                            </span>
+                            <button class="hosny-merge-refresh-btn"
+                                t-att-class="{ 'is-busy': state.isRefreshing }"
+                                t-att-disabled="state.isRefreshing || state.isSubmitting"
+                                t-on-click="() => this.refreshTables()">
+                                <i class="fa fa-refresh"
+                                    t-att-class="{ 'fa-spin': state.isRefreshing }" />
+                                <span t-if="state.isRefreshing">جارٍ التحديث...</span>
+                                <span t-elif="state.lastRefreshLabel">
+                                    آخر تحديث <t t-esc="state.lastRefreshLabel" />
+                                </span>
+                                <span t-else="">تحديث</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- A failed refresh never hides the list: the figures below
+                         come from the POS's own orders, so they stay usable. -->
+                    <div t-if="state.loadError" class="hosny-merge-refresh-warning">
+                        <i class="fa fa-exclamation-triangle" />
+                        <span t-esc="state.loadError" />
+                        <button class="hosny-merge-retry-link"
+                            t-att-disabled="state.isRefreshing"
+                            t-on-click="() => this.refreshTables()">إعادة المحاولة</button>
+                    </div>
+
+                    <div t-if="!availableTables.length" class="hosny-merge-state-box empty">
+                        <i t-att-class="state.isRefreshing ? 'fa fa-spinner fa-spin' : 'fa fa-chair'" />
+                        <span t-if="state.isRefreshing">جارٍ تحديث بيانات الطاولات...</span>
+                        <span t-else="">لا توجد طاولات أخرى تحتوي على طلبات نشطة حالياً.</span>
+                    </div>
+
+                    <div t-else="" class="hosny-merge-floor-list">
+                        <t t-foreach="tableSections" t-as="section" t-key="section.id">
+                            <section class="hosny-merge-floor-section">
+                                <button class="hosny-merge-floor-toggle"
+                                    t-on-click="() => this.toggleFloorSection(section.id)">
+                                    <span class="hosny-merge-floor-title" t-esc="section.name" />
+                                    <span class="hosny-merge-floor-count">
+                                        <t t-esc="section.tables.length" />
+                                        طاولات
+                                    </span>
+                                    <i class="fa fa-chevron-down hosny-merge-floor-icon"
+                                        t-att-class="{ 'collapsed': section.isCollapsed }" />
+                                </button>
+
+                                <div t-if="!section.isCollapsed" class="hosny-merge-table-grid">
+                                    <t t-foreach="section.tables" t-as="table" t-key="table.id">
+                                        <button class="hosny-merge-table-card"
+                                            t-att-class="{ 'selected': isSelected(table.id) }"
+                                            t-att-disabled="state.isSubmitting"
+                                            t-on-click="() => this.toggleTable(table.id)">
+                                            <div class="hosny-merge-table-top">
+                                                <div class="hosny-merge-table-name-group">
+                                                    <span class="hosny-merge-table-name" t-esc="table.name" />
+                                                    <span class="hosny-merge-table-seats">
+                                                        <i class="fa fa-users me-1" />
+                                                        <t t-esc="table.seats" />
+                                                    </span>
+                                                </div>
+                                                <span class="hosny-merge-select-indicator"
+                                                    t-att-class="{ 'active': isSelected(table.id) }">
+                                                    <i class="fa fa-check" />
+                                                </span>
+                                            </div>
+
+                                            <div class="hosny-merge-table-metrics">
+                                                <span class="metric">
+                                                    <span class="label">طلبات</span>
+                                                    <strong t-esc="table.ordersCount" />
+                                                </span>
+                                                <span class="metric">
+                                                    <span class="label">عناصر</span>
+                                                    <strong t-esc="table.itemsCount" />
+                                                </span>
+                                                <span class="metric">
+                                                    <span class="label">ضيوف</span>
+                                                    <strong t-esc="table.guestsCount" />
+                                                </span>
+                                            </div>
+
+                                            <div class="hosny-merge-table-total">
+                                                <span>الإجمالي</span>
+                                                <strong t-esc="formatCurrency(table.totalAmount)" />
+                                            </div>
+                                        </button>
+                                    </t>
+                                </div>
+                            </section>
+                        </t>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="footer modal-footer hosny-table-merge-footer">
+                <button class="button cancel btn btn-lg btn-outline-secondary"
+                    t-att-disabled="state.isSubmitting"
+                    t-on-click="cancel">
+                    <t t-esc="props.cancelText" />
+                </button>
+                <button class="button confirm highlight btn btn-lg btn-primary"
+                    t-att-disabled="state.isSubmitting || !selectedTables.length"
+                    t-on-click="confirm">
+                    <span t-if="!state.isSubmitting" t-esc="props.confirmText" />
+                    <span t-else="">جارٍ دمج الطاولات...</span>
+                </button>
+            </footer>
+        </div>
+            </Dialog>
+
+    </t>
+
+</templates>

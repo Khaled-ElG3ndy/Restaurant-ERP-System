@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_hosny_return_automation" model="ir.ui.view">
+        <field name="name">purchase.order.form.hosny.return.automation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_acknowledge']" position="after">
+                <button name="action_hosny_create_vendor_bill"
+                        string="إنشاء فاتورة مورد"
+                        type="object"
+                        class="btn-primary"
+                        groups="account.group_account_invoice"
+                        invisible="state != 'purchase'"/>
+                <button name="action_hosny_open_purchase_return_wizard"
+                        string="إنشاء مرتجع / إشعار دائن"
+                        type="object"
+                        class="btn-secondary"
+                        groups="purchase.group_purchase_user,account.group_account_invoice,stock.group_stock_user"
+                        invisible="state != 'purchase'"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object"
+                        name="action_hosny_view_vendor_bills"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        groups="account.group_account_invoice"
+                        invisible="hosny_vendor_bill_count == 0">
+                    <field name="hosny_vendor_bill_count" widget="statinfo" string="فواتير المورد"/>
+                </button>
+                <button type="object"
+                        name="action_hosny_view_vendor_refunds"
+                        class="oe_stat_button"
+                        icon="fa-undo"
+                        groups="account.group_account_invoice"
+                        invisible="hosny_vendor_refund_count == 0">
+                    <field name="hosny_vendor_refund_count" widget="statinfo" string="إشعارات دائنة"/>
+                </button>
+                <button type="object"
+                        name="action_hosny_view_stock_returns"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        groups="stock.group_stock_user"
+                        invisible="hosny_return_picking_count == 0">
+                    <field name="hosny_return_picking_count" widget="statinfo" string="مرتجعات المخزون"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

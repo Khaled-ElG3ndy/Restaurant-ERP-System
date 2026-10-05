@@ -1,0 +1,222 @@
+/* ===== LEFT COLUMN ===== */
+.payment-screen .left-content {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    background: #dfe3e8 !important;
+}
+
+.payment-screen .paymentmethods-container {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding-bottom: 6px !important;
+}
+
+/* ===== SECTION HEADERS ===== */
+.payment-screen .paymentmethods .title-category,
+.payment-screen .paymentlines .title-category {
+    background: #ffffff !important;
+    color: #183247 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    border-bottom: 1px solid #d9dee3 !important;
+}
+
+/* ===== PAYMENT METHODS ===== */
+.payment-screen .paymentmethods .paymentmethod {
+    margin: 6px 8px !important;
+    border-radius: 14px !important;
+    border: 1px solid #d7dde3 !important;
+    background: #fcfcfd !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    overflow: hidden !important;
+    transition: all 0.18s ease !important;
+}
+
+.payment-screen .paymentmethods .paymentmethod:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08) !important;
+    border-color: #c8d1d9 !important;
+}
+
+.payment-screen .paymentmethods .payment-name {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #1e3448 !important;
+}
+
+/* ===== NUMPAD CARD ===== */
+.payment-screen .left-content .pos-payment-left-numpad {
+    margin: 6px !important;
+    padding: 8px !important;
+    background: linear-gradient(180deg, #f9fafb 0%, #f3f5f7 100%) !important;
+    border: 1px solid #d7dde3 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.07) !important;
+    overflow: hidden !important;
+    flex: 0 0 auto !important;
+}
+
+.payment-screen .left-content .pos-payment-left-numpad .numpad {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    flex-grow: 0 !important;
+}
+
+.payment-screen .left-content .pos-payment-left-numpad .numpad.row {
+    --bs-gutter-x: 0 !important;
+    --bs-gutter-y: 0 !important;
+}
+
+.payment-screen .left-content .pos-payment-left-numpad .numpad > button,
+.payment-screen .left-content .pos-payment-left-numpad .numpad > .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 56px !important;
+    height: 56px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border-radius: 14px !important;
+    border: 1px solid #d6dce2 !important;
+    background: #ffffff !important;
+    color: #183247 !important;
+
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    transition: all 0.18s ease !important;
+}
+
+.payment-screen .left-content .pos-payment-left-numpad .numpad > button:hover,
+.payment-screen .left-content .pos-payment-left-numpad .numpad > .btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.10) !important;
+}
+
+.payment-screen .left-content .pos-payment-left-numpad .numpad > button:active,
+.payment-screen .left-content .pos-payment-left-numpad .numpad > .btn:active {
+    transform: scale(0.97) !important;
+}
+
+/* quick amount buttons */
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(4),
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(8),
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(12) {
+    background: linear-gradient(180deg, #ccefd1 0%, #b7e4be 100%) !important;
+    color: #124522 !important;
+    border-color: #a6d8ad !important;
+    font-size: 15px !important;
+}
+
+/* +/- */
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(13) {
+    background: linear-gradient(180deg, #f6e08f 0%, #ebd06f 100%) !important;
+    color: #5d4700 !important;
+    border-color: #e2c75b !important;
+}
+
+/* decimal */
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(15) {
+    background: linear-gradient(180deg, #f1ddd3 0%, #e8cdc0 100%) !important;
+    color: #6b3f2c !important;
+    border-color: #dfbeac !important;
+}
+
+/* backspace */
+.payment-screen .left-content .pos-payment-left-numpad .numpad > :nth-child(16) {
+    background: linear-gradient(180deg, #f4b0b0 0%, #eb9696 100%) !important;
+    color: #7a1717 !important;
+    border-color: #e98e8e !important;
+    font-size: 20px !important;
+}
+
+/* ===== VALIDATE BUTTON ===== */
+.payment-screen .validation {
+    margin: 0 8px 10px 8px !important;
+    min-height: 58px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, #8d7793 0%, #7a667f 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 10px 22px rgba(122, 102, 127, 0.28) !important;
+    font-weight: 800 !important;
+}
+
+.payment-screen .validation .next_text {
+    font-size: 15px !important;
+}
+
+/* ===== TOTAL AREA ===== */
+.payment-screen .paymentlines-container {
+    background: #ffffff !important;
+    border-bottom: 1px solid #d9dee3 !important;
+}
+
+.payment-screen .paymentlines-container .total {
+    color: #183247 !important;
+    font-weight: 900 !important;
+    font-size: 30px !important;
+}
+
+.payment-screen .paymentlines-container .message {
+    color: #4a6073 !important;
+    font-size: 13px !important;
+}
+
+/* ===== SMALLER HEIGHT SCREENS ===== */
+@media (max-height: 900px) {
+    .payment-screen .paymentmethods .paymentmethod {
+        margin: 5px 8px !important;
+    }
+
+    .payment-screen .left-content .pos-payment-left-numpad {
+        margin: 6px 8px !important;
+        padding: 8px !important;
+    }
+
+    .payment-screen .left-content .pos-payment-left-numpad .numpad {
+        gap: 6px !important;
+    }
+
+    .payment-screen .left-content .pos-payment-left-numpad .numpad > button,
+    .payment-screen .left-content .pos-payment-left-numpad .numpad > .btn {
+        min-height: 52px !important;
+        height: 52px !important;
+        border-radius: 12px !important;
+        font-size: 15px !important;
+    }
+
+    .payment-screen .validation {
+        min-height: 54px !important;
+    }
+}
+
+/* ===== VERY NARROW LEFT COLUMN ===== */
+@media (max-width: 1400px) {
+    .payment-screen .left-content .pos-payment-left-numpad .numpad > button,
+    .payment-screen .left-content .pos-payment-left-numpad .numpad > .btn {
+        min-height: 50px !important;
+        height: 50px !important;
+        font-size: 15px !important;
+    }
+
+    .payment-screen .left-content .pos-payment-left-numpad {
+        padding: 8px !important;
+    }
+}

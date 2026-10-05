@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loyalty_card_view_form_a6_demo_button" model="ir.ui.view">
+        <field name="name">loyalty.card.view.form.a6.demo.button</field>
+        <field name="model">loyalty.card</field>
+        <field name="inherit_id" ref="pos_gift_card_custom_design.loyalty_card_view_form_hosny_download"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_hosny_download_gift_card']" position="after">
+                <button name="action_hosny_preview_gift_card"
+                        string="معاينة"
+                        type="object"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

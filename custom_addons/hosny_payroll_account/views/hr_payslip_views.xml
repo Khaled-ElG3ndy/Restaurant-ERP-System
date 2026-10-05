@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_form_hosny_account" model="ir.ui.view">
+        <field name="name">hr.payslip.form.hosny.account</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <!-- إتاحة الإلغاء بعد الاعتماد: يُنشئ قيدًا عكسيًا -->
+            <xpath expr="//button[@name='action_payslip_cancel']" position="attributes">
+                <attribute name="invisible">state not in ('draft', 'verify', 'done')</attribute>
+                <attribute name="confirm">سيتم إنشاء قيد عكسي للقيد المحاسبي المرتبط بهذه القسيمة. هل تريد المتابعة؟</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        name="action_hosny_open_move"
+                        type="object"
+                        icon="fa-book"
+                        invisible="not move_id"
+                        string="قيد اليومية"/>
+            </xpath>
+
+            <field name="credit_note" position="after">
+                <field name="journal_id"
+                       options="{'no_create': True}"
+                       readonly="state != 'draft'"/>
+                <field name="hosny_analytic_account_id"
+                       options="{'no_create': True}"
+                       readonly="state != 'draft'"/>
+                <field name="hosny_accounting_date" readonly="state != 'draft'"/>
+                <field name="move_id" invisible="not move_id" readonly="1"/>
+                <field name="hosny_move_state" invisible="not move_id" readonly="1"/>
+                <field name="hosny_reversal_move_id"
+                       invisible="not hosny_reversal_move_id"
+                       readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_hosny_account" model="ir.ui.view">
+        <field name="name">hr.payslip.list.hosny.account</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="move_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_filter_hosny_account" model="ir.ui.view">
+        <field name="name">hr.payslip.search.hosny.account</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="bi_hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <filter name="hosny_posted"
+                        string="لها قيد محاسبي"
+                        domain="[('move_id', '!=', False)]"/>
+                <filter name="hosny_not_posted"
+                        string="بدون قيد محاسبي"
+                        domain="[('move_id', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_bank_statement_line_quick_form_view" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.quick.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="arch" type="xml">
+            <form string="New Bank Transaction">
+                <sheet>
+                    <field name="quick_create_token" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <group>
+                        <field name="journal_id" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="analytic_account_id" string="Branch" readonly="1" force_save="1" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="date" required="1"/>
+                        <field name="payment_ref" string="Label" required="1" placeholder="Write a label..."/>
+                        <field name="partner_id" options="{'no_create_edit': True}"/>
+                        <field name="amount" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_users_form_branch_access" model="ir.ui.view">
+        <field name="name">res.users.form.pos.branch.access</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']" position="inside">
+                <group string="Point of Sale" name="hosny_pos_branch_access">
+                    <field name="pos_config_ids"
+                           widget="many2many_tags"
+                           options="{'no_create': True}"
+                           placeholder="Empty: every point of sale"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

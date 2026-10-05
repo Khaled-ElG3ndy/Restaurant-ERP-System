@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="loyalty.mail_template_gift_card" model="mail.template">
+            <field name="subject">قسيمة هدية من سلسلة مطاعم حسني</field>
+            <field name="report_template_ids" eval="[(5, 0, 0)]"/>
+            <field name="body_html" type="html">
+                <div dir="rtl" style="direction:rtl; margin:0; padding:0; background-color:#f3eadb; color:#2b210f; font-family:Tahoma, Arial, sans-serif;">
+                    <t t-set="amount_number" t-value="object._hosny_gc_amount_number_label()"/>
+                    <t t-set="currency_short" t-value="object._hosny_gc_currency_short_label()"/>
+                    <t t-set="preview_url" t-value="object.get_base_url() + object._hosny_gc_preview_path()"/>
+                    <t t-set="download_url" t-value="object.get_base_url() + object._hosny_gc_download_path()"/>
+                    <t t-set="coupon_image_url" t-value="object.get_base_url() + object._hosny_gc_card_svg_path()"/>
+
+                    <div style="display:none; max-height:0; overflow:hidden; color:#ffffff;">
+                        قسيمة هدية من سلسلة مطاعم حسني بقيمة <t t-out="amount_number"/> <t t-out="currency_short"/>.
+                    </div>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#f3eadb" style="width:100%; border-collapse:collapse; background-color:#f3eadb; direction:rtl;">
+                        <tr>
+                            <td align="center" style="padding:28px 10px;">
+                                <a t-att-href="preview_url" target="_blank" style="display:block; max-width:820px; text-decoration:none; border:0;">
+                                    <img t-att-src="coupon_image_url" alt="قسيمة الخصم" style="display:block; width:100%; max-width:820px; height:auto; border:0; outline:none; text-decoration:none;"/>
+                                </a>
+                                <table role="presentation" width="820" cellpadding="0" cellspacing="0" style="width:820px; max-width:100%; border-collapse:collapse; direction:rtl;">
+                                    <tr>
+                                        <td align="center" style="padding-top:16px;">
+                                            <a t-att-href="preview_url" target="_blank" style="display:inline-block; min-width:104px; margin:0 4px; padding:10px 28px; border-radius:999px; background-color:#453824; color:#ffffff; border:2px solid #b79a5a; text-decoration:none; font-size:15px; line-height:1.2; font-weight:900;">معاينة</a>
+                                            <a t-att-href="download_url" target="_blank" style="display:inline-block; min-width:104px; margin:0 4px; padding:10px 28px; border-radius:999px; background-color:#b79a5a; color:#2b210f; border:2px solid #453824; text-decoration:none; font-size:15px; line-height:1.2; font-weight:900;">تحميل</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

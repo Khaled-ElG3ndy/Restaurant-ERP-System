@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hosny_purchase_vendor_bill_confirm,hosny.purchase.vendor.bill.confirm,model_hosny_purchase_vendor_bill_confirm,purchase.group_purchase_user,1,1,1,1
+access_hosny_purchase_return_wizard,hosny.purchase.return.wizard,model_hosny_purchase_return_wizard,purchase.group_purchase_user,1,1,1,1
+access_hosny_purchase_return_wizard_line,hosny.purchase.return.wizard.line,model_hosny_purchase_return_wizard_line,purchase.group_purchase_user,1,1,1,1

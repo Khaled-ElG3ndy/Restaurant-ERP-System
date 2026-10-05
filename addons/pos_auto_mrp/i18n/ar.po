@@ -1,0 +1,1044 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-15 23:33+0000\n"
+"PO-Revision-Date: 2026-07-15 23:36+0000\n"
+"Last-Translator: Custom\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%(move)s: %(error)s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid "%s complete logical locations are available."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%s journal entries could not be reset."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%s journal entries were reset to draft."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%s selected entries were skipped because they were not posted."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%s selected records were skipped because they are not journal entries."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "%s: unexpected error"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.product_template_form_view_inherit_preferred_mrp_location
+msgid ""
+"<span class=\"fa fa-map-marker text-primary\" title=\"Component Source\"/>"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__active
+msgid "Active"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__allocation_key
+msgid "Allocation Key"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__name
+msgid "Arabic Location Name"
+msgstr "اسم الموقع بالعربية"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_search_view
+msgid "Archived"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_config__auto_create_mrp_from_pos
+msgid "Auto Create Manufacturing Orders"
+msgstr "إنشاء أوامر التصنيع تلقائيًا"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_config_form_inherit_auto_mrp
+msgid "Auto Manufacturing"
+msgstr "التصنيع التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_config__auto_done_mrp_from_pos
+msgid "Auto Mark Manufacturing Orders as Done"
+msgstr "إنهاء أوامر التصنيع تلقائيًا"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Auto assign failed: %s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+msgid "Automatic Branch Routing"
+msgstr "التوجيه التلقائي حسب الفرع"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_sale_order_form_inherit_mo_link
+msgid "Automatic Manufacturing"
+msgstr "التصنيع التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_auto_mrp_return_allocation
+msgid "Automatic Manufacturing Return Allocation"
+msgstr "تخصيص مرتجع التصنيع التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__auto_return_allocation_id
+msgid "Automatic Return Allocation"
+msgstr "تخصيص المرتجع التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_allocation_ids
+msgid "Automatic Return Allocations"
+msgstr "تخصيصات المرتجعات التلقائية"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid "Automatic Return Unbuilds"
+msgstr "تفكيك المرتجعات التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_move__pos_auto_mrp_allocation_ids
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_picking__pos_auto_mrp_allocation_ids
+msgid "Automatic Unbuild Allocations"
+msgstr "تخصيصات التفكيك التلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_unbuild_count
+msgid "Automatic Unbuild Count"
+msgstr "عدد عمليات التفكيك التلقائية"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.mrp_production_form_inherit_links
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.stock_picking_form_inherit_auto_return_unbuild
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_sale_order_form_inherit_mo_link
+msgid "Automatic Unbuilds"
+msgstr "عمليات التفكيك التلقائية"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/return_allocation.py:0
+msgid "Automatic return unbuild completed"
+msgstr "اكتمل التفكيك التلقائي للمرتجع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_generated
+msgid "Automatically Generated"
+msgstr "مُنشأ تلقائيًا"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_unbuilt_qty
+msgid "Automatically Unbuilt Quantity"
+msgstr "الكمية التي تم تفكيكها تلقائيًا"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_pos_config__auto_create_mrp_from_pos
+msgid ""
+"Automatically create Manufacturing Orders from POS sales for products that "
+"have a BoM."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Automatically created from POS order %(order)s for lines %(lines)s."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/sale_order.py:0
+msgid "Automatically created from sales order %(order)s, line %(line)s."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields.selection,name:pos_auto_mrp.selection__pos_auto_mrp_return_allocation__state__cancelled
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_product_product__pos_mrp_source_profile_id
+#: model:ir.model.fields,help:pos_auto_mrp.field_product_template__pos_mrp_source_profile_id
+msgid ""
+"Choose one logical component location. The physical stock location is "
+"selected automatically from the Point of Sale that creates the order."
+msgstr ""
+"اختر موقعًا منطقيًا واحدًا للمكونات، وسيحدد النظام موقع المخزون الفعلي تلقائيًا "
+"حسب نقطة البيع التي أنشأت الطلب."
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.product_template_form_view_inherit_preferred_mrp_location
+msgid "Choose the component source"
+msgstr "اختر موقع سحب المكونات"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__company_id
+msgid "Company"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.ui.menu,name:pos_auto_mrp.menu_pos_mrp_source_profile
+msgid "Component Source Locations"
+msgstr "مواقع سحب المكونات"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_list_view
+msgid "Configured Points of Sale"
+msgstr "نقاط البيع المربوطة"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__create_uid
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__create_uid
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__create_date
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__create_date
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_account_move__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_config__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_location__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields.selection,name:pos_auto_mrp.selection__pos_auto_mrp_return_allocation__state__done
+msgid "Done"
+msgstr "منتهي"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.actions.act_window,help:pos_auto_mrp.action_pos_mrp_source_profile
+msgid ""
+"Each Arabic logical name routes automatically to one physical location per "
+"Point of Sale."
+msgstr "يوجّه كل اسم منطقي عربي تلقائيًا إلى موقع فعلي واحد لكل نقطة بيع."
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_unbuilt
+msgid "Has Tracked Unbuild"
+msgstr "يوجد تفكيك متتبع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_account_move__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_config__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_product_template__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_location__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_move__id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_picking__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_pos_config__auto_done_mrp_from_pos
+msgid ""
+"Manufacturing Orders are always confirmed automatically when all components "
+"are available. If this option is enabled, they are also marked as done "
+"automatically."
+msgstr ""
+"يتم تأكيد أوامر التصنيع تلقائيًا دائمًا عند توفر جميع المكونات. وعند تفعيل "
+"هذا الخيار، يتم أيضًا إنهاؤها تلقائيًا."
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_stock_location
+msgid "Inventory Locations"
+msgstr "مواقع المخزون"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__write_uid
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__write_uid
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__write_date
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__write_date
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_unbuild_id
+msgid "Latest Unbuild"
+msgstr "آخر أمر تفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_mrp_production__pos_auto_mrp_unbuild_id
+msgid "Latest unbuild order tracked on this manufacturing order."
+msgstr "آخر أمر تفكيك تم تتبعه على أمر التصنيع هذا."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid "Location routes synchronized"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__lot_id
+msgid "Lot"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_sale_order_form_inherit_mo_link
+msgid "MO"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__mrp_production_count
+msgid "MO Count"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "MO confirmation failed: %s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "Manual"
+msgstr "يدوي"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+msgid "Manually Unbuilt"
+msgstr "تفكيك يدوي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__manufactured_qty
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__manufactured_qty
+msgid "Manufactured Quantity"
+msgstr "الكمية المصنّعة"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+msgid "Manufacturing"
+msgstr "التصنيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/sale_order_line.py:0
+#: model:ir.model,name:pos_auto_mrp.model_mrp_production
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__mrp_production_id
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+msgid "Manufacturing Order"
+msgstr "أمر التصنيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+#: code:addons/pos_auto_mrp/models/pos_order_line.py:0
+#: code:addons/pos_auto_mrp/models/sale_order.py:0
+#: code:addons/pos_auto_mrp/models/sale_order_line.py:0
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order__mrp_production_count
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__mrp_production_ids
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__mrp_production_ids
+msgid "Manufacturing Orders"
+msgstr "أوامر التصنيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Manufacturing source/destination locations are not configured properly."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Mark as done failed: %s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+msgid "Missing Point of Sale routes:"
+msgstr "مسارات نقاط البيع الناقصة:"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__missing_pos_names
+msgid "Missing Points of Sale"
+msgstr "نقاط البيع الناقصة"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__mrp_production_count
+msgid "Mrp Production Count"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__mrp_unbuild_count
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__mrp_unbuild_count
+msgid "Mrp Unbuild Count"
+msgstr "عدد أوامر التفكيك"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_search_view
+msgid "Needs Configuration"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "No Manufacturing Operation Type found for company %s."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid ""
+"No completed automatic manufacturing order with the correct lot/serial "
+"number is available for returned product %(product)s."
+msgstr ""
+"لا يوجد أمر تصنيع تلقائي مكتمل برقم الدفعة أو الرقم التسلسلي الصحيح للمنتج "
+"المرتجع %(product)s."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+msgid "No journal entries were updated."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.constraint,message:pos_auto_mrp.constraint_pos_mrp_source_profile_route_profile_pos_config_uniq
+msgid ""
+"Only one physical location can be configured per logical location and Point "
+"of Sale."
+msgstr "يمكن إعداد موقع فعلي واحد فقط لكل موقع منطقي ونقطة بيع."
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+msgid "Open MO"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+msgid "Open Unbuild"
+msgstr "فتح أمر التفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__origin_source
+msgid "Origin Source"
+msgstr "مصدر التفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__pos_order_line_id
+msgid "Original POS Order Line"
+msgstr "سطر طلب نقطة البيع الأصلي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_product_product__pos_mrp_source_profile_id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_product_template__pos_mrp_source_profile_id
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+msgid "POS Component Source"
+msgstr "موقع سحب مكونات نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.actions.act_window,name:pos_auto_mrp.action_pos_mrp_source_profile
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_list_view
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_search_view
+msgid "POS Component Sources"
+msgstr "مواقع سحب مكونات نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_mrp_source_profile
+msgid "POS Manufacturing Component Source"
+msgstr "مصدر مكونات تصنيع نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_mrp_source_profile_route
+msgid "POS Manufacturing Component Source Route"
+msgstr "مسار مصدر مكونات تصنيع نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_location__pos_mrp_is_leaf
+msgid "POS Manufacturing Leaf Location"
+msgstr "موقع مخزون نهائي لتصنيع نقطة البيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_order_id
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.mrp_production_form_inherit_links
+msgid "POS Order"
+msgstr "طلب نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_order_line_id
+msgid "POS Order Line"
+msgstr "سطر طلب نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_order_line_ids
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_move__pos_auto_mrp_pos_line_ids
+msgid "POS Order Lines"
+msgstr "سطور طلب نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_order_name
+msgid "POS Order Name"
+msgstr "اسم طلب نقطة البيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+#: model:ir.model.fields.selection,name:pos_auto_mrp.selection__pos_auto_mrp_return_allocation__source_type__pos
+msgid "POS Refund"
+msgstr "استرداد نقطه البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__pos_refund_order_line_id
+msgid "POS Refund Order Line"
+msgstr "سطر استرداد نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields.selection,name:pos_auto_mrp.selection__pos_auto_mrp_return_allocation__state__pending
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__location_id
+msgid "Physical Stock Location"
+msgstr "موقع المخزون الفعلي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__pos_config_id
+msgid "Point of Sale"
+msgstr "نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "إعدادات نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "سطور طلبات نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "طلبات نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__route_ids
+msgid "Point of Sale Routes"
+msgstr "مسارات نقاط البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order__pos_auto_mrp_production_count
+msgid "Pos Auto Mrp Production Count"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order__pos_auto_mrp_unbuild_count
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_stock_picking__pos_auto_mrp_unbuild_count
+msgid "Pos Auto Mrp Unbuild Count"
+msgstr "عدد عمليات التفكيك التلقائية"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__pos_order_line_id
+msgid "Pos Order Line"
+msgstr "سطر طلب نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__pos_refund_order_line_id
+msgid "Pos Refund Order Line"
+msgstr "سطر استرداد نقطة البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_product_template
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__product_uom_id
+msgid "Product Uom"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__production_id
+msgid "Production"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile_route__profile_id
+msgid "Profile"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_search_view
+msgid "Ready"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__ready_for_all_pos
+msgid "Ready for All Points of Sale"
+msgstr "جاهز لجميع نقاط البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__pos_auto_mrp_refund_allocation_ids
+msgid "Refund Allocations"
+msgstr "تخصيصات الاسترداد"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_returnable_qty
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__remaining_returnable_qty
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__remaining_returnable_qty
+msgid "Remaining Returnable Quantity"
+msgstr "الكمية المتبقية الممكن إرجاعها"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid ""
+"Return %(picking)s cannot be unbuilt because %(product)s has no lot/serial "
+"number on the completed return move."
+msgstr ""
+"لا يمكن تفكيك المرتجع %(picking)s لأن المنتج %(product)s لا يحتوي على رقم "
+"دفعة أو رقم تسلسلي في حركة المرتجع المكتملة."
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__pos_auto_mrp_allocation_ids
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__pos_auto_mrp_allocation_ids
+msgid "Return Allocations"
+msgstr "تخصيصات المرتجعات"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__return_move_id
+msgid "Return Move"
+msgstr "حركة المرتجع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__return_move_line_id
+msgid "Return Move Line"
+msgstr "سطر حركة المرتجع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__return_picking_id
+msgid "Return Picking"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__return_move_id
+msgid "Return Stock Move"
+msgstr "حركة مخزون المرتجع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__return_picking_id
+msgid "Return Transfer"
+msgstr "حركة المرتجع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__returned_qty
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__returned_qty
+msgid "Returned Quantity"
+msgstr "الكمية المرتجعة"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_mrp_source_profile__route_count
+msgid "Route Count"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__sale_order_line_id
+msgid "Sale Order Line"
+msgstr "سطر أمر البيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+#: model:ir.model,name:pos_auto_mrp.model_sale_order
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__sale_order_id
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.mrp_production_form_inherit_links
+msgid "Sales Order"
+msgstr "أمر البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_sale_order_line
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__sale_order_line_id
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_unbuild__sale_order_line_id
+msgid "Sales Order Line"
+msgstr "سطر أمر البيع"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__sale_order_name
+msgid "Sales Order Name"
+msgstr "اسم أمر البيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+#: model:ir.model.fields.selection,name:pos_auto_mrp.selection__pos_auto_mrp_return_allocation__source_type__sale
+msgid "Sales Return"
+msgstr "مرتجع المبيعات"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/account_move.py:0
+#: model:ir.actions.server,name:pos_auto_mrp.action_account_move_set_to_draft_bulk
+msgid "Set to Draft (Bulk)"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Setting consumed quantities failed: %s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "Setting producing quantity failed: %s"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__source_type
+msgid "Source Type"
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__state
+msgid "State"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+msgid "Stock Adjustment Unbuild"
+msgstr "تفكيك تسوية مخزون"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_list_view
+msgid "Synchronize Leaf Locations"
+msgstr "مزامنة المواقع النهائية"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.actions.act_window,help:pos_auto_mrp.action_pos_mrp_source_profile
+msgid "Synchronize branch leaf locations"
+msgstr "مزامنة المواقع النهائية"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "System"
+msgstr "النظام"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+msgid "System Unbuild"
+msgstr "تفكيك تلقائي"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_stock_location__pos_mrp_is_leaf
+msgid ""
+"Technical field used to exclude parent locations from POS source mappings."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.constraint,message:pos_auto_mrp.constraint_pos_mrp_source_profile_name_uniq
+msgid "The Arabic logical location name must be unique."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.product_template_form_view_inherit_preferred_mrp_location
+msgid ""
+"The Jeddah or Madinah stock location is selected automatically from the "
+"active Point of Sale."
+msgstr "يحدد النظام موقع مخزون جدة أو المدينة تلقائيًا من نقطة البيع النشطة."
+
+#. module: pos_auto_mrp
+#: model:ir.model.constraint,message:pos_auto_mrp.constraint_pos_auto_mrp_return_allocation_quantity_positive
+msgid "The allocated return quantity must be positive."
+msgstr "يجب أن تكون كمية المرتجع المخصصة أكبر من صفر."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid ""
+"The component source '%(profile)s' has more than one route for Point of Sale "
+"'%(point_of_sale)s'."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid ""
+"The component source '%(profile)s' has no stock location configured for "
+"Point of Sale '%(point_of_sale)s'."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/product_template.py:0
+msgid ""
+"The component source '%(profile)s' is not configured for: %(points_of_sale)s."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid ""
+"The location '%(location)s' configured for '%(profile)s' must be an active "
+"internal leaf location."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.product_template_form_view_inherit_preferred_mrp_location
+msgid ""
+"The physical branch location is selected automatically from the Point of "
+"Sale."
+msgstr "يحدد النظام موقع الفرع الفعلي تلقائيًا حسب نقطة البيع."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_mrp_source_profile.py:0
+msgid "The physical stock location must be an internal leaf location."
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid ""
+"The return quantity for %(product)s exceeds the quantity manufactured for "
+"the original %(source)s line. Remaining returnable quantity: %(quantity)s "
+"%(uom)s."
+msgstr ""
+"كمية مرتجع %(product)s تتجاوز الكمية المصنّعة للسطر الأصلي في %(source)s. "
+"الكمية المتبقية الممكن إرجاعها: %(quantity)s %(uom)s."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/return_allocation.py:0
+msgid ""
+"The returned product is not available in %(location)s, so automatic unbuild "
+"%(unbuild)s could not be completed."
+msgstr ""
+"المنتج المرتجع غير متاح في %(location)s، لذلك تعذر إكمال أمر التفكيك "
+"التلقائي %(unbuild)s."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid ""
+"The returned quantity of %(product)s exceeds the remaining completed "
+"automatic manufacturing quantity. Available to unbuild: %(quantity)s %(uom)s."
+msgstr ""
+"كمية المنتج المرتجع %(product)s تتجاوز الكمية المتبقية من التصنيع التلقائي "
+"المكتمل. المتاح للتفكيك: %(quantity)s %(uom)s."
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,help:pos_auto_mrp.field_mrp_production__pos_auto_mrp_generated
+msgid ""
+"This manufacturing order was created by the POS Auto MRP sales workflow."
+msgstr ""
+
+#. module: pos_auto_mrp
+#: model:ir.model.constraint,message:pos_auto_mrp.constraint_pos_auto_mrp_return_allocation_allocation_key_uniq
+msgid "This returned quantity has already been allocated to an unbuild order."
+msgstr "تم تخصيص هذه الكمية المرتجعة مسبقًا لأمر تفكيك."
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid "This returned quantity is already being processed by another request."
+msgstr "تتم معالجة هذه الكمية المرتجعة بالفعل بواسطة طلب آخر."
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+msgid "This source is configured for every active manufacturing Point of Sale."
+msgstr "هذا الموقع مربوط بجميع نقاط البيع النشطة التي تنشئ أوامر تصنيع."
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_stock_picking
+msgid "Transfer"
+msgstr "حركة مخزون"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_auto_mrp_return_allocation__unbuild_id
+msgid "Unbuild"
+msgstr "تفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model,name:pos_auto_mrp.model_mrp_unbuild
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__mrp_unbuild_id
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+msgid "Unbuild Order"
+msgstr "أمر تفكيك"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+#: code:addons/pos_auto_mrp/models/pos_order_line.py:0
+#: code:addons/pos_auto_mrp/models/sale_order.py:0
+#: code:addons/pos_auto_mrp/models/sale_order_line.py:0
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order__mrp_unbuild_count
+msgid "Unbuild Orders"
+msgstr "أوامر التفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_mrp_production__pos_auto_mrp_refund_status
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.mrp_production_tree_view_inherit_pos_refund_status
+msgid "Unbuild Status"
+msgstr "حالة التفكيك"
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_pos_order_form_inherit_mo_link
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.view_sale_order_form_inherit_mo_link
+msgid "Unbuilds"
+msgstr "عمليات التفكيك"
+
+#. module: pos_auto_mrp
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_pos_order_line__unbuilt_qty
+#: model:ir.model.fields,field_description:pos_auto_mrp.field_sale_order_line__unbuilt_qty
+msgid "Unbuilt Quantity"
+msgstr "الكمية التي تم تفكيكها"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+msgid "Unbuilt by POS Refund"
+msgstr "تفكيك بسبب استرداد نقطه البيع"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+msgid "Unbuilt by Sales Return"
+msgstr "تفكيك بسبب مرتجع المبيعات"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "Warehouse Adjustment"
+msgstr "تسوية المخزون"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+msgid "The POS refund stock movement could not be completed, so no automatic unbuild was created. Check the returned quantity and lot/serial number, then retry the refund."
+msgstr "تعذر إكمال حركة مخزون استرداد نقطة البيع، لذلك لم يتم إنشاء تفكيك تلقائي. تحقق من الكمية المرتجعة ورقم الدفعة أو الرقم التسلسلي ثم أعد محاولة الاسترداد."
+
+#. module: pos_auto_mrp
+#: model_terms:ir.ui.view,arch_db:pos_auto_mrp.pos_mrp_source_profile_form_view
+msgid "e.g. مخزن قسم الشواية"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_production.py:0
+#: code:addons/pos_auto_mrp/models/pos_order.py:0
+#: code:addons/pos_auto_mrp/models/pos_order_line.py:0
+#: code:addons/pos_auto_mrp/models/sale_order_line.py:0
+#: code:addons/pos_auto_mrp/models/stock_picking.py:0
+msgid "id"
+msgstr ""
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "manual"
+msgstr "يدوي"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "sale_return"
+msgstr "مرتجع المبيعات"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "system"
+msgstr "النظام"
+
+#. module: pos_auto_mrp
+#. odoo-python
+#: code:addons/pos_auto_mrp/models/mrp_unbuild.py:0
+msgid "warehouse_adjustment"
+msgstr "تسوية المخزون"
+
+#~ msgid "Component Source"
+#~ msgstr "موقع سحب المكونات"
+
+#~ msgid "Related Unbuild"
+#~ msgstr "أمر التفكيك المرتبط"

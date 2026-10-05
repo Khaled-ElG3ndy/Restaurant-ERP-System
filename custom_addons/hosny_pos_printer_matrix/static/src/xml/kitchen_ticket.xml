@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+        تذكرة المطبخ بتصميم FERP. نصوص التصميم (نوع الفاتوره، طاوله، الوجبه،
+        الكـميه…) مكتوبة بإملاء تذكرة FERP نفسها عن قصد، ومنها الكشيدة في
+        «الكـميه» التي تعطي الكاف الممدودة كما في الأصل.
+        «رقم الفاتورة» = رقم الطلب في الوردية (hosny_session_number)، ورقم التتبّع
+        احتياطي فقط لو لم يصل الرقم من الخادم.
+        البيانات: data من getOrderData/generateReceiptsDataToPrint، و ticket
+        من buildKitchenTicket (المجموعات والأصناف والحالة والملاحظات).
+    -->
+    <t t-name="hosny_pos_printer_matrix.KitchenTicket">
+        <div class="hosny-kitchen-ticket" dir="rtl">
+            <!-- المجمّعة (الكنترول) لها عنوانها حتى لا تُحضَّر مرتين مع تذكرة المحطة. -->
+            <div class="hosny-kt-title">
+                <span t-if="data._bundled">فاتـــورة مجمعـــة</span>
+                <span t-else="">نسخـــة المطبـــخ</span>
+            </div>
+
+            <div t-if="ticket.status" class="hosny-kt-status" t-esc="ticket.status"/>
+
+            <div class="hosny-kt-meta">
+                <div class="hosny-kt-row">
+                    <div class="hosny-kt-label"><span>نوع الفاتوره</span></div>
+                    <div class="hosny-kt-value is-strong"><span t-esc="data.order_type_name"/></div>
+                </div>
+                <div class="hosny-kt-row">
+                    <div class="hosny-kt-label"><span>طاوله</span></div>
+                    <div class="hosny-kt-value is-number"><span t-esc="data.hosny_table"/></div>
+                </div>
+            </div>
+
+            <div class="hosny-kt-bar">
+                <div class="hosny-kt-bar-label">رقم الفاتورة</div>
+                <div class="hosny-kt-bar-number" t-esc="data.hosny_order_number or data.tracking_number"/>
+            </div>
+
+            <div class="hosny-kt-floor" t-esc="data.hosny_floor"/>
+
+            <table t-if="ticket.groups.length" class="hosny-kt-table">
+                <colgroup>
+                    <col/>
+                    <col class="hosny-kt-col-qty"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th><span>الوجبه</span></th>
+                        <th><span>الكـميه</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="ticket.groups" t-as="group" t-key="group.key">
+                        <tr class="hosny-kt-group">
+                            <td colspan="2"><span t-esc="group.name"/></td>
+                        </tr>
+                        <tr t-foreach="group.lines" t-as="line" t-key="line_index"
+                            class="hosny-kt-item" t-att-class="{'is-combo-child': line.comboChild}">
+                            <td class="hosny-kt-name">
+                                <span t-esc="line.name"/>
+                                <span t-foreach="line.details" t-as="detail" t-key="detail_index"
+                                      class="hosny-kt-detail"
+                                      t-att-class="{'is-note': detail.isNote}"
+                                      t-esc="detail.text"/>
+                            </td>
+                            <td class="hosny-kt-qty"><span t-esc="line.qty"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <div t-if="ticket.notes.length" class="hosny-kt-notes">
+                <div t-foreach="ticket.notes" t-as="note" t-key="note_index" class="hosny-kt-note">
+                    <span class="hosny-kt-note-label" t-esc="note.label"/>
+                    <t t-esc="note.text"/>
+                </div>
+            </div>
+
+            <div class="hosny-kt-cashier">
+                <span class="hosny-kt-cashier-label">Cashier</span>
+                <span class="hosny-kt-cashier-name" t-esc="data.employee_name"/>
+            </div>
+            <div class="hosny-kt-date" dir="ltr" t-esc="data.hosny_printed_at"/>
+        </div>
+    </t>
+
+</templates>

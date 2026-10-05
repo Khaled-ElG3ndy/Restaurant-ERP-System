@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="pos_audit_log_list" model="ir.ui.view">
+    <field name="name">pos.audit.log.list</field>
+    <field name="model">pos.audit.log</field>
+    <field name="arch" type="xml">
+      <list string="سجل المراجعة" create="false" delete="false" edit="false"
+            decoration-danger="action in ('void','refund','void_line')"
+            decoration-warning="action in ('discount','price_edit')"
+            decoration-info="action in ('cash_in','cash_out')">
+        <field name="create_date" string="الوقت"/>
+        <field name="action" string="العملية"/>
+        <field name="pos_config_id" optional="show"/>
+        <field name="order_ref" optional="show"/>
+        <field name="table_name" optional="show"/>
+        <field name="product_name"/>
+        <field name="quantity_cancelled" optional="show"/>
+        <field name="amount" string="القيمة"/>
+        <field name="reason" string="السبب (الكاشير)"/>
+        <field name="cashier" string="الكاشير"/>
+        <field name="approved_by" string="اعتمده"/>
+        <field name="pos_session_id" optional="hide"/>
+        <field name="notes" optional="hide"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="pos_audit_log_form" model="ir.ui.view">
+    <field name="name">pos.audit.log.form</field>
+    <field name="model">pos.audit.log</field>
+    <field name="arch" type="xml">
+      <form string="سجل المراجعة" create="false" edit="false" delete="false">
+        <sheet>
+          <group>
+            <group string="العملية">
+              <field name="action" string="العملية"/>
+              <field name="product_name" invisible="not product_name"/>
+              <field name="quantity_before" invisible="action != 'void_line'"/>
+              <field name="quantity_after" invisible="action != 'void_line'"/>
+              <field name="quantity_cancelled" invisible="action != 'void_line'"/>
+              <field name="amount" string="القيمة"/>
+              <field name="reason" string="السبب (الكاشير)"/>
+              <field name="notes" string="ملاحظات" invisible="not notes"/>
+            </group>
+            <group string="الاعتماد">
+              <field name="approved_by" string="اعتمده"/>
+              <field name="cashier" string="الكاشير"/>
+              <field name="create_date" string="الوقت"/>
+              <field name="pos_config_id"/>
+              <field name="pos_session_id" string="الجلسة"/>
+              <field name="pos_order_id" string="طلب نقاط البيع"/>
+              <field name="order_ref"/>
+              <field name="table_name" invisible="not table_name"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="pos_audit_log_search" model="ir.ui.view">
+    <field name="name">pos.audit.log.search</field>
+    <field name="model">pos.audit.log</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="product_name"/>
+        <field name="order_ref"/>
+        <field name="reason"/>
+        <field name="cashier"/>
+        <field name="approved_by"/>
+        <filter name="void_line" string="إلغاء أصناف مرسلة" domain="[('action', '=', 'void_line')]"/>
+        <separator/>
+        <filter name="today" string="اليوم" date="create_date"/>
+        <group>
+          <filter name="by_config" string="نقطة البيع" context="{'group_by': 'pos_config_id'}"/>
+          <filter name="by_approver" string="اعتمده" context="{'group_by': 'approved_by'}"/>
+          <filter name="by_cashier" string="الكاشير" context="{'group_by': 'cashier'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="pos_audit_log_action" model="ir.actions.act_window">
+    <field name="name">سجل الإلغاءات والمراجعة</field>
+    <field name="res_model">pos.audit.log</field>
+    <field name="view_mode">list,form</field>
+    <field name="context">{'create': False, 'search_default_void_line': 1}</field>
+  </record>
+
+  <menuitem id="pos_audit_log_menu"
+    name="سجل الإلغاءات"
+    parent="point_of_sale.menu_point_of_sale"
+    action="pos_audit_log_action"
+    sequence="90"
+    groups="point_of_sale.group_pos_manager"/>
+</odoo>

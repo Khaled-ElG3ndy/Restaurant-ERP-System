@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="hr.payroll.structure.type" name="_hosny_apply_arabic_names"/>
+    <function model="resource.calendar" name="_hosny_apply_arabic_names"/>
+</odoo>
+

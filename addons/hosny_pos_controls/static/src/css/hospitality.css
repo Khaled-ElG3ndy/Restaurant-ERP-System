@@ -1,0 +1,598 @@
+:root {
+    --hospitality-gold: #d3a32f;
+    --hospitality-gold-dark: #9a6c08;
+    --hospitality-ink: #142039;
+    --hospitality-muted: #8b95a7;
+    --hospitality-border: #e3e8ef;
+    --hospitality-canvas: #f8fafc;
+}
+
+/* POS control button */
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.hosny-hospitality-button {
+    isolation: isolate;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.hosny-hospitality-button:hover,
+.pos .product-screen .leftpane.hosny-order-panel .hosny-mode-button.hosny-hospitality-button.is-active {
+    border-color: var(--hospitality-gold);
+    background: #fffaf0;
+    color: var(--hospitality-gold-dark);
+    box-shadow: 0 0 0 3px rgba(211, 163, 47, 0.14);
+}
+
+/*
+ * Only used inside the hospitality mode button, so it takes that button's
+ * colour — including the gold it turns when the mode is active — rather than
+ * pinning an ink of its own and reading darker than the icons beside it.
+ */
+.pos .hosny-hospitality-service-icon {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    fill: currentColor;
+}
+
+/* Dialog shell */
+body .o_dialog .modal-dialog:has(.hosny-hospitality-dialog),
+body .modal-dialog:has(.hosny-hospitality-dialog) {
+    width: min(850px, calc(100vw - 40px)) !important;
+    max-width: min(850px, calc(100vw - 40px)) !important;
+    margin: 24px auto !important;
+}
+
+.hosny-hospitality-dialog {
+    height: min(610px, calc(100vh - 48px));
+    min-height: 520px;
+    overflow: hidden;
+    border: 1px solid #e8ebf0 !important;
+    border-radius: 24px !important;
+    background: #fff;
+    box-shadow: 0 28px 80px rgba(15, 23, 42, 0.32) !important;
+    font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+}
+
+.pos .o_dialog .modal-content.hosny-hospitality-dialog .modal-header {
+    display: flex;
+    flex: 0 0 78px;
+    align-items: center;
+    justify-content: space-between !important;
+    min-height: 78px !important;
+    padding: 0 24px !important;
+    border-bottom: 1px solid #e9edf2 !important;
+    background: #fff !important;
+    direction: rtl !important;
+    flex-direction: row-reverse;
+}
+
+.hosny-hospitality-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    color: var(--hospitality-ink);
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.hosny-hospitality-title-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    filter: drop-shadow(0 5px 5px rgba(154, 108, 8, 0.2));
+}
+
+.hosny-hospitality-title-icon svg {
+    width: 46px;
+    height: 46px;
+    overflow: visible;
+}
+
+.hosny-hospitality-close {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid #dfe5ed;
+    border-radius: 13px;
+    background: #fff;
+    color: #17233a;
+    font-size: 22px;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, 0.03);
+    transition: 0.16s ease;
+}
+
+.hosny-hospitality-close:hover {
+    border-color: #cfd6e0;
+    background: #f8fafc;
+    transform: translateY(-1px);
+}
+
+.pos .o_dialog .modal-content.hosny-hospitality-dialog .modal-body {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0 !important;
+    background: var(--hospitality-canvas);
+}
+
+.hosny-hospitality-content {
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 24px;
+    overflow: hidden;
+    color: var(--hospitality-ink);
+    direction: rtl;
+}
+
+/* Search row: search on the left, counter on the right, exactly like reference */
+.hosny-hospitality-search-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 145px;
+    gap: 24px;
+    align-items: center;
+    direction: ltr;
+}
+
+.hosny-hospitality-search-field {
+    position: relative;
+    min-width: 0;
+}
+
+.hosny-hospitality-search-field > i {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    z-index: 2;
+    color: #475569;
+    font-size: 25px;
+    transform: translateY(-50%);
+}
+
+.hosny-hospitality-search-field input {
+    width: 100%;
+    height: 70px;
+    padding: 0 72px 0 70px;
+    border: 2px solid var(--hospitality-gold);
+    border-radius: 19px;
+    background: #fff;
+    color: var(--hospitality-ink);
+    font-size: 18px;
+    font-weight: 600;
+    direction: rtl;
+    text-align: left;
+    box-shadow: 0 3px 0 rgba(211, 163, 47, 0.1), 0 8px 18px rgba(15, 23, 42, 0.04);
+    outline: none;
+}
+
+.hosny-hospitality-search-field input::placeholder {
+    color: #a5adba;
+    opacity: 1;
+}
+
+.hosny-hospitality-search-field input:focus {
+    border-color: #c18c12;
+    box-shadow: 0 0 0 4px rgba(211, 163, 47, 0.13);
+}
+
+.hosny-hospitality-search-clear {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 10px;
+    background: #f2f4f7;
+    color: #64748b;
+    transform: translateY(-50%);
+}
+
+.hosny-hospitality-results-count {
+    height: 62px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 15px;
+    border: 1px solid #e2e5e9;
+    border-radius: 24px;
+    background: #fff;
+    color: var(--hospitality-ink);
+    font-size: 17px;
+    font-weight: 900;
+    white-space: nowrap;
+    direction: rtl;
+    box-shadow: 0 3px 9px rgba(15, 23, 42, 0.06);
+}
+
+.hosny-hospitality-results-count i {
+    margin-inline-start: 8px;
+    color: #d39b1c;
+    font-size: 25px;
+}
+
+.hosny-hospitality-results-count b {
+    color: #111827;
+    font-size: 18px;
+}
+
+/* Product area */
+.hosny-hospitality-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 238px);
+    grid-auto-rows: max-content;
+    justify-content: start;
+    align-content: start;
+    gap: 16px;
+    padding: 2px 2px 16px;
+    overflow-y: auto;
+    direction: rtl;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.hosny-hospitality-card {
+    position: relative;
+    width: 238px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 8px 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 17px;
+    background: #fff;
+    color: var(--hospitality-ink);
+    text-align: right;
+    direction: rtl;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+    transition: 0.16s ease;
+}
+
+.hosny-hospitality-card:hover {
+    border-color: rgba(211, 163, 47, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.hosny-hospitality-card.is-selected {
+    border-color: var(--hospitality-gold) !important;
+    box-shadow: 0 0 0 3px rgba(211, 163, 47, 0.13), 0 14px 30px rgba(15, 23, 42, 0.11);
+}
+
+.hosny-hospitality-image-wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.hosny-hospitality-image {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 11px;
+    background: #eef1f5;
+}
+
+.hosny-hospitality-image-placeholder {
+    place-items: center;
+    color: #a67a18;
+    background: #fbf6e9;
+}
+
+.hosny-hospitality-image-placeholder svg {
+    width: 64px;
+    height: 64px;
+    fill: currentColor;
+}
+
+.hosny-hospitality-check {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 3;
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #d8dee7;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #fff;
+    font-size: 15px;
+    box-shadow: 0 3px 9px rgba(15, 23, 42, 0.08);
+}
+
+.hosny-hospitality-card.is-selected .hosny-hospitality-check {
+    border-color: var(--hospitality-gold) !important;
+    background: var(--hospitality-gold) !important;
+    color: #fff !important;
+}
+
+.hosny-hospitality-image-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 0 11px 0 10px;
+    background: #4eaa62;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    direction: rtl;
+}
+
+.hosny-hospitality-card-body {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 11px;
+    padding: 14px 4px 11px;
+}
+
+.hosny-hospitality-product-name {
+    min-height: 31px;
+    color: #101827;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.4;
+    text-align: right;
+}
+
+.hosny-hospitality-original-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 9px;
+    border-top: 1px dashed #dce2ea;
+    color: #7f899b;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.hosny-hospitality-original-price b {
+    order: 2;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #faf4e5;
+    color: #89600a;
+    font-size: 13px;
+    font-weight: 900;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+.hosny-hospitality-empty {
+    flex: 1 1 auto;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #7f899b;
+    text-align: center;
+}
+
+.hosny-hospitality-empty-icon {
+    width: 82px;
+    height: 82px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: #fbf4df;
+    color: #a67a18;
+}
+
+.hosny-hospitality-empty-icon svg {
+    width: 54px;
+    height: 54px;
+    fill: currentColor;
+}
+
+.hosny-hospitality-empty > i {
+    color: #c39426;
+    font-size: 46px;
+}
+
+.hosny-hospitality-empty strong {
+    color: var(--hospitality-ink);
+    font-size: 20px;
+    font-weight: 900;
+}
+
+/* Fixed footer */
+.pos .o_dialog .modal-content.hosny-hospitality-dialog .modal-footer {
+    flex: 0 0 100px;
+    padding: 18px 22px !important;
+    border-top: 1px solid #e9edf2 !important;
+    background: #fff !important;
+}
+
+.hosny-hospitality-footer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.14fr 1fr 1fr 1fr;
+    gap: 10px;
+    direction: ltr !important;
+}
+
+.pos .o_dialog .hosny-hospitality-footer .btn {
+    min-width: 0;
+    height: 62px;
+    min-height: 62px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 1px solid #dce2ea;
+    border-radius: 13px !important;
+    background: #fff;
+    color: var(--hospitality-ink);
+    font-size: 14px !important;
+    font-weight: 900;
+    direction: rtl;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.02);
+}
+
+.hosny-hospitality-footer .btn i {
+    font-size: 18px;
+}
+
+.hosny-hospitality-footer .btn-primary {
+    border-color: #c8941c;
+    background: linear-gradient(135deg, #d8a92f 0%, #e5b83f 100%);
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(170, 121, 14, 0.2);
+}
+
+.hosny-hospitality-footer .btn-primary:disabled {
+    opacity: 0.55;
+}
+
+.hosny-hospitality-footer .btn-outline-secondary:disabled {
+    border-color: #e2e7ed;
+    background: #f7f8fa;
+    color: #afb6c1;
+    opacity: 1;
+}
+
+.hosny-hospitality-footer .hosny-hospitality-cancel {
+    background: #fff;
+    color: #c91313;
+}
+
+.hosny-hospitality-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-inline-end: 8px;
+    padding: 4px 9px;
+    border: 1px solid rgba(198, 154, 53, 0.28);
+    border-radius: 999px;
+    background: #fff2c9;
+    color: #765315;
+    font-size: 11px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.hosny-hospitality-badge svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+@media (max-width: 1200px) {
+    body .o_dialog .modal-dialog:has(.hosny-hospitality-dialog),
+    body .modal-dialog:has(.hosny-hospitality-dialog) {
+        width: min(850px, calc(100vw - 36px)) !important;
+        max-width: min(850px, calc(100vw - 36px)) !important;
+        margin: 18px auto !important;
+    }
+
+    .hosny-hospitality-dialog {
+        height: min(610px, calc(100vh - 36px));
+    }
+
+    .hosny-hospitality-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        margin-top: 0;
+    }
+
+    .hosny-hospitality-card {
+        width: auto;
+    }
+}
+
+@media (max-width: 760px) {
+    .hosny-hospitality-dialog .modal-header {
+        flex-basis: 78px;
+        padding: 0 18px;
+    }
+
+    .hosny-hospitality-title {
+        gap: 10px;
+        font-size: 23px;
+    }
+
+    .hosny-hospitality-title-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .hosny-hospitality-title-icon svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .hosny-hospitality-close {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+
+    .hosny-hospitality-content {
+        padding: 16px;
+    }
+
+    .hosny-hospitality-search-wrap {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .hosny-hospitality-results-count {
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    .hosny-hospitality-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .hosny-hospitality-image {
+        height: 160px;
+    }
+
+    .hosny-hospitality-product-name {
+        font-size: 16px;
+    }
+
+    .hosny-hospitality-dialog .modal-footer {
+        flex-basis: auto;
+        padding: 14px;
+    }
+
+    .hosny-hospitality-footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .hosny-hospitality-footer .btn {
+        height: 54px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hosny-hospitality-grid {
+        grid-template-columns: 1fr;
+    }
+}

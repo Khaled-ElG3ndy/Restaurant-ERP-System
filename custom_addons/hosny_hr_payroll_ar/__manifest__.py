@@ -1,0 +1,27 @@
+{
+    "name": "بيانات الرواتب العربية - حسني",
+    "version": "19.0.2.0.0",
+    "category": "Human Resources/Payroll",
+    "summary": "بدلات وتأمين وإجازة سنوية وتعديلات رواتب مترابطة بالكامل",
+    "author": "Hosny",
+    "license": "LGPL-3",
+    "depends": [
+        "bi_hr_payroll",
+        "hr_work_entry",
+        "hr_holidays",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/hr_salary_adjustment_security.xml",
+        "data/arabic_master_data.xml",
+        "data/payroll_structure_data.xml",
+        "views/hr_salary_adjustment_views.xml",
+        "views/hr_payslip_views.xml",
+        "views/hr_employee_views.xml",
+        "views/hr_contract_template_views.xml",
+        "views/hr_leave_allocation_views.xml",
+        "views/res_config_settings_views.xml",
+    ],
+    "installable": True,
+    "application": False,
+}

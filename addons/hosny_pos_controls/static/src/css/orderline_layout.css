@@ -1,0 +1,339 @@
+/* Final POS orderline layout loaded after controls.css. */
+
+.pos .product-screen .leftpane.hosny-order-panel .order-container {
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-line-note-button,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-cart-qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-tax {
+    display: none !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .order-container {
+        box-sizing: border-box !important;
+        padding-inline: 10px !important;
+        overflow-x: hidden !important;
+    }
+}
+
+/* rtl:begin:ignore */
+/* Final action layout: price | divider | item | divider | quantity | delete. */
+.pos .product-screen .leftpane.hosny-order-panel .order-container > .orderline {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+    margin: 6px 0 !important;
+    padding: 6px 10px !important;
+    display: grid !important;
+    align-items: center !important;
+    position: relative !important;
+    direction: ltr !important;
+    overflow: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline > .d-flex {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    direction: ltr !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .info-list {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+    display: grid !important;
+    grid-template-columns: minmax(124px, max-content) 1px minmax(0, 1fr) 1px 44px 44px !important;
+    grid-template-areas: "price divider name action-divider qty delete" !important;
+    align-items: center !important;
+    column-gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 62px !important;
+    min-height: 62px !important;
+    max-height: 62px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    direction: ltr !important;
+    position: static !important;
+    overflow: hidden !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left {
+    grid-area: price !important;
+    width: fit-content !important;
+    min-width: 0 !important;
+    max-width: 156px !important;
+    justify-self: start !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+    width: fit-content !important;
+    min-width: 116px !important;
+    max-width: 156px !important;
+    min-height: 50px !important;
+    padding: 8px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    border: 1px solid rgba(130, 95, 40, 0.12) !important;
+    border-radius: 14px !important;
+    background: #fffdf8 !important;
+    color: #2b2723 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-price-amount {
+    font-size: 1em !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-price-currency {
+    color: #ab9f8c !important;
+    font-size: 0.68em !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-action-separator {
+    width: 1px !important;
+    height: 46px !important;
+    display: block !important;
+    background: rgba(130, 95, 40, 0.16) !important;
+    border-radius: 999px !important;
+    position: static !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator {
+    grid-area: divider !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-action-separator {
+    grid-area: action-divider !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-item {
+    grid-area: name !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    justify-self: stretch !important;
+    align-self: stretch !important;
+    direction: rtl !important;
+    text-align: right !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    text-align: right !important;
+    direction: rtl !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .product-name .text-wrap {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    max-width: 100% !important;
+    direction: rtl !important;
+    text-align: right !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-product-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    color: #233248 !important;
+    font-size: 20px !important;
+    line-height: 1.12 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: right !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-product-detail,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .attribute-line {
+    max-width: 100% !important;
+    padding: 3px 9px !important;
+    border-radius: 999px !important;
+    background: #f0e8d8 !important;
+    color: #9a8f7c !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+    align-self: flex-start !important;
+    text-align: right !important;
+    margin: 0 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    justify-self: center !important;
+    align-self: center !important;
+    line-height: 1 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty {
+    grid-area: qty !important;
+    border: 1px solid rgba(135, 100, 32, 0.32) !important;
+    border-radius: 12px !important;
+    background: #f6ecd4 !important;
+    color: #7a5c17 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+    grid-area: delete !important;
+    border: 1px solid #f0d8dd !important;
+    border-radius: 12px !important;
+    background: #fffdf8 !important;
+    color: #c8415c !important;
+    font-size: 19px !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:hover,
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete:focus-visible {
+    background: #fff4f6 !important;
+    border-color: #ffbac8 !important;
+    color: #c81035 !important;
+}
+
+.pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete i {
+    color: inherit !important;
+    font-size: 19px !important;
+    line-height: 1 !important;
+}
+
+@media (max-width: 720px) {
+    .pos .product-screen .leftpane.hosny-order-panel .order-container > .orderline {
+        height: 74px !important;
+        min-height: 74px !important;
+        max-height: 74px !important;
+        margin: 6px 0 !important;
+        padding: 6px 8px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .line-details,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-head {
+        grid-template-columns: minmax(102px, max-content) 1px minmax(0, 1fr) 1px 42px 42px !important;
+        column-gap: 8px !important;
+        height: 62px !important;
+        min-height: 62px !important;
+        max-height: 62px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-price-box,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-left,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+        width: fit-content !important;
+        min-width: 102px !important;
+        max-width: 128px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .price,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .product-price {
+        min-height: 46px !important;
+        padding: 7px 9px !important;
+        font-size: 20px !important;
+        gap: 5px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-separator,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-action-separator {
+        height: 44px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-product-main {
+        font-size: 17px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-product-detail,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .attribute-line {
+        font-size: 11px !important;
+        padding: 3px 7px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .qty,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-qty,
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete {
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 42px !important;
+        font-size: 21px !important;
+    }
+
+    .pos .product-screen .leftpane.hosny-order-panel .orderline .hosny-orderline-delete i {
+        font-size: 18px !important;
+    }
+}
+/* rtl:end:ignore */

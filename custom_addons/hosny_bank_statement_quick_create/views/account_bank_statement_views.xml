@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_bank_statement_list_quick_create" model="ir.ui.view">
+        <field name="name">account.bank.statement.list.quick.create</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <header>
+                    <button
+                        name="action_quick_create_statement_line"
+                        string="New"
+                        type="object"
+                        class="btn-primary"
+                        display="always"
+                        groups="account.group_account_basic"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

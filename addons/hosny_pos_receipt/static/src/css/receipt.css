@@ -1,0 +1,58 @@
+.hosny-receipt { font-family: 'Cairo', Arial, sans-serif; }
+.pos-receipt-logo {
+    max-width: 180px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.pos-receipt-order-note {
+    border-top: 1px dashed #ccc;
+    padding-top: 0.75rem;
+    page-break-before: always;
+    break-before: page;
+}
+.pos-receipt-order-note-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+}
+.pos-receipt-order-note-text {
+    font-size: 0.90rem;
+    white-space: pre-line;
+    line-height: 1.4;
+}
+.pos-receipt img#posqrcode,
+.premium-receipt-footer-qr {
+    display: none !important;
+}
+.pos-receipt img#qrcode {
+    display: none !important;
+}
+.pos-receipt .hosny-receipt-tax-qr {
+    border-top: 1px dashed #ccc;
+    text-align: center;
+}
+.pos-receipt .hosny-receipt-tax-qr img#qrcode {
+    display: block !important;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+.pos .hosny-line-note-button {
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #8a8175;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin-inline-start: 0.35rem;
+}
+.pos .hosny-line-note-button:hover,
+.pos .hosny-line-note-button.has-note {
+    background: #f5efe2;
+    color: #1f2937;
+}

@@ -1,0 +1,1509 @@
+.partial-transfer-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.hosny-partial-transfer-popup {
+    direction: rtl;
+    width: 100%;
+    max-width: 96vw;
+    min-width: 0;
+    height: 92vh;
+    min-height: 760px;
+    max-height: 940px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    border: none;
+    overflow: hidden;
+    border-radius: 28px;
+    margin: 0;
+    background: radial-gradient(circle at top left, rgba(201, 129, 45, 0.22), transparent 28%), linear-gradient(145deg, #fff9f3 0%, #ffffff 34%, #f8f5ef 100%);
+    box-shadow: 0 36px 90px rgba(54, 40, 16, 0.24);
+}
+
+.hosny-partial-transfer-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: 1.6rem 1.8rem 1.15rem;
+    color: #382514;
+    border-bottom: 1px solid rgba(85, 59, 33, 0.12);
+    background: linear-gradient(135deg, rgba(110, 71, 28, 0.04), rgba(201, 129, 45, 0.1));
+}
+
+.hosny-header-title {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.hosny-partial-transfer-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #5d3d18;
+}
+
+.hosny-header-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-width: 110px;
+    padding: 0.95rem 1rem;
+    border-radius: 999px;
+    background: rgba(242, 209, 146, 0.24);
+    border: 1px solid rgba(188, 143, 63, 0.18);
+    color: #7b4f18;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hosny-header-pill span:last-child {
+    opacity: 0.78;
+}
+
+.o_dialog .modal-content.hosny-partial-transfer-popup,
+.o_dialog .modal-content.hosny-partial-transfer-popup .modal-body,
+.o_dialog .modal-content.hosny-partial-transfer-popup .modal-header {
+  background: radial-gradient(circle at top right, rgba(199, 140, 70, 0.18), transparent 26%), linear-gradient(145deg, #fff9f2 0%, #ffffff 38%, #f7f1e7 100%);
+    box-shadow: 0 38px 95px rgba(62, 45, 18, 0.24);
+
+}
+
+
+.o_dialog .modal-content.hosny-partial-transfer-popup .modal-body {
+    background: transparent !important;
+}
+
+.pos .o_dialog .modal.d-block:has(.hosny-partial-transfer-popup) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+}
+
+.pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 98vw !important;
+    max-width: 1680px !important;
+    min-height: auto !important;
+    margin: auto !important;
+    padding: 0 !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup {
+    width: 100% !important;
+    max-width: 1680px !important;
+    overflow: hidden !important;
+}
+
+@media (max-width: 1024px), (max-height: 792px) {
+    .hosny-partial-transfer-popup {
+        min-height: 0;
+        max-width: 96vw;
+        max-height: 96vh;
+    }
+
+    .pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup),
+    .pos .o_dialog .modal-content.hosny-partial-transfer-popup {
+        max-width: 96vw !important;
+    }
+}
+
+.hosny-partial-transfer-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(520px, 1.7fr) minmax(520px, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem 1.5rem 0;
+    overflow: hidden;
+}
+
+.hosny-transfer-lines-panel,
+.hosny-transfer-tables-panel {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hosny-transfer-lines-list,
+.hosny-transfer-floor-list {
+    min-height: 0;
+    overflow: auto;
+    padding: 0.5rem 0.75rem 0.75rem;
+    max-height: 62vh;
+}
+
+.hosny-transfer-line-controls {
+    display: grid;
+    grid-template-columns: 64px minmax(140px, 1fr) 64px 100px 100px;
+    align-items: stretch;
+    gap: 0.7rem;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn {
+    border: 1px solid rgba(96, 74, 48, 0.12);
+    border-radius: 16px;
+    min-height: 64px;
+    background: white;
+    color: #4a3420;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hosny-qty-btn.primary {
+    background: linear-gradient(135deg, #a8641c, #cf8732);
+    color: white;
+    border-color: transparent;
+}
+
+.hosny-partial-transfer-header .modal-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.hosny-partial-transfer-subtitle {
+    margin-top: 0.45rem;
+    font-size: 1rem;
+    color: #7a5d3c;
+}
+
+.hosny-partial-transfer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1.15rem;
+    border-radius: 999px;
+    color: #8b541a;
+    background: rgba(201, 129, 45, 0.12);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hosny-transfer-lines-panel,
+.hosny-transfer-tables-panel {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+    max-width: none;
+}
+
+.hosny-panel-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0 0.45rem;
+}
+
+.hosny-panel-title {
+    margin: 0;
+    font-size: 1.22rem;
+    font-weight: 800;
+    color: #402914;
+}
+
+.hosny-transfer-summary-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #7f6241;
+}
+
+.hosny-transfer-lines-list,
+.hosny-transfer-floor-list {
+    min-height: 0;
+    overflow: auto;
+    padding: 0.5rem 0.85rem 0.85rem;
+}
+
+.hosny-transfer-lines-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+
+.hosny-transfer-line-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.2rem 1.2rem 1.1rem;
+    border-radius: 22px;
+    border: 1px solid rgba(102, 74, 40, 0.12);
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 12px 30px rgba(83, 56, 24, 0.07);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    animation: hosnyTransferRise 0.24s ease;
+}
+
+.hosny-transfer-line-card.is-selected {
+    border-color: rgba(180, 117, 44, 0.42);
+    box-shadow: 0 16px 34px rgba(180, 117, 44, 0.14);
+    transform: translateY(-1px);
+}
+
+.hosny-transfer-line-card.is-combo-child {
+    background: linear-gradient(135deg, rgba(246, 241, 234, 0.95), rgba(255, 255, 255, 0.9));
+}
+
+.hosny-transfer-line-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.hosny-transfer-line-title-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.hosny-transfer-line-title {
+    margin: 0;
+    font-size: 1.18rem;
+    line-height: 1.55;
+    font-weight: 800;
+    color: #2f2318;
+}
+
+.hosny-transfer-line-price {
+    color: #885219;
+    font-size: 1.12rem;
+    font-weight: 800;
+    white-space: nowrap;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-transfer-line-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 0.7rem;
+}
+
+.hosny-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.42rem 0.75rem;
+    border-radius: 999px;
+    background: #f4eadf;
+    color: #704819;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.hosny-chip.light {
+    background: #f7f6f2;
+    color: #5f5649;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-chip.subtle {
+    background: rgba(98, 84, 67, 0.1);
+    color: #605142;
+}
+
+.hosny-transfer-line-note {
+    margin-top: 0.65rem;
+    padding: 0.8rem 0.95rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.hosny-transfer-line-note.customer {
+    background: rgba(255, 213, 79, 0.16);
+    color: #6a520a;
+}
+
+.hosny-transfer-line-note.internal {
+    background: rgba(57, 151, 226, 0.12);
+    color: #215e8a;
+}
+
+.hosny-transfer-line-note.attributes {
+    background: rgba(89, 94, 255, 0.08);
+    color: #3b4588;
+}
+
+.hosny-transfer-combo-hint {
+    margin-top: 0.6rem;
+    color: #85633b;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.hosny-transfer-line-controls {
+    display: grid;
+    grid-template-columns: 64px minmax(130px, 1fr) 64px 92px 92px;
+    align-items: stretch;
+    gap: 0.7rem;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn {
+    border: 1px solid rgba(96, 74, 48, 0.12);
+    border-radius: 16px;
+    min-height: 58px;
+    background: white;
+    color: #4a3420;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hosny-qty-btn.primary {
+    background: linear-gradient(135deg, #a8641c, #cf8732);
+    color: white;
+    border-color: transparent;
+}
+
+.hosny-quick-btn.subtle {
+    background: #f7f3ee;
+    color: #6b5b49;
+}
+
+.hosny-qty-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff6ec, #fff);
+    border: 1px solid rgba(181, 124, 54, 0.12);
+}
+
+.hosny-qty-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #7a4c19;
+}
+
+.hosny-qty-label {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #87694b;
+}
+
+.hosny-floor-section + .hosny-floor-section {
+    margin-top: 1rem;
+}
+
+.hosny-floor-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid rgba(141, 101, 46, 0.14);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(248, 241, 231, 0.92));
+    color: #5d432a;
+    box-shadow: 0 10px 24px rgba(88, 58, 21, 0.06);
+    text-align: right;
+}
+
+.hosny-floor-toggle-label {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.hosny-floor-toggle-icon {
+    font-size: 0.95rem;
+    transition: transform 0.18s ease;
+}
+
+.hosny-floor-toggle-icon.is-collapsed {
+    transform: rotate(-90deg);
+}
+
+.hosny-table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 0.85rem;
+}
+
+.hosny-table-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    min-height: 126px;
+    padding: 1rem;
+    text-align: right;
+    border-radius: 18px;
+    border: 1px solid rgba(98, 73, 44, 0.14);
+    background: rgba(255, 255, 255, 0.92);
+    color: #3e2b19;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+}
+.hosny-table-card.selected {
+    color: white;
+    border-color: #9d5d16;
+    background: linear-gradient(135deg, #7e470f, #c7832b 55%, #e4b25d);
+    box-shadow: 0 22px 40px rgba(156, 99, 31, 0.34);
+    transform: translateY(-2px) scale(1.01);
+    outline: 3px solid rgba(226, 183, 103, 0.42);
+    outline-offset: 1px;
+}
+.hosny-table-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.hosny-table-selected-badge {
+    position: absolute;
+    top: 0.75rem;
+    inset-inline-start: 0.75rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    color: red;
+    font-size: 0.76rem;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    margin-right: 130px;
+}
+
+.hosny-table-meta {
+    font-size: 0.92rem;
+    font-weight: 700;
+    opacity: 0.88;
+}
+
+.hosny-transfer-summary-card {
+    margin-top: auto;
+    padding: 1.2rem;
+    border-radius: 22px;
+    color: #3e2b19;
+    background: linear-gradient(145deg, #fffdf9, #f3eadf);
+    border: 1px solid rgba(113, 84, 45, 0.12);
+}
+
+.hosny-summary-label {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #6b4b29;
+}
+
+.hosny-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.48rem 0;
+    font-size: 0.98rem;
+}
+
+.hosny-summary-row strong {
+    color: #8d5518;
+    font-size: 1rem;
+    font-weight: 800;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-partial-transfer-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.2rem 1.2rem;
+    border-top: 1px solid rgba(85, 59, 33, 0.12);
+    background: rgba(255, 255, 255, 0.82);
+}
+
+.hosny-partial-transfer-footer .btn {
+    min-width: 140px;
+    min-height: 56px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+@keyframes hosnyTransferRise {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .hosny-partial-transfer-popup {
+        width: 100%;
+        height: 95vh;
+        min-height: 0;
+        max-height: 95vh;
+    }
+
+    .hosny-partial-transfer-body {
+        grid-template-columns: 1fr;
+        overflow: auto;
+    }
+
+    .hosny-transfer-lines-panel,
+    .hosny-transfer-tables-panel,
+    .hosny-transfer-lines-list,
+    .hosny-transfer-floor-list {
+        overflow: visible;
+    }
+}
+
+@media (max-width: 767px) {
+    .hosny-partial-transfer-header {
+        padding: 1rem;
+    }
+
+    .hosny-partial-transfer-header .modal-title {
+        font-size: 1.35rem;
+    }
+
+    .hosny-partial-transfer-body {
+        padding: 0.75rem 0.75rem 0;
+    }
+
+    .hosny-transfer-line-controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hosny-partial-transfer-footer {
+        padding: 0.75rem;
+    }
+
+    .hosny-partial-transfer-footer .btn {
+        flex: 1 1 0;
+    }
+}
+
+[dir="rtl"] .hosny-transfer-line-head,
+[dir="rtl"] .hosny-panel-title-row,
+[dir="rtl"] .hosny-summary-row,
+[dir="rtl"] .hosny-partial-transfer-header {
+    text-align: right;
+}
+
+[dir="rtl"] .hosny-transfer-line-controls,
+[dir="rtl"] .hosny-table-card,
+[dir="rtl"] .hosny-transfer-line-main,
+[dir="rtl"] .hosny-transfer-line-note,
+[dir="rtl"] .hosny-floor-toggle {
+    text-align: right;
+}
+
+/* Screenshot-matched partial transfer layout */
+.pos .o_dialog .modal.d-block:has(.hosny-partial-transfer-popup) {
+    padding: 18px !important;
+}
+
+.pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup) {
+    width: 1100px !important;
+    max-width: 96vw !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup,
+.hosny-partial-transfer-popup {
+    width: 100% !important;
+    max-width: 1100px !important;
+    height: 900px;
+    min-height: 0;
+    max-height: 96vh;
+    border-radius: 3px;
+    background: #ffffff !important;
+    box-shadow: 0 22px 58px rgba(34, 28, 20, 0.32) !important;
+}
+
+.hosny-partial-transfer-header {
+    direction: ltr;
+    flex: 0 0 122px;
+    align-items: flex-start;
+    padding: 26px 28px 22px;
+    border-bottom: 1px solid #e5d7c4;
+    background:
+        radial-gradient(circle at 4% 12%, rgba(239, 206, 159, 0.28), transparent 16%),
+        linear-gradient(135deg, #fff7ec 0%, #f8efe4 48%, #fffaf3 100%);
+}
+
+.hosny-header-title {
+    direction: rtl;
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+.hosny-partial-transfer-title {
+    margin: 4px 0 0;
+    color: #2d2926;
+    font-size: 28px;
+    line-height: 1.25;
+    font-weight: 900;
+}
+
+.hosny-partial-transfer-subtitle {
+    margin-top: 8px;
+    color: #8a6337;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+.hosny-header-pill {
+    min-width: 84px;
+    min-height: 48px;
+    padding: 0 18px;
+    border: none;
+    background: #f2dcbd;
+    color: #7b4b16;
+    font-size: 15px;
+    box-shadow: none;
+}
+
+.hosny-header-pill span:first-child {
+    font-size: 19px;
+}
+
+.hosny-partial-transfer-body {
+    flex: 1 1 auto;
+    grid-template-columns: minmax(540px, 1.25fr) minmax(430px, 0.95fr);
+    gap: 18px;
+    padding: 18px 28px 0;
+    background: #fffdf9;
+}
+
+.hosny-transfer-lines-panel,
+.hosny-transfer-tables-panel {
+    gap: 14px;
+    overflow: hidden;
+}
+
+.hosny-panel-title-row {
+    min-height: 28px;
+    padding: 0 4px;
+}
+
+.hosny-transfer-lines-panel > .hosny-panel-title-row {
+    justify-content: flex-start;
+}
+
+.hosny-transfer-lines-panel > .hosny-panel-title-row .hosny-transfer-summary-inline {
+    display: none;
+}
+
+.hosny-transfer-tables-panel > .hosny-panel-title-row {
+    justify-content: center;
+    position: relative;
+}
+
+.hosny-transfer-tables-panel > .hosny-panel-title-row .hosny-transfer-summary-inline {
+    position: absolute;
+    left: 8px;
+    top: 2px;
+}
+
+.hosny-panel-title {
+    color: #4d3218;
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 900;
+}
+
+.hosny-transfer-summary-inline {
+    color: #6d543b;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.hosny-transfer-lines-list,
+.hosny-transfer-floor-list {
+    max-height: none;
+    padding: 0 6px 8px;
+    scrollbar-color: #9ab0bd transparent;
+    scrollbar-width: thin;
+}
+
+.hosny-transfer-line-card {
+    gap: 18px;
+    padding: 22px 24px 20px;
+    border-radius: 18px;
+    border-color: #ece5db;
+    background: #ffffff;
+    box-shadow: 0 12px 26px rgba(54, 40, 21, 0.06);
+}
+
+.hosny-transfer-line-head {
+    align-items: flex-start;
+}
+
+.hosny-transfer-line-title {
+    color: #2e271f;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.hosny-transfer-line-price {
+    color: #915715;
+    font-size: 18px;
+    font-weight: 900;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-transfer-line-meta {
+    justify-content: flex-start;
+    margin-top: 14px;
+}
+
+.hosny-chip {
+    padding: 8px 14px;
+    background: #f2eadf;
+    color: #7d5424;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.hosny-chip.light {
+    background: #f1eee8;
+    color: #6a6259;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-transfer-line-controls {
+    grid-template-columns: 54px 170px 54px 82px 82px;
+    justify-content: end;
+    gap: 18px;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn,
+.hosny-qty-display {
+    min-height: 58px;
+    border-radius: 14px;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn {
+    border-color: #f0eadf;
+    background: #ffffff;
+    color: #4b5560;
+    box-shadow: none;
+}
+
+.hosny-qty-btn.primary {
+    color: #4b5560;
+    background: #ffffff;
+    border-color: #f0eadf;
+}
+
+.hosny-qty-display {
+    background: #fff7ef;
+    border-color: #efd8bb;
+}
+
+.hosny-qty-value {
+    color: #7a4917;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.hosny-qty-label {
+    color: #8a6337;
+    font-size: 12px;
+}
+
+.hosny-floor-toggle {
+    min-height: 50px;
+    margin-bottom: 12px;
+    padding: 0 16px;
+    border-color: #eee6dc;
+    border-radius: 14px;
+    background: #fffdf9;
+    color: #4c5965;
+    box-shadow: none;
+}
+
+.hosny-floor-toggle-label {
+    margin-inline-start: auto;
+    color: #4c5965;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.hosny-table-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.hosny-table-card {
+    align-items: flex-end;
+    min-height: 124px;
+    gap: 9px;
+    padding: 18px 16px;
+    border-radius: 10px;
+    border-color: #f0e6d8;
+    background: #ffffff;
+    color: #4b5563;
+    box-shadow: none;
+}
+
+.hosny-table-card.selected {
+    color: #4b5563;
+    border-color: #f0d9a9;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(224, 184, 100, 0.45);
+    transform: none;
+    outline: none;
+}
+
+.hosny-table-name {
+    color: #4b5563;
+    font-size: 21px;
+    line-height: 1.1;
+    font-weight: 900;
+}
+
+.hosny-table-meta {
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.hosny-table-selected-badge {
+    position: static;
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #ff0000;
+    font-size: 9px;
+}
+
+.hosny-transfer-summary-card {
+    flex: 0 0 198px;
+    margin-top: 16px;
+    padding: 24px 20px;
+    border-radius: 22px;
+    border-color: #ead7bd;
+    background: #fbf5ed;
+    box-shadow: none;
+}
+
+.hosny-summary-label {
+    margin-bottom: 22px;
+    text-align: center;
+    color: #6d4a25;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.hosny-summary-row {
+    padding: 6px 0;
+    color: #6d4a25;
+    font-size: 14px;
+}
+
+.hosny-summary-row strong {
+    color: #935914;
+    font-size: 17px;
+    font-weight: 900;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-partial-transfer-footer {
+    flex: 0 0 84px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 26px 22px;
+    border-top: none;
+    background: #ffffff;
+}
+
+.hosny-partial-transfer-footer .btn {
+    min-width: 140px;
+    min-height: 56px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.hosny-partial-transfer-footer .confirm {
+    background: #ddb765 !important;
+    border-color: #ddb765 !important;
+    color: #24313f !important;
+    box-shadow: 0 16px 28px rgba(191, 150, 70, 0.28);
+}
+
+.hosny-partial-transfer-footer .cancel {
+    background: #ffffff !important;
+    border-color: #f0e9df !important;
+    color: #25313d !important;
+}
+
+@media (max-width: 1120px) {
+    .pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup),
+    .pos .o_dialog .modal-content.hosny-partial-transfer-popup,
+    .hosny-partial-transfer-popup {
+        max-width: 96vw !important;
+    }
+
+    .hosny-partial-transfer-body {
+        grid-template-columns: minmax(0, 1fr);
+        overflow: auto;
+    }
+
+    .hosny-transfer-lines-list,
+    .hosny-transfer-floor-list {
+        overflow: visible;
+    }
+}
+
+@media (max-width: 767px) {
+    .hosny-partial-transfer-header {
+        flex-basis: auto;
+        padding: 18px;
+    }
+
+    .hosny-partial-transfer-title {
+        font-size: 22px;
+    }
+
+    .hosny-transfer-line-controls,
+    .hosny-table-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Final target layout overrides for the partial-transfer popup. */
+.pos .o_dialog .modal.d-block:has(.hosny-partial-transfer-popup) {
+    padding: 24px !important;
+}
+
+.pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup) {
+    width: 1180px !important;
+    max-width: 96vw !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup,
+.hosny-partial-transfer-popup {
+    width: 1180px !important;
+    max-width: 96vw !important;
+    height: 850px !important;
+    min-height: 720px !important;
+    max-height: 96vh !important;
+    border-radius: 4px !important;
+    background: #ffffff !important;
+}
+
+.hosny-partial-transfer-header {
+    flex: 0 0 124px !important;
+    direction: ltr;
+    align-items: flex-start !important;
+    padding: 26px 28px 22px !important;
+    border-bottom: 1px solid #e3d4bf !important;
+    background:
+        radial-gradient(circle at 3% 0%, rgba(238, 202, 151, 0.38), transparent 18%),
+        linear-gradient(135deg, #fff4e7 0%, #fbf2e8 48%, #fffaf4 100%) !important;
+}
+
+.hosny-header-title {
+    direction: rtl;
+    text-align: right !important;
+}
+
+.hosny-partial-transfer-title {
+    margin: 2px 0 0 !important;
+    color: #2e2924 !important;
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+}
+
+.hosny-partial-transfer-subtitle {
+    margin-top: 8px !important;
+    color: #8a6337 !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+}
+
+.hosny-header-pill {
+    min-width: 86px !important;
+    min-height: 48px !important;
+    padding: 0 18px !important;
+    border: 0 !important;
+    background: #f1d9b5 !important;
+    color: #7b4a15 !important;
+    box-shadow: none !important;
+}
+
+.hosny-header-pill span:first-child {
+    font-size: 19px !important;
+}
+
+.hosny-partial-transfer-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    grid-template-columns: minmax(560px, 1.18fr) minmax(460px, 0.82fr) !important;
+    gap: 18px !important;
+    padding: 18px 24px 0 !important;
+    overflow: hidden !important;
+    background: #fffdf9 !important;
+}
+
+.hosny-transfer-lines-panel,
+.hosny-transfer-tables-panel {
+    min-height: 0 !important;
+    gap: 14px !important;
+    overflow: hidden !important;
+}
+
+.hosny-transfer-lines-list,
+.hosny-transfer-floor-list {
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 6px 8px !important;
+    overflow: auto !important;
+    scrollbar-color: #9ab0bd transparent;
+    scrollbar-width: thin;
+}
+
+.hosny-transfer-lines-list {
+    flex: 1 1 auto !important;
+    gap: 16px !important;
+}
+
+.hosny-transfer-floor-list {
+    flex: 1 1 auto !important;
+}
+
+.hosny-transfer-summary-card {
+    flex: 0 0 auto !important;
+    margin-top: 14px !important;
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    border-color: #ead7bd !important;
+    background: #fbf5ed !important;
+    box-shadow: none !important;
+}
+
+.hosny-panel-title-row {
+    min-height: 30px !important;
+    padding: 0 4px !important;
+}
+
+.hosny-transfer-lines-panel > .hosny-panel-title-row {
+    justify-content: flex-start !important;
+}
+
+.hosny-transfer-lines-panel > .hosny-panel-title-row .hosny-transfer-summary-inline {
+    display: none !important;
+}
+
+.hosny-transfer-tables-panel > .hosny-panel-title-row {
+    position: relative;
+    justify-content: center !important;
+}
+
+.hosny-transfer-tables-panel > .hosny-panel-title-row .hosny-transfer-summary-inline {
+    position: absolute;
+    left: 8px;
+    top: 3px;
+}
+
+.hosny-panel-title {
+    color: #4d3218 !important;
+    font-size: 18px !important;
+    line-height: 1.35 !important;
+    font-weight: 900 !important;
+}
+
+.hosny-transfer-line-card {
+    gap: 20px !important;
+    padding: 22px 24px 20px !important;
+    border-radius: 18px !important;
+    border-color: #ece5db !important;
+    background: #ffffff !important;
+    box-shadow: 0 12px 26px rgba(54, 40, 21, 0.06) !important;
+}
+
+.hosny-transfer-line-main,
+.hosny-transfer-line-head,
+.hosny-transfer-line-title-wrap {
+    min-width: 0;
+}
+
+.hosny-transfer-line-head {
+    align-items: flex-start !important;
+}
+
+.hosny-transfer-line-title {
+    color: #2e271f !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+
+.hosny-transfer-line-price {
+    color: #915715 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-transfer-line-meta {
+    justify-content: flex-start !important;
+    margin-top: 14px !important;
+}
+
+.hosny-chip {
+    padding: 8px 14px !important;
+    background: #f2eadf !important;
+    color: #7d5424 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.hosny-chip.light {
+    background: #f1eee8 !important;
+    color: #6a6259 !important;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-transfer-line-controls {
+    grid-template-columns: 56px 170px 56px 82px 82px !important;
+    justify-content: end !important;
+    gap: 14px !important;
+    overflow: visible !important;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn,
+.hosny-qty-display {
+    min-height: 58px !important;
+    border-radius: 14px !important;
+}
+
+.hosny-qty-btn,
+.hosny-quick-btn {
+    border-color: #f0eadf !important;
+    background: #ffffff !important;
+    color: #4b5560 !important;
+    box-shadow: none !important;
+}
+
+.hosny-qty-btn.primary {
+    background: #ffffff !important;
+    border-color: #f0eadf !important;
+    color: #4b5560 !important;
+}
+
+.hosny-qty-display {
+    background: #fff7ef !important;
+    border-color: #efd8bb !important;
+}
+
+.hosny-qty-value {
+    color: #7a4917 !important;
+    font-size: 25px !important;
+    line-height: 1 !important;
+}
+
+.hosny-qty-label {
+    color: #8a6337 !important;
+    font-size: 12px !important;
+}
+
+.hosny-floor-toggle {
+    min-height: 50px !important;
+    margin-bottom: 12px !important;
+    padding: 0 16px !important;
+    border-color: #eee6dc !important;
+    border-radius: 14px !important;
+    background: #fffdf9 !important;
+    color: #4c5965 !important;
+    box-shadow: none !important;
+}
+
+.hosny-floor-toggle-label {
+    margin-inline-start: auto !important;
+    color: #4c5965 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.hosny-table-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.hosny-table-card {
+    align-items: flex-end !important;
+    min-height: 124px !important;
+    gap: 9px !important;
+    padding: 18px 16px !important;
+    border-radius: 10px !important;
+    border-color: #f0e6d8 !important;
+    background: #ffffff !important;
+    color: #4b5563 !important;
+    box-shadow: none !important;
+}
+
+.hosny-table-card.selected {
+    color: #4b5563 !important;
+    border-color: #f0d9a9 !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 2px rgba(224, 184, 100, 0.45) !important;
+    transform: none !important;
+    outline: none !important;
+}
+
+.hosny-table-name {
+    color: #4b5563 !important;
+    font-size: 21px !important;
+    line-height: 1.1 !important;
+    font-weight: 900 !important;
+}
+
+.hosny-table-meta {
+    color: #4b5563 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+}
+
+.hosny-table-selected-badge {
+    position: static !important;
+    align-self: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #ff0000 !important;
+    font-size: 9px !important;
+}
+
+.hosny-summary-label {
+    margin-bottom: 22px !important;
+    text-align: center !important;
+    color: #6d4a25 !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+.hosny-summary-row {
+    padding: 6px 0 !important;
+    color: #6d4a25 !important;
+    font-size: 14px !important;
+}
+
+.hosny-summary-row strong {
+    color: #935914 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    direction:ltr !important;
+    unicode-bidi:plaintext;
+}
+
+.hosny-partial-transfer-footer {
+    flex: 0 0 104px !important;
+    direction: ltr;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    padding: 20px 24px 24px !important;
+    border-top: 1px solid #eee7dd !important;
+    background: #ffffff !important;
+}
+
+.hosny-footer-actions {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.hosny-partial-transfer-footer .btn {
+    min-width: 140px !important;
+    min-height: 56px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.hosny-partial-transfer-footer .confirm {
+    background: #ddb765 !important;
+    border-color: #ddb765 !important;
+    color: #24313f !important;
+    box-shadow: 0 16px 28px rgba(191, 150, 70, 0.28) !important;
+}
+
+.hosny-partial-transfer-footer .cancel {
+    background: #ffffff !important;
+    border-color: #f0e9df !important;
+    color: #25313d !important;
+}
+
+@media (max-width: 1120px) {
+    .pos .o_dialog .modal-dialog:has(.hosny-partial-transfer-popup),
+    .pos .o_dialog .modal-content.hosny-partial-transfer-popup,
+    .hosny-partial-transfer-popup {
+        width: 96vw !important;
+        max-width: 96vw !important;
+        height: 96vh !important;
+        min-height: 0 !important;
+    }
+
+    .hosny-partial-transfer-body {
+        grid-template-columns: minmax(0, 1fr) !important;
+        overflow: auto !important;
+    }
+
+    .hosny-transfer-lines-list,
+    .hosny-transfer-floor-list {
+        overflow: visible !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .hosny-partial-transfer-header {
+        flex-basis: auto !important;
+        padding: 18px !important;
+    }
+
+    .hosny-partial-transfer-title {
+        font-size: 22px !important;
+    }
+
+    .hosny-transfer-line-controls,
+    .hosny-table-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .hosny-footer-actions {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .hosny-partial-transfer-footer .btn {
+        min-width: 0 !important;
+        flex: 1 1 0;
+    }
+}
+
+/* Exact Dialog chrome corrections: header flush, pinned summary, target footer. */
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup > .modal-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fffdf9 !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup > .modal-footer {
+    flex: 0 0 104px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 24px 24px !important;
+    border-top: 1px solid #eee7dd !important;
+    background: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+    height: 20px !important;
+    justify-content: flex-end !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup > .modal-body > .hosny-partial-transfer-header {
+    width: 100% !important;
+    margin: 0 !important;
+    border-radius: 4px 4px 0 0 !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup > .modal-body > .hosny-partial-transfer-body {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup .hosny-transfer-tables-panel {
+    display: grid !important;
+    grid-template-rows: 30px minmax(0, 1fr) auto !important;
+    align-content: stretch !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup .hosny-transfer-floor-list {
+    min-height: 0 !important;
+    overflow: auto !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup .hosny-transfer-summary-card {
+    align-self: stretch !important;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
+}
+
+.hosny-partial-transfer-footer {
+    width: 100% !important;
+}
+
+.hosny-footer-actions {
+    width: 100% !important;
+    direction: ltr;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+}
+
+.pos .o_dialog .modal-content.hosny-partial-transfer-popup .hosny-footer-actions .btn {
+    flex: 0 0 auto !important;
+}
+
+@media (max-width: 1120px) {
+    .pos .o_dialog .modal-content.hosny-partial-transfer-popup .hosny-transfer-tables-panel {
+        display: flex !important;
+    }
+}

@@ -1,0 +1,208 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * hosny_purchase_requisition_name
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-27 00:00+0000\n"
+"PO-Revision-Date: 2026-06-27 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Last 3 Purchase Bills"
+msgstr "آخر 3 فواتير شراء"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Bill Number"
+msgstr "رقم الفاتورة"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Currency"
+msgstr "العملة"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.PurchaseOrderLineCompareListRenderer.RecordRow
+msgid "No posted purchase bills found"
+msgstr "لا توجد فواتير شراء مرحلة"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_purchase_order__analytic_account_id
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_form_hosny_branch
+msgid "Branch"
+msgstr "الفرع"
+
+#. module: hosny_purchase_requisition_name
+#: code:addons/hosny_purchase_requisition_name/models/purchase_requisition.py:0
+msgid "Please select the branch before confirming the purchase order."
+msgstr "يرجى اختيار الفرع قبل تأكيد أمر الشراء."
+
+#. module: hosny_purchase_requisition_name
+#: code:addons/hosny_purchase_requisition_name/models/purchase_requisition.py:0
+msgid "The selected destination/operation type does not belong to the selected branch."
+msgstr "وجهة الاستلام / نوع العملية المحدد لا ينتمي إلى الفرع المحدد."
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_purchase_order_line__hosny_is_lowest_compare_price
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_line_compare_search_hosny
+msgid "Lowest Price"
+msgstr "أقل سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_line_compare_search_hosny
+msgid "Compare Order Lines"
+msgstr "مقارنة سطور الطلب"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_line_compare_search_hosny
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_line_compare_search_hosny
+msgid "Product"
+msgstr "المنتج"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_purchase_order_line__hosny_compare_company_branch_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_line_compare_tree_hosny_branch
+msgid "Company"
+msgstr "الشركة"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__purchase_line_id
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard_line__order_line_id
+msgid "Purchase Order Line"
+msgstr "بند أمر الشراء"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__line_ids
+msgid "History Lines"
+msgstr "سجل الأسعار"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__has_history
+msgid "Has History"
+msgstr "يوجد سجل"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__last_price
+msgid "Last Price"
+msgstr "آخر سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Last price"
+msgstr "آخر سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Lowest price"
+msgstr "أقل سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__highest_price
+msgid "Highest Price"
+msgstr "أعلى سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Highest price"
+msgstr "أعلى سعر"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__average_price
+msgid "Average Price"
+msgstr "متوسط السعر"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Average price"
+msgstr "متوسط السعر"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard__empty_message
+msgid "Empty Message"
+msgstr "رسالة عدم وجود بيانات"
+
+#. module: hosny_purchase_requisition_name
+#: code:addons/hosny_purchase_requisition_name/models/purchase_requisition.py:0
+#: code:addons/hosny_purchase_requisition_name/wizard/purchase_price_history_wizard.py:0
+msgid "No previous purchase prices found for this product"
+msgstr "لا توجد أسعار شراء سابقة لهذا الصنف"
+
+#. module: hosny_purchase_requisition_name
+#: code:addons/hosny_purchase_requisition_name/models/purchase_requisition.py:0
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.purchase_order_form_hosny_branch
+msgid "Last Purchase Prices"
+msgstr "آخر أسعار الشراء"
+
+#. module: hosny_purchase_requisition_name
+#: code:addons/hosny_purchase_requisition_name/models/purchase_requisition.py:0
+msgid "Please select a product first."
+msgstr "يرجى اختيار الصنف أولاً."
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard_line__purchase_date
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Purchase Date"
+msgstr "تاريخ الشراء"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard_line__tax_display
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Taxes"
+msgstr "الضرائب"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard_line__total_amount
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Total Line Amount"
+msgstr "إجمالي مبلغ البند"
+
+#. module: hosny_purchase_requisition_name
+#: model:ir.model.fields,field_description:hosny_purchase_requisition_name.field_hosny_purchase_price_history_wizard_line__source_reference
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Source Reference"
+msgstr "مرجع أمر الشراء / فاتورة المورد"
+
+#. module: hosny_purchase_requisition_name
+#: model_terms:ir.ui.view,arch_db:hosny_purchase_requisition_name.hosny_purchase_price_history_wizard_form
+msgid "Close"
+msgstr "إغلاق"

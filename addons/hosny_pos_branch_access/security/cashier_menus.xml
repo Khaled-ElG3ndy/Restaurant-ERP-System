@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--
+        Menus a branch cashier has no business in. Flagging a menu here hides it
+        from users who are restricted to a branch and from nobody else, so the
+        manager and the administrator keep the exact menus they have today.
+        Hiding a root menu hides everything under it.
+    -->
+
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="contacts.menu_contacts" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="hr_recruitment.menu_hr_recruitment_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="mrp.menu_mrp_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="sale.sale_menu_root" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <!-- Not reachable without administration rights, flagged as a second lock. -->
+    <record id="base.menu_administration" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <!--
+        Inside the point of sale the cashier keeps the dashboard, to open and
+        close their session, and Orders, which carries orders, sessions and
+        payments. The product catalogue and the analysis reports are not part
+        of the job.
+    -->
+    <record id="point_of_sale.pos_config_menu_catalog" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="point_of_sale.menu_point_config_product" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="point_of_sale.menu_point_rep" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="point_of_sale.menu_pos_preparation_printer" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <record id="point_of_sale.menu_point_of_sale_customer" model="ir.ui.menu">
+        <field name="hosny_hide_for_cashier" eval="True"/>
+    </record>
+
+    <function model="ir.ui.menu" name="hosny_flag_optional_cashier_menus"/>
+
+    <record id="hosny_cashier_menu_rule" model="ir.rule">
+        <field name="name">Menus: hide what a branch cashier does not need</field>
+        <field name="model_id" ref="base.model_ir_ui_menu"/>
+        <field name="domain_force">[('hosny_hide_for_cashier_tree', '=', False)] if user.pos_config_ids else [(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+</odoo>

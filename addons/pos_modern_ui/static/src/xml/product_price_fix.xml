@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_modern_ui.ProductCardTextFirst"
+       t-inherit="point_of_sale.ProductCard"
+       t-inherit-mode="extension">
+
+        <xpath expr="//article" position="replace">
+            <article tabindex="0"
+                role="button"
+                t-attf-class="{{props.class}} {{props.color ? `o_colorlist_item_color_transparent_${props.color}` : ''}} product {{props.isComboPopup ? '' : 'o-text-first-product-card'}} position-relative btn d-flex flex-column align-items-stretch p-0 text-start cursor-pointer"
+                t-on-keypress="(event) => event.code === 'Space' ? props.onClick(event) : ()=>{}"
+                t-on-click.stop="props.onClick"
+                t-att-data-product-id="props.productId"
+                t-attf-aria-labelledby="article_product_{{props.productId}}">
+                <div t-if="props.isComboPopup and props.imageUrl" class="product-img ratio ratio-4x3 rounded-top rounded-3">
+                    <img class="w-100 object-fit-cover bg-200 pe-none" t-att-src="props.imageUrl" t-att-alt="props.name" draggable="false"/>
+                </div>
+                <div class="product-content h-100 w-100 d-flex flex-column align-items-stretch justify-content-between">
+                    <div class="o-text-product-main d-flex flex-column align-items-center justify-content-center">
+                        <div class="product-name"
+                            t-attf-id="article_product_{{props.productId}}"
+                            t-att-title="props.name"
+                            t-esc="props.name"/>
+                        <t t-set="productPrice" t-value="props.product.lst_price || props.product.list_price || 0"/>
+                        <div t-if="productPrice" class="product-price" dir="ltr" aria-label="Product price">
+                            <span class="o-price-value" t-esc="productPrice.toFixed ? productPrice.toFixed(2) : Number(productPrice).toFixed(2)"/>
+                            <span class="o-price-currency">SR</span>
+                        </div>
+                    </div>
+                    <div class="o-product-card-actions">
+                        <t t-slot="quantityButtons"/>
+                    </div>
+                </div>
+                <span t-if="props.productCartQty"
+                    t-out="this.productQty"
+                    class="product-cart-qty px-2 py-1 rounded bg-black text-white fs-6 fw-bolder flex-shrink-0 position-absolute top-0 end-0 mt-1 me-1"
+                    t-att-class="{'text-danger': this.productQty lt 0}"/>
+                <span t-if="props.comboExtraPrice" class="price-extra px-2 py-0 rounded-pill text-bg-info position-absolute top-0 start-0 mt-1 ms-1">
+                    <t t-esc="props.comboExtraPrice"/>
+                </span>
+            </article>
+        </xpath>
+
+    </t>
+
+</templates>
