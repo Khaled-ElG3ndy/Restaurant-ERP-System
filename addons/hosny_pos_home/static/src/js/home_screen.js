@@ -167,9 +167,6 @@ export class HosnyHomeScreen extends Component {
         });
         return text.replace(/\s*هـ$/, "") + " هـ";
     }
-    get greeting() {
-        return this.state.now.getHours() < 12 ? "صباح الخير" : "مساء الخير";
-    }
     get cashierName() {
         return this.pos.cashier?.name || this.pos.user?.name || "";
     }
@@ -223,34 +220,11 @@ export class HosnyHomeScreen extends Component {
             this.openOrders.filter((o) => o.table_id).map((o) => (o.table_id.rootTable || o.table_id).id)
         );
         const count = all.filter((t) => busy.has(t.id)).length;
-        return { busy: count, total: all.length, pct: all.length ? Math.round((count * 100) / all.length) : 0 };
+        return { busy: count, total: all.length };
     }
-    /** أعمدة صغيرة لمبيعات آخر ساعات اليوم حتى الساعة الحالية. */
-    get hours() {
+    get average() {
         const s = this.summary;
-        const hourly = s.hourly || [];
-        if (!hourly.length) {
-            return [];
-        }
-        const now = s.current_hour ?? this.state.now.getHours();
-        const from = Math.max(0, now - 7);
-        const slice = hourly.slice(from, now + 1);
-        const max = Math.max(...slice, 1);
-        return slice.map((amount, i) => {
-            const h = from + i;
-            return {
-                h,
-                pct: amount ? Math.max(18, Math.round((amount / max) * 100)) : 12,
-                tip: `${pad(h)}:00 — ${this.fmt(amount)}`,
-                now: h === now,
-            };
-        });
-    }
-    get payments() {
-        return this.summary.payments || [];
-    }
-    get paymentsDetail() {
-        return this.payments.map((p) => `${p.name}: ${this.fmt(p.amount)}`).join("\n");
+        return s.today_count ? s.today_total / s.today_count : 0;
     }
     /** الطلبات المفتوحة على الجهاز ثم آخر المدفوعة اليوم، الأحدث أولاً. */
     get recentOrders() {
@@ -286,21 +260,18 @@ export class HosnyHomeScreen extends Component {
         const pos = this.pos;
         const open = this.openOrders.length;
         return {
-            home: { icon: "fa-home", title: "الرئيسية", run: () => {} },
             orders: {
                 icon: "fa-file-text-o",
                 tone: "violet",
                 title: "الطلبات والفواتير",
-                navTitle: "الطلبات المفتوحة",
-                sub: "عرض الطلبات والفواتير",
-                badge: open,
+                sub: open ? `${open} طلب مفتوح` : "لا طلبات مفتوحة",
                 run: () => pos.navigate("TicketScreen"),
             },
             sell: {
                 icon: "fa-shopping-cart",
                 tone: "green",
                 title: "المبيعات",
-                sub: "ابدأ البيع مباشرة",
+                sub: "ابدأ طلباً جديداً",
                 run: () => this.startSelling(),
             },
             tables: {
@@ -314,28 +285,24 @@ export class HosnyHomeScreen extends Component {
                 icon: "fa-money",
                 tone: "amber",
                 title: "إيداع / سحب",
-                sub: "حركات النقدية",
                 run: () => pos.cashMove(),
             },
             report: {
                 icon: "fa-bar-chart",
                 tone: "purple",
                 title: "تقرير الوردية",
-                sub: "المبيعات وطرق الدفع",
                 run: () => this.openReport(),
             },
             close: {
                 icon: "fa-power-off",
                 tone: "red",
                 title: "إغلاق الوردية",
-                sub: "الإغلاق اليومي",
                 run: () => pos.closeSession(),
             },
             backend: this.isManager && {
                 icon: "fa-cog",
                 tone: "slate",
                 title: "لوحة التحكم",
-                sub: "الإعدادات والتقارير",
                 run: () => pos.closePos(),
             },
         };
@@ -344,20 +311,12 @@ export class HosnyHomeScreen extends Component {
         const actions = this.actions;
         return keys.filter((key) => actions[key]).map((key) => ({ key, ...actions[key] }));
     }
-    /** بترتيب القراءة من اليمين: الطاولات، المبيعات، الطلبات. */
+    /** بترتيب القراءة من اليمين: المبيعات أولاً وأكبرها. */
     get mainTiles() {
-        return this.pick(["tables", "sell", "orders"]);
+        return this.pick(["sell", "tables", "orders"]);
     }
-    get moreTiles() {
-        return this.pick(["backend", "close", "report", "cash"]);
-    }
-    get navItems() {
-        return this.pick(["home", "orders", "tables", "sell", "report", "cash", "close"]).map((item) => ({
-            ...item,
-            title: item.navTitle || item.title,
-            active: item.key === "home",
-            badge: item.key === "orders" ? item.badge : 0,
-        }));
+    get toolTiles() {
+        return this.pick(["cash", "report", "backend", "close"]);
     }
 
     startSelling() {

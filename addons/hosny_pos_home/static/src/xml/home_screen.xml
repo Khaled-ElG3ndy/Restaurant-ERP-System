@@ -3,60 +3,96 @@
 
     <t t-name="hosny_pos_home.HomeScreen">
         <div class="hh-home" dir="rtl">
-            <!-- الرأس: الساعة والشعار | الكاشير والوردية | اسم المطعم -->
+            <!-- الرأس: المطعم | الوردية، الكاشير، الساعة -->
             <header class="hh-head">
-                <div class="hh-head-clock">
+                <div class="hh-brand">
                     <div class="hh-crest"><img t-att-src="logo" alt="مطعم حسني"/></div>
-                    <div class="hh-clock">
+                    <div class="hh-brand-copy">
+                        <strong>مطعم حسني</strong>
+                        <span>فرع <t t-esc="branch"/></span>
+                    </div>
+                </div>
+                <div class="hh-head-info">
+                    <div t-attf-class="hh-shift {{ online ? 'is-online' : 'is-offline' }}"
+                         t-att-title="shift.startText ? shift.name + ' — بدأت ' + shift.startText : shift.name">
+                        <t t-if="online">
+                            <strong t-esc="shift.label"/>
+                            <span t-if="shift.since">منذ <t t-esc="shift.since"/></span>
+                        </t>
+                        <strong t-else="">غير متصل — الطلبات تُحفظ على الجهاز</strong>
+                    </div>
+                    <div class="hh-cashier" t-att-title="cashierRole">
+                        <span class="hh-avatar" t-esc="cashierInitial"/>
+                        <strong t-esc="cashierName"/>
+                    </div>
+                    <div class="hh-clock" t-att-title="hijri">
                         <div class="hh-time">
                             <span class="hh-time-hm" t-esc="time.hm"/>
                             <span class="hh-time-ampm" t-esc="time.ampm"/>
                         </div>
-                        <div class="hh-date" t-att-title="hijri">
-                            <i class="fa fa-calendar-o" aria-hidden="true"/>
-                            <span><t t-esc="weekday"/> <t t-esc="gregorian"/></span>
-                        </div>
+                        <span class="hh-date"><t t-esc="weekday"/> <t t-esc="gregorian"/></span>
                     </div>
-                </div>
-                <div class="hh-head-mid">
-                    <div class="hh-cashier">
-                        <span class="hh-avatar" t-esc="cashierInitial"/>
-                        <div class="hh-cashier-copy">
-                            <span class="hh-cashier-role" t-esc="cashierRole"/>
-                            <strong class="hh-cashier-name" t-esc="cashierName"/>
-                        </div>
-                    </div>
-                    <div class="hh-shift" t-att-title="shift.name">
-                        <span class="hh-shift-icon"><i class="fa fa-clock-o" aria-hidden="true"/></span>
-                        <div class="hh-shift-copy">
-                            <span t-attf-class="hh-shift-state {{ online ? 'is-online' : 'is-offline' }}">
-                                <t t-esc="online ? 'الوردية الحالية' : 'غير متصل — الطلبات تُحفظ على الجهاز'"/>
-                            </span>
-                            <strong t-esc="shift.label"/>
-                            <span class="hh-shift-time" t-if="shift.startText">
-                                بدأت <t t-esc="shift.startText"/> · منذ <t t-esc="shift.since"/>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hh-brand">
-                    <div class="hh-brand-copy">
-                        <strong>مطعم حسني</strong>
-                        <span>نقطة البيع · فرع <t t-esc="branch"/></span>
-                    </div>
-                    <span class="hh-brand-icon"><i class="fa fa-cutlery" aria-hidden="true"/></span>
                 </div>
             </header>
 
             <div class="hh-body">
+                <main class="hh-main">
+                    <!-- أرقام اليوم -->
+                    <section class="hh-stats">
+                        <div class="hh-stat">
+                            <span class="hh-stat-label">مبيعات اليوم</span>
+                            <span class="hh-stat-value">
+                                <t t-esc="state.loading ? '…' : fmt(summary.today_total)"/>
+                                <span t-if="delta" t-attf-class="hh-delta {{ delta.up ? 'is-up' : 'is-down' }}"
+                                      title="مقارنة بأمس حتى نفس الساعة">
+                                    <i t-attf-class="fa {{ delta.up ? 'fa-arrow-up' : 'fa-arrow-down' }}" aria-hidden="true"/>
+                                    <bdi><t t-esc="delta.pct"/>%</bdi>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="hh-stat">
+                            <span class="hh-stat-label">طلبات اليوم</span>
+                            <span class="hh-stat-value" t-esc="state.loading ? '…' : (summary.today_count || 0)"/>
+                        </div>
+                        <div class="hh-stat">
+                            <span class="hh-stat-label">متوسط الفاتورة</span>
+                            <span class="hh-stat-value" t-esc="state.loading ? '…' : fmt(average)"/>
+                        </div>
+                        <span class="hh-stats-warn" t-if="state.failed">تعذّر تحديث الأرقام — تُعرض آخر قيم</span>
+                    </section>
+
+                    <!-- الأزرار الرئيسية -->
+                    <section class="hh-tiles">
+                        <button t-foreach="mainTiles" t-as="tile" t-key="tile.key"
+                                t-attf-class="hh-tile hh-tone-{{ tile.tone }} hh-tile-{{ tile.key }}"
+                                t-on-click="() => tile.run()">
+                            <span class="hh-tile-icon"><i t-attf-class="fa {{ tile.icon }}" aria-hidden="true"/></span>
+                            <span class="hh-tile-title" t-esc="tile.title"/>
+                            <span class="hh-tile-sub" t-esc="tile.sub"/>
+                        </button>
+                    </section>
+
+                    <!-- أدوات الوردية -->
+                    <section class="hh-tools">
+                        <button t-foreach="toolTiles" t-as="tool" t-key="tool.key"
+                                t-attf-class="hh-tool hh-tone-{{ tool.tone }}"
+                                t-on-click="() => tool.run()">
+                            <span class="hh-tool-icon"><i t-attf-class="fa {{ tool.icon }}" aria-hidden="true"/></span>
+                            <span class="hh-tool-title" t-esc="tool.title"/>
+                        </button>
+                    </section>
+                </main>
+
                 <!-- آخر الطلبات -->
                 <aside class="hh-recent">
                     <h2 class="hh-recent-title">آخر الطلبات</h2>
                     <ul class="hh-orders" t-if="recentOrders.length">
                         <li t-foreach="recentOrders" t-as="o" t-key="o.key">
+                            <span class="hh-order-main">
+                                <b>#<t t-esc="o.ref"/></b>
+                                <span t-esc="o.place"/>
+                            </span>
                             <span class="hh-order-amount" t-esc="fmt(o.amount)"/>
-                            <span class="hh-order-place" t-esc="o.place"/>
-                            <span class="hh-order-ref">#<t t-esc="o.ref"/></span>
                             <span t-attf-class="hh-order-state is-{{ o.tone }}" t-esc="o.state"/>
                             <span class="hh-order-time" t-esc="o.time"/>
                         </li>
@@ -64,139 +100,9 @@
                     <div class="hh-empty" t-else="">
                         <t t-esc="state.loading ? 'جارٍ التحميل…' : 'لا طلبات اليوم بعد'"/>
                     </div>
-                    <button class="hh-recent-all" t-on-click="() => pos.navigate('TicketScreen')">
-                        عرض جميع الطلبات <i class="fa fa-arrow-right" aria-hidden="true"/>
-                    </button>
                 </aside>
-
-                <main class="hh-main">
-                    <!-- نظرة سريعة على اليوم -->
-                    <section class="hh-glance">
-                        <h2 class="hh-glance-title">نظرة سريعة على اليوم</h2>
-                        <div class="hh-kpis">
-                            <div class="hh-kpi">
-                                <div class="hh-kpi-copy">
-                                    <span class="hh-kpi-label">إجمالي المبيعات</span>
-                                    <span class="hh-kpi-value" t-esc="state.loading ? '…' : fmt(summary.today_total)"/>
-                                </div>
-                                <span class="hh-kpi-icon is-mint"><i class="fa fa-bar-chart" aria-hidden="true"/></span>
-                                <div class="hh-kpi-foot">
-                                    <div class="hh-spark" t-if="hours.length" role="img" aria-label="المبيعات بالساعة اليوم">
-                                        <span t-foreach="hours" t-as="b" t-key="b.h"
-                                              t-attf-class="hh-spark-bar {{ b.now ? 'is-now' : '' }}"
-                                              t-attf-style="block-size: {{ b.pct }}%" t-att-title="b.tip"/>
-                                    </div>
-                                    <span t-if="delta" t-attf-class="hh-delta {{ delta.up ? 'is-up' : 'is-down' }}"
-                                          title="مقارنة بأمس حتى نفس الساعة">
-                                        <bdi><t t-esc="delta.up ? '+' : '-'"/><t t-esc="delta.pct"/>%</bdi>
-                                        <i t-attf-class="fa {{ delta.up ? 'fa-arrow-up' : 'fa-arrow-down' }}" aria-hidden="true"/>
-                                    </span>
-                                    <span t-elif="!state.loading" class="hh-kpi-note">
-                                        <b t-esc="summary.today_count || 0"/> طلب اليوم
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="hh-kpi">
-                                <div class="hh-kpi-copy">
-                                    <span class="hh-kpi-label">الطاولات المشغولة</span>
-                                    <span class="hh-kpi-value"><bdi dir="ltr"><t t-esc="tables.busy"/> / <t t-esc="tables.total"/></bdi></span>
-                                </div>
-                                <span class="hh-kpi-icon is-teal"><i class="fa fa-cutlery" aria-hidden="true"/></span>
-                                <div class="hh-kpi-foot">
-                                    <div class="hh-meter" role="img" t-attf-aria-label="{{ tables.busy }} من {{ tables.total }}">
-                                        <div class="hh-meter-fill" t-attf-style="inline-size: {{ tables.pct }}%"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="hh-kpi">
-                                <div class="hh-kpi-copy">
-                                    <span class="hh-kpi-label">الطلبات المفتوحة</span>
-                                    <span class="hh-kpi-value" t-esc="openOrders.length"/>
-                                </div>
-                                <span class="hh-kpi-icon is-violet"><i class="fa fa-file-text-o" aria-hidden="true"/></span>
-                                <div class="hh-kpi-foot"><span class="hh-kpi-note">طلب قيد التنفيذ</span></div>
-                            </div>
-
-                            <div class="hh-kpi hh-kpi-pay" t-att-title="paymentsDetail">
-                                <div class="hh-kpi-copy">
-                                    <span class="hh-kpi-label">طرق الدفع</span>
-                                </div>
-                                <span class="hh-kpi-icon is-blue"><i class="fa fa-credit-card" aria-hidden="true"/></span>
-                                <ul class="hh-pay" t-if="payments.length">
-                                    <li t-foreach="payments.slice(0, 2)" t-as="p" t-key="p.name">
-                                        <span t-esc="p.name"/>
-                                        <b t-esc="fmt(p.amount)"/>
-                                    </li>
-                                </ul>
-                                <div class="hh-kpi-foot" t-else="">
-                                    <span class="hh-kpi-note" t-esc="state.loading ? '…' : 'لا مدفوعات بعد'"/>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- الاختصارات الرئيسية -->
-                    <section class="hh-tiles-main">
-                        <t t-foreach="mainTiles" t-as="tile" t-key="tile.key">
-                            <t t-call="hosny_pos_home.Tile"/>
-                        </t>
-                    </section>
-                    <section class="hh-tiles-more">
-                        <t t-foreach="moreTiles" t-as="tile" t-key="tile.key">
-                            <t t-call="hosny_pos_home.Tile"/>
-                        </t>
-                    </section>
-
-                    <section class="hh-banner">
-                        <span class="hh-banner-icon"><i class="fa fa-smile-o" aria-hidden="true"/></span>
-                        <div class="hh-banner-copy">
-                            <strong>معاً لرضا ضيوفنا</strong>
-                            <span><t t-esc="greeting"/>، <t t-esc="cashierName"/> — خدمة أسرع .. وتجربة أمتع</span>
-                        </div>
-                        <span class="hh-banner-warn" t-if="state.failed">تعذّر تحديث الأرقام — تُعرض آخر قيم</span>
-                    </section>
-                </main>
-
-                <!-- القائمة الجانبية -->
-                <nav class="hh-nav" aria-label="القائمة">
-                    <t t-foreach="navItems" t-as="item" t-key="item.key">
-                        <button t-attf-class="hh-nav-item {{ item.active ? 'is-active' : '' }}"
-                                t-att-aria-current="item.active ? 'page' : false"
-                                t-on-click="() => item.run()">
-                            <span class="hh-nav-label">
-                                <t t-esc="item.title"/>
-                                <span class="hh-nav-badge" t-if="item.badge" t-esc="item.badge"/>
-                            </span>
-                            <span class="hh-nav-icon"><i t-attf-class="fa {{ item.icon }}" aria-hidden="true"/></span>
-                        </button>
-                    </t>
-                    <div class="hh-nav-foot">
-                        <span class="hh-nav-motto">أكل طيّب .. مزاج أطيب</span>
-                        <button t-if="isManager" class="hh-nav-item hh-nav-settings" t-on-click="() => pos.closePos()">
-                            <span class="hh-nav-label">لوحة التحكم</span>
-                            <span class="hh-nav-icon"><i class="fa fa-cog" aria-hidden="true"/></span>
-                        </button>
-                    </div>
-                </nav>
             </div>
         </div>
-    </t>
-
-    <t t-name="hosny_pos_home.Tile">
-        <button t-attf-class="hh-tile hh-tone-{{ tile.tone }} hh-tile-{{ tile.key }}" t-on-click="() => tile.run()">
-            <span class="hh-tile-deco" aria-hidden="true"><i t-attf-class="fa {{ tile.icon }}"/></span>
-            <span class="hh-tile-icon">
-                <i t-attf-class="fa {{ tile.icon }}" aria-hidden="true"/>
-                <span class="hh-tile-badge" t-if="tile.badge" t-esc="tile.badge"/>
-            </span>
-            <span class="hh-tile-copy">
-                <span class="hh-tile-title" t-esc="tile.title"/>
-                <span class="hh-tile-sub" t-esc="tile.sub"/>
-            </span>
-            <span class="hh-tile-go" aria-hidden="true"><i class="fa fa-arrow-right"/></span>
-        </button>
     </t>
 
     <t t-name="hosny_pos_home.ShiftReport">
