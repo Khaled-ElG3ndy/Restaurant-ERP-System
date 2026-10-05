@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+        شاشة الدفع بتقسيمة FERP، ثلاثة أعمدة (rtl، الأول على اليمين):
+        الإجراءات والأرقام | الدفع | ملخص الفاتورة
+    -->
+    <t t-name="hosny_pos_payment.PaymentScreen">
+        <div class="hp-screen" dir="rtl">
+
+            <!-- ── الإجراءات والأرقام ── -->
+            <section class="hp-col hp-actions">
+                <div class="hp-card hp-buttons">
+                    <button class="hp-action" t-att-class="{ 'is-on': currentOrder.getPartner() }"
+                            t-on-click="() => this.pos.selectPartner()">
+                        <i class="fa fa-user" aria-hidden="true"/>
+                        <span class="hp-action-copy">
+                            <span>العميل</span>
+                            <small t-if="currentOrder.getPartner()" t-esc="currentOrder.getPartner().name"/>
+                        </span>
+                    </button>
+                    <button class="hp-action"
+                            t-att-class="{ 'is-on': currentOrder.isToInvoice(), 'is-off': !pos.config.canInvoice }"
+                            t-att-disabled="currentOrder.lines[0]?.refunded_orderline_id?.order_id?.isToInvoice()"
+                            t-on-click="toggleIsToInvoice">
+                        <i class="fa fa-file-text-o" aria-hidden="true"/>
+                        <span class="hp-action-copy"><span>فاتورة ضريبية</span></span>
+                        <i t-attf-class="fa hp-action-check {{ currentOrder.isToInvoice() ? 'fa-check-square' : 'fa-square-o' }}" aria-hidden="true"/>
+                    </button>
+                    <button t-if="hpShowPromo" class="hp-action" t-on-click="() => this.openPromoCode()">
+                        <i class="fa fa-ticket" aria-hidden="true"/>
+                        <span class="hp-action-copy"><span>كوبون / كود خصم</span></span>
+                    </button>
+                    <button t-if="hpCanSplit" class="hp-action" t-on-click="() => this.hpSplit()">
+                        <i class="fa fa-files-o" aria-hidden="true"/>
+                        <span class="hp-action-copy"><span>تقسيم الفاتورة</span></span>
+                    </button>
+                    <button t-if="pos.config.iface_cashdrawer" class="hp-action" t-on-click="openCashbox">
+                        <i class="fa fa-archive" aria-hidden="true"/>
+                        <span class="hp-action-copy"><span>فتح الدرج</span></span>
+                    </button>
+                </div>
+
+                <div class="hp-card hp-keys">
+                    <div class="hp-notes">
+                        <button t-foreach="hpNotes" t-as="note" t-key="note" class="hp-note"
+                                t-on-click="() => this.hpTender(note)">
+                            <bdi><t t-esc="note"/></bdi>
+                        </button>
+                        <button class="hp-note hp-note-exact" title="المبلغ المتبقي كاملاً" t-on-click="() => this.hpExact()">بالضبط</button>
+                    </div>
+                    <div class="hp-numpad">
+                        <t t-foreach="['1','2','3','4','5','6','7','8','9']" t-as="digit" t-key="digit">
+                            <button class="hp-num" t-on-click="() => this.hpKey(digit)" t-esc="digit"/>
+                        </t>
+                        <button class="hp-num" t-on-click="() => this.hpKey(hpDecimalPoint)" t-esc="hpDecimalPoint"/>
+                        <button class="hp-num" t-on-click="() => this.hpKey('0')">0</button>
+                        <button class="hp-num hp-num-back" t-on-click="() => this.hpKey('Backspace')" aria-label="مسح">
+                            <i class="fa fa-long-arrow-left" aria-hidden="true"/>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── الدفع ── -->
+            <section class="hp-col hp-pay">
+                <div class="hp-totals">
+                    <div class="hp-total is-due">
+                        <span>الإجمالي</span>
+                        <b t-esc="hpMoney(currentOrder.totalDue)"/>
+                    </div>
+                    <div class="hp-total is-paid">
+                        <span>المبلغ المدفوع</span>
+                        <b t-esc="hpMoney(hpPaid)"/>
+                    </div>
+                    <div t-if="hpChange" class="hp-total is-change">
+                        <span>الباقي للعميل</span>
+                        <b t-esc="hpMoney(hpChange)"/>
+                    </div>
+                    <div t-else="" class="hp-total is-left" t-att-class="{ 'is-zero': !hpRemaining }">
+                        <span>المبلغ المتبقي</span>
+                        <b t-esc="hpMoney(hpRemaining)"/>
+                    </div>
+                    <button t-if="hpShowTip" class="hp-tip" t-att-class="{ 'is-on': currentOrder.getTip() }" t-on-click="addTip">
+                        <i class="fa fa-heart" aria-hidden="true"/>
+                        <span>إكرامية</span>
+                        <small t-if="currentOrder.getTip()" t-esc="hpMoney(currentOrder.getTip())"/>
+                    </button>
+                </div>
+
+                <div class="hp-methods">
+                    <button t-foreach="hpMethods" t-as="method" t-key="method.id" class="hp-method"
+                            t-att-class="{
+                                'is-active': hpIsActiveMethod(method),
+                                'is-busy': pos.paymentTerminalInProgress and method.use_payment_terminal,
+                            }"
+                            t-on-click="() => this.addNewPaymentLine(method)">
+                        <i t-attf-class="fa {{ hpMethodIcon(method) }}" aria-hidden="true"/>
+                        <span t-esc="method.name"/>
+                    </button>
+                </div>
+
+                <div class="hp-card hp-lines">
+                    <div class="hp-lines-head">
+                        <span>نوع الدفع</span>
+                        <span>المبلغ</span>
+                        <span>العمليات</span>
+                    </div>
+                    <div class="hp-lines-body">
+                        <div t-foreach="hpLines" t-as="line" t-key="line.uuid" class="hp-line"
+                             t-att-class="{ 'is-selected': line.isSelected() }"
+                             t-on-click="() => this.selectPaymentLine(line.uuid)">
+                            <span class="hp-line-method">
+                                <i t-attf-class="fa {{ hpMethodIcon(line.payment_method_id) }}" aria-hidden="true"/>
+                                <t t-esc="line.payment_method_id.name"/>
+                            </span>
+                            <span class="hp-line-amount" t-esc="hpMoney(line.getAmount())"/>
+                            <span class="hp-line-ops">
+                                <t t-set="status" t-value="line.getPaymentStatus()"/>
+                                <button t-if="status === 'pending' or status === 'retry'" class="hp-line-btn is-send"
+                                        t-on-click.stop="() => this.sendPaymentRequest(line)">إرسال</button>
+                                <button t-elif="status === 'waiting' or status === 'waitingCard'" class="hp-line-btn"
+                                        t-on-click.stop="() => this.sendPaymentCancel(line)">إلغاء</button>
+                                <span t-elif="status and status !== 'done'" class="hp-line-status" t-esc="status"/>
+                                <button class="hp-line-btn is-delete" title="حذف"
+                                        t-on-click.stop="() => this.deletePaymentLine(line.uuid)">
+                                    <i class="fa fa-trash" aria-hidden="true"/>
+                                </button>
+                            </span>
+                        </div>
+                        <div t-if="!hpLines.length" class="hp-lines-empty">
+                            <i class="fa fa-hand-pointer-o" aria-hidden="true"/>
+                            اختر وسيلة الدفع من الأعلى
+                        </div>
+                    </div>
+                </div>
+
+                <button t-if="!hpHideValidate" class="hp-validate" t-att-class="{ 'is-ready': hpCanValidate }"
+                        t-on-click="() => this.validateOrder()">
+                    <i class="fa fa-check-circle" aria-hidden="true"/>
+                    <span t-if="pos.config.set_tip_after_payment and currentOrder.isPaid()">إغلاق الحساب</span>
+                    <span t-else="">إغلاق الفاتورة</span>
+                </button>
+            </section>
+
+            <!-- ── ملخص الفاتورة ── -->
+            <section class="hp-col hp-summary">
+                <button class="hp-back" t-on-click="() => pos.onClickBackButton()">
+                    <i class="fa fa-arrow-right" aria-hidden="true"/>
+                    <span>عودة</span>
+                </button>
+
+                <div class="hp-card hp-bill">
+                    <button class="hp-preview" t-on-click="() => this.hpPreview()">
+                        <i class="fa fa-eye" aria-hidden="true"/>
+                        <span>عرض الفاتورة</span>
+                    </button>
+                    <div class="hp-rows">
+                        <div class="hp-row"><span>قيمة الفاتورة</span><b t-esc="hpMoney(hpSummary.base)"/></div>
+                        <div class="hp-row"><span>الضريبة</span><b t-esc="hpMoney(hpSummary.tax)"/></div>
+                        <div class="hp-row"><span>إجمالي الخصم</span><b t-esc="hpMoney(hpSummary.discount)"/></div>
+                        <div t-if="hpSummary.tip" class="hp-row"><span>الإكرامية</span><b t-esc="hpMoney(hpSummary.tip)"/></div>
+                        <div class="hp-row is-total"><span>الإجمالي النهائي</span><b t-esc="hpMoney(hpSummary.total)"/></div>
+                    </div>
+
+                    <div t-if="hpHasNotes" class="hp-notes-row" t-att-class="{ 'has-note': currentOrder.hosnyInvoiceNote }">
+                        <div class="hp-notes-copy">
+                            <span>الملاحظات</span>
+                            <small t-if="currentOrder.hosnyInvoiceNote" t-esc="currentOrder.hosnyInvoiceNote"/>
+                            <small t-elif="currentOrder.hosnyIsPayLater" class="is-wanted">فاتورة أجل — أضف الملاحظة</small>
+                        </div>
+                        <button class="hp-notes-add" t-on-click="() => this.openHosnyInvoiceNote()"
+                                t-att-title="currentOrder.hosnyInvoiceNote ? 'تعديل الملاحظات' : 'إضافة ملاحظة'">
+                            <i t-attf-class="fa {{ currentOrder.hosnyInvoiceNote ? 'fa-pencil' : 'fa-plus' }}" aria-hidden="true"/>
+                        </button>
+                    </div>
+
+                    <div class="hp-info">
+                        <div><span>رقم الفاتورة</span><b><bdi t-esc="hpInvoiceNumber"/></b></div>
+                        <div><span>التاريخ</span><b><bdi t-esc="hpDate"/></b></div>
+                        <div><span>اسم المستخدم</span><b t-esc="hpCashier"/></div>
+                        <div t-if="hpPlace"><span>المكان</span><b t-esc="hpPlace"/></div>
+                    </div>
+                </div>
+
+                <button class="hp-print" t-on-click="() => this.hpPrint()">
+                    <i class="fa fa-print" aria-hidden="true"/>
+                    <span>طباعة</span>
+                </button>
+            </section>
+        </div>
+    </t>
+
+    <t t-name="hosny_pos_payment.ReceiptPreview">
+        <Dialog title="'عرض الفاتورة'" contentClass="'hp-receipt-dialog'" size="'md'">
+            <div class="hp-receipt-paper">
+                <OrderReceipt order="props.order"/>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-secondary btn-lg" t-on-click="props.close">إغلاق</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
