@@ -167,7 +167,7 @@ export class HosnyHomeScreen extends Component {
         const pos = this.pos;
         const tiles = [
             { key: "sell", tone: "green", icon: "fa-shopping-cart", title: "المبيعات", run: () => this.startSelling() },
-            { key: "tables", tone: "magenta", icon: "fa-cutlery", title: "الطاولات", run: () => this.openTables() },
+            { key: "tables", tone: "navy", icon: "fa-cutlery", title: "الطاولات", run: () => this.openTables() },
             {
                 key: "orders",
                 tone: "blue",
@@ -178,11 +178,11 @@ export class HosnyHomeScreen extends Component {
             },
         ];
         if (pos.showCashMoveButton && pos.cashier?._role !== "minimal") {
-            tiles.push({ key: "cash", tone: "orange", icon: "fa-exchange", title: "إيداع / سحب", run: () => pos.cashMove() });
+            tiles.push({ key: "cash", tone: "amber", icon: "fa-exchange", title: "إيداع / سحب", run: () => pos.cashMove() });
         }
-        tiles.push({ key: "report", tone: "purple", icon: "fa-file-text", title: "تقرير الوردية", run: () => this.openReport() });
+        tiles.push({ key: "report", tone: "deep", icon: "fa-file-text", title: "تقرير الوردية", run: () => this.openReport() });
         if (this.isManager) {
-            tiles.push({ key: "backend", tone: "steel", icon: "fa-cogs", title: "الإعدادات", run: () => pos.closePos() });
+            tiles.push({ key: "backend", tone: "slate", icon: "fa-cogs", title: "الإعدادات", run: () => pos.closePos() });
         }
         tiles.push({ key: "close", tone: "red", icon: "fa-power-off", title: "إغلاق الوردية", run: () => pos.closeSession() });
         return tiles;

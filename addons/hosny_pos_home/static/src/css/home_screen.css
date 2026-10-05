@@ -19,8 +19,8 @@
     --hh-edge: rgba(255,255,255,.10);
     --hh-edge-2: rgba(255,255,255,.16);
     --hh-ink: #FFFFFF;
-    --hh-ink-2: #D6DCF5;
-    --hh-muted: #9AA3C7;
+    --hh-ink-2: #DCE3ED;
+    --hh-muted: #A9B8CC;
     --hh-num: "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
     --hh-text: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
     --hh-ease: cubic-bezier(.22,.8,.3,1);
@@ -35,14 +35,13 @@
     overflow: auto;
     color: var(--hh-ink);
     font-family: var(--hh-text);
-    background-color: #0B1030;
+    background-color: #0E2748;
     background-image:
-        radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.4px),
-        radial-gradient(700px 520px at 85% 8%, rgba(124,58,237,.42), transparent 70%),
-        radial-gradient(760px 560px at 8% 92%, rgba(37,99,235,.40), transparent 70%),
-        radial-gradient(520px 420px at 50% 55%, rgba(14,165,233,.12), transparent 70%),
-        linear-gradient(180deg, #121845 0%, #0A0E2A 100%);
-    background-size: 26px 26px, auto, auto, auto, auto;
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170' viewBox='0 0 170 170'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='.075' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(18 16)'%3E%3Cpath d='M6 0v14M0 0v8a6 6 0 0 0 12 0V0M6 14v26M26 0c-5 4-6 14-6 20h6v20'/%3E%3C/g%3E%3Cg transform='translate(104 14)'%3E%3Cpath d='M8 30c-5 0-8-4-8-8 0-5 4-8 8-8 1-6 6-10 12-10s11 4 12 10c4 0 8 3 8 8 0 4-3 8-8 8zM10 30v10h20V30'/%3E%3C/g%3E%3Cg transform='translate(14 112)'%3E%3Cpath d='M0 30h46M5 30a18 18 0 0 1 36 0M23 12V8M19 8h8'/%3E%3C/g%3E%3Cg transform='translate(110 112)'%3E%3Cpath d='M0 8h26v14a10 10 0 0 1-10 10h-6A10 10 0 0 1 0 22zM26 12h4a6 6 0 0 1 0 12h-4M7 4c0-3 3-3 3-6M15 4c0-3 3-3 3-6'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(69 69)' fill='none' stroke='%23D8B25A' stroke-opacity='.16' stroke-width='1.8' stroke-linejoin='round'%3E%3Cpath d='M16 0l4.6 11.4L32 16l-11.4 4.6L16 32l-4.6-11.4L0 16l11.4-4.6z'/%3E%3Ccircle cx='16' cy='16' r='3'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(900px 600px at 80% 0%, rgba(43,93,160,.55), transparent 70%),
+        radial-gradient(800px 560px at 0% 100%, rgba(22,131,83,.22), transparent 70%),
+        linear-gradient(180deg, #17395F 0%, #0E2748 100%);
+    background-size: 170px 170px, auto, auto, auto;
     isolation: isolate;
 }
 :is(#hs,.pos) .hh-home * { box-sizing: border-box; }
@@ -61,9 +60,10 @@
     flex: 0 0 auto; display: grid; place-items: center;
     inline-size: clamp(50px, 7.6vh, 66px); block-size: clamp(50px, 7.6vh, 66px);
     border-radius: 20px;
-    font-size: clamp(24px, 3.6vh, 32px); color: #fff;
-    /*rtl:ignore*/background: linear-gradient(135deg, #FB923C 0%, #F43F5E 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 14px 30px -10px rgba(244,63,94,.65);
+    font-size: clamp(24px, 3.6vh, 32px);
+    color: #0E2748;
+    /*rtl:ignore*/background: linear-gradient(135deg, #EFCB7E 0%, #C99A3E 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 14px 30px -10px rgba(216,178,90,.6);
 }
 
 /* ── اللوحة الزجاجية ──────────────────────────────────────────────── */
@@ -97,10 +97,8 @@
 :is(#hs,.pos) .hh-box-title .fa {
     display: grid; place-items: center;
     inline-size: 28px; block-size: 28px; border-radius: 9px;
-    font-size: 14px; color: #C4B5FD; background: rgba(139,92,246,.18);
+    font-size: 14px; color: #EFCB7E; background: rgba(216,178,90,.16);
 }
-:is(#hs,.pos) .hh-box-branch .hh-box-title .fa { color: #7DD3FC; background: rgba(14,165,233,.18); }
-:is(#hs,.pos) .hh-box-sync .hh-box-title .fa { color: #86EFAC; background: rgba(34,197,94,.16); }
 :is(#hs,.pos) .hh-net {
     margin-inline-start: auto;
     display: inline-flex; align-items: center; gap: 6px;
@@ -108,7 +106,7 @@
     font-size: 11.5px; font-weight: 700;
 }
 :is(#hs,.pos) .hh-net::before { content: ""; inline-size: 7px; block-size: 7px; border-radius: 50%; background: currentColor; }
-:is(#hs,.pos) .hh-net.is-online { color: #4ADE80; background: rgba(74,222,128,.12); }
+:is(#hs,.pos) .hh-net.is-online { color: #6DBF8F; background: rgba(22,131,83,.22); }
 :is(#hs,.pos) .hh-net.is-offline { color: #FDA4AF; background: rgba(244,63,94,.18); }
 
 :is(#hs,.pos) .hh-clock {
@@ -137,7 +135,7 @@
     flex: 0 0 auto;
     inline-size: clamp(56px, 9vh, 78px); block-size: clamp(56px, 9vh, 78px);
     border-radius: 50%; padding: 3px; background: #fff;
-    box-shadow: 0 0 0 3px rgba(255,255,255,.12), 0 10px 24px -8px rgba(0,0,0,.6);
+    box-shadow: 0 0 0 2px #D8B25A, 0 0 0 6px rgba(216,178,90,.14), 0 10px 24px -8px rgba(0,0,0,.6);
 }
 :is(#hs,.pos) .hh-branch-logo img { inline-size: 100%; block-size: 100%; object-fit: contain; border-radius: 50%; display: block; }
 
@@ -195,17 +193,21 @@
     display: grid; place-items: center;
     border-radius: 999px;
     font-family: var(--hh-num); font-size: 13.5px; font-weight: 800;
-    color: #1D4ED8; background: #fff;
+    color: #0E2748; background: #EFCB7E;
     box-shadow: 0 6px 14px -4px rgba(0,0,0,.35);
 }
 
-:is(#hs,.pos) .hh-tone-green   { --t-a: #34D399; --t-b: #059669; --t-glow: rgba(16,185,129,.65); }
-:is(#hs,.pos) .hh-tone-magenta { --t-a: #F472B6; --t-b: #C026D3; --t-glow: rgba(217,70,239,.6); }
-:is(#hs,.pos) .hh-tone-blue    { --t-a: #60A5FA; --t-b: #4F46E5; --t-glow: rgba(79,70,229,.6); }
-:is(#hs,.pos) .hh-tone-orange  { --t-a: #FDBA74; --t-b: #EA580C; --t-glow: rgba(249,115,22,.6); }
-:is(#hs,.pos) .hh-tone-purple  { --t-a: #C084FC; --t-b: #7C3AED; --t-glow: rgba(139,92,246,.6); }
-:is(#hs,.pos) .hh-tone-steel   { --t-a: #94A3B8; --t-b: #475569; --t-glow: rgba(71,85,105,.6); }
-:is(#hs,.pos) .hh-tone-red     { --t-a: #FB7185; --t-b: #DC2626; --t-glow: rgba(244,63,94,.6); }
+:is(#hs,.pos) .hh-tone-green   { --t-a: #2E9D6A; --t-b: #0F7A49; --t-glow: rgba(22,131,83,.6); }
+:is(#hs,.pos) .hh-tone-navy    { --t-a: #2B5DA0; --t-b: #17395F; --t-glow: rgba(36,82,142,.6); }
+:is(#hs,.pos) .hh-tone-blue    { --t-a: #3A6FB5; --t-b: #1C3F6E; --t-glow: rgba(43,93,160,.6); }
+:is(#hs,.pos) .hh-tone-amber   { --t-a: #E9A247; --t-b: #C2701A; --t-glow: rgba(224,145,47,.55); }
+:is(#hs,.pos) .hh-tone-deep    { --t-a: #24528E; --t-b: #0E2748; --t-glow: rgba(14,39,72,.7); }
+:is(#hs,.pos) .hh-tone-slate   { --t-a: #637D99; --t-b: #425E7B; --t-glow: rgba(66,94,123,.6); }
+:is(#hs,.pos) .hh-tone-red     { --t-a: #D2544B; --t-b: #A8322B; --t-glow: rgba(198,52,45,.55); }
+/* the navy buttons carry a gold icon so they stay apart at a glance */
+:is(#hs,.pos) .hh-tone-navy .hh-tile-icon,
+:is(#hs,.pos) .hh-tone-blue .hh-tile-icon,
+:is(#hs,.pos) .hh-tone-deep .hh-tile-icon { color: #EFCB7E; background: rgba(216,178,90,.16); box-shadow: inset 0 0 0 1px rgba(216,178,90,.35); }
 
 /* ── التذييل ──────────────────────────────────────────────────────── */
 :is(#hs,.pos) .hh-foot {
