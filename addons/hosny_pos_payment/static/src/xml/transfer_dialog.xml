@@ -144,4 +144,12 @@
             </t>
         </Dialog>
     </t>
+
+    <!-- «تحويل» معطّل للسفري وللطلب الفارغ (الزر من hosny_pos_controls) -->
+    <t t-name="hosny_pos_payment.TransferButtonState" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('hosny-transfer-button')]" position="attributes">
+            <attribute name="t-att-disabled">!hpCanTransfer</attribute>
+            <attribute name="t-att-title">hpCanTransfer ? 'نقل الأصناف إلى طاولة أخرى' : 'التحويل لطلبات الطاولات فقط'</attribute>
+        </xpath>
+    </t>
 </templates>

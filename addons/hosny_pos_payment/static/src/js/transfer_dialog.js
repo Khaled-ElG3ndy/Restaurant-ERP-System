@@ -188,10 +188,6 @@ export class HosnyTransferDialog extends Component {
             this.state.error = "حدد صنفاً واحداً على الأقل، أو علّم على الكل للتحويل الكلي.";
             return;
         }
-        if (!this.isFullTransfer && !this.sourceTable) {
-            this.state.error = "التحويل الجزئي لطلبات الطاولات فقط — علّم على الكل لنقل الطلب كاملاً.";
-            return;
-        }
         this.state.step = 2;
     }
     back() {
@@ -265,12 +261,22 @@ export class HosnyTransferDialog extends Component {
 }
 
 patch(ControlButtons.prototype, {
-    clickTransferOrder() {
+    /** التحويل لطلبات الطاولات فقط: السفري لا طاولة له ينتقل منها. */
+    get hpCanTransfer() {
         const order = this.pos.getOrder();
-        if (!order?.lines?.length || order.finalized) {
-            return super.clickTransferOrder(...arguments);
+        return Boolean(
+            order &&
+                !order.finalized &&
+                order.table_id &&
+                !this.pos.isTakeawayOrder?.(order) &&
+                (order.lines || []).some((line) => line.qty > EPS)
+        );
+    },
+    clickTransferOrder() {
+        if (!this.hpCanTransfer) {
+            return;
         }
         this.dialog.closeAll();
-        this.dialog.add(HosnyTransferDialog, { order });
+        this.dialog.add(HosnyTransferDialog, { order: this.pos.getOrder() });
     },
 });
