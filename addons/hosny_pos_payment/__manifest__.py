@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Payment',
-    'version': '19.0.1.5.5',
+    'version': '19.0.1.6.0',
     'category': 'Point of Sale',
     'summary': 'شاشة الدفع بتقسيمة FERP: ملخص الفاتورة، الدفع، والإجراءات والأرقام',
     'description': """
@@ -29,6 +29,11 @@
 «نقل الطلبات» بتقسيمة FERP خلف زر «تحويل»: جدول الأصناف (تحديد الكل =
 تحويل كلي، بعضها أو جزء من الكمية = جزئي) ثم اختيار الدور والطاولة؛ الطاولة
 المشغولة يُضاف المنقول إلى طلبها. يغني عن زرّي «تحويل جزئي» و«دمج الطاولات».
+
+«مردود المبيعات» بتقسيمة FERP خلف «استرداد الأموال»: اختيار الفاتورة من نافذة
+بحث، بطاقات الأصناف (المباعة والمتبقية) و«اختيار الكل»، جدول بكمية المردود
+وسبب الإلغاء لكل صنف، سبب الاسترجاع، وملخص المردود. الحفظ يبني طلب الإرجاع
+بطريقة أودو ويفتح الدفع بالطريقة المختارة، والأسهم تتصفح المرتجعات السابقة.
 """,
     'author': 'Hosny',
     # hosny_pos_controls: شاشة «تسديد الفواتير» وزرّها منه، وهنا يُستبدل قالبها
@@ -50,6 +55,9 @@
             'hosny_pos_payment/static/src/js/transfer_dialog.js',
             'hosny_pos_payment/static/src/xml/transfer_dialog.xml',
             'hosny_pos_payment/static/src/css/transfer_dialog.css',
+            'hosny_pos_payment/static/src/js/returns_screen.js',
+            'hosny_pos_payment/static/src/xml/returns_screen.xml',
+            'hosny_pos_payment/static/src/css/returns_screen.css',
         ],
     },
     'installable': True,

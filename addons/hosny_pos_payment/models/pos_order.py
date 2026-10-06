@@ -14,6 +14,9 @@ class PosOrder(models.Model):
         filters: date_from / date_to (UTC «YYYY-MM-DD HH:MM:SS»)، order_type_id،
         number (رقم الفاتورة أو المرجع)، status (all / paid / open / pay_later /
         refund)، table_id. يعيد الأسطر وأنواع الفواتير والطاولات للفلاتر.
+
+        لشاشة المرتجعات: refundable (المدفوعة غير المرتجعة فقط)، search (رقم
+        الفاتورة أو اسم العميل أو جواله)، limit.
         """
         filters = filters or {}
         config = self.env["pos.config"].browse(config_id)
@@ -41,6 +44,20 @@ class PosOrder(models.Model):
             if has_session_number and number.isdigit():
                 number_domain = ["|", ("hosny_session_number", "=", int(number))] + number_domain
             domain += number_domain
+        search = (filters.get("search") or "").strip()
+        if search:
+            search_domain = [
+                "|", "|", "|",
+                ("tracking_number", "ilike", search),
+                ("pos_reference", "ilike", search),
+                ("partner_id.name", "ilike", search),
+                ("partner_id.phone", "ilike", search),
+            ]
+            if has_session_number and search.isdigit():
+                search_domain = ["|", ("hosny_session_number", "=", int(search))] + search_domain
+            domain += search_domain
+        if filters.get("refundable"):
+            domain += [("state", "in", PAID_STATES), ("is_refund", "=", False)]
         status = filters.get("status") or "all"
         if status == "paid":
             domain.append(("state", "in", PAID_STATES))
@@ -52,7 +69,8 @@ class PosOrder(models.Model):
             domain.append(("is_refund", "=", True))
 
         total_count = self.search_count(domain)
-        orders = self.search(domain, order="date_order desc, id desc", limit=LIST_LIMIT)
+        limit = min(int(filters.get("limit") or LIST_LIMIT), LIST_LIMIT)
+        orders = self.search(domain, order="date_order desc, id desc", limit=limit)
 
         rows = []
         for order in orders:
@@ -85,6 +103,14 @@ class PosOrder(models.Model):
                 "partner": partner.name or "",
                 "phone": partner.phone or getattr(partner, "mobile", "") or "",
                 "prints": order.nb_print,
+                "cashier": (
+                    "employee_id" in order._fields and order.employee_id.name
+                ) or order.user_id.name or "",
+                "refunded_number": order.refunded_order_id and str(
+                    (has_session_number and order.refunded_order_id.hosny_session_number)
+                    or order.refunded_order_id.tracking_number
+                    or order.refunded_order_id.pos_reference
+                ) or "",
             })
 
         tables = self.env["restaurant.table"].search(
@@ -93,7 +119,7 @@ class PosOrder(models.Model):
         return {
             "rows": rows,
             "total_count": total_count,
-            "limit": LIST_LIMIT,
+            "limit": limit,
             "types": [
                 {"id": t.id, "name": t.name}
                 for t in (self.env["pos.order.type"].search([]) if has_type else [])

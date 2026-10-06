@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- «مردود المبيعات» بتقسيمة FERP: الفاتورة والملخص يميناً، الأصناف يساراً -->
+    <t t-name="hosny_pos_payment.ReturnScreen">
+        <div class="hr-screen" dir="rtl">
+            <t t-set="sum" t-value="summary"/>
+            <t t-set="h" t-value="state.head"/>
+
+            <!-- الرأس: المسار والأزرار والتصفح -->
+            <header class="hr-head">
+                <div class="hr-title">
+                    <h1><i class="fa fa-undo" aria-hidden="true"/> مردود المبيعات</h1>
+                    <nav class="hr-crumbs">
+                        <span>الرئيسية</span><i class="fa fa-angle-left" aria-hidden="true"/>
+                        <span>مردود المبيعات</span><i class="fa fa-angle-left" aria-hidden="true"/>
+                        <b t-esc="isView ? 'عرض مردود' : 'طلب إرجاع جديد'"/>
+                    </nav>
+                </div>
+                <div class="hr-tools">
+                    <button class="hr-tool is-new" title="مردود جديد" t-on-click="newReturn">
+                        <i class="fa fa-plus" aria-hidden="true"/><span>جديد</span>
+                    </button>
+                    <button class="hr-tool" title="اختيار فاتورة" t-on-click="pickInvoice">
+                        <i class="fa fa-search" aria-hidden="true"/><span>اختيار فاتورة</span>
+                    </button>
+                    <button class="hr-tool" title="طباعة" t-att-disabled="!h" t-on-click="print">
+                        <i class="fa fa-print" aria-hidden="true"/><span>طباعة</span>
+                    </button>
+                    <button class="hr-tool" title="تحديث" t-att-disabled="!h" t-on-click="refresh">
+                        <i class="fa fa-refresh" aria-hidden="true"/><span>تحديث</span>
+                    </button>
+                </div>
+                <div class="hr-pager" title="المرتجعات السابقة">
+                    <button class="hr-pg" title="الأول" t-on-click="() => this.goHistory('first')"><i class="fa fa-angle-double-right" aria-hidden="true"/></button>
+                    <button class="hr-pg" title="السابق" t-on-click="() => this.goHistory('prev')"><i class="fa fa-angle-right" aria-hidden="true"/></button>
+                    <span class="hr-pg-info">
+                        <t t-if="history.index >= 0"><b t-esc="history.index + 1"/> / <t t-esc="historyCount"/></t>
+                        <t t-else="">المرتجعات</t>
+                    </span>
+                    <button class="hr-pg" title="التالي" t-on-click="() => this.goHistory('next')"><i class="fa fa-angle-left" aria-hidden="true"/></button>
+                    <button class="hr-pg" title="الأخير" t-on-click="() => this.goHistory('last')"><i class="fa fa-angle-double-left" aria-hidden="true"/></button>
+                </div>
+                <button class="hr-back" t-on-click="back"><i class="fa fa-arrow-right" aria-hidden="true"/> رجوع</button>
+            </header>
+
+            <div class="hr-body">
+                <!-- يمين: الفاتورة والملخص -->
+                <aside class="hr-card hr-side">
+                    <div class="hr-chips">
+                        <button class="hr-chip is-invoice" t-att-disabled="isView" t-on-click="pickInvoice">
+                            <small>رقم الفاتورة</small>
+                            <b><bdi t-esc="h ? h.number : 'اختر'"/></b>
+                        </button>
+                        <div class="hr-chip is-refund" t-att-class="{ 'is-view': isView }">
+                            <small>رقم المردود</small>
+                            <b><bdi t-esc="h ? h.refundNumber : '—'"/></b>
+                        </div>
+                        <div class="hr-chip is-partner">
+                            <small>اسم العميل</small>
+                            <b t-esc="h and h.partner ? h.partner : 'بدون عميل'" t-att-title="h and h.partner"/>
+                        </div>
+                    </div>
+
+                    <div class="hr-fields">
+                        <label class="hr-field"><span>تاريخ المردود</span>
+                            <div class="hr-val"><i class="fa fa-calendar" aria-hidden="true"/><bdi t-esc="h ? h.refundDate : today"/></div></label>
+                        <label class="hr-field"><span>تاريخ الفاتورة</span>
+                            <div class="hr-val"><i class="fa fa-calendar-o" aria-hidden="true"/><bdi t-esc="h ? h.invoiceDate : '—'"/></div></label>
+                        <label class="hr-field"><span>كاشير المردود</span>
+                            <div class="hr-val"><i class="fa fa-user" aria-hidden="true"/><t t-esc="h ? h.refundCashier : cashierName"/></div></label>
+                        <label class="hr-field"><span>كاشير الفاتورة</span>
+                            <div class="hr-val"><i class="fa fa-user-o" aria-hidden="true"/><t t-esc="h ? h.invoiceCashier : '—'"/></div></label>
+                        <label class="hr-field"><span>طريقة الدفع</span>
+                            <div class="hr-val is-select">
+                                <i class="fa fa-credit-card" aria-hidden="true"/>
+                                <t t-if="isView"><t t-esc="h.methods"/></t>
+                                <select t-else="" t-model.number="state.methodId" t-att-disabled="!h">
+                                    <option t-foreach="methods" t-as="m" t-key="m.id" t-att-value="m.id" t-esc="m.name"/>
+                                </select>
+                            </div></label>
+                        <label class="hr-field"><span t-esc="isView ? 'المبلغ المسترد' : 'المبلغ المدفوع'"/>
+                            <div class="hr-val is-money"><t t-esc="money(h ? h.paid : 0)"/></div></label>
+                        <label class="hr-field"><span>نوع الفاتورة</span>
+                            <div class="hr-val"><i class="fa fa-tags" aria-hidden="true"/><t t-esc="h and h.type ? h.type : '—'"/></div></label>
+                        <label class="hr-field"><span>المخزن</span>
+                            <div class="hr-val" t-att-title="stockName"><i class="fa fa-cubes" aria-hidden="true"/><t t-esc="stockName"/></div></label>
+                    </div>
+
+                    <div class="hr-summary">
+                        <div class="hr-summary-head"><span>ملخص المردود</span><span>المبلغ</span></div>
+                        <div class="hr-sr"><span>إجمالي المردود</span><b t-esc="money(sum.excl)"/></div>
+                        <div class="hr-sr"><span>قيمة رسوم الخدمة</span><b t-esc="money(sum.service)"/></div>
+                        <div class="hr-sr"><span>إجمالي الخصم</span><b t-esc="money(sum.discount)"/></div>
+                        <div class="hr-sr"><span>إجمالي الضريبة</span><b t-esc="money(sum.tax)"/></div>
+                        <div class="hr-sr"><span>سعر التوصيل</span><b t-esc="money(sum.delivery)"/></div>
+                        <div class="hr-sr is-total"><span>إجمالي المبلغ</span><b t-esc="money(sum.incl)"/></div>
+                    </div>
+
+                    <button t-if="!isView" class="hr-save" t-att-disabled="!canSave" t-on-click="save">
+                        <i t-attf-class="fa {{ state.saving ? 'fa-circle-o-notch fa-spin' : 'fa-check-circle' }}" aria-hidden="true"/>
+                        حفظ المردود والدفع
+                    </button>
+                    <div t-else="" class="hr-view-note"><i class="fa fa-eye" aria-hidden="true"/> عرض فقط — مردود محفوظ</div>
+                </aside>
+
+                <!-- يسار: الأصناف -->
+                <section class="hr-main">
+                    <div class="hr-card hr-strip" t-att-class="{ 'is-empty': !state.rows.length }">
+                        <t t-if="state.loading">
+                            <div class="hr-banner"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/> جارٍ التحميل…</div>
+                        </t>
+                        <t t-elif="!state.rows.length">
+                            <div class="hr-banner">
+                                <b>لا يوجد طلب بعد</b>
+                                <button class="hr-banner-btn" t-on-click="pickInvoice">
+                                    <i class="fa fa-search" aria-hidden="true"/> اختيار الفاتورة
+                                </button>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <button t-if="!isView" class="hr-all" t-att-class="{ 'is-on': allSelected }" t-on-click="toggleAll">
+                                <span class="hr-box" t-att-class="{ 'is-on': allSelected }"/> اختيار الكل
+                            </button>
+                            <div class="hr-cards">
+                                <button t-foreach="state.rows" t-as="row" t-key="row.uuid" class="hr-pcard"
+                                        t-att-class="{ 'is-on': isChecked(row), 'is-done': row.remaining &lt;= 0 }"
+                                        t-att-disabled="isView or row.remaining &lt;= 0"
+                                        t-att-title="row.remaining &lt;= 0 ? 'مُرتجع بالكامل' : 'إضافة قطعة للمردود'"
+                                        t-on-click="() => this.addOne(row)">
+                                    <span class="hr-pcard-name" t-esc="row.name"/>
+                                    <span class="hr-pcard-price" t-esc="money(row.unitIncl)"/>
+                                    <span class="hr-pcard-qty">
+                                        <span class="is-sold">المباعة <b t-esc="qtyText(row.sold)"/></span>
+                                        <span class="is-left">المتبقية <b t-esc="qtyText(row.remaining)"/></span>
+                                    </span>
+                                    <span t-if="isChecked(row)" class="hr-pcard-badge" t-esc="qtyText(selQty(row))"/>
+                                </button>
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="hr-card hr-table-card">
+                        <div class="hr-table-wrap">
+                            <table class="hr-table">
+                                <thead>
+                                    <tr>
+                                        <th class="is-check">
+                                            <button t-if="!isView" class="hr-box" t-att-class="{ 'is-on': allSelected }"
+                                                    t-att-disabled="!state.rows.length" title="اختيار الكل" t-on-click="toggleAll"/>
+                                        </th>
+                                        <th class="is-num">#</th>
+                                        <th>اسم الوجبة</th>
+                                        <th class="is-center">كمية المردود</th>
+                                        <th class="is-center">المتبقية</th>
+                                        <th class="is-center">المباعة</th>
+                                        <th class="is-center">الخصم</th>
+                                        <th class="is-center">الضريبة</th>
+                                        <th class="is-center">السعر<small>شامل الضريبة</small></th>
+                                        <th class="is-center">الإجمالي</th>
+                                        <th class="is-center">سبب الإلغاء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="state.rows" t-as="row" t-key="row.uuid">
+                                        <t t-set="q" t-value="isView ? row.returned : selQty(row)"/>
+                                        <tr class="hr-row" t-att-class="{ 'is-on': q > 0, 'is-done': !isView and row.remaining &lt;= 0 }">
+                                            <td class="is-check">
+                                                <button t-if="!isView" class="hr-box" t-att-class="{ 'is-on': q > 0 }"
+                                                        t-att-disabled="row.remaining &lt;= 0" t-on-click="() => this.toggleRow(row)"/>
+                                            </td>
+                                            <td class="is-num" t-esc="row_index + 1"/>
+                                            <td class="hr-name">
+                                                <b t-esc="row.name" t-att-title="row.name"/>
+                                                <small t-if="row.combo">وجبة</small>
+                                                <small t-if="!isView and row.remaining &lt;= 0" class="is-done">مُرتجع بالكامل</small>
+                                            </td>
+                                            <td class="is-center">
+                                                <span t-if="isView" class="hr-qty-view" t-esc="qtyText(q)"/>
+                                                <span t-else="" class="hr-stepper">
+                                                    <button class="hr-pm is-minus" t-att-disabled="q &lt;= 0" t-on-click="() => this.stepQty(row, -1)" aria-label="أقل"/>
+                                                    <input type="text" inputmode="decimal" class="hr-qty"
+                                                           t-att-value="q ? qtyText(q) : ''" placeholder="0" t-att-disabled="row.remaining &lt;= 0"
+                                                           t-on-input="(ev) => this.typeQty(row, ev)" t-on-focus="(ev) => ev.target.select()"/>
+                                                    <button class="hr-pm is-plus" t-att-disabled="q >= row.remaining" t-on-click="() => this.stepQty(row, 1)" aria-label="أكثر"/>
+                                                </span>
+                                            </td>
+                                            <td class="is-center is-n" t-esc="qtyText(row.remaining)"/>
+                                            <td class="is-center is-n" t-esc="qtyText(row.sold)"/>
+                                            <td class="is-center is-n"><t t-esc="money(row.unitDiscount * (q or row.sold))"/></td>
+                                            <td class="is-center is-n"><t t-esc="money((row.unitIncl - row.unitExcl) * (q or row.sold))"/></td>
+                                            <td class="is-center is-n" t-esc="money(row.unitIncl)"/>
+                                            <td class="is-center is-n is-strong" t-esc="money(row.unitIncl * (q or row.sold))"/>
+                                            <td class="is-center">
+                                                <span class="hr-ops">
+                                                    <button class="hr-op is-edit" t-att-class="{ 'has-note': state.notes[row.uuid] }"
+                                                            t-att-disabled="isView or q &lt;= 0"
+                                                            t-att-title="state.notes[row.uuid] or 'سبب الإلغاء'" t-on-click="() => this.editNote(row)">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"/>
+                                                    </button>
+                                                    <button class="hr-op is-del" t-att-disabled="isView or q &lt;= 0" title="إزالة من المردود"
+                                                            t-on-click="() => this.clearRow(row)">
+                                                        <i class="fa fa-trash" aria-hidden="true"/>
+                                                    </button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="state.editing === row.uuid or (isView and state.notes[row.uuid])" class="hr-note-row">
+                                            <td colspan="11">
+                                                <label class="hr-note">
+                                                    <span><i class="fa fa-comment-o" aria-hidden="true"/> سبب الإلغاء</span>
+                                                    <input type="text" placeholder="مثال: الصنف بارد، طلب خطأ…" t-att-value="state.notes[row.uuid] or ''"
+                                                           t-att-readonly="isView" t-on-input="(ev) => this.setNote(row, ev)"/>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <div t-if="!state.rows.length" class="hr-empty">اختر الفاتورة لعرض أصنافها</div>
+                        </div>
+                        <label class="hr-reason">
+                            <span>سبب الاسترجاع</span>
+                            <textarea rows="2" placeholder="اكتب سبب الاسترجاع…" t-att-readonly="isView"
+                                      t-att-value="state.reason" t-on-input="setReason"/>
+                        </label>
+                    </div>
+
+                    <div t-if="state.error" class="hr-error"><i class="fa fa-exclamation-circle" aria-hidden="true"/> <t t-esc="state.error"/></div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <!-- نافذة اختيار الفاتورة -->
+    <t t-name="hosny_pos_payment.ReturnPicker">
+        <Dialog title="'اختيار الفاتورة'" size="'xl'" contentClass="'hr-pick-dialog'" bodyClass="'hr-pick-body'">
+            <div class="hr-pick" dir="rtl">
+                <form class="hr-pick-bar" t-on-submit.prevent="load">
+                    <label class="hr-pick-search">
+                        <i class="fa fa-search" aria-hidden="true"/>
+                        <input type="search" placeholder="رقم الفاتورة أو اسم العميل أو الجوال" t-model="state.search" autofocus="autofocus"/>
+                    </label>
+                    <label class="hr-pick-type">
+                        <i class="fa fa-tags" aria-hidden="true"/>
+                        <select t-model="state.typeId">
+                            <option value="">كل الأنواع</option>
+                            <option t-foreach="state.types" t-as="type" t-key="type.id" t-att-value="type.id" t-esc="type.name"/>
+                        </select>
+                    </label>
+                    <button type="submit" class="hr-pick-filter" t-att-disabled="state.loading">
+                        <i t-attf-class="fa {{ state.loading ? 'fa-circle-o-notch fa-spin' : 'fa-filter' }}" aria-hidden="true"/> تصفية
+                    </button>
+                </form>
+                <div class="hr-pick-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="is-check">اختيار</th>
+                                <th>رقم الفاتورة</th>
+                                <th>التاريخ</th>
+                                <th>نوع الفاتورة</th>
+                                <th>العميل</th>
+                                <th>الكاشير</th>
+                                <th class="is-center">المبلغ</th>
+                                <th class="is-center">العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="state.rows" t-as="row" t-key="row.id" t-att-class="{ 'is-on': state.picked === row.id }"
+                                t-on-click="() => this.pick(row)" t-on-dblclick="() => this.choose(row)">
+                                <td class="is-check"><span class="hr-radio" t-att-class="{ 'is-on': state.picked === row.id }"/></td>
+                                <td class="is-n is-strong"><bdi t-esc="row.number"/><small t-if="row.refunded" class="hr-tag">به مرتجع</small></td>
+                                <td class="is-n"><bdi t-esc="dateText(row.date)"/></td>
+                                <td t-esc="row.type or (row.table ? 'محلي' : 'سفري')"/>
+                                <td class="is-clip" t-esc="row.partner or '—'"/>
+                                <td t-esc="row.cashier or '—'"/>
+                                <td class="is-center is-n" t-esc="money(row.amount)"/>
+                                <td class="is-center">
+                                    <button class="hr-pick-show" t-on-click.stop="() => this.choose(row)">عرض</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div t-if="!state.rows.length" class="hr-empty">
+                        <t t-esc="state.loading ? 'جارٍ جلب الفواتير…' : (state.error or 'لا توجد فواتير بهذا البحث')"/>
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hr-pick-footer">
+                    <button class="hr-pick-btn is-ok" t-att-disabled="!state.picked" t-on-click="show">
+                        <i class="fa fa-eye" aria-hidden="true"/> عرض
+                    </button>
+                    <button class="hr-pick-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+</templates>
