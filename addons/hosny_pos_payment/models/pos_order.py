@@ -7,6 +7,50 @@ LIST_LIMIT = 1000
 class PosOrder(models.Model):
     _inherit = "pos.order"
 
+    # مخزن المردود المختار في شاشة «مردود المبيعات». رقم لا علاقة: نقطة البيع
+    # لا تحمّل stock.location، والحقل البسيط يُرسل مع الطلب كما هو.
+    hosny_return_location_id = fields.Integer(string="مخزن المردود", copy=False)
+
+    @api.model
+    def hosny_return_locations(self, config_id):
+        """المخازن الداخلية التي يمكن رد الأصناف إليها، والافتراضي منها."""
+        config = self.env["pos.config"].browse(config_id)
+        config.check_access("read")
+        config = config.sudo()
+        picking_type = config.picking_type_id
+        if picking_type.return_picking_type_id:
+            default = picking_type.return_picking_type_id.default_location_dest_id
+        else:
+            default = picking_type.default_location_src_id
+        locations = self.env["stock.location"].sudo().search(
+            [("usage", "=", "internal"), ("company_id", "in", [config.company_id.id, False])],
+            order="complete_name", limit=200,
+        )
+        return {
+            "default_id": default.id or False,
+            "locations": [{"id": loc.id, "name": loc.complete_name} for loc in locations],
+        }
+
+    def _hosny_return_location(self):
+        self.ensure_one()
+        if not (self.is_refund and self.hosny_return_location_id):
+            return self.env["stock.location"]
+        location = self.env["stock.location"].sudo().browse(self.hosny_return_location_id).exists()
+        if location.usage != "internal" or location.company_id not in (self.company_id, self.env["res.company"]):
+            return self.env["stock.location"]
+        return location
+
+    def _force_create_picking_real_time(self):
+        # المخزن المختار يخص هذا المردود وحده؛ تجميع الأسطر عند إغلاق الوردية
+        # يضيعه، فيُنشأ إذنه فوراً.
+        return super()._force_create_picking_real_time() or bool(self._hosny_return_location())
+
+    def _create_order_picking(self):
+        location = self._hosny_return_location()
+        if location:
+            return super(PosOrder, self.with_context(hosny_return_location_id=location.id))._create_order_picking()
+        return super()._create_order_picking()
+
     @api.model
     def hosny_invoice_list(self, config_id, filters=None):
         """فواتير شاشة «تسديد الفواتير» لنقطة البيع هذه، بفلاتر FERP.

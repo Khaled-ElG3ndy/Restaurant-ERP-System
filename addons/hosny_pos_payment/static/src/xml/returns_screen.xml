@@ -71,7 +71,11 @@
                             <div class="hr-val"><i class="fa fa-user" aria-hidden="true"/><t t-esc="h ? h.refundCashier : cashierName"/></div></label>
                         <label class="hr-field"><span>كاشير الفاتورة</span>
                             <div class="hr-val"><i class="fa fa-user-o" aria-hidden="true"/><t t-esc="h ? h.invoiceCashier : '—'"/></div></label>
-                        <label class="hr-field"><span>طريقة الدفع</span>
+                        <label class="hr-field"><span t-esc="isView ? 'المبلغ المسترد' : 'المبلغ المدفوع'"/>
+                            <div class="hr-val is-money"><t t-esc="money(h ? h.paid : 0)"/></div></label>
+                        <label class="hr-field"><span>نوع الفاتورة</span>
+                            <div class="hr-val"><i class="fa fa-tags" aria-hidden="true"/><t t-esc="h and h.type ? h.type : '—'"/></div></label>
+                        <label class="hr-field is-wide"><span>طريقة الدفع</span>
                             <div class="hr-val is-select">
                                 <i class="fa fa-credit-card" aria-hidden="true"/>
                                 <t t-if="isView"><t t-esc="h.methods"/></t>
@@ -79,12 +83,14 @@
                                     <option t-foreach="methods" t-as="m" t-key="m.id" t-att-value="m.id" t-esc="m.name"/>
                                 </select>
                             </div></label>
-                        <label class="hr-field"><span t-esc="isView ? 'المبلغ المسترد' : 'المبلغ المدفوع'"/>
-                            <div class="hr-val is-money"><t t-esc="money(h ? h.paid : 0)"/></div></label>
-                        <label class="hr-field"><span>نوع الفاتورة</span>
-                            <div class="hr-val"><i class="fa fa-tags" aria-hidden="true"/><t t-esc="h and h.type ? h.type : '—'"/></div></label>
-                        <label class="hr-field"><span>المخزن</span>
-                            <div class="hr-val" t-att-title="stockName"><i class="fa fa-cubes" aria-hidden="true"/><t t-esc="stockName"/></div></label>
+                        <label class="hr-field is-wide"><span>المخزن (تُرد إليه الأصناف)</span>
+                            <div class="hr-val is-select" t-att-title="stockName">
+                                <i class="fa fa-cubes" aria-hidden="true"/>
+                                <t t-if="isView or !stock.locations.length"><t t-esc="stockName"/></t>
+                                <select t-else="" t-model.number="state.locationId" t-att-disabled="!h">
+                                    <option t-foreach="stock.locations" t-as="loc" t-key="loc.id" t-att-value="loc.id" t-esc="loc.name"/>
+                                </select>
+                            </div></label>
                     </div>
 
                     <div class="hr-summary">

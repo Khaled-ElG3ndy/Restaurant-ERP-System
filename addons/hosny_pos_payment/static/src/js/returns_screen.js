@@ -125,6 +125,25 @@ export class HosnyReturnScreen extends Component {
         this.order = null; // الفاتورة الأصلية (نموذج نقطة البيع، لا يُقرأ أثناء العرض)
         this.state = useState(this.emptyState());
         this.history = useState({ rows: [], index: -1, loading: false });
+        this.stock = useState({ locations: [], defaultId: null });
+        this.loadLocations();
+    }
+
+    /** مخازن الرد، مرة واحدة لكل فتح للشاشة. */
+    async loadLocations() {
+        try {
+            const result = await this.pos.data.call("pos.order", "hosny_return_locations", [this.pos.config.id]);
+            this.stock.locations = result.locations || [];
+            this.stock.defaultId = result.default_id || this.stock.locations[0]?.id || null;
+            if (!this.state.locationId) {
+                this.state.locationId = this.stock.defaultId;
+            }
+        } catch {
+            this.stock.locations = [];
+        }
+    }
+    locationName(id) {
+        return this.stock.locations.find((loc) => loc.id === id)?.name || "";
     }
 
     emptyState() {
@@ -141,6 +160,7 @@ export class HosnyReturnScreen extends Component {
             editing: null,
             reason: "",
             methodId: null,
+            locationId: this.stock?.defaultId || null,
         };
     }
 
@@ -161,8 +181,11 @@ export class HosnyReturnScreen extends Component {
         return (this.pos.config.payment_method_ids || []).map((m) => ({ id: m.id, name: m.name }));
     }
     get stockName() {
-        const type = this.pos.config.picking_type_id;
-        return type?.warehouse_id?.name || type?.default_location_src_id?.display_name || "مخزن نقطة البيع";
+        return (
+            this.locationName(this.isView ? this.state.head?.locationId : this.state.locationId) ||
+            this.locationName(this.stock.defaultId) ||
+            "مخزن نقطة البيع"
+        );
     }
     get isView() {
         return this.state.mode === "view";
@@ -400,6 +423,9 @@ export class HosnyReturnScreen extends Component {
                 destination.setPartner?.(partner);
             }
             destination.refunded_order_id = order;
+            if (this.state.locationId) {
+                destination.hosny_return_location_id = this.state.locationId;
+            }
             const reason = this.state.reason.trim();
             if (reason) {
                 destination.internal_note = reason;
@@ -489,6 +515,7 @@ export class HosnyReturnScreen extends Component {
                     paid: Math.abs(row.amount || 0),
                     type: row.type || "",
                     methods: [...new Set(payments)].join("، ") || "—",
+                    locationId: refund.hosny_return_location_id || this.stock.defaultId,
                 },
                 rows: lines.map((l) => {
                     const snap = this.snapshotRow(l, { returned: Math.abs(l.qty) });
