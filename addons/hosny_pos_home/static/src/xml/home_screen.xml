@@ -118,6 +118,11 @@
                 <i class="fa fa-th-large" aria-hidden="true"/>
                 <span>الرئيسية</span>
             </button>
+            <span t-if="hosnyTableChip" class="hh-nav-table" dir="rtl" title="طاولة الطلب">
+                <i class="fa fa-cutlery" aria-hidden="true"/>
+                <span>طاولة <bdi class="hh-nav-table-num" t-esc="hosnyTableChip.number"/></span>
+                <span t-if="hosnyTableChip.floor" class="hh-nav-table-floor" t-esc="hosnyTableChip.floor"/>
+            </span>
         </xpath>
     </t>
 </templates>

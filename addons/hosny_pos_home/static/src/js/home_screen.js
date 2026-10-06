@@ -275,6 +275,18 @@ patch(Navbar.prototype, {
     get hosnyShowHomeButton() {
         return this.pos.hosnyHomeEnabled() && this.pos.router.state.current !== HOME;
     },
+    /** شارة الطاولة: للطلب المحلي فقط، الطاولة والدور (لا «محلي» ولا «سفري»). */
+    get hosnyTableChip() {
+        if (this.pos.router.state.current !== "ProductScreen") {
+            return null;
+        }
+        const order = this.pos.getOrder();
+        const table = order?.table_id?.rootTable || order?.table_id;
+        if (!order || order.finalized || order.isRefund || !table || this.pos.isTakeawayOrder?.(order)) {
+            return null;
+        }
+        return { number: table.table_number ?? table.name ?? "", floor: table.floor_id?.name || "" };
+    },
 });
 
 /**

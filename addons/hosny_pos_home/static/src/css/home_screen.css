@@ -281,3 +281,49 @@
 :is(#hs,.pos) .pos-topheader .hh-nav-home i { color: #1F5FD0; font-size: 15px; }
 :is(#hs,.pos) .pos-topheader .hh-nav-home:hover { background: #E8F1FD !important; }
 :is(#hs,.pos) .pos-topheader .hh-nav-home:active { background: #D6E6FB !important; }
+
+
+/* ── الشريط العلوي ────────────────────────────────────────────────────
+   «الطاولات» (pos_entry_selector) وشارة «محلي/سفري» (hosny_pos_printer_matrix)
+   أُلغيا: الطاولة والدور في hh-nav-table للطلب المحلي فقط. الأخريان تأتيان
+   بقواعد عرض بوزن id، فثلاث :not(#…) ترفع الإخفاء فوقها. */
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader .pos-workplace-btn,
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader .hosny-order-type-chip { display: none !important; }
+
+:is(#hs,.pos) .pos-topheader .hh-nav-table {
+    display: inline-flex; align-items: center; gap: 8px;
+    block-size: 44px;
+    padding: 0 16px;
+    margin-inline: 4px;
+    border: 1.5px solid #9FD3B6; border-radius: 999px;
+    background: #EEF8F2;
+    color: #0F5F3B;
+    font-family: "Cairo", sans-serif; font-size: 14px; font-weight: 800;
+    white-space: nowrap;
+}
+:is(#hs,.pos) .pos-topheader .hh-nav-table .fa { color: #168353; font-size: 15px; }
+:is(#hs,.pos) .pos-topheader .hh-nav-table-num { font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif; font-size: 16px; }
+:is(#hs,.pos) .pos-topheader .hh-nav-table-floor {
+    padding: 2px 10px; border-radius: 999px;
+    background: #FFFFFF; color: #2E6B4D;
+    font-size: 12.5px; font-weight: 800;
+}
+
+/* زر القائمة: الخطوط الثلاثة مرسومة في منتصف الزر تماماً بدل رمز الخط،
+   الذي كانت مسافات أودو (btn-lg و lh-lg و fa-fw) تزيحه عن المنتصف. */
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader button:has(> .fa-bars) {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    padding: 0 !important; gap: 0 !important; line-height: 1 !important;
+    position: relative !important;
+}
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader button:has(> .fa-bars)::after { display: none !important; }
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader button > .fa-bars {
+    display: block !important;
+    inline-size: 20px !important; block-size: 2.5px !important;
+    margin: 0 !important; padding: 0 !important;
+    border-radius: 2px !important;
+    background: currentColor !important;
+    box-shadow: 0 -6.5px 0 currentColor, 0 6.5px 0 currentColor !important;
+    font-size: 0 !important; line-height: 0 !important;
+}
+body:not(#hh-a):not(#hh-b):not(#hh-c) .pos-topheader button > .fa-bars::before { content: none !important; }
