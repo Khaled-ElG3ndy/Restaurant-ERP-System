@@ -30,9 +30,7 @@
                     <div class="hx-head">
                         <span class="is-check">
                             <button class="hx-check" t-att-class="{ 'is-on': allFull, 'is-mixed': anySelected and !allFull }"
-                                    t-att-title="allFull ? 'إلغاء تحديد الكل' : 'تحديد الكل'" t-on-click="toggleAll">
-                                <i t-attf-class="fa {{ allFull ? 'fa-check' : (anySelected ? 'fa-minus' : '') }}" aria-hidden="true"/>
-                            </button>
+                                    t-att-title="allFull ? 'إلغاء تحديد الكل' : 'تحديد الكل'" t-on-click="toggleAll"/>
                         </span>
                         <span>الاسم</span>
                         <span class="is-center">الكمية</span>
@@ -43,9 +41,7 @@
                              t-att-class="{ 'is-on': selQty(line) > 0, 'is-part': selQty(line) > 0 and !isFull(line) }">
                             <span class="is-check">
                                 <button class="hx-check" t-att-class="{ 'is-on': isFull(line), 'is-mixed': selQty(line) > 0 and !isFull(line) }"
-                                        t-on-click="() => this.toggleLine(line)">
-                                    <i t-attf-class="fa {{ isFull(line) ? 'fa-check' : (selQty(line) > 0 ? 'fa-minus' : '') }}" aria-hidden="true"/>
-                                </button>
+                                        t-att-aria-label="isFull(line) ? 'إلغاء التحديد' : 'تحديد'" t-on-click="() => this.toggleLine(line)"/>
                             </span>
                             <span class="hx-name" t-on-click="() => this.toggleLine(line)">
                                 <b t-esc="lineName(line)"/>
@@ -57,15 +53,11 @@
                             </span>
                             <span class="hx-qty"><bdi t-esc="qtyText(line.qty)"/></span>
                             <span class="hx-stepper-qty">
-                                <button class="hx-pm is-minus" t-att-disabled="selQty(line) &lt;= 0" t-on-click="() => this.stepQty(line, -1)" aria-label="أقل">
-                                    <i class="fa fa-minus" aria-hidden="true"/>
-                                </button>
+                                <button class="hx-pm is-minus" t-att-disabled="selQty(line) &lt;= 0" t-on-click="() => this.stepQty(line, -1)" aria-label="أقل"/>
                                 <input type="text" inputmode="decimal" class="hx-qty-input"
                                        t-att-value="selQty(line) ? qtyText(selQty(line)) : ''" placeholder="0"
                                        t-on-input="(ev) => this.typeQty(line, ev)" t-on-focus="(ev) => ev.target.select()"/>
-                                <button class="hx-pm is-plus" t-att-disabled="isFull(line)" t-on-click="() => this.stepQty(line, 1)" aria-label="أكثر">
-                                    <i class="fa fa-plus" aria-hidden="true"/>
-                                </button>
+                                <button class="hx-pm is-plus" t-att-disabled="isFull(line)" t-on-click="() => this.stepQty(line, 1)" aria-label="أكثر"/>
                             </span>
                         </div>
                     </div>

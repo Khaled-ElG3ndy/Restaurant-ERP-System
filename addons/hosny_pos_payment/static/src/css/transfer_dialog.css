@@ -160,6 +160,38 @@ body:not(#hx-a):not(#hx-b):not(#hx-c) .hosny-merge-button.hosny-merge-button { d
 }
 :is(#hs, body) .hx-dialog .hx-check.is-on { background: var(--hx-mint-a) !important; border-color: var(--hx-mint-a) !important; }
 :is(#hs, body) .hx-dialog .hx-check.is-mixed { background: var(--hx-amber) !important; border-color: var(--hx-amber) !important; }
+/* Marks are drawn in CSS, not icon glyphs: the skin's icon sizes, margins
+   and line-heights pushed the glyphs off centre. */
+:is(#hs, body) .hx-dialog .hx-check,
+:is(#hs, body) .hx-dialog .hx-pm { position: relative !important; }
+:is(#hs, body) .hx-dialog .hx-check::after,
+:is(#hs, body) .hx-dialog .hx-pm::before,
+:is(#hs, body) .hx-dialog .hx-pm::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important; margin: auto !important; padding: 0 !important;
+    box-sizing: border-box !important;
+}
+/* ✓ : two borders of a box turned 45° */
+:is(#hs, body) .hx-dialog .hx-check.is-on::after {
+    inline-size: 8px !important; block-size: 14px !important;
+    border: solid #FFFFFF !important; border-width: 0 3px 3px 0 !important; border-radius: 1px !important;
+    /*rtl:ignore*/transform: translateY(-1px) rotate(45deg) !important;
+}
+/* − : one bar */
+:is(#hs, body) .hx-dialog .hx-check.is-mixed::after {
+    inline-size: 12px !important; block-size: 3px !important; border-radius: 2px !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+}
+:is(#hs, body) .hx-dialog .hx-pm::before,
+:is(#hs, body) .hx-dialog .hx-pm.is-plus::after {
+    inline-size: 14px !important; block-size: 3px !important; border-radius: 2px !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+}
+:is(#hs, body) .hx-dialog .hx-pm.is-plus::after { transform: rotate(90deg) !important; }
 .hx-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; cursor: pointer; }
 .hx-name b { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 16px; font-weight: 800; color: var(--hx-ink); }
 .hx-name small { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12.5px; font-weight: 600; color: var(--hx-muted); }
