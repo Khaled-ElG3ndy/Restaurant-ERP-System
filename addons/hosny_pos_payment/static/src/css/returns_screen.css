@@ -188,16 +188,18 @@ body:not(#hr-a):not(#hr-b) .hr-screen .hr-all.is-on { background: var(--hr-mint-
 body:not(#hr-a):not(#hr-b) .hr-screen .hr-pcard {
     position: relative !important; flex: none !important;
     display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
-    inline-size: 140px !important; min-block-size: 106px !important; padding: 10px 8px !important;
+    /* the card grows to whatever its quantity badges need (1.333 كيلو…) */
+    inline-size: max-content !important; min-inline-size: 150px !important; max-inline-size: 280px !important;
+    min-block-size: 106px !important; padding: 10px 12px !important;
     border-radius: 14px !important; border: 2px solid transparent !important;
     background: #FFFFFF !important; color: var(--hr-ink) !important;
 }
 body:not(#hr-a):not(#hr-b) .hr-screen .hr-pcard.is-on { border-color: var(--hr-mint-a) !important; background: var(--hr-mint-soft) !important; }
 body:not(#hr-a):not(#hr-b) .hr-screen .hr-pcard.is-done { opacity: .55 !important; }
-.hr-pcard-name { max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 800; }
+.hr-pcard-name { max-inline-size: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 800; }
 .hr-pcard-price { font-family: var(--hr-num); font-size: 15px; font-weight: 800; color: var(--hr-mint-b); }
-.hr-pcard-qty { display: flex; gap: 6px; }
-.hr-pcard-qty > span { padding: 2px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.hr-pcard-qty { display: flex; flex-wrap: nowrap; gap: 6px; }
+.hr-pcard-qty > span { flex: none; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
 .hr-pcard-qty b { font-family: var(--hr-num); }
 .hr-pcard-qty .is-sold { background: #EAF1FB; color: var(--hr-navy-a); }
 .hr-pcard-qty .is-left { background: #FDF1DF; color: #9A5A0E; }
