@@ -173,11 +173,13 @@ body:not(#hx-a):not(#hx-b):not(#hx-c) .hosny-merge-button.hosny-merge-button { d
     display: block !important; margin: auto !important; padding: 0 !important;
     box-sizing: border-box !important;
 }
-/* ✓ : two borders of a box turned 45° */
+/* ✓ : an SVG, not two borders of a turned box — rtlcss mirrors
+   `border-width: 0 3px 3px 0`, which turned the tick into a «<». */
 :is(#hs, body) .hx-dialog .hx-check.is-on::after {
-    inline-size: 8px !important; block-size: 14px !important;
-    border: solid #FFFFFF !important; border-width: 0 3px 3px 0 !important; border-radius: 1px !important;
-    /*rtl:ignore*/transform: translateY(-1px) rotate(45deg) !important;
+    inline-size: 16px !important; block-size: 16px !important;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px 16px no-repeat !important;
+    border: 0 !important;
+    transform: none !important;
 }
 /* − : one bar */
 :is(#hs, body) .hx-dialog .hx-check.is-mixed::after {
