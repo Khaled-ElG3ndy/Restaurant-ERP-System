@@ -7,8 +7,10 @@
    ===================================================================== */
 
 /* ── «تحويل جزئي» و«دمج الطاولات» أُلغيا: «تحويل» يقوم بالاثنين ── */
-:is(#hs, body) .partial-transfer-button,
-:is(#hs, body) .hosny-merge-button { display: none !important; }
+/* The skin shows these tiles with `display: inline-flex !important` at
+   id weight; three :not(#…) raise this rule above any of its selectors. */
+body:not(#hx-a):not(#hx-b):not(#hx-c) .partial-transfer-button.partial-transfer-button,
+body:not(#hx-a):not(#hx-b):not(#hx-c) .hosny-merge-button.hosny-merge-button { display: none !important; }
 /* ستة أزرار تبقى: ثلاثة أعمدة في صفين متساويين */
 :is(#hs,.pos) .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions.hosny-order-actions,
 :is(#hs,.pos) .product-screen .hosny-order-actions.hosny-order-actions.hosny-order-actions {
