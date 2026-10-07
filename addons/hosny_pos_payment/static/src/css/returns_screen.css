@@ -441,3 +441,60 @@ body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op {
 body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op::before,
 body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op::after { content: none !important; }
 body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op > .fa { margin: 0 !important; }
+
+/* ── 2026-10-07: less blue ──
+   The invoice strip, the three header chips, the paid-amount box and the
+   summary head were all navy gradients, so the screen read as one blue
+   block. They are light now (white / pale slate with navy text); navy is
+   kept for the one main action in each place («جديد», «اختيار الفاتورة»)
+   and money totals use mint. */
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-strip {
+    background: #FFFFFF !important;
+    border: 1px solid var(--hr-line) !important;
+    min-block-size: 0 !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-strip.is-empty {
+    min-block-size: 92px !important;
+    /*rtl:ignore*/background: linear-gradient(180deg, #FFFFFF 0%, #F5F8FC 100%) !important;
+    border-style: dashed !important; border-color: #C9D5E4 !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-banner { color: var(--hr-ink) !important; font-size: 18px !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-banner > .fa { color: var(--hr-navy-a) !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-banner-btn {
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hr-navy-a), var(--hr-navy-b)) !important;
+    color: #FFFFFF !important; box-shadow: 0 6px 14px -6px rgba(23,57,95,.5) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-banner-btn .fa { color: #FFFFFF !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-pcard {
+    border: 2px solid var(--hr-line) !important; background: #FBFCFE !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-pcard.is-on { border-color: var(--hr-mint-a) !important; background: var(--hr-mint-soft) !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-all.is-on { box-shadow: 0 0 0 3px rgba(46,157,106,.25) !important; }
+
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-chip {
+    background: var(--hr-soft) !important; color: var(--hr-ink) !important;
+    border: 1px solid var(--hr-line) !important;
+    border-block-start: 3px solid var(--hr-gold) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-chip small { color: var(--hr-muted) !important; opacity: 1 !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-chip b { color: var(--hr-ink) !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen button.hr-chip.is-invoice:not(:disabled) {
+    background: #FFFFFF !important; border-color: #C9D5E4 !important; border-block-start-color: var(--hr-navy-a) !important;
+    cursor: pointer !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen button.hr-chip.is-invoice:not(:disabled) b { color: var(--hr-navy-a) !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-chip.is-refund.is-view {
+    background: var(--hr-mint-soft) !important; border-color: #BFE3CF !important; border-block-start-color: var(--hr-mint-a) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-chip.is-refund.is-view b { color: var(--hr-mint-b) !important; }
+
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-val.is-money {
+    background: var(--hr-mint-soft) !important; border-color: #BFE3CF !important; color: var(--hr-mint-b) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-summary-head {
+    background: var(--hr-soft) !important; color: var(--hr-ink) !important;
+    border-block-end: 1px solid var(--hr-line) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-screen .hr-back {
+    background: #FFFFFF !important; border-color: var(--hr-line) !important; color: var(--hr-ink) !important;
+}
