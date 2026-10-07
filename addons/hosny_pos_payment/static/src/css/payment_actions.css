@@ -201,3 +201,62 @@ body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-btn:disabled { opacity
 :is(#hs,.pos) .hp-screen .hp-print .fa { color: var(--hp-navy-a) !important; }
 :is(#hs,.pos) .hp-screen .hp-print:hover,
 :is(#hs,.pos) .hp-screen .hp-preview:hover { filter: none; background: #F2F6FB !important; }
+
+/* ── 2026-10-07: discount approval («اعتماد خصم 100%») ──────────────
+   Replaces hosny_pos_controls' manager-PIN window on the payment screen:
+   totals before/after, discount reasons, approver + approval password
+   (checked on the server, like the item-void approval). */
+.hpa-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.hpa-sum-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 10px 8px; border: 1px solid #DCE3ED; border-radius: 14px; background: #FFFFFF;
+}
+.hpa-sum-cell small { font-size: 12.5px; font-weight: 700; color: #637D99; }
+.hpa-sum-cell b { font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif; font-size: 18px; font-weight: 800; color: #17395F; }
+.hpa-sum-cell.is-cut { border-color: #F0C4C0; background: #FDF3F2; }
+.hpa-sum-cell.is-cut b { color: #D2544B; }
+.hpa-sum-cell.is-after { border-color: #A9D8BE; background: #E6F4EC; }
+.hpa-sum-cell.is-after b { color: #0F7A49; }
+.hpa-step { display: flex; align-items: center; gap: 8px; margin-block-start: 2px; font-size: 15px; font-weight: 800; color: #17395F; }
+.hpa-step-n {
+    display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: 50%;
+    background: #17395F; color: #FFFFFF; font-family: "IBM Plex Sans Arabic", sans-serif; font-size: 13px; font-weight: 800;
+}
+.hpa-reasons { display: flex; flex-wrap: wrap; gap: 8px; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-reason {
+    block-size: 40px !important; padding: 0 14px !important;
+    border: 1px solid #DCE3ED !important; border-radius: 999px !important;
+    background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+    font-size: 14px !important; font-weight: 700 !important;
+}
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-reason:hover { border-color: #2E9D6A !important; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-reason.is-on { border-color: #2E9D6A !important; background: #E6F4EC !important; color: #0F7A49 !important; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-text,
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-text:focus {
+    display: block !important; inline-size: 100% !important; block-size: 46px !important;
+    margin: 0 !important; padding: 0 14px !important;
+    border: 2px solid #DCE3ED !important; border-radius: 12px !important; background: #FFFFFF !important;
+    box-shadow: none !important; outline: 0 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+    font-family: "Cairo", sans-serif !important; font-size: 15px !important; font-weight: 700 !important; color: #24374B !important;
+}
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-text:focus { border-color: #2B5DA0 !important; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-text::placeholder { color: #9AAAC0 !important; font-weight: 600 !important; }
+.hpa-muted { padding: 10px 12px; border-radius: 12px; background: #FFFFFF; font-size: 13.5px; font-weight: 700; color: #637D99; }
+.hpa-muted.is-empty { background: #FDF1DF; color: #9A5A0E; }
+.hpa-approvers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-approver {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    min-block-size: 52px !important; padding: 6px 12px !important;
+    border: 1px solid #DCE3ED !important; border-radius: 14px !important;
+    background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+}
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-approver b { overflow: hidden; text-overflow: ellipsis; font-size: 14.5px; font-weight: 800; }
+body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-approver.is-on { border-color: #2E9D6A !important; background: #E6F4EC !important; }
+.hpa-approver.is-on .hpa-avatar { /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A, #0F7A49); }
+.hpa-error {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px;
+    background: #FCEBEA; color: #B23D35; font-size: 14px; font-weight: 800;
+}
+@media (max-width: 700px) { .hpa-approvers, .hpa-sum { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

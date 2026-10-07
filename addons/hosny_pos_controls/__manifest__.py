@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Controls',
-    'version': '19.0.1.18.0',
+    'version': '19.0.1.19.0',
     'category': 'Point of Sale',
     'summary': 'Zero-tolerance POS controls — audit log, reason codes',
     # pos_modern_ui owns the product card markup this module extends and styles,
