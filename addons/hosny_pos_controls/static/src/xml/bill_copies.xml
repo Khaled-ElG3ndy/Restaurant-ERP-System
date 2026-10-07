@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- عدد نسخ الفاتورة: رقم بين − و +، واختيارات سريعة 1…5 -->
+    <t t-name="hosny_pos_controls.CopiesPopup">
+        <Dialog title="'عدد نسخ الفاتورة'" size="'sm'" contentClass="'hc-copies-dialog'" bodyClass="'hc-copies-body'">
+            <div class="hc-copies" dir="rtl">
+                <div class="hc-copies-stepper">
+                    <button type="button" class="hc-copies-pm is-minus" aria-label="أقل"
+                            t-att-disabled="copies &lt;= 1" t-on-click="() => this.step(-1)"/>
+                    <input type="text" inputmode="numeric" class="hc-copies-input" autofocus="autofocus"
+                           t-att-value="state.value" t-on-input="onInput" t-on-focus="(ev) => ev.target.select()"/>
+                    <button type="button" class="hc-copies-pm is-plus" aria-label="أكثر" t-on-click="() => this.step(1)"/>
+                </div>
+                <div class="hc-copies-label" t-esc="label"/>
+                <div class="hc-copies-quick">
+                    <button t-foreach="quick" t-as="n" t-key="n" type="button" class="hc-copies-chip"
+                            t-att-class="{ 'is-on': copies === n }" t-on-click="() => this.set(n)" t-esc="n"/>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hc-copies-footer">
+                    <button class="hc-copies-btn is-print" t-att-disabled="copies &lt; 1" t-on-click="confirm">
+                        <i class="fa fa-print" aria-hidden="true"/> طباعة
+                    </button>
+                    <button class="hc-copies-btn is-cancel" t-on-click="props.close">إهمال</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+</templates>
