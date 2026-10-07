@@ -281,14 +281,16 @@ export class HosnyTransferDialog extends Component {
 }
 
 patch(ControlButtons.prototype, {
-    /** التحويل لطلبات الطاولات فقط: السفري لا طاولة له ينتقل منها. */
+    /**
+     * التحويل لطلبات الطاولات فقط: السفري المباشر لا طاولة له ينتقل منها،
+     * وطلب الهاتف على طاولة «سفري» له طاولة فيتحوّل كأي طاولة.
+     */
     get hpCanTransfer() {
         const order = this.pos.getOrder();
         return Boolean(
             order &&
                 !order.finalized &&
                 order.table_id &&
-                !this.pos.isTakeawayOrder?.(order) &&
                 (order.lines || []).some((line) => line.qty > EPS)
         );
     },

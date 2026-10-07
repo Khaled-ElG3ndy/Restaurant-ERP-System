@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
+import re
+
 from odoo import api, fields, models
+
+# طاولات طابق «سفري» (طلبات الهاتف): الطلب عليها سفري ويحتفظ بطاولته.
+# نفس النمط في static/src/app/order_type_rules.js.
+TAKEAWAY_FLOOR_RE = re.compile(r"سفري|takeaway|take away|تيك", re.IGNORECASE)
 
 
 class PosOrder(models.Model):
@@ -45,8 +51,23 @@ class PosOrder(models.Model):
         stale_type = "order_type_id" in vals and not vals["order_type_id"]
         if stale_type:
             del vals["order_type_id"]
-        if vals.get("order_type_id"):
+        if vals.get("order_type_id") and "table_id" not in vals:
+            # النوع وحده: السفري يترك طاولته إلا على طاولات «سفري».
+            order_type = self.env["pos.order.type"].browse(vals["order_type_id"])
+            if not order_type._hosny_requires_table():
+                kept = self.filtered(lambda o: self._hosny_is_takeaway_table(o.table_id.id))
+                others = self - kept
+                res = others._hosny_write(dict(vals, table_id=False)) if others else True
+                if kept:
+                    kept._hosny_write(vals)
+                return res
+        elif vals.get("order_type_id"):
             self._hosny_prepare_type_and_table(vals)
+        elif vals.get("table_id") and self._hosny_is_takeaway_table(vals["table_id"]):
+            # إلى طاولة «سفري»: الطلب سفري عليها.
+            takeaway_type = self.env["pos.order.type"]._hosny_takeaway_type(self.company_id[:1])
+            if takeaway_type:
+                vals["order_type_id"] = takeaway_type.id
         elif vals.get("table_id"):
             takeaway = self.filtered(
                 lambda o: o.order_type_id and not o.order_type_id._hosny_requires_table())
@@ -76,16 +97,30 @@ class PosOrder(models.Model):
         return res
 
     @api.model
+    def _hosny_is_takeaway_table(self, table_id):
+        if not table_id:
+            return False
+        table = self.env["restaurant.table"].sudo().browse(table_id).exists()
+        return bool(table and TAKEAWAY_FLOOR_RE.search(table.floor_id.name or ""))
+
+    @api.model
     def _hosny_prepare_type_and_table(self, vals):
         """نوع الطلب هو المرجع، والطاولة تتبعه (يُعدّل vals في مكانه).
 
-        - نوع بلا طاولة (سفري / توصيل): table_id = False دائماً، مهما أُرسل.
+        - نوع بلا طاولة (سفري / توصيل): table_id = False، إلا طاولات طابق
+          «سفري»: الطلب عليها سفري دائماً ويحتفظ بها.
         - طلب جديد بلا نوع: على طاولة ← محلي، وبدون طاولة ← سفري. لا نعتبر
           طلباً بلا طاولة «محلياً» أبداً. (الشاشة بعد التحديث ترسل النوع دائماً؛
           هذا لنقاط البيع التي لم يُعَد تحميلها ولأي إنشاء من خارج الشاشة.)
         """
         OrderType = self.env["pos.order.type"]
         company = self.env["res.company"].browse(vals.get("company_id")) or self.env.company
+        on_takeaway_table = self._hosny_is_takeaway_table(vals.get("table_id"))
+        if on_takeaway_table:
+            order_type = OrderType._hosny_takeaway_type(company) or OrderType.browse(vals.get("order_type_id"))
+            if order_type:
+                vals["order_type_id"] = order_type.id
+            return vals
         if vals.get("order_type_id"):
             order_type = OrderType.browse(vals["order_type_id"])
         else:

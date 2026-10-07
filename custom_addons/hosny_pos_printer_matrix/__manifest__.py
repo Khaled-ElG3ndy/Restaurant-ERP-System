@@ -1,6 +1,6 @@
 {
     "name": "Hosny POS Printer Matrix",
-    "version": "19.0.7.6.0",
+    "version": "19.0.7.7.0",
     "category": "Point of Sale",
     "summary": "Per-printer routing by order type, copy count, receipt template, chief printer",
     "description": """

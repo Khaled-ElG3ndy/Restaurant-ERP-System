@@ -73,6 +73,10 @@ body:has(.pos),
 :is(#hs,.pos) .floor-map .table.custom-floor-table[data-hh-kind="safari"] {
     --hf-t-a: #EE447B; --hf-t-b: #DD2765; --hf-t-glow: rgba(221,39,101,.5);
 }
+/* طاولات طابق «سفري» أرقامها 1…15: تُقرأ «سفري 3» كما في النظام السابق */
+:is(#hs,.pos) .floor-map[data-pos-floor-tone="takeaway"] .table.custom-floor-table[data-hh-kind="safari"] .custom-floor-table-number::before {
+    content: "سفري ";
+}
 body:has(.pos),
 .pos {
     --hf-busy-a: #8A3134;

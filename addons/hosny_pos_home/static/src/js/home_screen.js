@@ -20,7 +20,7 @@ import { LoginScreen } from "@point_of_sale/app/screens/login_screen/login_scree
 import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
 import { FloorScreen } from "@pos_restaurant/app/screens/floor_screen/floor_screen";
 import { handleSaleDetails } from "@point_of_sale/app/components/navbar/sale_details_button/sale_details_button";
-import { dineInFloors } from "@pos_entry_selector/js/entry_selector";
+import { dineInFloors, isTakeawayFloor } from "@pos_entry_selector/js/entry_selector";
 
 const HOME = "HosnyHomeScreen";
 const pad = (n) => String(n).padStart(2, "0");
@@ -295,6 +295,10 @@ patch(Navbar.prototype, {
  */
 patch(FloorScreen.prototype, {
     hosnyTableKind(table) {
+        // طاولات طابق «سفري» (طلبات الهاتف) وأي طاولة اسمها «سفري…»
+        if (isTakeawayFloor(table?.floor_id)) {
+            return "safari";
+        }
         const label = String(
             table?.getName?.() || table?.table_number || table?.name || ""
         ).trim();

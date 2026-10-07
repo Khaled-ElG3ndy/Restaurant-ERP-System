@@ -48,7 +48,9 @@ patch(PosStore.prototype, {
                 !order.finalized &&
                 !order.isRefund &&
                 !order.isEmpty?.() &&
-                this.isTakeawayOrder?.(order)
+                this.isTakeawayOrder?.(order) &&
+                // طلب الهاتف على طاولة «سفري» يُرسل ويعود للخريطة حتى يصل العميل
+                !order.table_id
         );
     },
 
@@ -59,6 +61,7 @@ patch(PosStore.prototype, {
                 (this.hosnyCashierFirst?.() &&
                     order &&
                     !order.isRefund &&
+                    !order.table_id &&
                     this.isTakeawayOrder?.(order))
         );
     },

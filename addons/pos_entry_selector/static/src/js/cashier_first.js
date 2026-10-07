@@ -19,8 +19,11 @@ patch(PosStore.prototype, {
         return Boolean(this.config.module_pos_restaurant && this.takeawayOrderType);
     },
 
+    /** السفري المباشر (بلا طاولة). طلب الهاتف على طاولة «سفري» يُعامل كالمحلي. */
     hosnyIsOpenTakeaway(order) {
-        return Boolean(order) && !order.finalized && !order.isRefund && this.isTakeawayOrder(order);
+        return (
+            Boolean(order) && !order.finalized && !order.isRefund && !order.table_id && this.isTakeawayOrder(order)
+        );
     },
 
     /**

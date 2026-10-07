@@ -1,5 +1,7 @@
 /**
- * نوع الطلب والطاولة: السفري لا طاولة له أبداً، والطاولة تعني «محلي».
+ * نوع الطلب والطاولة: السفري لا طاولة له، والطاولة تعني «محلي» — إلا طاولات
+ * طابق «سفري» (2026-10-07): طلب الهاتف السفري يُحجز على «سفري 1…15» ليُتابَع
+ * حتى يصل العميل؛ الطلب عليها سفري ويبقى على طاولته، ويعود للخريطة كالمحلي.
  *
  * النوع (order_type_id) هو المرجع والطاولة تتبعه، ونفس القاعدة على الخادم في
  * models/pos_order.py. «سفري» (code = safari) هو نوع السفري المعتمد.
@@ -17,6 +19,14 @@ import { patch } from "@web/core/utils/patch";
 export const TABLELESS_ORDER_TYPE_CODES = new Set(["safari", "takeaway", "delivery"]);
 export const TAKEAWAY_ORDER_TYPE_CODE = "safari";
 export const LOCAL_ORDER_TYPE_CODE = "local";
+// نفس النمط في models/pos_order.py و pos_entry_selector (isTakeawayFloor).
+const TAKEAWAY_FLOOR = /سفري|takeaway|take away|تيك/i;
+
+/** طاولة على طابق «سفري»: طلبها سفري ويحتفظ بها. */
+export function isTakeawayTable(table) {
+    const floor = table?.floor_id || table?.rootTable?.floor_id;
+    return Boolean(floor && TAKEAWAY_FLOOR.test(String(floor.name || "")));
+}
 
 patch(PosStore.prototype, {
     getOrderTypeByCode(code) {
@@ -39,10 +49,21 @@ patch(PosStore.prototype, {
         return Boolean(order) && !this.orderTypeRequiresTable(this.getEffectiveOrderType(order));
     },
 
+    resolveTable(table) {
+        return table && typeof table !== "object" ? this.models["restaurant.table"]?.get(table) : table || null;
+    },
+
+    /** طلب سفري على طاولة من طابق «سفري» (طلبات الهاتف). */
+    isTakeawayTableOrder(order) {
+        return Boolean(order?.table_id) && isTakeawayTable(this.resolveTable(order.table_id));
+    },
+
     /** نوع الطلب الجديد لو لم يُحدَّد. */
     newOrderType(data) {
         if (data.table_id) {
-            return this.localOrderType;
+            return isTakeawayTable(this.resolveTable(data.table_id))
+                ? this.takeawayOrderType || this.localOrderType
+                : this.localOrderType;
         }
         // قسمة الفاتورة تنشئ الجزء الجديد بلا طاولة: يبقى من نوع الطلب الأصلي.
         const current = this.getOrder();
@@ -64,9 +85,18 @@ patch(PosStore.prototype, {
         return order;
     },
 
-    /** السفري بلا طاولة. */
+    /** السفري بلا طاولة، إلا على طاولات «سفري» فالطلب عليها سفري دائماً. */
     applyOrderTypeRules(order) {
-        if (order && !order.finalized && order.table_id && this.isTakeawayOrder(order)) {
+        if (!order || order.finalized || !order.table_id) {
+            return;
+        }
+        if (this.isTakeawayTableOrder(order)) {
+            if (!this.isTakeawayOrder(order) && this.takeawayOrderType) {
+                order.order_type_id = this.takeawayOrderType;
+            }
+            return;
+        }
+        if (this.isTakeawayOrder(order)) {
             order.table_id = false;
         }
     },
@@ -167,7 +197,12 @@ patch(PosStore.prototype, {
     },
 
     seatOrder(order) {
-        if (order?.table_id && !order.finalized && this.isTakeawayOrder(order)) {
+        if (order?.table_id && !order.finalized && this.isTakeawayTableOrder(order)) {
+            if (!this.isTakeawayOrder(order) && this.takeawayOrderType) {
+                order.order_type_id = this.takeawayOrderType;
+                this.addPendingOrder([order.id]);
+            }
+        } else if (order?.table_id && !order.finalized && this.isTakeawayOrder(order)) {
             const type = order.uiState?.hosnyTypeOnTable || this.localOrderType;
             order.order_type_id = type;
             this.addPendingOrder([order.id]);
@@ -194,7 +229,7 @@ patch(PosStore.prototype, {
     /** بعد «إرسال الطلب»: السفري يبقى على الشاشة حتى الدفع. */
     showDefault() {
         const order = this.getOrder();
-        if (this.config.module_pos_restaurant && order && !order.finalized && this.isTakeawayOrder(order)) {
+        if (this.config.module_pos_restaurant && order && !order.finalized && this.isTakeawayOrder(order) && !order.table_id) {
             this.navigate("ProductScreen", { orderUuid: order.uuid });
             return;
         }
@@ -203,7 +238,7 @@ patch(PosStore.prototype, {
 
     /** بعد الدفع: طلب سفري جديد مباشرة بدل خريطة الطاولات. */
     orderDone(order) {
-        if (this.config.module_pos_restaurant && order && this.isTakeawayOrder(order)) {
+        if (this.config.module_pos_restaurant && order && this.isTakeawayOrder(order) && !order.table_id) {
             order.setScreenData({ name: "" });
             this.searchProductWord = "";
             const next = this.startTakeawayOrder();
