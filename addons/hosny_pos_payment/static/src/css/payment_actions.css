@@ -136,3 +136,68 @@ body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-btn.is-clear { backgro
 body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-btn.is-close { margin-inline-start: auto !important; background: #F2F6FB !important; border-color: #DCE3ED !important; color: #17395F !important; }
 body:not(#hpm-a):not(#hpm-b):not(#hpm-c) .hpa-dialog .hpa-btn:disabled { opacity: .45 !important; }
 @media (max-width: 700px) { .hpa-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── 2026-10-07: less blue ───────────────────────────────────────────
+   Khaled: «اللون الأزرق في الصفحة دي كتير». Navy stays on the one
+   number that matters (الإجمالي); the action buttons, the chosen payment
+   method, the lines header, the selected amount, «عرض الفاتورة» and
+   «طباعة» go light — white or a pale blue with navy text — and «on»
+   states are mint. Later in the bundle than payment_screen.css and one
+   class heavier, so these win without touching that file. */
+:is(#hs,.pos) .hp-screen .hp-action {
+    background: #FFFFFF !important;
+    border: 1px solid var(--hp-line) !important;
+    color: var(--hp-ink) !important;
+    box-shadow: 0 4px 10px -8px rgba(23,57,95,.35) !important;
+}
+:is(#hs,.pos) .hp-screen .hp-action > .fa:first-child {
+    display: grid; place-items: center;
+    inline-size: 30px; block-size: 30px; border-radius: 9px;
+    background: #EAF1FB; color: var(--hp-navy-a) !important; font-size: 15px;
+}
+:is(#hs,.pos) .hp-screen .hp-action-copy small { color: var(--hp-muted); opacity: 1; }
+:is(#hs,.pos) .hp-screen .hp-action:hover { background: var(--hp-soft) !important; filter: none; }
+:is(#hs,.pos) .hp-screen .hp-action.is-on {
+    background: #E6F4EC !important; border-color: #A9D8BE !important; color: #0F7A49 !important;
+}
+:is(#hs,.pos) .hp-screen .hp-action.is-on > .fa:first-child { background: #2E9D6A; color: #FFFFFF !important; }
+:is(#hs,.pos) .hp-screen .hp-action.is-on .hp-action-copy small { color: #2E7D57; }
+
+:is(#hs,.pos) .hp-screen .hp-method.is-active {
+    background: #EEF4FC !important;
+    border: 2px solid var(--hp-navy-a) !important;
+    color: var(--hp-ink) !important;
+    box-shadow: 0 6px 14px -10px rgba(43,93,160,.6) !important;
+}
+:is(#hs,.pos) .hp-screen .hp-method.is-active .fa { color: var(--hp-navy-a); }
+
+:is(#hs,.pos) .hp-screen .hp-lines-head {
+    background: #F4F7FB !important;
+    border-bottom: 1px solid var(--hp-line);
+    color: var(--hp-muted) !important;
+}
+:is(#hs,.pos) .hp-screen .hp-lines-head span { color: var(--hp-muted) !important; }
+:is(#hs,.pos) .hp-screen .hp-line.is-selected { background: #F7FAFE !important; }
+:is(#hs,.pos) .hp-screen .hp-line.is-selected .hp-line-amount {
+    background: #FFFFFF !important;
+    border: 2px solid var(--hp-navy-a) !important;
+    color: var(--hp-ink) !important;
+    box-shadow: 0 0 0 3px rgba(43,93,160,.12) !important;
+}
+
+:is(#hs,.pos) .hp-screen .hp-preview {
+    background: #EAF1FB !important;
+    border: 1px solid #C9DAF0 !important;
+    color: var(--hp-navy-a) !important;
+    box-shadow: none !important;
+}
+:is(#hs,.pos) .hp-screen .hp-preview .fa { color: var(--hp-navy-a) !important; }
+:is(#hs,.pos) .hp-screen .hp-print {
+    background: #FFFFFF !important;
+    border: 2px solid var(--hp-navy-a) !important;
+    color: var(--hp-navy-a) !important;
+    box-shadow: 0 6px 14px -10px rgba(23,57,95,.45) !important;
+}
+:is(#hs,.pos) .hp-screen .hp-print .fa { color: var(--hp-navy-a) !important; }
+:is(#hs,.pos) .hp-screen .hp-print:hover,
+:is(#hs,.pos) .hp-screen .hp-preview:hover { filter: none; background: #F2F6FB !important; }
