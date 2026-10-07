@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Skin',
-    'version': '19.0.46.0.0',
+    'version': '19.0.46.1.0',
     'category': 'Point of Sale',
     'summary': 'One coherent look for the POS — the branches\' own navy/blue/green, rebuilt',
     'description': """
@@ -346,6 +346,7 @@ Uninstalling restores the previous look exactly.
         'point_of_sale._assets_pos': [
             'hosny_pos_skin/static/src/css/fonts.css',
             'hosny_pos_skin/static/src/js/product_pager.js',
+            'hosny_pos_skin/static/src/js/close_popup.js',
             'hosny_pos_skin/static/src/css/skin.css',
             'hosny_pos_skin/static/src/xml/product_pager.xml',
             'hosny_pos_skin/static/src/xml/skin.xml',
