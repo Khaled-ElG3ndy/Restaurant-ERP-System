@@ -11,6 +11,32 @@ class PosOrder(models.Model):
     # (pos.order.line.hosny_return_location_id)؛ الحقل يبقى لبيانات تلك الفترة.
     hosny_return_location_id = fields.Integer(string="مخزن المردود", copy=False)
 
+    # شاشة الدفع (2026-10-07): «النادل» و«الموظف» (وجبة موظف). أرقام وأسماء لا
+    # علاقات: نقطة البيع لا تحمّل hr.employee، والحقول البسيطة تُرسل كما هي.
+    hosny_waiter_id = fields.Integer(string="النادل (رقم الموظف)", copy=False)
+    hosny_waiter_name = fields.Char(string="النادل", copy=False)
+    hosny_staff_meal_id = fields.Integer(string="وجبة موظف (رقم الموظف)", copy=False)
+    hosny_staff_meal_name = fields.Char(string="وجبة موظف", copy=False)
+
+    @api.model
+    def hosny_staff_list(self, config_id):
+        """موظفو شركة نقطة البيع لـ«النادل» و«الموظف»، مع جهة اتصال كل موظف
+        (لتسجيل وجبة الموظف عليه كعميل)."""
+        config = self.env["pos.config"].browse(config_id)
+        config.check_access("read")
+        if "hr.employee" not in self.env:
+            return []
+        company = config.sudo().company_id
+        employees = self.env["hr.employee"].sudo().search(
+            [("company_id", "in", [company.id, False])], order="name", limit=500)
+        has_contact = "work_contact_id" in employees._fields
+        return [{
+            "id": employee.id,
+            "name": employee.name,
+            "job": employee.job_title or employee.job_id.name or "",
+            "partner_id": has_contact and employee.work_contact_id.id or False,
+        } for employee in employees]
+
     @api.model
     def hosny_return_locations(self, config_id):
         """المخازن الداخلية التي يمكن رد الأصناف إليها، والافتراضي منها."""
@@ -162,6 +188,32 @@ class PosOrderLine(models.Model):
     # المبيعات»). رقم لا علاقة: نقطة البيع لا تحمّل stock.location.
     # stock.picking._create_picking_from_pos_order_lines يقسم إذن المردود عليه.
     hosny_return_location_id = fields.Integer(string="مخزن المردود", copy=False)
+
+    # شاشة الدفع (2026-10-07): «النادل» و«الموظف» (وجبة موظف). أرقام وأسماء لا
+    # علاقات: نقطة البيع لا تحمّل hr.employee، والحقول البسيطة تُرسل كما هي.
+    hosny_waiter_id = fields.Integer(string="النادل (رقم الموظف)", copy=False)
+    hosny_waiter_name = fields.Char(string="النادل", copy=False)
+    hosny_staff_meal_id = fields.Integer(string="وجبة موظف (رقم الموظف)", copy=False)
+    hosny_staff_meal_name = fields.Char(string="وجبة موظف", copy=False)
+
+    @api.model
+    def hosny_staff_list(self, config_id):
+        """موظفو شركة نقطة البيع لـ«النادل» و«الموظف»، مع جهة اتصال كل موظف
+        (لتسجيل وجبة الموظف عليه كعميل)."""
+        config = self.env["pos.config"].browse(config_id)
+        config.check_access("read")
+        if "hr.employee" not in self.env:
+            return []
+        company = config.sudo().company_id
+        employees = self.env["hr.employee"].sudo().search(
+            [("company_id", "in", [company.id, False])], order="name", limit=500)
+        has_contact = "work_contact_id" in employees._fields
+        return [{
+            "id": employee.id,
+            "name": employee.name,
+            "job": employee.job_title or employee.job_id.name or "",
+            "partner_id": has_contact and employee.work_contact_id.id or False,
+        } for employee in employees]
 
     @api.model
     def _load_pos_data_fields(self, config):

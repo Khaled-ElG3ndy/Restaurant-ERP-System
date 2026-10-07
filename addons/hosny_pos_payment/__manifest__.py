@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Payment',
-    'version': '19.0.1.8.2',
+    'version': '19.0.1.9.0',
     'category': 'Point of Sale',
     'summary': 'شاشة الدفع بتقسيمة FERP: ملخص الفاتورة، الدفع، والإجراءات والأرقام',
     'description': """
@@ -46,6 +46,9 @@
             'hosny_pos_payment/static/src/js/payment_screen.js',
             'hosny_pos_payment/static/src/xml/payment_screen.xml',
             'hosny_pos_payment/static/src/css/payment_screen.css',
+            'hosny_pos_payment/static/src/js/payment_actions.js',
+            'hosny_pos_payment/static/src/xml/payment_actions.xml',
+            'hosny_pos_payment/static/src/css/payment_actions.css',
             'hosny_pos_payment/static/src/js/invoices_screen.js',
             'hosny_pos_payment/static/src/xml/invoices_screen.xml',
             'hosny_pos_payment/static/src/css/invoices_screen.css',

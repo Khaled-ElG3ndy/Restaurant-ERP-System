@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- اختيار موظف: النادل / وجبة موظف -->
+    <t t-name="hosny_pos_payment.StaffPicker">
+        <Dialog title="props.title" size="'md'" contentClass="'hpa-dialog'" bodyClass="'hpa-body'">
+            <div class="hpa" dir="rtl">
+                <p t-if="props.subtitle" class="hpa-sub" t-esc="props.subtitle"/>
+                <label class="hpa-search">
+                    <i class="fa fa-search" aria-hidden="true"/>
+                    <input type="search" placeholder="ابحث بالاسم أو الوظيفة" t-model="state.search" autofocus="autofocus"/>
+                </label>
+                <div class="hpa-grid">
+                    <button t-foreach="list" t-as="employee" t-key="employee.id" type="button" class="hpa-person"
+                            t-att-class="{ 'is-on': employee.id === props.selectedId }" t-on-click="() => this.pick(employee)">
+                        <span class="hpa-avatar" t-esc="employee.name.slice(0, 1)"/>
+                        <span class="hpa-person-copy">
+                            <b t-esc="employee.name"/>
+                            <small t-if="employee.job" t-esc="employee.job"/>
+                        </span>
+                    </button>
+                    <div t-if="!list.length" class="hpa-empty">لا يوجد موظف بهذا البحث</div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hpa-footer">
+                    <button t-if="props.selectedId" class="hpa-btn is-clear" t-on-click="clear">
+                        <i class="fa fa-times-circle" aria-hidden="true"/> <t t-esc="props.clearLabel"/>
+                    </button>
+                    <button class="hpa-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <!-- نسبة الخصم -->
+    <t t-name="hosny_pos_payment.DiscountPopup">
+        <Dialog title="'الخصم'" size="'sm'" contentClass="'hpa-dialog is-small'" bodyClass="'hpa-body'">
+            <div class="hpa" dir="rtl">
+                <div class="hpa-pc">
+                    <input type="text" inputmode="decimal" class="hpa-pc-input" placeholder="0" autofocus="autofocus"
+                           t-att-value="state.value" t-on-input="onInput" t-on-focus="(ev) => ev.target.select()"/>
+                    <span class="hpa-pc-sign">%</span>
+                </div>
+                <div class="hpa-quick">
+                    <button t-foreach="quick" t-as="n" t-key="n" type="button" class="hpa-chip"
+                            t-att-class="{ 'is-on': pc === n }" t-on-click="() => this.set(n)"><bdi><t t-esc="n"/>%</bdi></button>
+                </div>
+                <div class="hpa-hint" t-att-class="{ 'is-lock': needsApproval }">
+                    <i t-attf-class="fa {{ needsApproval ? 'fa-lock' : 'fa-info-circle' }}" aria-hidden="true"/>
+                    <t t-if="needsApproval">أكثر من <bdi>5%</bdi> يحتاج رقم سري المدير</t>
+                    <t t-else="">الخصم على كل الأصناف — لا يشمل الخدمات والتوصيل</t>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hpa-footer">
+                    <button class="hpa-btn is-ok" t-att-disabled="pc &lt;= 0" t-on-click="confirm">
+                        <i class="fa fa-check-circle" aria-hidden="true"/> تطبيق الخصم
+                    </button>
+                    <button t-if="props.current" class="hpa-btn is-clear" t-on-click="remove">إلغاء الخصم</button>
+                    <button class="hpa-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+</templates>

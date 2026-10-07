@@ -11,41 +11,66 @@
             <!-- ── الإجراءات والأرقام ── -->
             <section class="hp-col hp-actions">
                 <div class="hp-card hp-buttons">
+                    <!-- بترتيب FERP -->
+                    <button class="hp-action" t-att-class="{ 'is-on': currentOrder.hosny_waiter_name }" t-on-click="() => this.hpPickWaiter()">
+                        <i class="fa fa-cutlery" aria-hidden="true"/>
+                        <span class="hp-action-copy">
+                            <span>النادل</span>
+                            <small t-if="currentOrder.hosny_waiter_name" t-esc="currentOrder.hosny_waiter_name"/>
+                        </span>
+                    </button>
+                    <button class="hp-action" t-att-class="{ 'is-on': currentOrder.hosny_staff_meal_name }" t-on-click="() => this.hpPickStaffMeal()">
+                        <i class="fa fa-id-badge" aria-hidden="true"/>
+                        <span class="hp-action-copy">
+                            <span>الموظف</span>
+                            <small t-if="currentOrder.hosny_staff_meal_name">وجبة موظف · <t t-esc="currentOrder.hosny_staff_meal_name"/></small>
+                        </span>
+                    </button>
                     <button class="hp-action" t-att-class="{ 'is-on': currentOrder.getPartner() }"
                             t-on-click="() => this.pos.selectPartner()">
-                        <i class="fa fa-user" aria-hidden="true"/>
+                        <i class="fa fa-users" aria-hidden="true"/>
                         <span class="hp-action-copy">
-                            <span>العميل</span>
+                            <span>العملاء</span>
                             <small t-if="currentOrder.getPartner()" t-esc="currentOrder.getPartner().name"/>
                         </span>
                     </button>
-                    <button class="hp-action"
-                            t-att-class="{ 'is-on': currentOrder.isToInvoice(), 'is-off': !pos.config.canInvoice }"
-                            t-att-disabled="currentOrder.lines[0]?.refunded_orderline_id?.order_id?.isToInvoice()"
-                            t-on-click="toggleIsToInvoice">
-                        <i class="fa fa-file-text-o" aria-hidden="true"/>
-                        <span class="hp-action-copy"><span>فاتورة ضريبية</span></span>
-                        <i t-attf-class="fa hp-action-check {{ currentOrder.isToInvoice() ? 'fa-check-square' : 'fa-square-o' }}" aria-hidden="true"/>
+                    <t t-set="hpPc" t-value="hpDiscountPc"/>
+                    <button class="hp-action" t-att-class="{ 'is-on': hpPc > 0 and hpPc &lt; 100 }" t-on-click="() => this.hpDiscount()">
+                        <i class="fa fa-percent" aria-hidden="true"/>
+                        <span class="hp-action-copy">
+                            <span>الخصم</span>
+                            <small t-if="hpPc > 0 and hpPc &lt; 100">خصم <bdi><t t-esc="hpPc"/>%</bdi></small>
+                        </span>
                     </button>
-                    <button t-if="hpShowPromo" class="hp-action" t-on-click="() => this.openPromoCode()">
-                        <i class="fa fa-ticket" aria-hidden="true"/>
-                        <span class="hp-action-copy"><span>كوبون / كود خصم</span></span>
+                    <button class="hp-action is-full" t-att-class="{ 'is-on': hpPc === 100 }" t-on-click="() => this.hpFullDiscount()">
+                        <bdi class="hp-action-badge">100%</bdi>
+                        <span class="hp-action-copy"><span>خصم <bdi>100%</bdi></span></span>
                     </button>
-                    <button t-if="hpCanSplit" class="hp-action" t-on-click="() => this.hpSplit()">
-                        <i class="fa fa-files-o" aria-hidden="true"/>
-                        <span class="hp-action-copy"><span>تقسيم الفاتورة</span></span>
-                    </button>
-                    <button t-if="pos.config.iface_cashdrawer" class="hp-action" t-on-click="openCashbox">
-                        <i class="fa fa-archive" aria-hidden="true"/>
-                        <span class="hp-action-copy"><span>فتح الدرج</span></span>
-                    </button>
+
+                    <div class="hp-mini">
+                        <button class="hp-mini-btn"
+                                t-att-class="{ 'is-on': currentOrder.isToInvoice(), 'is-off': !pos.config.canInvoice }"
+                                t-att-disabled="currentOrder.lines[0]?.refunded_orderline_id?.order_id?.isToInvoice()"
+                                t-on-click="toggleIsToInvoice">
+                            <i t-attf-class="fa {{ currentOrder.isToInvoice() ? 'fa-check-square' : 'fa-file-text-o' }}" aria-hidden="true"/> فاتورة ضريبية
+                        </button>
+                        <button t-if="hpShowPromo" class="hp-mini-btn" t-on-click="() => this.openPromoCode()">
+                            <i class="fa fa-ticket" aria-hidden="true"/> كوبون
+                        </button>
+                        <button t-if="hpCanSplit" class="hp-mini-btn" t-on-click="() => this.hpSplit()">
+                            <i class="fa fa-files-o" aria-hidden="true"/> تقسيم الفاتورة
+                        </button>
+                        <button t-if="pos.config.iface_cashdrawer" class="hp-mini-btn" t-on-click="openCashbox">
+                            <i class="fa fa-archive" aria-hidden="true"/> فتح الدرج
+                        </button>
+                    </div>
                 </div>
 
                 <div class="hp-card hp-keys">
                     <div class="hp-notes">
-                        <button t-foreach="hpNotes" t-as="note" t-key="note" class="hp-note"
-                                t-on-click="() => this.hpTender(note)">
-                            <bdi><t t-esc="note"/></bdi>
+                        <button t-foreach="hpNotes" t-as="note" t-key="note.value" class="hp-note"
+                                t-att-class="{ 'is-coin': note.coin }" t-on-click="() => this.hpTender(note.value)">
+                            <bdi t-esc="note.amount"/><small t-esc="note.unit"/>
                         </button>
                         <button class="hp-note hp-note-exact" title="المبلغ المتبقي كاملاً" t-on-click="() => this.hpExact()">بالضبط</button>
                     </div>
@@ -187,6 +212,8 @@
                         <div><span>التاريخ</span><b><bdi t-esc="hpDate"/></b></div>
                         <div><span>اسم المستخدم</span><b t-esc="hpCashier"/></div>
                         <div t-if="hpPlace"><span>المكان</span><b t-esc="hpPlace"/></div>
+                        <div t-if="currentOrder.hosny_waiter_name"><span>النادل</span><b t-esc="currentOrder.hosny_waiter_name"/></div>
+                        <div t-if="currentOrder.hosny_staff_meal_name"><span>وجبة موظف</span><b t-esc="currentOrder.hosny_staff_meal_name"/></div>
                     </div>
                 </div>
 

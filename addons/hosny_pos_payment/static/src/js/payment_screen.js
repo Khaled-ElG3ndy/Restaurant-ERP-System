@@ -32,8 +32,14 @@ const FEES = [
     { key: "driver", code: "HOSNY_FEE_DRIVER", label: "سعر تسليم السائق للمنطقة" },
 ];
 
-/** فئات النقد: تضع المبلغ الذي سلّمه العميل في سطر الدفع المحدد. */
-const NOTES = [5, 10, 20, 50, 100, 200, 500];
+/**
+ * فئات النقد كما في FERP: هللات ثم ريالات. تضع المبلغ الذي سلّمه العميل في
+ * سطر الدفع المحدد.
+ */
+const NOTES = [
+    ...[5, 10, 25, 50].map((h) => ({ value: h / 100, amount: h, unit: "هللة", coin: true })),
+    ...[1, 5, 10, 20, 50, 100, 200, 500].map((r) => ({ value: r, amount: r, unit: "ريال", coin: false })),
+];
 
 patch(PaymentScreen, {
     template: "hosny_pos_payment.PaymentScreen",
