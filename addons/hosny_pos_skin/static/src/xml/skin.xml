@@ -99,4 +99,19 @@
             <attribute name="alt">صورة الصنف</attribute>
         </xpath>
     </t>
+    <!-- «إغلاق الوردية» (point_of_sale.ClosePosPopup), 2026-10-07: the header
+         reads as a title plus two chips — order count and total — instead of
+         «14 الطلبات: SR 800.12», where the bidi run swapped the currency to
+         the front. .total-orders stays on the chips for core's tours. -->
+    <t t-name="hosny_pos_skin.ClosePosPopup" t-inherit="point_of_sale.ClosePosPopup" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='header']/div" position="replace">
+            <div class="hs-close-head">
+                <h4 class="hs-close-title"><i class="fa fa-lock" aria-hidden="true"/> إغلاق الوردية</h4>
+                <div class="hs-close-stats total-orders">
+                    <span class="hs-close-chip"><b t-esc="props.orders_details.quantity"/> طلب</span>
+                    <span class="hs-close-chip is-amount"><span class="amount" t-esc="env.utils.formatCurrency(props.orders_details.amount)"/></span>
+                </div>
+            </div>
+        </xpath>
+    </t>
 </templates>
