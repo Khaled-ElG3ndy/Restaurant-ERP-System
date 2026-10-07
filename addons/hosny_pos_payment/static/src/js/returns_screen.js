@@ -135,9 +135,7 @@ export class HosnyReturnScreen extends Component {
             const result = await this.pos.data.call("pos.order", "hosny_return_locations", [this.pos.config.id]);
             this.stock.locations = result.locations || [];
             this.stock.defaultId = result.default_id || this.stock.locations[0]?.id || null;
-            if (!this.state.locationId) {
-                this.state.locationId = this.stock.defaultId;
-            }
+
         } catch {
             this.stock.locations = [];
         }
@@ -160,7 +158,7 @@ export class HosnyReturnScreen extends Component {
             editing: null,
             reason: "",
             methodId: null,
-            locationId: this.stock?.defaultId || null,
+            locs: {}, // مخزن كل صنف (uuid ← id)، الافتراضي إن لم يُختر
         };
     }
 
@@ -180,12 +178,16 @@ export class HosnyReturnScreen extends Component {
     get methods() {
         return (this.pos.config.payment_method_ids || []).map((m) => ({ id: m.id, name: m.name }));
     }
-    get stockName() {
-        return (
-            this.locationName(this.isView ? this.state.head?.locationId : this.state.locationId) ||
-            this.locationName(this.stock.defaultId) ||
-            "مخزن نقطة البيع"
-        );
+    /** مخزن الصنف: ما اختاره الكاشير، وإلا مخزن الرد الافتراضي. */
+    locOf(row) {
+        return this.state.locs[row.uuid] || this.stock.defaultId || null;
+    }
+    setLoc(row, ev) {
+        this.state.locs[row.uuid] = parseInt(ev.target.value, 10) || null;
+    }
+    /** أرقام الجدول بلا رمز العملة، كما في FERP. */
+    num(amount) {
+        return `\u2066${(Number(amount) || 0).toFixed(this.pos.currency?.decimal_places ?? 2)}\u2069`;
     }
     get isView() {
         return this.state.mode === "view";
@@ -407,6 +409,10 @@ export class HosnyReturnScreen extends Component {
                     continue;
                 }
                 const parent = this._createRefundLine(source, destination, qty);
+                const location = this.locOf(row);
+                if (location) {
+                    parent.hosny_return_location_id = location;
+                }
                 const note = (this.state.notes[row.uuid] || "").trim();
                 if (note) {
                     parent.customer_note = note;
@@ -415,6 +421,11 @@ export class HosnyReturnScreen extends Component {
                     this._createRefundLine(child, destination, source.qty ? (child.qty * qty) / source.qty : 0)
                 );
                 if (children.length) {
+                    for (const child of children) {
+                        if (location) {
+                            child.hosny_return_location_id = location;
+                        }
+                    }
                     parent.combo_line_ids = [["link", ...children]];
                 }
             }
@@ -423,9 +434,6 @@ export class HosnyReturnScreen extends Component {
                 destination.setPartner?.(partner);
             }
             destination.refunded_order_id = order;
-            if (this.state.locationId) {
-                destination.hosny_return_location_id = this.state.locationId;
-            }
             const reason = this.state.reason.trim();
             if (reason) {
                 destination.internal_note = reason;
@@ -515,10 +523,10 @@ export class HosnyReturnScreen extends Component {
                     paid: Math.abs(row.amount || 0),
                     type: row.type || "",
                     methods: [...new Set(payments)].join("، ") || "—",
-                    locationId: refund.hosny_return_location_id || this.stock.defaultId,
                 },
                 rows: lines.map((l) => {
                     const snap = this.snapshotRow(l, { returned: Math.abs(l.qty) });
+                    snap.loc = l.hosny_return_location_id || refund.hosny_return_location_id || this.stock.defaultId;
                     const origin = l.refunded_orderline_id;
                     snap.sold = origin ? Math.abs(origin.qty) : snap.returned;
                     snap.remaining = origin ? Math.max(0, Math.abs(origin.qty) - (origin.refundedQty || 0)) : 0;

@@ -7,8 +7,8 @@ LIST_LIMIT = 1000
 class PosOrder(models.Model):
     _inherit = "pos.order"
 
-    # مخزن المردود المختار في شاشة «مردود المبيعات». رقم لا علاقة: نقطة البيع
-    # لا تحمّل stock.location، والحقل البسيط يُرسل مع الطلب كما هو.
+    # مخزن المردود على مستوى الطلب (الإصدار 19.0.1.7). صار المخزن لكل صنف
+    # (pos.order.line.hosny_return_location_id)؛ الحقل يبقى لبيانات تلك الفترة.
     hosny_return_location_id = fields.Integer(string="مخزن المردود", copy=False)
 
     @api.model
@@ -30,26 +30,6 @@ class PosOrder(models.Model):
             "default_id": default.id or False,
             "locations": [{"id": loc.id, "name": loc.complete_name} for loc in locations],
         }
-
-    def _hosny_return_location(self):
-        self.ensure_one()
-        if not (self.is_refund and self.hosny_return_location_id):
-            return self.env["stock.location"]
-        location = self.env["stock.location"].sudo().browse(self.hosny_return_location_id).exists()
-        if location.usage != "internal" or location.company_id not in (self.company_id, self.env["res.company"]):
-            return self.env["stock.location"]
-        return location
-
-    def _force_create_picking_real_time(self):
-        # المخزن المختار يخص هذا المردود وحده؛ تجميع الأسطر عند إغلاق الوردية
-        # يضيعه، فيُنشأ إذنه فوراً.
-        return super()._force_create_picking_real_time() or bool(self._hosny_return_location())
-
-    def _create_order_picking(self):
-        location = self._hosny_return_location()
-        if location:
-            return super(PosOrder, self.with_context(hosny_return_location_id=location.id))._create_order_picking()
-        return super()._create_order_picking()
 
     @api.model
     def hosny_invoice_list(self, config_id, filters=None):
@@ -173,3 +153,16 @@ class PosOrder(models.Model):
                 for t in tables
             ],
         }
+
+
+class PosOrderLine(models.Model):
+    _inherit = "pos.order.line"
+
+    # المخزن الذي يُرد إليه هذا الصنف (عمود «المخازن» في شاشة «مردود
+    # المبيعات»). رقم لا علاقة: نقطة البيع لا تحمّل stock.location.
+    # stock.picking._create_picking_from_pos_order_lines يقسم إذن المردود عليه.
+    hosny_return_location_id = fields.Integer(string="مخزن المردود", copy=False)
+
+    @api.model
+    def _load_pos_data_fields(self, config):
+        return super()._load_pos_data_fields(config) + ["hosny_return_location_id"]
