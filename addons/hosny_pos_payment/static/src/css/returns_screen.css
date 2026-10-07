@@ -409,3 +409,35 @@ body:not(#hr-a):not(#hr-b) .hr-pick-dialog .hr-pick-btn.is-close {
     .hr-tool span { display: none; }
     .hr-crumbs { display: none; }
 }
+
+/* ── 2026-10-07: check and action icons dead centre in their columns ──
+   On the till they sat off centre (icons ~20px left of «سبب الإلغاء»),
+   which the preview never reproduced: some stylesheet there moves the
+   buttons. The cells no longer rely on text-align: each gets a fixed
+   width and a full-width flex box centred with justify-content, and
+   the buttons lose any margin / float at three-id weight. */
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table th.is-check,
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table td.is-check {
+    inline-size: 48px !important; min-inline-size: 48px !important; max-inline-size: 48px !important;
+    padding-inline: 0 !important; text-align: center !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table th:last-child,
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-row > td:last-child {
+    inline-size: 96px !important; min-inline-size: 96px !important;
+    padding-inline: 4px !important; text-align: center !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table td.is-check > .hr-box,
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table th.is-check > .hr-box {
+    display: block !important; float: none !important; margin: 0 auto !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops {
+    display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important;
+    inline-size: 100% !important; margin: 0 !important; padding: 0 !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op {
+    flex: none !important; float: none !important; margin: 0 !important; position: relative !important;
+    inset: auto !important; transform: none !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op::before,
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op::after { content: none !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hr-table .hr-ops > .hr-op > .fa { margin: 0 !important; }
