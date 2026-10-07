@@ -1,128 +1,206 @@
 # -*- coding: utf-8 -*-
 """Vector artwork for the Hosny A6 discount coupon.
 
-The whole card is emitted as a single inline ``<svg>`` drawn on a fixed
-1489 x 1039 grid (A6 landscape at ~10 units per millimetre).  Working on one
-grid keeps every ornament, box and baseline in exact proportion whatever size
-the page is finally rendered at, and it renders identically in wkhtmltopdf and
-in the browser preview.
+The card is one inline ``<svg>`` drawn in the pixel grid of the approved
+reference design (card from 13,36 to 722,528).  The viewBox adds the thin
+page margin around it and has the A6 landscape ratio, so the PDF page, the
+mail image and the browser preview all show the same artwork.
 
 Only shapes live here - all wording and values are passed in by the caller.
+
+QtWebKit (wkhtmltopdf) rasterises anything carrying ``opacity`` or a filter,
+so the artwork uses neither: soft shadows are stacks of opaque shapes whose
+colours are pre-blended with what lies under them, and every gradient stop
+is opaque.  Text and ornaments therefore stay true vectors in the PDF.
 """
+import math
 
-INK = "#2B210F"
-BROWN = "#453824"
-BROWN_DARK = "#332817"
-BROWN_INNER = "#5C4B30"
-GOLD = "#B79A5A"
-GOLD_BRIGHT = "#D4C5A5"
-GOLD_SOFT = "#C7AA6B"
-GOLD_TEXT = "#A98234"
-GOLD_MUTED = "#A88340"
-CREAM = "#F3EADB"
-PAGE = "#E9DEC6"
-PANEL = "#E4D7BC"
-CHIP = "#FFF9EA"
-BORDER = "#D0C1A7"
-PATTERN = "#DDD3BE"
-PANEL_PATTERN = "#CFC2A9"
-# QtWebKit rasterises any group carrying an "opacity" attribute, which would
-# print the ornaments as soft bitmaps.  These are the same tints pre-blended
-# against their backdrop, so every stroke stays true vector in the PDF.
-GOLD_ON_PANEL = "#CABCA2"      # left panel watermark
-GOLD_ON_FOOTER = "#C7B89D"     # footer arabesque
-GOLD_ON_BROWN = "#746446"      # cartouche inner rule
-GOLD_ON_CREAM_55 = "#DEC693"   # barcode divider
+VIEWBOX = (5, 24.8, 725, 514.4)
+CARD = dict(x=13, y=36, w=709, h=492, r=22)
+FRAME = dict(x=20.5, y=43.5, w=694, h=476.5, r=16)
+FOOTER_TOP = 430
 
-# The card sits on the page with a tiny margin so its rounded corners show.
-CARD = dict(x=6, y=24, w=1477, h=985, r=46)
+INK = "#2B200C"
+INK_SOFT = "#4A3B22"
+MUTED = "#6A5A3F"
+GOLD = "#B49A62"
+GOLD_DARK = "#8A7449"
+BROWN = "#41351F"
+CREAM_TEXT = "#ECE2CC"
 
-# Left cream brand panel with the same soft sweep as the reference design.
-LEFT_PANEL = (
-    "M 6,70 Q 6,34 43,34 H 386 C 478,34 527,112 527,203 V 644 "
-    "C 527,742 478,803 391,844 C 265,902 145,952 6,1006 Z"
+# Left identity panel: the gold rule and the panel fill sit 7px apart with a
+# light gap between them, as on the reference.
+PANEL_RULE = (
+    "M 198,36 C 240,36 264,67 264,113 V 338 "
+    "C 264,384 242,414 204,438"
 )
-LEFT_EDGE = (
-    "M 386,34 C 482,34 540,113 540,205 V 647 "
-    "C 540,751 488,815 399,856 C 272,914 148,963 6,1018"
-)
-LEFT_EDGE_INNER = (
-    "M 374,34 C 463,40 510,116 510,204 V 636 "
-    "C 510,727 465,785 382,825 C 257,883 142,930 6,985"
-)
-FOOTER_TOP = 825
-
-# Classic shamsa cartouche: flat top and bottom, concave shoulders, lobed ends.
-CARTOUCHE = (
-    "M 720,420 H 1088 C 1137,420 1160,438 1171,467 "
-    "C 1180,490 1190,503 1204,515 C 1216,526 1216,564 1204,575 "
-    "C 1190,587 1180,600 1171,623 C 1160,652 1137,670 1088,670 "
-    "H 720 C 671,670 648,652 637,623 C 628,600 618,587 604,575 "
-    "C 592,564 592,526 604,515 C 618,503 628,490 637,467 "
-    "C 648,438 671,420 720,420 Z"
+PANEL_FILL = (
+    "M 13,36 H 184 C 228,36 257,67 257,114 V 336 "
+    "C 257,380 236,409 198,433 L 198,440 H 13 Z"
 )
 
 
-def _rot(deg):
-    return 'transform="rotate(%s)"' % deg
+def _f(value):
+    """Compact number formatting for path data."""
+    return ("%.2f" % value).rstrip("0").rstrip(".")
 
 
-def _mandala(transform="", color=GOLD):
-    """12-fold geometric medallion centred on the origin, radius 100."""
-    out = ['<g transform="%s" fill="none" stroke="%s" stroke-width="4">'
-           % (transform, color)]
-    for r in (99, 86, 60, 24):
-        out.append('<circle r="%s"/>' % r)
-    for i in range(12):
-        out.append('<path d="M 0,-26 C 15,-38 15,-50 0,-60 C -15,-50 -15,-38 0,-26 Z" %s/>'
-                   % _rot(i * 30))
-    for i in range(24):
-        out.append('<path d="M 0,-61 L 0,-85" %s/>' % _rot(i * 15 + 7.5))
-    for i in range(12):
-        out.append('<circle cx="0" cy="-72" r="5" fill="%s" stroke="none" %s/>'
-                   % (color, _rot(i * 30)))
-    out.append("</g>")
-    return "\n".join(out)
-
-
-def _floral(transform="", color=GOLD):
-    """Wide, flat arabesque fan used as the footer watermark.
-
-    Sized to sit wholly inside the footer band so it needs no clip path.
-    """
-    petal = "M 0,-10 C 24,-26 34,-54 0,-84 C -34,-54 -24,-26 0,-10 Z"
-    mid = "M 0,-10 C 22,-22 34,-42 26,-64 C 4,-56 -4,-32 0,-10 Z"
-    out = ['<g transform="%s" fill="none" stroke="%s" stroke-width="4">'
-           % (transform, color)]
-    out.append('<path d="%s"/>' % petal)
-    for sx in (1, -1):
-        out.append('<g transform="scale(%s,1)"><path d="%s"/>'
-                   '<path d="%s" transform="rotate(34)"/></g>' % (sx, mid, mid))
-    out.append('<path d="M -118,6 C -74,-16 -34,-4 0,-8 C 34,-4 74,-16 118,6"/>')
-    out.append('<path d="M -96,20 C -52,2 -18,12 0,10 C 18,12 52,2 96,20"/>')
-    out.append('<circle cx="0" cy="-4" r="11" fill="%s" stroke="none"/>' % color)
-    out.append("</g>")
-    return "\n".join(out)
-
-
-def _sprig(transform=""):
-    """Little gold leaf flourish flanking the value cartouche."""
-    leaf = "M 0,0 C 12,-6 26,-4 36,6 C 24,14 10,12 0,0 Z"
-    out = ['<g transform="%s" fill="%s">' % (transform, GOLD)]
-    for a in (-52, 0, 52):
-        out.append('<path d="%s" %s/>' % (leaf, _rot(a)))
-    out.append('<circle cx="-9" cy="0" r="6"/>')
-    out.append("</g>")
-    return "\n".join(out)
-
-
-def _ring_icon(cx, cy, glyph, r=16):
-    """A gold outline circle with a filled 24x24 glyph centred inside it."""
+def _esc(value):
     return (
-        '<g><circle cx="%s" cy="%s" r="%s" fill="none" stroke="%s" stroke-width="2.4"/>'
-        '<g transform="translate(%s,%s) scale(0.72)"><path d="%s" fill="%s"/></g></g>'
-        % (cx, cy, r, GOLD, cx - 8.6, cy - 8.6, glyph, GOLD)
+        str(value or "")
+        .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        .replace('"', "&quot;")
     )
+
+
+def _star(cx, cy, points, outer, inner, rotate=-90.0):
+    """Closed star polygon path."""
+    parts = []
+    for i in range(points * 2):
+        radius = outer if i % 2 == 0 else inner
+        angle = math.radians(rotate + i * 180.0 / points)
+        parts.append("%s,%s" % (_f(cx + radius * math.cos(angle)),
+                                _f(cy + radius * math.sin(angle))))
+    return "M " + " L ".join(parts) + " Z"
+
+
+def _star_tile(size, color, width):
+    """One tile of the star lattice: a 16-point star with a ring at the centre
+    and 10-point stars on the corners (drawn four times so they wrap)."""
+    s = size / 73.0
+    c = size / 2.0
+    out = ['<g fill="none" stroke="%s" stroke-width="%s" stroke-linejoin="miter">'
+           % (color, _f(width))]
+    out.append('<path d="%s"/>' % _star(c, c, 16, 28 * s, 17.5 * s))
+    out.append('<circle cx="%s" cy="%s" r="%s"/>' % (_f(c), _f(c), _f(8 * s)))
+    for x, y in ((0, 0), (size, 0), (0, size), (size, size)):
+        out.append('<path d="%s"/>' % _star(x, y, 10, 15 * s, 7.8 * s))
+    out.append("</g>")
+    return "".join(out)
+
+
+def _rosette_tile(size, color, width):
+    """Faint rosette lattice of the main (cream) area."""
+    c = size / 2.0
+    s = size / 45.0
+    petal = ("M 0,%s C %s,%s %s,%s 0,%s C %s,%s %s,%s 0,%s Z" % (
+        _f(-4.6 * s), _f(3.2 * s), _f(-7 * s), _f(3.2 * s), _f(-11 * s), _f(-14.5 * s),
+        _f(-3.2 * s), _f(-11 * s), _f(-3.2 * s), _f(-7 * s), _f(-4.6 * s)))
+    out = ['<g fill="none" stroke="%s" stroke-width="%s">' % (color, _f(width))]
+    out.append('<g transform="translate(%s,%s)">' % (_f(c), _f(c)))
+    for i in range(12):
+        out.append('<path d="%s" transform="rotate(%s)"/>' % (petal, i * 30))
+    out.append('<circle r="%s"/></g>' % _f(3.4 * s))
+    for x, y in ((0, 0), (size, 0), (0, size), (size, size)):
+        out.append('<path d="%s"/>' % _star(x, y, 8, 6.5 * s, 3.2 * s))
+    out.append("</g>")
+    return "".join(out)
+
+
+def _mix(c1, c2, t):
+    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#%02X%02X%02X" % tuple(round(a[i] + (b[i] - a[i]) * t) for i in range(3))
+
+
+def _shadow_rect(x, y, w, h, r, under, dark, spread=6.0, dy=3.0, steps=6):
+    """Soft drop shadow from opaque rounded rects, darkest innermost."""
+    out = []
+    for i in range(steps):
+        t = (i + 1) / float(steps)
+        grow = spread * (1 - t)
+        color = _mix(under, dark, t * t)
+        out.append(
+            '<rect x="%s" y="%s" width="%s" height="%s" rx="%s" fill="%s"/>'
+            % (_f(x - grow), _f(y + dy - grow + 1), _f(w + 2 * grow),
+               _f(h + 2 * grow - 1), _f(r + grow), color))
+    return "".join(out)
+
+
+def _shadow_circle(cx, cy, r, under, dark, spread=6.0, dy=3.0, steps=6):
+    out = []
+    for i in range(steps):
+        t = (i + 1) / float(steps)
+        out.append('<circle cx="%s" cy="%s" r="%s" fill="%s"/>'
+                   % (_f(cx), _f(cy + dy), _f(r + spread * (1 - t)),
+                      _mix(under, dark, t * t)))
+    return "".join(out)
+
+
+def _plaque(x0, y0, x1, y1, inset=0.0):
+    """Value cartouche: concave corner notches and slightly bulging ends."""
+    x0 += inset
+    y0 += inset
+    x1 -= inset
+    y1 -= inset
+    k = max(0.0, 1 - inset / 40.0)
+    ch = 28 * k + 4          # chamfer run
+    cv = 25 * k + 3          # chamfer rise
+    rr = 4.5 * k + 1         # corner rounding
+    my0 = y0 + cv
+    my1 = y1 - cv
+    pts = [
+        "M %s,%s" % (_f(x0 + ch + rr), _f(y0)),
+        "H %s" % _f(x1 - ch - rr),
+        "Q %s,%s %s,%s" % (_f(x1 - ch), _f(y0), _f(x1 - ch + rr * .7), _f(y0 + rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x1 - ch * .86), _f(my0 - cv * .13), _f(x1 - 3 - rr * .7), _f(my0 - rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x1 - 3), _f(my0), _f(x1 - 2), _f(my0 + rr * 1.4)),
+        "C %s,%s %s,%s %s,%s" % (_f(x1 + .6), _f(my0 + 12), _f(x1 + .6), _f(my1 - 12),
+                                 _f(x1 - 2), _f(my1 - rr * 1.4)),
+        "Q %s,%s %s,%s" % (_f(x1 - 3), _f(my1), _f(x1 - 3 - rr * .7), _f(my1 + rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x1 - ch * .86), _f(my1 + cv * .13), _f(x1 - ch + rr * .7), _f(y1 - rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x1 - ch), _f(y1), _f(x1 - ch - rr), _f(y1)),
+        "H %s" % _f(x0 + ch + rr),
+        "Q %s,%s %s,%s" % (_f(x0 + ch), _f(y1), _f(x0 + ch - rr * .7), _f(y1 - rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x0 + ch * .86), _f(my1 + cv * .13), _f(x0 + 3 + rr * .7), _f(my1 + rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x0 + 3), _f(my1), _f(x0 + 2), _f(my1 - rr * 1.4)),
+        "C %s,%s %s,%s %s,%s" % (_f(x0 - .6), _f(my1 - 12), _f(x0 - .6), _f(my0 + 12),
+                                 _f(x0 + 2), _f(my0 + rr * 1.4)),
+        "Q %s,%s %s,%s" % (_f(x0 + 3), _f(my0), _f(x0 + 3 + rr * .7), _f(my0 - rr * .7)),
+        "Q %s,%s %s,%s" % (_f(x0 + ch * .86), _f(my0 - cv * .13), _f(x0 + ch - rr * .7), _f(y0 + rr * .7)),
+        "Q %s,%s %s,%s Z" % (_f(x0 + ch), _f(y0), _f(x0 + ch + rr), _f(y0)),
+    ]
+    return " ".join(pts)
+
+
+def _sparkle(cx, cy, color):
+    """Four tapered petals set as an X, flanking the amount."""
+    petal = "M 0,0 C 2.1,-2 2.2,-5.4 0,-8.4 C -2.2,-5.4 -2.1,-2 0,0 Z"
+    return ('<g transform="translate(%s,%s)" fill="%s">%s</g>' % (
+        _f(cx), _f(cy), color,
+        "".join('<path d="%s" transform="rotate(%s)"/>' % (petal, a)
+                for a in (45, 135, 225, 315))))
+
+
+def _cloche(cx):
+    """Serving cloche with a bow, between the two header rules."""
+    return (
+        '<g stroke="#85714A" stroke-width="0.8" fill="url(#hcCloche)">'
+        '<ellipse cx="%(l)s" cy="73.2" rx="3.6" ry="1.9" transform="rotate(-12 %(l)s 73.2)"/>'
+        '<ellipse cx="%(r)s" cy="73.2" rx="3.6" ry="1.9" transform="rotate(12 %(r)s 73.2)"/>'
+        '<circle cx="%(c)s" cy="74.4" r="1.5"/>'
+        '<path d="M %(c)s,75.8 V 77.4" fill="none"/>'
+        '<path d="M %(dl)s,91.2 C %(dl)s,82.4 %(dl2)s,77.4 %(c)s,77.4 '
+        'C %(dr2)s,77.4 %(dr)s,82.4 %(dr)s,91.2 Z"/>'
+        '<rect x="%(bl)s" y="91" width="35" height="4.6" rx="2.2"/>'
+        '</g>' % dict(c=_f(cx), l=_f(cx - 3.6), r=_f(cx + 3.6),
+                      dl=_f(cx - 15.6), dl2=_f(cx - 8.6), dr=_f(cx + 15.6),
+                      dr2=_f(cx + 8.6), bl=_f(cx - 17.5)))
+
+
+def _calendar(x, y):
+    """Outline calendar centred on x,y (14 x 14)."""
+    dots = "".join('<circle cx="%s" cy="%s" r="0.95"/>' % (_f(x + dx), _f(y + dy))
+                   for dx, dy in ((-3.4, 1.4), (0, 1.4), (3.4, 1.4), (-3.4, 4.4), (0, 4.4)))
+    return (
+        '<g fill="none" stroke="#8D774C" stroke-width="1.5" stroke-linecap="round">'
+        '<rect x="%s" y="%s" width="14" height="13" rx="2.4"/>'
+        '<path d="M %s,%s H %s"/>'
+        '<path d="M %s,%s V %s"/><path d="M %s,%s V %s"/></g>'
+        '<g fill="#8D774C">%s</g>' % (
+            _f(x - 7), _f(y - 5.6), _f(x - 7), _f(y - 1.6), _f(x + 7),
+            _f(x - 3.6), _f(y - 7.6), _f(y - 4), _f(x + 3.6), _f(y - 7.6), _f(y - 4),
+            dots))
 
 
 PHONE_GLYPH = (
@@ -132,77 +210,43 @@ PHONE_GLYPH = (
     "0,-0.55 0.45,-1 1,-1 h3.5 c0.55,0 1,0.45 1,1 0,1.25 0.2,2.45 0.57,3.57 "
     "0.11,0.35 0.03,0.74 -0.25,1.02 l-2.2,2.2 Z"
 )
-MAIL_GLYPH = (
-    "M20,4 H4 C2.9,4 2.01,4.9 2.01,6 L2,18 c0,1.1 0.9,2 2,2 h16 "
-    "c1.1,0 2,-0.9 2,-2 V6 C22,4.9 21.1,4 20,4 Z M20,8 l-8,5 -8,-5 V6 l8,5 8,-5 V8 Z"
-)
 
 
-def _pin_icon(cx, cy, s=1.0):
+def _phone(cx, cy):
+    s = 0.56
+    return ('<path d="%s" fill="%s" transform="translate(%s,%s) scale(%s)"/>'
+            % (PHONE_GLYPH, INK, _f(cx - 12 * s), _f(cy - 12 * s), s))
+
+
+def _mail(cx, cy):
     return (
-        '<g transform="translate(%s,%s) scale(%s)">'
-        '<path d="M 0,-20 C -10.5,-20 -19,-11.5 -19,-1 C -19,13 0,26 0,26 '
-        'C 0,26 19,13 19,-1 C 19,-11.5 10.5,-20 0,-20 Z" fill="none" '
-        'stroke="%s" stroke-width="3.2"/>'
-        '<circle cx="0" cy="-1" r="6.6" fill="none" stroke="%s" stroke-width="3.2"/></g>'
-        % (cx, cy, s, GOLD, GOLD)
-    )
+        '<g fill="none" stroke="%s" stroke-width="1.2" stroke-linejoin="round">'
+        '<rect x="%s" y="%s" width="11.4" height="8.4" rx="1.2"/>'
+        '<path d="M %s,%s L %s,%s L %s,%s"/></g>' % (
+            INK, _f(cx - 5.7), _f(cy - 4.2),
+            _f(cx - 4.8), _f(cy - 3), _f(cx), _f(cy + .6), _f(cx + 4.8), _f(cy - 3)))
 
 
-def _plain_icon(cx, cy, glyph, color=INK, scale=0.72):
+def _pin(cx, cy):
+    """Outline map pin: a teardrop with a ring, point at the bottom."""
     return (
-        '<g transform="translate(%s,%s) scale(%s)">'
-        '<path d="%s" fill="%s"/></g>'
-        % (cx - 12 * scale, cy - 12 * scale, scale, glyph, color)
-    )
+        '<g fill="none" stroke="#33281A" stroke-width="1.35" transform="translate(%s,%s)">'
+        '<path d="M 0,6.8 C -2.6,3.6 -4.9,0.4 -4.9,-1.8 C -4.9,-4.6 -2.7,-6.6 0,-6.6 '
+        'C 2.7,-6.6 4.9,-4.6 4.9,-1.8 C 4.9,0.4 2.6,3.6 0,6.8 Z"/>'
+        '<circle cx="0" cy="-1.9" r="1.9"/></g>' % (_f(cx), _f(cy)))
 
 
-def _pattern_defs():
-    return """
-    <pattern id="hosnySoftPattern" width="92" height="92" patternUnits="userSpaceOnUse">
-      {soft}
-    </pattern>
-    <pattern id="hosnyPanelPattern" width="96" height="96" patternUnits="userSpaceOnUse">
-      {panel}
-    </pattern>
-    """.format(
-        soft=_mandala("translate(46,46) scale(0.31)", PATTERN),
-        panel=_mandala("translate(48,48) scale(0.38)", PANEL_PATTERN),
-    )
-
-
-def _calendar_icon(cx, cy):
+def _emblem(cx, cy, color):
+    """The small boat-and-anchor mark in the middle of the footer."""
     return (
-        '<g transform="translate(%s,%s)" fill="none" stroke="%s" stroke-width="3.4" '
-        'stroke-linecap="round" stroke-linejoin="round">'
-        '<rect x="-21" y="-16" width="42" height="37" rx="6"/>'
-        '<path d="M -21,-4 H 21"/>'
-        '<path d="M -11,-22 V -11"/><path d="M 11,-22 V -11"/>'
-        '<path d="M -11,6 H -9"/><path d="M -1,6 H 1"/><path d="M 9,6 H 11"/>'
-        '<path d="M -11,14 H -9"/><path d="M -1,14 H 1"/></g>' % (cx, cy, GOLD)
-    )
-
-
-def _cloche(cx, cy):
-    """Gold cloche (domed serving dish) with a sprig on top."""
-    return (
-        '<g transform="translate(%s,%s)" fill="%s">'
-        '<path d="M 0,-38 C -13,-40 -25,-50 -29,-64 C -14,-67 -2,-56 0,-38 Z"/>'
-        '<path d="M 0,-38 C 13,-40 25,-50 29,-64 C 14,-67 2,-56 0,-38 Z"/>'
-        '<path d="M 0,-40 L 0,-26" stroke="%s" stroke-width="6" stroke-linecap="round"/>'
-        '<circle cx="0" cy="-28" r="7.5"/>'
-        '<path d="M -55,22 C -55,-8 -30,-24 0,-24 C 30,-24 55,-8 55,22 Z"/>'
-        '<rect x="-68" y="26" width="136" height="12" rx="6"/></g>'
-        % (cx, cy, GOLD, GOLD)
-    )
-
-
-def _esc(value):
-    return (
-        str(value or "")
-        .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        .replace('"', "&quot;")
-    )
+        '<g fill="none" stroke="%(c)s" stroke-width="1.1" stroke-linecap="round" '
+        'stroke-linejoin="round" transform="translate(%(x)s,%(y)s)">'
+        '<path d="M -22.6,-9.2 C -13,-9.6 -5,-10.6 0,-13.8 C 5,-10.6 13,-9.6 22.6,-9.2 '
+        'C 17,-1 9,3.2 0,3.4 C -9,3.2 -17,-1 -22.6,-9.2 Z"/>'
+        '<circle cx="0" cy="-7.4" r="2"/>'
+        '<path d="M 0,0 V 13.6"/><path d="M -2.6,4.6 H 2.6"/>'
+        '<path d="M -10.4,6.8 L 0,13.6 L 10.4,6.8"/></g>' % dict(
+            c=color, x=_f(cx), y=_f(cy)))
 
 
 def wrap_branches(branches, max_chars=27, max_lines=2, separator=" • "):
@@ -232,167 +276,255 @@ def wrap_branches(branches, max_chars=27, max_lines=2, separator=" • "):
     return lines
 
 
+def barcode_modules(pattern):
+    """reportlab's decomposed Code128 ("BaAbC…": upper = bar, lower = space,
+    a-d = 1-4 modules) as (start, width) bars in module units, plus the total."""
+    bars, pos = [], 0
+    for char in pattern or "":
+        width = ord(char.lower()) - 96
+        if char.isupper():
+            bars.append((pos, width))
+        pos += width
+    return bars, pos
+
+
+def _barcode(pattern, x, y, w, h, color):
+    bars, total = barcode_modules(pattern)
+    if not bars or not total:
+        return ""
+    unit = w / float(total)
+    return '<g fill="%s">%s</g>' % (color, "".join(
+        '<rect x="%s" y="%s" width="%s" height="%s"/>'
+        % (_f(x + start * unit), _f(y), _f(width * unit), _f(h))
+        for start, width in bars))
+
+
 def build_card_svg(brand, tagline, headline, subtitle, value_label, amount,
                    currency, expiry, expiry_label, code, code_title, code_hint_1,
                    code_hint_2, branches_label, branches, phones, email,
-                   logo_src=None, barcode_src=None, font_family="HosnyCoupon",
-                   barcode_missing="الباركود غير متاح"):
+                   logo_src=None, barcode_pattern=None, font_family="HosnyCoupon",
+                   serif_family="HosnyCouponSerif",
+                   barcode_missing="الباركود غير متاح", **_ignored):
     """Return the complete coupon as one inline SVG string."""
+    ff = font_family
+    sf = serif_family
+
+    def text(x, y, size, weight, fill, value, anchor="middle", rtl=True, extra=""):
+        return (
+            '<text x="%s" y="%s" font-family="%s" font-weight="%s" font-size="%s" '
+            'fill="%s" text-anchor="%s"%s%s>%s</text>'
+            % (_f(x), _f(y), ff, weight, _f(size), fill, anchor,
+               ' direction="rtl"' if rtl else "", extra, _esc(value)))
+
+    # ── footer contacts ──
     rows = []
-    for index, number in enumerate(list(phones)[:3]):
-        baseline = 884 + index * 35
-        rows.append(_plain_icon(68, baseline - 7, PHONE_GLYPH, INK, scale=0.66))
-        rows.append(
-            '<text x="92" y="%s" font-family="%s" font-weight="700" font-size="22" '
-            'fill="%s">%s</text>' % (baseline, font_family, INK, _esc(number))
-        )
+    contacts = [("phone", p) for p in list(phones or [])[:3]]
     if email:
-        baseline = 884 + min(len(phones), 3) * 35
-        rows.append(_plain_icon(68, baseline - 7, MAIL_GLYPH, INK, scale=0.66))
-        rows.append(
-            '<text x="92" y="%s" font-family="%s" font-weight="700" font-size="22" '
-            'fill="%s">%s</text>' % (baseline, font_family, INK, _esc(email))
-        )
+        contacts.append(("mail", email))
+    for index, (kind, value) in enumerate(contacts):
+        mid = 448.2 + index * 20.7
+        rows.append(_phone(50.2, mid) if kind == "phone" else _mail(50.2, mid))
+        rows.append(text(65, mid + 4.1, 12.1, 700, INK, value, anchor="start", rtl=False))
 
-    branch_lines = []
-    for index, line in enumerate(wrap_branches(branches)):
-        branch_lines.append(
-            '<text x="1380" y="%s" font-family="%s" font-weight="700" font-size="23" '
-            'fill="%s" text-anchor="start" direction="rtl">%s</text>'
-            % (945 + index * 34, font_family, INK, _esc(line))
-        )
+    branch_rows = "".join(
+        text(667.6, 494.4 + i * 15.5, 11.4, 600, INK_SOFT, line, anchor="start")
+        for i, line in enumerate(wrap_branches(branches)))
 
+    # ── logo ──
     if logo_src:
-        logo = ('<image xlink:href="%s" href="%s" x="165" y="86" width="150" '
-                'height="150" preserveAspectRatio="xMidYMid meet"/>'
+        logo = ('<image xlink:href="%s" href="%s" x="97" y="68" width="76" height="76" '
+                'preserveAspectRatio="xMidYMid slice" clip-path="url(#hcLogoClip)"/>'
                 % (logo_src, logo_src))
     else:
-        logo = ('<circle cx="240" cy="161" r="72" fill="none" stroke="%s" '
-                'stroke-width="4"/>' % GOLD)
+        logo = ('<circle cx="135" cy="106" r="31" fill="none" stroke="%s" stroke-width="1.6"/>'
+                % GOLD)
 
-    if barcode_src:
-        barcode = ('<image xlink:href="%s" href="%s" x="664" y="711" width="438" '
-                   'height="74" preserveAspectRatio="none"/>'
-                   % (barcode_src, barcode_src))
+    if barcode_pattern:
+        barcode = _barcode(barcode_pattern, 328, 353, 216, 42, "#2E2410")
     else:
-        barcode = ('<text x="883" y="758" font-family="%s" font-weight="700" '
-                   'font-size="27" fill="%s" text-anchor="middle" direction="rtl">%s'
-                   '</text>' % (font_family, GOLD_MUTED, _esc(barcode_missing)))
+        barcode = text(436, 380, 13, 700, MUTED, barcode_missing)
+
+    rule_l = '<path d="M 367,83.5 H 447" stroke="url(#hcRuleL)" stroke-width="1.1"/>'
+    rule_r = '<path d="M 525,83.5 H 607" stroke="url(#hcRuleR)" stroke-width="1.1"/>'
 
     return """<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 0 1489 1039" preserveAspectRatio="xMidYMid meet">
+     viewBox="{vb}" preserveAspectRatio="xMidYMid meet">
   <defs>
-    <clipPath id="hosnyCardClip">
-      <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" rx="{cr}"/>
-    </clipPath>
-    <clipPath id="hosnyPanelClip"><path d="{panel}"/></clipPath>
-    {patterns}
+    <clipPath id="hcCardClip"><rect x="13" y="36" width="709" height="492" rx="22"/></clipPath>
+    <clipPath id="hcPanelClip"><path d="{panel_fill}"/></clipPath>
+    <clipPath id="hcLogoClip"><circle cx="135" cy="106" r="38"/></clipPath>
+    <linearGradient id="hcPage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8F2E3"/><stop offset="1" stop-color="#EAE1CC"/>
+    </linearGradient>
+    <linearGradient id="hcMain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAF5EA"/><stop offset="0.55" stop-color="#F8F2E5"/>
+      <stop offset="1" stop-color="#F3EBDA"/>
+    </linearGradient>
+    <linearGradient id="hcPanel" gradientUnits="userSpaceOnUse" x1="13" y1="0" x2="257" y2="0">
+      <stop offset="0" stop-color="#E6DABD"/><stop offset="0.45" stop-color="#ECE2C7"/>
+      <stop offset="0.8" stop-color="#E7DBBF"/><stop offset="1" stop-color="#D8CAA8"/>
+    </linearGradient>
+    <linearGradient id="hcFooter" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#EBE0C5"/><stop offset="0.5" stop-color="#E9DDC0"/>
+      <stop offset="1" stop-color="#E4D8BA"/>
+    </linearGradient>
+    <linearGradient id="hcChip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF7"/><stop offset="1" stop-color="#F6EFDF"/>
+    </linearGradient>
+    <linearGradient id="hcCal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4EAD2"/><stop offset="1" stop-color="#E8D9B6"/>
+    </linearGradient>
+    <linearGradient id="hcCloche" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CDB580"/><stop offset="1" stop-color="#A48F60"/>
+    </linearGradient>
+    <linearGradient id="hcRuleL" gradientUnits="userSpaceOnUse" x1="367" y1="0" x2="447" y2="0">
+      <stop offset="0" stop-color="#E4D8BE"/><stop offset="1" stop-color="#A89366"/>
+    </linearGradient>
+    <linearGradient id="hcRuleR" gradientUnits="userSpaceOnUse" x1="525" y1="0" x2="607" y2="0">
+      <stop offset="0" stop-color="#A89366"/><stop offset="1" stop-color="#E4D8BE"/>
+    </linearGradient>
+    <linearGradient id="hcDivider" gradientUnits="userSpaceOnUse" x1="112" y1="0" x2="156" y2="0">
+      <stop offset="0" stop-color="#E6DABE"/><stop offset="0.5" stop-color="#4E3F26"/>
+      <stop offset="1" stop-color="#E6DABE"/>
+    </linearGradient>
+    <linearGradient id="hcRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9C799"/><stop offset="0.5" stop-color="#C9B482"/>
+      <stop offset="1" stop-color="#BDA672"/>
+    </linearGradient>
+    <linearGradient id="hcBrown" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4D4029"/><stop offset="0.35" stop-color="#3F331E"/>
+      <stop offset="0.55" stop-color="#4A3E28"/><stop offset="1" stop-color="#372C19"/>
+    </linearGradient>
+    <linearGradient id="hcAmount" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E4DCC8"/><stop offset="1" stop-color="#A69A7E"/>
+    </linearGradient>
+    <linearGradient id="hcBox" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFEF9"/><stop offset="1" stop-color="#FAF6EC"/>
+    </linearGradient>
+    <pattern id="hcMainPat" x="289.5" y="36.5" width="45" height="45" patternUnits="userSpaceOnUse">{main_tile}</pattern>
+    <pattern id="hcPanelPat" x="13.5" y="37.5" width="73" height="73" patternUnits="userSpaceOnUse">{panel_tile}</pattern>
+    <pattern id="hcFootPat" x="136" y="429" width="62" height="62" patternUnits="userSpaceOnUse">{foot_tile}</pattern>
   </defs>
 
-  <rect width="1489" height="1039" fill="{page}"/>
-  <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" rx="{cr}" fill="{cream}"/>
+  <rect x="{vx}" y="{vy}" width="{vw}" height="{vh}" fill="url(#hcPage)"/>
+  {card_shadow}
+  <g clip-path="url(#hcCardClip)">
+    <rect x="13" y="36" width="709" height="492" fill="url(#hcMain)"/>
+    <rect x="13" y="36" width="709" height="492" fill="url(#hcMainPat)"/>
 
-  <g clip-path="url(#hosnyCardClip)">
-    <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" fill="{cream}"/>
-    <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" fill="url(#hosnySoftPattern)"/>
+    <!-- left identity panel -->
+    <path d="{panel_rule} L 13,438 V 36 Z" fill="#FCF6E7"/>
+    <path d="{panel_fill}" fill="url(#hcPanel)"/>
+    <rect x="13" y="36" width="260" height="410" fill="url(#hcPanelPat)" clip-path="url(#hcPanelClip)"/>
+    <path d="{panel_rule}" fill="none" stroke="#A0957D" stroke-width="1.1"/>
 
-    <!-- left identity sweep -->
-    <path d="{panel}" fill="{panel_fill}"/>
-    <g clip-path="url(#hosnyPanelClip)">
-      <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" fill="url(#hosnyPanelPattern)"/>
-    </g>
-    <path d="{edge_inner}" fill="none" stroke="#FFF7E7" stroke-width="6"/>
-    <path d="{edge}" fill="none" stroke="{gold}" stroke-width="4"/>
+    <!-- footer band -->
+    <rect x="13" y="{ft}" width="709" height="{fh}" fill="url(#hcFooter)"/>
+    <rect x="13" y="{ft}" width="709" height="{fh}" fill="url(#hcFootPat)"/>
+    <path d="M 13,{ft_hi} H 722" stroke="#FBF6EA" stroke-width="2"/>
+    <path d="M 13,{ft_line} H 722" stroke="#D3C7AF" stroke-width="1"/>
 
-    {logo}
-    <text x="240" y="394" font-family="{ff}" font-weight="900" font-size="45"
-          fill="{ink}" text-anchor="middle" direction="rtl">{brand}</text>
-    <text x="240" y="445" font-family="{ff}" font-weight="700" font-size="24"
-          fill="{ink}" text-anchor="middle" direction="rtl">{tagline}</text>
-
-    <!-- validity chip -->
-    <rect x="58" y="515" width="512" height="116" rx="22" fill="{chip}"
-          stroke="{border}" stroke-width="2.4"/>
-    {calendar}
-    <text x="436" y="553" font-family="{ff}" font-weight="700" font-size="22"
-          fill="{ink}" text-anchor="end" direction="rtl">{expiry_label}</text>
-    <text x="436" y="598" font-family="{ff}" font-weight="900" font-size="28"
-          fill="{ink}" text-anchor="end">{expiry}</text>
-
-    <!-- headline -->
-    {cloche}
-    <path d="M 736,176 H 884" stroke="{gold}" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M 1004,176 H 1160" stroke="{gold}" stroke-width="2.2" stroke-linecap="round"/>
-    <circle cx="916" cy="176" r="4" fill="{gold}"/>
-    <circle cx="984" cy="176" r="4" fill="{gold}"/>
-    <text x="936" y="316" font-family="{ff}" font-weight="900" font-size="82"
-          fill="{ink}" text-anchor="middle" direction="rtl">{headline}</text>
-    <text x="936" y="369" font-family="{ff}" font-weight="700" font-size="27"
-          fill="{gold_text}" text-anchor="middle" direction="rtl">{subtitle}</text>
-
-    <!-- value cartouche -->
-    <path d="{cart}" fill="{brown}" stroke="{gold}" stroke-width="7"/>
-    <path d="{cart}" fill="none" stroke="{inner}" stroke-width="2.2"
-          transform="translate(904,545) scale(0.956) translate(-904,-545)"/>
-    {sprig_l}
-    {sprig_r}
-    <text x="904" y="467" font-family="{ff}" font-weight="700" font-size="25"
-          fill="{gold_bright}" text-anchor="middle" direction="rtl">{value_label}</text>
-    <text x="904" y="590" font-family="Georgia, 'Times New Roman', serif"
-          font-weight="700" font-size="112" letter-spacing="1.5"
-          fill="{gold_bright}" text-anchor="middle">{amount}</text>
-    <text x="904" y="638" font-family="{ff}" font-weight="900" font-size="31"
-          fill="{gold_bright}" text-anchor="middle" direction="rtl">{currency}</text>
-
-    <!-- barcode and usage hint -->
-    <rect x="574" y="696" width="624" height="128" rx="12" fill="#FFFFFF"
-          stroke="#E5D8C0" stroke-width="1.5"/>
-    {barcode}
-    <text x="883" y="811" font-family="{ff}" font-weight="900" font-size="27"
-          letter-spacing="1.1" fill="{ink}" text-anchor="middle">{code}</text>
-    <path d="M 1238,704 V 814" stroke="{divider}" stroke-width="2"/>
-    <text x="1372" y="737" font-family="{ff}" font-weight="900" font-size="27"
-          fill="{ink}" text-anchor="start" direction="rtl">{code_title}</text>
-    <text x="1372" y="780" font-family="{ff}" font-weight="700" font-size="22"
-          fill="{gold_muted}" text-anchor="start" direction="rtl">{hint1}</text>
-    <text x="1372" y="812" font-family="{ff}" font-weight="700" font-size="22"
-          fill="{gold_muted}" text-anchor="start" direction="rtl">{hint2}</text>
-
-    <!-- footer -->
-    <rect x="{cx}" y="{footer_top}" width="{cw}" height="{footer_h}" fill="{panel_fill}"/>
-    <rect x="{cx}" y="{footer_top}" width="{cw}" height="{footer_h}" fill="url(#hosnySoftPattern)"/>
-    <path d="M {cx},{footer_top} H {card_right}" stroke="{border}" stroke-width="1.5"/>
-    {floral}
-    {rows}
-    {pin}
-    <text x="1380" y="902" font-family="{ff}" font-weight="900" font-size="28"
-          fill="{ink}" text-anchor="start" direction="rtl">{branches_label}</text>
-    {branch_lines}
+    <rect x="{fx}" y="{fy}" width="{fw}" height="{fhh}" rx="{fr}" fill="none"
+          stroke="#BDB196" stroke-width="1"/>
   </g>
+  <rect x="13.5" y="36.5" width="708" height="491" rx="21.5" fill="none"
+        stroke="#DCD1BA" stroke-width="1"/>
 
-  <rect x="{cx}" y="{cy}" width="{cw}" height="{ch}" rx="{cr}" fill="none"
-        stroke="{border}" stroke-width="2"/>
+  <!-- logo -->
+  {logo_shadow}
+  <circle cx="135" cy="106" r="41" fill="#FCF4E4" stroke="#9C8E71" stroke-width="0.9"/>
+  {logo}
+
+  {brand}
+  {tagline}
+  <path d="M 112,250 H 156" stroke="url(#hcDivider)" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- validity chip -->
+  {chip_shadow}
+  <rect x="38" y="258" width="245" height="54" rx="10" fill="url(#hcChip)" stroke="#D6CAB0" stroke-width="0.9"/>
+  <rect x="237.5" y="269" width="32.5" height="32.5" rx="7.5" fill="url(#hcCal)" stroke="#CDBB93" stroke-width="0.9"/>
+  {calendar}
+  {expiry_label}
+  {expiry}
+
+  <!-- headline -->
+  {rule_l}
+  <circle cx="451.2" cy="83.5" r="2.3" fill="#A48F60"/>
+  {cloche}
+  <circle cx="521.2" cy="83.5" r="2.3" fill="#A48F60"/>
+  {rule_r}
+  {headline}
+  {subtitle}
+
+  <!-- value cartouche -->
+  {cart_shadow}
+  <path d="{cart_outer}" fill="url(#hcRim)" stroke="#AE9864" stroke-width="0.8"/>
+  <path d="{cart_dark}" fill="url(#hcBrown)"/>
+  <path d="{cart_rule}" fill="none" stroke="#8C7C5B" stroke-width="0.9"/>
+  {spark_l}
+  {spark_r}
+  {value_label}
+  <text x="485" y="288" font-family="{sf}" font-weight="600" font-size="{amount_size}"
+        letter-spacing="1" fill="url(#hcAmount)" text-anchor="middle">{amount}</text>
+  {currency}
+
+  <!-- barcode -->
+  {box_shadow}
+  <rect x="287" y="345" width="298" height="80" rx="9" fill="url(#hcBox)" stroke="#DED6C3" stroke-width="0.8"/>
+  {barcode}
+  <text x="435.5" y="416.4" font-family="{sf}" font-weight="600" font-size="15.2"
+        letter-spacing="1.4" fill="#33281A" text-anchor="middle">{code}</text>
+  {code_title}
+  {hint1}
+  {hint2}
+
+  <!-- footer content -->
+  {rows}
+  {emblem}
+  {pin}
+  {branches_label}
+  {branch_rows}
 </svg>""".format(
-        panel=LEFT_PANEL, edge=LEFT_EDGE, edge_inner=LEFT_EDGE_INNER,
-        cart=CARTOUCHE, patterns=_pattern_defs(),
-        cx=CARD["x"], cy=CARD["y"], cw=CARD["w"], ch=CARD["h"], cr=CARD["r"],
-        card_right=CARD["x"] + CARD["w"],
-        footer_top=FOOTER_TOP, footer_h=CARD["y"] + CARD["h"] - FOOTER_TOP,
-        floral=_floral("translate(744,974) scale(0.58)", GOLD_ON_FOOTER),
-        sprig_l=_sprig("translate(635,545) scale(0.72)"),
-        sprig_r=_sprig("translate(1173,545) scale(-0.72,0.72)"),
-        calendar=_calendar_icon(518, 574), cloche=_cloche(950, 150),
-        pin=_pin_icon(1292, 914, 0.62), rows="\n    ".join(rows),
-        branch_lines="\n    ".join(branch_lines),
-        logo=logo, barcode=barcode, ff=font_family,
-        page=PAGE, cream=CREAM, panel_fill=PANEL, chip=CHIP, border=BORDER,
-        ink=INK, brown=BROWN, gold=GOLD, gold_bright=GOLD_BRIGHT,
-        gold_text=GOLD_TEXT, gold_muted=GOLD_MUTED,
-        inner=GOLD_ON_BROWN, divider=GOLD_ON_CREAM_55,
-        brand=_esc(brand), tagline=_esc(tagline), headline=_esc(headline),
-        subtitle=_esc(subtitle), value_label=_esc(value_label),
-        amount=_esc(amount), currency=_esc(currency), expiry=_esc(expiry),
-        expiry_label=_esc(expiry_label), code=_esc(code),
-        code_title=_esc(code_title), hint1=_esc(code_hint_1),
-        hint2=_esc(code_hint_2), branches_label=_esc(branches_label),
+        vb=" ".join(_f(v) for v in VIEWBOX),
+        vx=_f(VIEWBOX[0]), vy=_f(VIEWBOX[1]), vw=_f(VIEWBOX[2]), vh=_f(VIEWBOX[3]),
+        panel_fill=PANEL_FILL, panel_rule=PANEL_RULE,
+        main_tile=_rosette_tile(45, "#F0E9DA", 0.7),
+        panel_tile=_star_tile(73, "#CDBF9F", 0.9),
+        foot_tile=_star_tile(62, "#D3C5A6", 0.85),
+        card_shadow=_shadow_rect(13, 36, 709, 492, 22, "#EAE1CC", "#CFC2A6", spread=9, dy=5),
+        ft=FOOTER_TOP, fh=CARD["y"] + CARD["h"] - FOOTER_TOP,
+        ft_hi=_f(FOOTER_TOP - 2), ft_line=_f(FOOTER_TOP - 0.5),
+        fx=FRAME["x"], fy=FRAME["y"], fw=FRAME["w"], fhh=FRAME["h"], fr=FRAME["r"],
+        logo_shadow=_shadow_circle(135, 106, 41, "#E6DBBF", "#B9AA88", spread=5, dy=2.6),
+        logo=logo,
+        # 13 characters fill the panel at the design size; longer names shrink.
+        brand=text(135.5, 205, 23.5 * min(1.0, 13.0 / max(len(str(brand or "")), 1)),
+                   900, INK, brand),
+        tagline=text(135, 232.5, 12.1, 600, "#5B4C33", tagline),
+        chip_shadow=_shadow_rect(38, 258, 245, 54, 10, "#E7DCC0", "#D8CCB0", spread=7, dy=2),
+        calendar=_calendar(253.75, 286),
+        expiry_label=text(224.5, 278.6, 10.5, 600, "#5B4C33", expiry_label, anchor="start"),
+        expiry=text(223.6, 295.2, 14, 800, INK, expiry, anchor="end", rtl=False),
+        rule_l=rule_l, rule_r=rule_r, cloche=_cloche(487),
+        headline=text(485.5, 160, 49.1, 900, INK, headline),
+        subtitle=text(485, 189.2, 16.4, 600, INK_SOFT, subtitle),
+        cart_shadow=_shadow_rect(352, 214, 271, 115, 30, "#F4ECDD", "#D6C9AC", spread=8, dy=3),
+        cart_outer=_plaque(341, 208, 634, 327),
+        cart_dark=_plaque(341, 208, 634, 327, 5.5),
+        cart_rule=_plaque(341, 208, 634, 327, 10.5),
+        spark_l=_sparkle(363.5, 268, "#D9CDB2"), spark_r=_sparkle(611.5, 268, "#D9CDB2"),
+        value_label=text(486, 232.6, 11.9, 700, CREAM_TEXT, value_label),
+        sf=sf, amount_size=_f(52.7 if len(str(amount)) <= 7 else max(34, 52.7 - 5 * (len(str(amount)) - 7))),
+        amount=_esc(amount),
+        currency=text(486, 309, 14.4, 800, "#EFE6D2", currency),
+        box_shadow=_shadow_rect(287, 345, 298, 80, 9, "#F3EBDB", "#DDD2BA", spread=6, dy=2.5),
+        barcode=barcode, code=_esc(code),
+        code_title=text(685.6, 374, 13.5, 800, INK, code_title, anchor="start"),
+        hint1=text(685.6, 391.6, 10.8, 600, MUTED, code_hint_1, anchor="start"),
+        hint2=text(685.6, 407.6, 11, 600, MUTED, code_hint_2, anchor="start"),
+        rows="\n  ".join(rows),
+        emblem=_emblem(367.8, 502.5, "#C2B394"),
+        pin=_pin(684.8, 470.6),
+        branches_label=text(668, 476, 14.2, 800, INK, branches_label, anchor="start"),
+        branch_rows=branch_rows,
     )

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'POS Gift Card Custom Arabic Design',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Point of Sale',
     'summary': 'Premium Arabic gift card print layout for POS',
     'description': """
