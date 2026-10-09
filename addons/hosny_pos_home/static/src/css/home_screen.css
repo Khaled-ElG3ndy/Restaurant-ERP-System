@@ -245,23 +245,83 @@
     :is(#hs,.pos) .hh-tile:hover { transform: none; }
 }
 
-/* ── تقرير الوردية ────────────────────────────────────────────────── */
-.hh-report .modal-body { padding: 18px 20px; }
-.hh-report-body { font-family: "Cairo", "IBM Plex Sans Arabic", sans-serif; /*rtl:ignore*/direction: rtl; }
-.hh-report-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-block-end: 16px; }
-.hh-report-kpis > div { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 14px; background: #EEF3FA; border: 1px solid #D8E2F0; }
-.hh-report-kpis span { font-size: 12.5px; color: #5B6F8A; font-weight: 700; }
-.hh-report-kpis b { font-family: "IBM Plex Sans Arabic", sans-serif; font-size: 20px; color: #16305E; }
-.hh-report-cols { display: grid; grid-template-columns: 1fr 1.4fr; gap: 18px; }
-.hh-report-cols h4 { font-size: 14px; font-weight: 800; color: #16305E; margin-block: 0 8px; }
-.hh-report-table { inline-size: 100%; border-collapse: collapse; font-size: 13.5px; }
-.hh-report-table td { padding: 7px 6px; border-block-end: 1px solid #E5EBF3; color: #1C2D40; }
-.hh-report-table td.num { font-family: "IBM Plex Sans Arabic", sans-serif; font-weight: 700; text-align: end; white-space: nowrap; }
-.hh-report-table .hh-muted { color: #8998A9; text-align: center; }
-@media (max-width: 760px) {
-    .hh-report-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* ── تقرير الوردية (2026-10-09) ──────────────────────────────────────
+   Shift-only figures (pos.session.hosny_shift_report). Borderless frame
+   with a full-bleed navy header — the light dialog border was the white
+   line over it — and dark labels / navy figures for legibility. */
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report {
+    border: 0 !important; border-radius: 20px !important; overflow: hidden !important; background: #FFFFFF !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-header {
+    margin: 0 !important; padding: 16px 22px !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-header::after { display: none !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-header .modal-title { margin: 0 !important; color: #FFFFFF !important; font-size: 20px !important; font-weight: 800 !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-header .btn-close { filter: invert(1) grayscale(1) brightness(2) !important; opacity: .85 !important; background-color: transparent !important; border: 0 !important; margin: 0 !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-body { padding: 18px 22px !important; background: #F2F6FB !important; }
+.hh-report-body { display: flex; flex-direction: column; gap: 14px; font-family: "Cairo", "IBM Plex Sans Arabic", sans-serif; color: #17395F; /*rtl:ignore*/direction: rtl; /*rtl:ignore*/text-align: right; }
+.hh-report-state { padding: 40px; text-align: center; font-size: 16px; font-weight: 700; color: #4B5E75; }
+.hh-report-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.hh-report-meta > span { display: flex; flex-direction: column; gap: 1px; padding: 8px 12px; border-radius: 12px; background: #FFFFFF; border: 1px solid #DCE3ED; min-width: 0; }
+.hh-report-meta small { font-size: 12px; font-weight: 700; color: #637D99; }
+.hh-report-meta b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14.5px; font-weight: 800; color: #17395F; }
+.hh-report-kpis { display: grid; grid-template-columns: 1.3fr repeat(3, minmax(0, 1fr)); gap: 10px; }
+.hh-report-kpis > div { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DCE3ED; }
+.hh-report-kpis span { font-size: 13.5px; color: #4B5E75; font-weight: 700; }
+.hh-report-kpis b { font-family: "IBM Plex Sans Arabic", sans-serif; font-size: 24px; font-weight: 800; color: #17395F; }
+.hh-report-kpis > .is-main { /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%); border-color: transparent; }
+.hh-report-kpis > .is-main span { color: #DFF3E8; }
+.hh-report-kpis > .is-main b { color: #FFFFFF; font-size: 28px; }
+.hh-report-kpis > .is-red { background: #FDF3F2; border-color: #F0C4C0; }
+.hh-report-kpis > .is-red b { color: #C0392B; }
+.hh-report-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.hh-report-chips > span { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE3ED; font-size: 13.5px; font-weight: 700; color: #4B5E75; }
+.hh-report-chips > span .fa { color: #2B5DA0; }
+.hh-report-chips > span b { font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif; font-weight: 800; color: #17395F; }
+.hh-report-chips > span.is-amber { background: #FDF1DF; border-color: #F1D9AE; }
+.hh-report-chips > span.is-amber .fa, .hh-report-chips > span.is-amber b { color: #9A5A0E; }
+.hh-report-cols { display: grid; grid-template-columns: 1fr 1.25fr; gap: 12px; align-items: start; }
+.hh-report-card { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #DCE3ED; }
+.hh-report-card h4 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15.5px; font-weight: 800; color: #17395F; }
+.hh-report-card h4 .fa { color: #2B5DA0; }
+.hh-report-table { inline-size: 100%; border-collapse: collapse; font-size: 14px; }
+.hh-report-table th { padding: 6px; border-block-end: 1px solid #DCE3ED; font-size: 12.5px; font-weight: 800; color: #637D99; text-align: start; }
+.hh-report-table td { padding: 8px 6px; border-block-end: 1px solid #EDF1F6; color: #24374B; font-weight: 700; }
+.hh-report-table .num { font-family: "IBM Plex Sans Arabic", sans-serif; font-weight: 800; text-align: end; white-space: nowrap; color: #17395F; }
+.hh-report-table td.rank { inline-size: 26px; color: #9AAAC0; font-family: "IBM Plex Sans Arabic", sans-serif; }
+.hh-report-table td.name { max-inline-size: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hh-report-table tfoot td { border: 0; padding-block-start: 10px; font-weight: 800; color: #0F7A49; }
+.hh-report-table tfoot td.num { color: #0F7A49; font-size: 16px; }
+.hh-report-table .hh-muted { padding: 18px 6px; color: #8998A9; text-align: center; font-weight: 700; }
+.hh-report-cash { display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 12px; background: #F7FAFE; border: 1px dashed #C9D5E4; }
+.hh-report-cash h4 { margin-block-end: 4px; font-size: 14.5px; }
+.hh-report-cash > div { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: #4B5E75; }
+.hh-report-cash > div b { font-family: "IBM Plex Sans Arabic", sans-serif; font-weight: 800; color: #17395F; }
+.hh-report-cash > div.is-total { margin-block-start: 4px; padding-block-start: 6px; border-block-start: 1px solid #DCE3ED; color: #0F7A49; }
+.hh-report-cash > div.is-total b { color: #0F7A49; font-size: 16px; }
+.hh-report-error { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #FCEBEA; color: #B23D35; font-weight: 800; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .o_dialog .modal-content.hh-report > .modal-footer {
+    margin: 0 !important; padding: 14px 22px !important; border: 0 !important; border-block-start: 1px solid #E3E9F1 !important; background: #FFFFFF !important;
+}
+.hh-report-foot { display: flex; align-items: center; gap: 10px; inline-size: 100%; }
+.hh-report-stamp { margin-inline-start: auto; font-size: 13px; font-weight: 700; color: #637D99; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hh-report .modal-footer .btn {
+    display: inline-flex !important; align-items: center !important; gap: 8px !important;
+    min-height: 50px !important; margin: 0 !important; padding: 0 20px !important; border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16px !important; font-weight: 800 !important; white-space: nowrap !important; transform: none !important; box-shadow: none !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hh-report .modal-footer .btn-primary {
+    border: 0 !important; /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important; color: #FFFFFF !important;
+}
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hh-report .modal-footer .btn-secondary { border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important; }
+body:not(#hr-a):not(#hr-b):not(#hr-c) .hh-report .modal-footer .btn-secondary .fa { color: #2B5DA0 !important; }
+@media (max-width: 900px) {
+    .hh-report-meta, .hh-report-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hh-report-cols { grid-template-columns: 1fr; }
 }
+
 
 /* ── زر «الرئيسية» في الشريط العلوي ───────────────────────────────── */
 :is(#hs,.pos) .pos-topheader .hh-nav-home {

@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Home',
-    'version': '19.0.1.4.0',
+    'version': '19.0.1.5.0',
     'category': 'Point of Sale',
     'summary': 'الشاشة الرئيسية لنقطة البيع على طريقة FERP: الوقت، الفرع، المزامنة والأزرار',
     'description': """

@@ -57,15 +57,39 @@ function formatDate(date, locale, options) {
     }
 }
 
+/**
+ * تقرير الوردية: أرقام هذه الوردية فقط من الخادم (pos.session.hosny_shift_report)
+ * — نفس طلبات ونقد «إغلاق الوردية» — ويُحمَّل عند فتح النافذة وبزر «تحديث».
+ */
 export class HosnyShiftReport extends Component {
     static template = "hosny_pos_home.ShiftReport";
     static components = { Dialog };
-    static props = { summary: Object, close: Function };
+    static props = { close: Function };
 
     setup() {
         this.pos = usePos();
         this.hardwareProxy = useService("hardware_proxy");
         this.dialog = useService("dialog");
+        this.state = useState({ data: null, loading: true, error: "", printing: false });
+        onMounted(() => this.load());
+    }
+    async load() {
+        this.state.loading = true;
+        this.state.error = "";
+        try {
+            this.state.data = await this.pos.data.call("pos.session", "hosny_shift_report", [
+                [this.pos.session.id],
+            ]);
+        } catch {
+            this.state.error = this.state.data
+                ? "تعذّر التحديث — الأرقام المعروضة من آخر تحميل."
+                : "تعذّر تحميل التقرير — تأكد من الاتصال ثم اضغط «تحديث».";
+        } finally {
+            this.state.loading = false;
+        }
+    }
+    get d() {
+        return this.state.data || {};
     }
     get canPrint() {
         return Boolean(this.hardwareProxy.printer);
@@ -74,10 +98,16 @@ export class HosnyShiftReport extends Component {
         return money(this, amount);
     }
     qty(value) {
-        return Number.isInteger(value) ? value : Number(value || 0).toFixed(2);
+        const n = Number(value || 0);
+        return Number.isInteger(n) ? String(n) : String(parseFloat(n.toFixed(3)));
     }
     async print() {
-        await handleSaleDetails(this.pos, this.hardwareProxy, this.dialog);
+        this.state.printing = true;
+        try {
+            await handleSaleDetails(this.pos, this.hardwareProxy, this.dialog);
+        } finally {
+            this.state.printing = false;
+        }
     }
 }
 
@@ -212,8 +242,7 @@ export class HosnyHomeScreen extends Component {
         window.open(`/odoo/${this.pos.config.id}/action-hosny_pos_home.action_pos_settings_current`, "_blank");
     }
     async openReport() {
-        await this.loadSummary();
-        this.dialog.add(HosnyShiftReport, { summary: this.state.summary || {} });
+        this.dialog.add(HosnyShiftReport, {});
     }
 }
 

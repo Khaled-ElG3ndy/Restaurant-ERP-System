@@ -65,40 +65,101 @@
     </t>
 
     <t t-name="hosny_pos_home.ShiftReport">
-        <Dialog title="'تقرير الوردية'" contentClass="'hh-report'" size="'lg'">
+        <Dialog title="'تقرير الوردية'" contentClass="'hh-report'" size="'xl'">
             <div class="hh-report-body" dir="rtl">
-                <div class="hh-report-kpis">
-                    <div><span>مبيعات اليوم</span><b t-esc="fmt(props.summary.today_total)"/></div>
-                    <div><span>طلبات اليوم</span><b t-esc="props.summary.today_count || 0"/></div>
-                    <div><span>مبيعات الوردية</span><b t-esc="fmt(props.summary.session_total)"/></div>
-                    <div><span>طلبات الوردية</span><b t-esc="props.summary.session_count || 0"/></div>
+                <div t-if="state.loading and !state.data" class="hh-report-state">
+                    <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/> جارٍ تحميل أرقام الوردية…
                 </div>
-                <div class="hh-report-cols">
-                    <div>
-                        <h4>طرق الدفع اليوم</h4>
-                        <table class="hh-report-table">
-                            <tr t-foreach="props.summary.payments || []" t-as="p" t-key="p.name">
-                                <td t-esc="p.name"/><td class="num" t-esc="fmt(p.amount)"/>
-                            </tr>
-                            <tr t-if="!(props.summary.payments || []).length"><td colspan="2" class="hh-muted">لا مدفوعات بعد</td></tr>
-                        </table>
+                <t t-if="state.data">
+                    <div class="hh-report-meta">
+                        <span><small>الوردية</small><b><bdi t-esc="d.session_name"/></b></span>
+                        <span><small>بدأت</small><b><bdi t-esc="d.session_start"/></b></span>
+                        <span><small>المدة</small><b><bdi t-esc="d.duration"/> ساعة</b></span>
+                        <span><small>فتحها</small><b t-esc="d.session_user"/></span>
                     </div>
-                    <div>
-                        <h4>الأكثر مبيعاً اليوم</h4>
-                        <table class="hh-report-table">
-                            <tr t-foreach="props.summary.top_products || []" t-as="p" t-key="p_index">
-                                <td t-esc="p.name"/><td class="num" t-esc="qty(p.qty)"/><td class="num" t-esc="fmt(p.amount)"/>
-                            </tr>
-                            <tr t-if="!(props.summary.top_products || []).length"><td colspan="3" class="hh-muted">لا أصناف بعد</td></tr>
-                        </table>
+
+                    <div class="hh-report-kpis">
+                        <div class="is-main">
+                            <span>صافي مبيعات الوردية</span>
+                            <b t-esc="fmt(d.total)"/>
+                        </div>
+                        <div>
+                            <span>عدد الطلبات</span>
+                            <b t-esc="d.count"/>
+                        </div>
+                        <div>
+                            <span>متوسط الطلب</span>
+                            <b t-esc="fmt(d.average)"/>
+                        </div>
+                        <div t-att-class="{ 'is-red': d.refund_count }">
+                            <span>المرتجعات <t t-if="d.refund_count">(<t t-esc="d.refund_count"/>)</t></span>
+                            <b t-esc="fmt(d.refund_total)"/>
+                        </div>
                     </div>
+
+                    <div class="hh-report-chips">
+                        <span><i class="fa fa-percent" aria-hidden="true"/> الخصومات <b t-esc="fmt(d.discount_total)"/></span>
+                        <span><i class="fa fa-motorcycle" aria-hidden="true"/> الخدمة والتوصيل <b t-esc="fmt(d.fees_total)"/></span>
+                        <span t-att-class="{ 'is-amber': d.open_count }"><i class="fa fa-hourglass-half" aria-hidden="true"/> طلبات مفتوحة <b><t t-esc="d.open_count"/> · <t t-esc="fmt(d.open_total)"/></b></span>
+                        <span><i class="fa fa-calendar" aria-hidden="true"/> مبيعات اليوم (كل الورديات) <b t-esc="fmt(d.today_total)"/></span>
+                    </div>
+
+                    <div class="hh-report-cols">
+                        <section class="hh-report-card">
+                            <h4><i class="fa fa-credit-card" aria-hidden="true"/> طرق الدفع في الوردية</h4>
+                            <table class="hh-report-table">
+                                <thead><tr><th>الطريقة</th><th class="num">طلبات</th><th class="num">المبلغ</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="d.payments || []" t-as="p" t-key="p_index">
+                                        <td t-esc="p.name"/><td class="num" t-esc="p.count"/><td class="num" t-esc="fmt(p.amount)"/>
+                                    </tr>
+                                    <tr t-if="!(d.payments || []).length"><td colspan="3" class="hh-muted">لا مدفوعات في هذه الوردية</td></tr>
+                                </tbody>
+                                <tfoot t-if="(d.payments || []).length">
+                                    <tr><td>الإجمالي</td><td/><td class="num" t-esc="fmt(d.payments_total)"/></tr>
+                                </tfoot>
+                            </table>
+
+                            <div t-if="d.cash and d.cash.name" class="hh-report-cash">
+                                <h4><i class="fa fa-money" aria-hidden="true"/> النقد في الدرج</h4>
+                                <div><span>رصيد الافتتاح</span><b t-esc="fmt(d.cash.opening)"/></div>
+                                <div><span>مدفوعات <t t-esc="d.cash.name"/></span><b t-esc="fmt(d.cash.payments)"/></div>
+                                <div><span>الإيداع / السحب</span><b t-esc="fmt(d.cash.moves)"/></div>
+                                <div class="is-total"><span>المتوقع في الدرج</span><b t-esc="fmt(d.cash.expected)"/></div>
+                            </div>
+                        </section>
+                        <section class="hh-report-card">
+                            <h4><i class="fa fa-star" aria-hidden="true"/> الأكثر مبيعاً في الوردية</h4>
+                            <table class="hh-report-table">
+                                <thead><tr><th>#</th><th>الصنف</th><th class="num">الكمية</th><th class="num">المبلغ</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="d.top_products || []" t-as="p" t-key="p_index">
+                                        <td class="rank" t-esc="p_index + 1"/>
+                                        <td class="name" t-esc="p.name"/>
+                                        <td class="num" t-esc="qty(p.qty)"/>
+                                        <td class="num" t-esc="fmt(p.amount)"/>
+                                    </tr>
+                                    <tr t-if="!(d.top_products || []).length"><td colspan="4" class="hh-muted">لا أصناف في هذه الوردية</td></tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                </t>
+                <div t-if="state.error" class="hh-report-error" role="alert">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"/> <t t-esc="state.error"/>
                 </div>
             </div>
             <t t-set-slot="footer">
-                <button t-if="canPrint" class="btn btn-primary btn-lg" t-on-click="print">
-                    <i class="fa fa-print" aria-hidden="true"/> طباعة تقرير الوردية
-                </button>
-                <button class="btn btn-secondary btn-lg" t-on-click="props.close">إغلاق</button>
+                <div class="hh-report-foot">
+                    <button t-if="canPrint" class="btn btn-primary btn-lg hh-report-print" t-att-disabled="state.printing or !state.data" t-on-click="print">
+                        <i t-attf-class="fa {{ state.printing ? 'fa-circle-o-notch fa-spin' : 'fa-print' }}" aria-hidden="true"/> طباعة تقرير الوردية
+                    </button>
+                    <button class="btn btn-secondary btn-lg hh-report-refresh" t-att-disabled="state.loading" t-on-click="() => this.load()">
+                        <i t-attf-class="fa fa-refresh {{ state.loading ? 'fa-spin' : '' }}" aria-hidden="true"/> تحديث
+                    </button>
+                    <span t-if="d.printed_at" class="hh-report-stamp">حتى <bdi t-esc="d.printed_at"/></span>
+                    <button class="btn btn-secondary btn-lg hh-report-close" t-on-click="props.close">إغلاق</button>
+                </div>
             </t>
         </Dialog>
     </t>
