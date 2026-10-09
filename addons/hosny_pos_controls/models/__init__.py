@@ -7,3 +7,4 @@ from . import pos_order
 from . import res_config_settings
 from . import hospitality
 from . import void_approval
+from . import product_attribute_value
