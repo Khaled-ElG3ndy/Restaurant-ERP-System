@@ -45,7 +45,7 @@ Product = env["product.product"]
 if names:
     products = Product.browse()
     for name in names:
-        products |= Product.search([("available_in_pos", "=", True), ("name", "ilike", name)], limit=3)
+        products |= Product.search([("available_in_pos", "=", True), ("name", "ilike", name)], limit=8)
 else:
     products = Product.search([("available_in_pos", "=", True), ("list_price", ">", 0)], limit=8, order="id")
 
