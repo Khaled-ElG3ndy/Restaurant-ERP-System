@@ -46,6 +46,10 @@ class PosOrder(models.Model):
     def write(self, vals):
         vals = dict(vals)
         vals.pop("hosny_session_number", None)
+        # بعد الترقيم يملك الخادم رقم الطلب؛ مزامنة متأخرة من الشاشة تحمل رقم
+        # الجهاز القديم لا تمسحه.
+        if "tracking_number" in vals and any(self.mapped("hosny_session_number")):
+            vals.pop("tracking_number")
         # نقطة بيع لم يُعَد تحميلها بعد التحديث ترسل order_type_id = false لأنها
         # لا تعرف النوع؛ لا نسمح لها بمسح نوع مسجّل.
         stale_type = "order_type_id" in vals and not vals["order_type_id"]
@@ -144,7 +148,9 @@ class PosOrder(models.Model):
             if not order.session_id or (order.hosny_session_number and not force):
                 continue
             number = order.session_id._hosny_next_order_number()
+            # رقم الطلب الظاهر (tracking_number) هو رقم الوردية نفسه (2026-10-09):
+            # 1، 2، 3… ويبدأ من 1 مع كل وردية، بدل عدّاد الجهاز في أودو (46010).
             self.env.cr.execute(
-                "UPDATE pos_order SET hosny_session_number = %s WHERE id = %s",
-                [number, order.id])
-        self.invalidate_recordset(["hosny_session_number"])
+                "UPDATE pos_order SET hosny_session_number = %s, tracking_number = %s WHERE id = %s",
+                [number, str(number), order.id])
+        self.invalidate_recordset(["hosny_session_number", "tracking_number"])

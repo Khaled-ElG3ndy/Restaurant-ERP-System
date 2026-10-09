@@ -61,6 +61,39 @@ const splitNote = (note) =>
         .filter(Boolean);
 
 patch(PosStore.prototype, {
+    /**
+     * رقم الطلب في الوردية يعطيه الخادم عند أول مزامنة. نزامن الطلب الجديد في
+     * الخلفية مع أول صنف يُضاف، فيظهر رقمه (1، 2، 3…) خلال لحظة بدل رقم الجهاز
+     * المؤقت، ويطابق رقم تذكرة المطبخ والفاتورة.
+     */
+    async addLineToOrder(vals, order, ...rest) {
+        const line = await super.addLineToOrder(vals, order, ...rest);
+        this.hosnyRequestOrderNumber(order || this.getOrder());
+        return line;
+    },
+
+    hosnyRequestOrderNumber(order) {
+        if (
+            !order ||
+            order.finalized ||
+            order.hosny_session_number ||
+            typeof order.id === "number" ||
+            !order.lines?.length ||
+            this.data.network.offline
+        ) {
+            return;
+        }
+        this._hosnyNumbering ??= new Set();
+        if (this._hosnyNumbering.has(order.uuid)) {
+            return;
+        }
+        this._hosnyNumbering.add(order.uuid);
+        Promise.resolve()
+            .then(() => this.syncAllOrders({ orders: [order] }))
+            .catch(() => {})
+            .finally(() => this._hosnyNumbering.delete(order.uuid));
+    },
+
     /** بيانات التذكرة التي لا يحملها getOrderData الأصلي. */
     getOrderData(order, reprint) {
         const data = super.getOrderData(order, reprint);
