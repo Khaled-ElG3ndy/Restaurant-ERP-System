@@ -8804,3 +8804,43 @@ body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-seco
     color: #FFFFFF !important;
 }
 :is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway .hs-tp-table-number { font-size: 24px !important; }
+
+/* ══ 47  notifications (toasts) — visible close mark (2026-10-09) ═════
+   The theme's button rules repaint every button (cream background, no
+   background-image), which wiped Bootstrap's .btn-close SVG: the close
+   button of «اختر منتجاً أولاً.» and every other toast showed as an empty
+   circle. The × is drawn with two CSS bars instead, and the toast gets the
+   till's font, right-aligned text and a clearer frame. */
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification {
+    overflow: hidden !important; border-radius: 14px !important;
+    box-shadow: 0 14px 30px -12px rgba(10,22,36,.45) !important;
+    font-family: "Cairo", sans-serif !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification > div {
+    padding-block: 12px !important; border-color: #E3E9F1 !important; background: #FFFFFF !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_content {
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+    color: #17395F !important; font-size: 15px !important; font-weight: 700 !important; line-height: 1.6 !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_bar { inline-size: 6px !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close {
+    position: absolute !important; inset-block-start: 8px !important; inset-inline-end: 8px !important;
+    display: block !important; inline-size: 30px !important; block-size: 30px !important;
+    min-width: 0 !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important;
+    border: 1px solid #DCE3ED !important; border-radius: 50% !important;
+    background: #F2F6FB none !important; box-shadow: none !important; opacity: 1 !important;
+    transform: none !important; filter: none !important; cursor: pointer !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::before,
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::after {
+    content: "" !important; position: absolute !important; inset: 0 !important; margin: auto !important;
+    inline-size: 13px !important; block-size: 2px !important; border-radius: 2px !important;
+    background: #17395F !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::before { transform: rotate(45deg) !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::after { transform: rotate(-45deg) !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover { background: #FCEBEA !important; border-color: #F0C4C0 !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::before,
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::after { background: #D2544B !important; }
