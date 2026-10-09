@@ -36,6 +36,10 @@
                     <span class="hfr-label">نوع الفاتوره</span>
                     <div class="hfr-value"><span t-esc="r.orderType"/></div>
                 </div>
+                <div t-if="r.table" class="hfr-row hfr-row-table">
+                    <span class="hfr-label">رقم الطاولة</span>
+                    <div class="hfr-value"><span t-esc="r.table"/></div>
+                </div>
                 <div class="hfr-row hfr-row-payment">
                     <span class="hfr-label">نوع الدفع</span>
                     <div class="hfr-value"><span t-esc="r.paymentType"/></div>

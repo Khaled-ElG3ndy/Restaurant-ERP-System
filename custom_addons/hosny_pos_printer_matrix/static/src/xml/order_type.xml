@@ -58,6 +58,9 @@
                 <div t-if="data.order_type_name" class="fw-bold" style="font-size: 130%;">
                     <t t-esc="data.order_type_name"/>
                 </div>
+                <div t-if="data.hosny_table" class="fw-bold" style="font-size: 150%;">
+                    طاولة <t t-esc="data.hosny_table"/><t t-if="data.hosny_floor"> — <t t-esc="data.hosny_floor"/></t>
+                </div>
                 <div style="font-size: 85%;">
                     <t t-esc="data.config_name"/> : <t t-esc="data.time"/>
                 </div>

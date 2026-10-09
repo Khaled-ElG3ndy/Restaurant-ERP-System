@@ -196,6 +196,15 @@ export function buildFerpReceipt(order, pos = null) {
     const orderType = pos?.getEffectiveOrderType?.(order) || order.order_type_id;
     const partner = order.partner_id;
     const note = (order.hosny_invoice_note || order.general_customer_note || "").trim();
+    // الطاولة على كل فاتورة لطلب عليها (2026-10-09): «5 · أرضي»، و«سفري 3»
+    // لطاولات طلبات الهاتف. السفري بلا طاولة يبقى بلا هذا السطر.
+    const table = order.table_id?.rootTable || order.table_id;
+    const floorName = (table?.floor_id?.name || "").trim();
+    const tableLabel = table
+        ? /سفري|takeaway|تيك/i.test(floorName)
+            ? `سفري ${table.table_number}`
+            : [String(table.table_number ?? ""), floorName].filter(Boolean).join(" · ")
+        : "";
 
     return {
         logoUrl: config?.receiptLogoUrl || "",
@@ -206,6 +215,7 @@ export function buildFerpReceipt(order, pos = null) {
         docTitle: order.isRefund ? "إشعار دائن مبسط" : "فاتورة ضريبية مبسطة",
         invoiceNumber: String(order.hosny_session_number || order.tracking_number || ""),
         orderType: orderType?.name || "",
+        table: tableLabel,
         paymentType: unique(payments.map((payment) => payment.payment_method_id?.name)).join("، "),
         serial: order.pos_reference || "",
         date: formatFerpDate(openedAt),
