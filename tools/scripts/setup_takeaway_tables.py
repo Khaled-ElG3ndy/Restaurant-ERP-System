@@ -1,4 +1,4 @@
-# طاولات «سفري 1…15» لطلبات الهاتف: طابق «سفري» لكل نقطة بيع مطعم.
+# طاولات «سفري 1…25» لطلبات الهاتف (HOSNY_COUNT، 25 افتراضياً — setup_floor_tables.py للأرضي والعلوي أيضاً): طابق «سفري» لكل نقطة بيع مطعم.
 #
 # يُشغَّل داخل odoo-bin shell (المتغير env موجود هناك).
 #   HOSNY_MODE=apply (الافتراضي): ينشئ الطابق والطاولات الناقصة (لا يكرر شيئاً).
@@ -11,7 +11,7 @@ import os
 import re
 
 MODE = os.environ.get("HOSNY_MODE", "apply")
-COUNT = 15
+COUNT = int(os.environ.get("HOSNY_COUNT", "25"))
 FLOOR_NAME = "سفري"
 TAKEAWAY_FLOOR_RE = re.compile(r"سفري|takeaway|take away|تيك", re.IGNORECASE)
 
