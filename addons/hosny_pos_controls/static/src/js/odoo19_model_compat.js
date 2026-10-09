@@ -391,3 +391,17 @@ patch(PosOrderline.prototype, {
         return super.taxGroupLabels;
     },
 });
+
+/**
+ * ونفس الشيء مع العملة: أودو يقرأ this.order_id.currency في getter السطر،
+ * فينهار بـ «Cannot read properties of undefined (reading 'currency')» لسطر
+ * حُذف ولا يزال مرسوماً. نرجع عملة نقطة البيع بدل الانهيار (2026-10-09).
+ */
+patch(PosOrderline.prototype, {
+    get currency() {
+        if (!this.order_id) {
+            return this.models?.["pos.config"]?.getFirst?.()?.currency_id;
+        }
+        return super.currency;
+    },
+});
