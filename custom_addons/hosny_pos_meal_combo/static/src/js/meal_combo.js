@@ -65,6 +65,24 @@ patch(PosStore.prototype, {
             return line;
         }
 
+        // نفس الوجبة مرة ثانية ← تزيد كمية سطرها (2026-10-09). أودو لا يدمجها
+        // (سطر الوجبة له مكوّنات = combo)، فنزيد كمية الوجبة الموجودة —
+        // setQuantity يضاعف مكوّناتها والمنتجات النهائية الإضافية — ونحذف الجديد
+        // قبل أن تُبنى له مكوّنات. نفس شروط أودو للدمج: لا سعر صريح ولا merge:false.
+        const target =
+            opts.merge !== false && !("price_unit" in (vals || {}))
+                ? this._hosnyMergeableMealLine(order, line)
+                : null;
+        if (target) {
+            const newQty = target.getQuantity() + line.getQuantity();
+            line.delete();
+            target.setQuantity(newQty, Boolean(target.combo_line_ids?.length));
+            target.setHasChange?.(true);
+            order.triggerRecomputeAllPrices?.();
+            this.selectOrderLine(order, target);
+            return target;
+        }
+
         const productTemplate = line.product_id?.product_tmpl_id;
         if (productTemplate?.is_meal_combo) {
             this._createMealComponentLines(order, line);
@@ -73,6 +91,37 @@ patch(PosStore.prototype, {
         await this._createAdditionalFinalProductLines(order, line);
         this.selectOrderLine(order, line);
         return line;
+    },
+
+    /** سطر وجبة (أو صنف بمنتجات نهائية إضافية) مطابق للسطر الجديد في الطلب. */
+    _hosnyMergeableMealLine(order, line) {
+        const template = line.product_id?.product_tmpl_id;
+        const isMealProduct =
+            template?.is_meal_combo || getAdditionalFinalProductLines(this, template).length > 0;
+        if (!isMealProduct || !order || order.finalized || line.getQuantity() <= 0) {
+            return null;
+        }
+        const round = (value) => this.currency?.round?.(value || 0) ?? value;
+        return (
+            order.lines.find(
+                (other) =>
+                    other !== line &&
+                    other.uuid !== line.uuid &&
+                    other.product_id?.id === line.product_id?.id &&
+                    !other.is_meal_component &&
+                    !other.is_additional_final_product &&
+                    !other.combo_parent_id &&
+                    !other.refunded_orderline_id &&
+                    !line.refunded_orderline_id &&
+                    other.getQuantity() > 0 &&
+                    (other.getNote?.() || "") === (line.getNote?.() || "") &&
+                    (other.getCustomerNote?.() || "") === (line.getCustomerNote?.() || "") &&
+                    (other.getDiscount?.() || 0) === (line.getDiscount?.() || 0) &&
+                    other.price_type === line.price_type &&
+                    round(other.price_unit) === round(line.price_unit) &&
+                    (other.full_product_name || "") === (line.full_product_name || "")
+            ) || null
+        );
     },
 
     _createMealComponentLines(order, parentLine) {
