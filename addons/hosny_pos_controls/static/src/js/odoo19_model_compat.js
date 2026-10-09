@@ -376,3 +376,18 @@ Object.defineProperty(PosStore.prototype, "ordersToUpdateSet", {
     },
     configurable: true,
 });
+
+/**
+ * سطر حُذف من طلبه (دمج صنف مكرر، أو حذف) قد يبقى مرسوماً لحظة؛ أودو يقرأ
+ * this.order_id.fiscal_position_id في taxGroupLabels فينهار الكاشير بـ
+ * «Cannot read properties of undefined (reading 'fiscal_position_id')».
+ * السطر بلا طلب ليس له تسمية ضريبة (2026-10-09).
+ */
+patch(PosOrderline.prototype, {
+    get taxGroupLabels() {
+        if (!this.order_id) {
+            return "";
+        }
+        return super.taxGroupLabels;
+    },
+});

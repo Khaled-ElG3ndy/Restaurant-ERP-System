@@ -75,11 +75,12 @@ patch(PosStore.prototype, {
                 : null;
         if (target) {
             const newQty = target.getQuantity() + line.getQuantity();
+            // نختار السطر الباقي قبل حذف المكرر، فلا يبقى المحذوف هو المختار
+            this.selectOrderLine(order, target);
             line.delete();
             target.setQuantity(newQty, Boolean(target.combo_line_ids?.length));
             target.setHasChange?.(true);
             order.triggerRecomputeAllPrices?.();
-            this.selectOrderLine(order, target);
             return target;
         }
 
