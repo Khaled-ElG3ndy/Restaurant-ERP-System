@@ -1,6 +1,6 @@
 {
     'name': 'POS Entry Selector',
-    'version': '19.0.2.7.0',
+    'version': '19.0.2.8.0',
     'license': 'LGPL-3',
     'author': 'Hosney-Pos',
     'depends': ['point_of_sale', 'pos_restaurant', 'pos_modern_ui', 'hosny_pos_printer_matrix'],

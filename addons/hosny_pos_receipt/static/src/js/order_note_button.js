@@ -185,6 +185,8 @@ patch(OrderPaymentValidation.prototype, {
         const printed = order?.uiState?.hosnyNotePrinted;
         if (
             order?.uiState?.hosnyTakeawayAutoNext &&
+            // المحلي تُطبع فاتورته بعد الدفع دائماً (takeaway_checkout)، بالملاحظة
+            !order.table_id &&
             printed !== undefined &&
             order.hosnyInvoiceNote &&
             order.hosnyInvoiceNote !== printed

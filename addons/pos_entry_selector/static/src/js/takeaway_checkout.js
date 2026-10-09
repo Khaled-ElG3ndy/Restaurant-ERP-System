@@ -62,15 +62,15 @@ patch(PosStore.prototype, {
         );
     },
 
-    /** كل سفري يُدفع من الكاشير ينتهي بسفري جديد، أياً كان الزر الذي بدأ منه. */
+    /**
+     * بعد «إغلاق الفاتورة» من الكاشير: لا شاشة إيصال — تُطبع الفاتورة تلقائياً
+     * ويُفتح طلب جديد (2026-10-09: المحلي أيضاً، كان يقف على شاشة الإيصال
+     * والطباعة اليدوية). المرتجع يبقى على مساره.
+     */
     hosnyTakeawayAutoNext(order) {
         return Boolean(
             this.hosnyIsTakeawayCheckoutLocked(order) ||
-                (this.hosnyCashierFirst?.() &&
-                    order &&
-                    !order.isRefund &&
-                    !order.table_id &&
-                    this.isTakeawayOrder?.(order))
+                (this.hosnyCashierFirst?.() && order && !order.isRefund)
         );
     },
 
@@ -236,21 +236,28 @@ patch(OrderPaymentValidation.prototype, {
     },
 
     /**
-     * لا شاشة إيصال للسفري. فاتورته تخرج عادة مع أول إرسال؛ لو دُفع دون أن
-     * يُرسل («الدفع» ثم «إهمال») نطبعها هنا مرة واحدة قبل فتح السفري الجديد.
+     * لا شاشة إيصال، فالفاتورة تُطبع هنا مرة واحدة قبل فتح الطلب الجديد:
+     *   • المحلي (على طاولة): دائماً — فاتورة «تم التسديد»، حتى لو طُبعت فاتورة
+     *     الحساب قبل الدفع.
+     *   • السفري: فاتورته تخرج عادة مع أول إرسال؛ لو دُفع دون أن يُرسل
+     *     («الدفع» ثم «إهمال») تُطبع هنا.
+     * طباعة أودو التلقائية (iface_print_auto) لو مفعّلة تكفي عن هذه.
      */
     async afterOrderValidation() {
         const result = await super.afterOrderValidation(...arguments);
+        const order = this.order;
+        const alreadyPrinted = order?.table_id
+            ? false
+            : order?.uiState?.hosnyReceiptPrinted || order?.nb_print;
         if (
-            this.order?.uiState?.hosnyTakeawayAutoNext &&
-            !this.order.uiState.hosnyReceiptPrinted &&
-            !this.order.nb_print &&
+            order?.uiState?.hosnyTakeawayAutoNext &&
+            !alreadyPrinted &&
             !this.pos.config.iface_print_auto
         ) {
             try {
-                await this.pos.printReceipt({ order: this.order });
+                await this.pos.printReceipt({ order });
             } catch (error) {
-                console.warn("[Hosny] takeaway receipt after payment failed", error);
+                console.warn("[Hosny] receipt after payment failed", error);
             }
         }
         return result;
