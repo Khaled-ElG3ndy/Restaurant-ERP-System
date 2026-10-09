@@ -215,6 +215,12 @@ patch(PosStore.prototype, {
      * للطلب قبل الطباعة كي يظهر على تذكرة التحضير.
      */
     hosnyNeedsTakeawayCustomerReceipt(order, opts = {}) {
+        // 2026-10-09 (خالد): «إرسال الطلب» يطبع تذاكر الأقسام فقط؛ فاتورة العميل
+        // للسفري تُطبع بعد الدفع (نسختان، takeaway_checkout في pos_entry_selector).
+        // hosnyTakeawayReceiptAtSend = true يعيد السلوك القديم (غير مضبوط افتراضياً).
+        if (!this.hosnyTakeawayReceiptAtSend) {
+            return false;
+        }
         if (
             !order ||
             order.finalized ||

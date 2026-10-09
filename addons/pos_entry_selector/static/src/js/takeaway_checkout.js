@@ -236,29 +236,42 @@ patch(OrderPaymentValidation.prototype, {
     },
 
     /**
-     * لا شاشة إيصال، فالفاتورة تُطبع هنا مرة واحدة قبل فتح الطلب الجديد:
-     *   • المحلي (على طاولة): دائماً — فاتورة «تم التسديد»، حتى لو طُبعت فاتورة
-     *     الحساب قبل الدفع.
-     *   • السفري: فاتورته تخرج عادة مع أول إرسال؛ لو دُفع دون أن يُرسل
-     *     («الدفع» ثم «إهمال») تُطبع هنا.
-     * طباعة أودو التلقائية (iface_print_auto) لو مفعّلة تكفي عن هذه.
+     * أودو يطبع نسخة بلا انتظار (fire-and-forget) لو autoPrint؛ نوقفها هنا حتى
+     * لا تتزاحم مع نسخنا، ونطبع كل النسخ بأنفسنا بالتتابع في afterOrderValidation.
+     */
+    get canPrintReceipt() {
+        if (this.order?.uiState?.hosnyTakeawayAutoNext) {
+            return false;
+        }
+        return super.canPrintReceipt;
+    },
+
+    /**
+     * لا شاشة إيصال، فالفاتورة تُطبع هنا قبل فتح الطلب الجديد (2026-10-09):
+     *   • السفري (بلا طاولة): نسختان — ولا تُطبع له فاتورة عند «إرسال الطلب».
+     *   • المحلي: نسخة واحدة («تم التسديد»).
+     * printReceiptCopies (hosny_pos_controls) يطبع بالتتابع ويتوقف عند أول فشل
+     * ويقول كم نسخة خرجت؛ خدمة الطباعة نفسها تعرض «إعادة المحاولة».
      */
     async afterOrderValidation() {
         const result = await super.afterOrderValidation(...arguments);
         const order = this.order;
-        const alreadyPrinted = order?.table_id
-            ? false
-            : order?.uiState?.hosnyReceiptPrinted || order?.nb_print;
-        if (
-            order?.uiState?.hosnyTakeawayAutoNext &&
-            !alreadyPrinted &&
-            !this.pos.config.iface_print_auto
-        ) {
-            try {
-                await this.pos.printReceipt({ order });
-            } catch (error) {
-                console.warn("[Hosny] receipt after payment failed", error);
+        if (!order?.uiState?.hosnyTakeawayAutoNext) {
+            return result;
+        }
+        const copies = order.table_id ? 1 : 2;
+        try {
+            if (this.pos.printReceiptCopies) {
+                await this.pos.printReceiptCopies({ order, copies });
+            } else {
+                for (let i = 0; i < copies; i++) {
+                    if (!(await this.pos.printReceipt({ order }))) {
+                        break;
+                    }
+                }
             }
+        } catch (error) {
+            console.warn("[Hosny] receipt after payment failed", error);
         }
         return result;
     },

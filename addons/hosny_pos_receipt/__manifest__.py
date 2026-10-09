@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Receipt - Arabic',
-    'version': '19.0.4.4.1',
+    'version': '19.0.4.4.2',
     'category': 'Point of Sale',
     'summary': 'Customer receipt in the FERP design (Hosny branches)',
     'depends': ['point_of_sale', 'pos_restaurant', 'l10n_gcc_pos', 'l10n_sa_pos', 'hosny_pos_controls'],
