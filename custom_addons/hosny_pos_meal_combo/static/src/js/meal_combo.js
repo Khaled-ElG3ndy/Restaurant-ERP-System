@@ -302,6 +302,26 @@ patch(PosOrderline.prototype, {
 });
 
 patch(PosOrder.prototype, {
+    /**
+     * مكوّنات الوجبة مربوطة بالوجبة كأسطر combo لكن بلا combo_item_id، وأودو
+     * يقرأ cLine.combo_item_id.combo_id عند إعادة تسعير الكومبو (setPricelist،
+     * مثلاً عند اختيار العميل في الدفع) فينهار بـ «reading 'combo_id'»
+     * (2026-10-09). نمرّر له أسطر الكومبو الحقيقية فقط؛ الوجبة بلا كومبو
+     * حقيقي ترجع قوائم فارغة.
+     */
+    getFreeAndExtraChildLines(pLine) {
+        const children = pLine?.combo_line_ids || [];
+        if (children.every((child) => child.combo_item_id)) {
+            return super.getFreeAndExtraChildLines(...arguments);
+        }
+        const realItems = children.filter((child) => child.combo_item_id);
+        if (!realItems.length) {
+            return { childLineFree: [], childLineExtra: [] };
+        }
+        const view = Object.create(pLine, { combo_line_ids: { value: realItems } });
+        return super.getFreeAndExtraChildLines(view);
+    },
+
     removeOrderline(line) {
         if (line?.is_additional_final_parent) {
             for (const childLine of getAdditionalFinalChildren(this, line)) {
