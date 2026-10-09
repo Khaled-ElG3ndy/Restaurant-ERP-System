@@ -8781,3 +8781,26 @@ body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-seco
 }
 body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary:hover { background: #F2F6FB !important; }
 body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary .fa { color: #2B5DA0 !important; }
+
+/* ══ 46  table picker: «سفري» floor (2026-10-09) ══════════════════════
+   The «اختر الطاولة» picker now lists the «سفري» floor after the dining
+   floors. Its free tables are pink like on the floor map; busy and current
+   keep their red / blue. */
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway.is-active,
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway.is-active:hover {
+    border-color: #DD2765 !important;
+    background: #DD2765 !important;
+    color: #FFFFFF !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway:not(.is-active) { color: #C21E5C !important; }
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current),
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current):hover {
+    border-color: transparent !important;
+    /*rtl:ignore*/background: linear-gradient(145deg, #EE447B 0%, #DD2765 100%) !important;
+    box-shadow: 0 6px 16px rgba(221, 39, 101, .28) !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current) .hs-tp-table-number,
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current) .hs-tp-table-state {
+    color: #FFFFFF !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway .hs-tp-table-number { font-size: 24px !important; }

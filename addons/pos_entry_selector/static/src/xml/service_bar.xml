@@ -38,7 +38,7 @@
                     </span>
                     <span class="hs-tp-title-copy">
                         <strong t-esc="title"/>
-                        <small>اختيار الطاولة يجعل الطلب «محلي»</small>
+                        <small>طاولات الصالة تجعل الطلب «محلي» — طاولات «سفري» لطلبات الهاتف</small>
                     </span>
                 </div>
                 <button type="button" class="hs-tp-close" aria-label="إغلاق" t-on-click="() => scope.close()">
@@ -51,7 +51,7 @@
                     <button t-foreach="floors" t-as="tpFloor" t-key="tpFloor.id"
                             type="button" role="tab"
                             class="hs-tp-floor"
-                            t-att-class="{ 'is-active': tpFloor.id === state.floorId }"
+                            t-att-class="{ 'is-active': tpFloor.id === state.floorId, 'is-takeaway': isTakeawayFloor(tpFloor) }"
                             t-att-aria-selected="tpFloor.id === state.floorId ? 'true' : 'false'"
                             t-on-click="() => this.selectFloor(tpFloor)">
                         <span t-esc="tpFloor.name"/>
@@ -64,9 +64,9 @@
                     <t t-foreach="tables" t-as="tpTable" t-key="tpTable.id">
                         <t t-set="tpInfo" t-value="tableState(tpTable)"/>
                         <button type="button" class="hs-tp-table"
-                                t-att-class="{ 'is-busy': tpInfo.busy, 'is-current': tpInfo.current }"
+                                t-att-class="{ 'is-busy': tpInfo.busy, 'is-current': tpInfo.current, 'is-takeaway': isTakeawayFloor(tpTable.floor_id) }"
                                 t-on-click="() => this.pick(tpTable)">
-                            <span class="hs-tp-table-number" t-esc="tpTable.table_number"/>
+                            <span class="hs-tp-table-number"><t t-if="isTakeawayFloor(tpTable.floor_id)">سفري </t><t t-esc="tpTable.table_number"/></span>
                             <span class="hs-tp-table-state">
                                 <t t-if="tpInfo.current">الحالية</t>
                                 <bdi t-elif="tpInfo.amount" t-esc="tpInfo.amount"/>
