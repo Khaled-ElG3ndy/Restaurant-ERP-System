@@ -151,12 +151,14 @@
 :is(#hs,.pos) .hp-total.is-paid b { color: var(--hp-mint); }
 :is(#hs,.pos) .hp-total.is-left b { color: var(--hp-red); }
 :is(#hs,.pos) .hp-total.is-left.is-zero b { color: var(--hp-mint); }
+/* «الباقي للعميل»: amber so the cashier sees at once what to hand back */
 :is(#hs,.pos) .hp-total.is-change {
     border-color: transparent;
-    /*rtl:ignore*/background: linear-gradient(135deg, var(--hp-mint-a) 0%, var(--hp-mint-b) 100%);
+    /*rtl:ignore*/background: linear-gradient(135deg, #F0A23C 0%, #D97F1A 100%);
+    box-shadow: 0 10px 22px -10px rgba(217,127,26,.75);
 }
-:is(#hs,.pos) .hp-total.is-change span { color: rgba(255,255,255,.85); }
-:is(#hs,.pos) .hp-total.is-change b { color: #FFFFFF; }
+:is(#hs,.pos) .hp-total.is-change span { color: #FFF4E2; font-weight: 800; }
+:is(#hs,.pos) .hp-total.is-change b { color: #FFFFFF; font-weight: 800; }
 :is(#hs,.pos) .hp-tip {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
     min-inline-size: 92px;

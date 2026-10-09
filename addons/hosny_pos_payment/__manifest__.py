@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Payment',
-    'version': '19.0.1.10.0',
+    'version': '19.0.1.10.1',
     'category': 'Point of Sale',
     'summary': 'شاشة الدفع بتقسيمة FERP: ملخص الفاتورة، الدفع، والإجراءات والأرقام',
     'description': """

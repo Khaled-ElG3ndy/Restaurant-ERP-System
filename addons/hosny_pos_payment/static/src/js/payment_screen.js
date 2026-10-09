@@ -247,8 +247,17 @@ patch(PaymentScreen.prototype, {
     get hpRemaining() {
         return Math.max(0, this.currentOrder.remainingDue);
     },
+    /**
+     * الباقي للعميل حين يدفع أكثر من الإجمالي. order.change في أودو 19 سالب
+     * لطلب البيع (الإجمالي − المدفوع، بعد تقريب النقدي)، فكان Math.max(0, …)
+     * يرجع صفراً دائماً ولا يظهر الباقي. المرتجع (إجمالي سالب) بلا باقٍ.
+     */
     get hpChange() {
-        return Math.max(0, this.currentOrder.change);
+        const order = this.currentOrder;
+        if (!order || order.totalDue < 0) {
+            return 0;
+        }
+        return Math.abs(order.change || 0);
     },
     get hpMethods() {
         const minimal = this.pos.cashier?._role === "minimal";
