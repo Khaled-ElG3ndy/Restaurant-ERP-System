@@ -113,5 +113,26 @@
                 </div>
             </div>
         </xpath>
+        <!-- 2026-10-10: a wider window in two columns so closing needs little
+             or no scrolling — the method cards on one side, the counting
+             inputs and the closing note on the other. Nodes are moved, not
+             copied, so core's bindings and any other module's hooks on them
+             keep working. -->
+        <xpath expr="//div[hasclass('payment-methods-overview')]" position="before">
+            <div class="hs-close-grid">
+                <section class="hs-close-col hs-close-figures"/>
+                <section class="hs-close-col hs-close-count">
+                    <h5 class="hs-close-col-title"><i class="fa fa-calculator" aria-hidden="true"/> التعداد</h5>
+                </section>
+            </div>
+        </xpath>
+        <xpath expr="//section[hasclass('hs-close-figures')]" position="inside">
+            <xpath expr="//div[hasclass('payment-methods-overview')]" position="move"/>
+        </xpath>
+        <xpath expr="//section[hasclass('hs-close-count')]" position="inside">
+            <xpath expr="//Dialog/div[@t-if='pos.config.cash_control']" position="move"/>
+            <xpath expr="//Dialog/div[@t-foreach='props.non_cash_payment_methods']" position="move"/>
+            <xpath expr="//Dialog/div[hasclass('notes-container')]" position="move"/>
+        </xpath>
     </t>
 </templates>

@@ -8782,6 +8782,65 @@ body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-seco
 body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary:hover { background: #F2F6FB !important; }
 body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary .fa { color: #2B5DA0 !important; }
 
+/* ── 45b  two columns, less scrolling (2026-10-10) ──
+   Khaled: the closing window scrolled a lot. It is now wide (up to
+   1240px) and split: the method cards on the start side, a white
+   «التعداد» panel with the counting inputs and the closing note on the
+   other (skin.xml moves those nodes into .hs-close-grid). Inputs are
+   shorter and their labels tighter. Anything another module adds to
+   the body (the shift summary) stays below at full width. Under 992px
+   the columns stack. */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-dialog:has(> .modal-content.close-pos-popup) {
+    max-width: min(1240px, calc(100vw - 32px)) !important; inline-size: 100% !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body { padding: 16px 20px !important; }
+.close-pos-popup .hs-close-grid {
+    display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(330px, 1fr);
+    gap: 16px; align-items: start;
+}
+.close-pos-popup .hs-close-col { min-inline-size: 0; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-figures .payment-methods-overview {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; gap: 10px !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 14px; border: 1px solid #DCE3ED; border-radius: 16px; background: #FFFFFF;
+    box-shadow: 0 6px 16px -14px rgba(23,57,95,.6);
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-col-title {
+    display: flex !important; align-items: center !important; gap: 8px !important;
+    margin: 0 !important; padding-block-end: 8px !important; border-block-end: 1px dashed #DCE3ED !important;
+    color: #17395F !important; font-size: 17px !important; font-weight: 800 !important;
+}
+.close-pos-popup .hs-close-col-title .fa { color: #2B5DA0; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div { margin: 0 !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div:empty { display: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .form-label,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div > span {
+    display: block !important; margin: 0 0 4px !important;
+    color: #17395F !important; font-size: 14px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div > .d-flex { margin-block-start: 0 !important; gap: 8px !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count input:not([type="checkbox"]) {
+    min-block-size: 44px !important; block-size: 44px !important; padding: 6px 12px !important; font-size: 17px !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .btn.icon {
+    flex-basis: 44px !important; inline-size: 44px !important; block-size: 44px !important; font-size: 16px !important;
+}
+/* closing note: under the inputs, one short box */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .notes-container {
+    flex-direction: column !important; gap: 8px !important; padding: 0 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count textarea {
+    min-block-size: 54px !important; block-size: 54px !important; padding: 8px 12px !important;
+}
+/* the old divider and whatever follows the grid */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > hr { display: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > .hs-close-grid ~ * { margin-block-start: 14px !important; }
+@media (max-width: 991.98px) {
+    .close-pos-popup .hs-close-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* ══ 46  table picker: «سفري» floor (2026-10-09) ══════════════════════
    The «اختر الطاولة» picker now lists the «سفري» floor after the dining
    floors. Its free tables are pink like on the floor map; busy and current
