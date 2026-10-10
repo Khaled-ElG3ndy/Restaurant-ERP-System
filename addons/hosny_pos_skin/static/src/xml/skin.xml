@@ -135,4 +135,12 @@
             <xpath expr="//Dialog/div[hasclass('notes-container')]" position="move"/>
         </xpath>
     </t>
+    <!-- «التحكم في الفتح» (point_of_sale.OpeningControlPopup), 2026-10-10:
+         a class on the dialog so the skin can give it the navy borderless
+         frame and a right-to-left body (section 48). -->
+    <t t-name="hosny_pos_skin.OpeningControlPopup" t-inherit="point_of_sale.OpeningControlPopup" t-inherit-mode="extension">
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="contentClass">'hs-open-popup'</attribute>
+        </xpath>
+    </t>
 </templates>

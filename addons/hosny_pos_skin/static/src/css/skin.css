@@ -8903,3 +8903,71 @@ body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::
 body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover { background: #FCEBEA !important; border-color: #F0C4C0 !important; }
 body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::before,
 body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::after { background: #D2544B !important; }
+
+/* ══ 48  «التحكم في الفتح» (OpeningControlPopup) (2026-10-10) ══════════
+   Khaled: drop the explanation under «رصيد الافتتاح», start everything
+   on the right, and no white line over the header. Same frame as §45:
+   borderless, full-bleed navy header. The body is pinned right-to-left.
+   The «رصيد الافتتاح» card (added on the server) keeps only its first
+   line — the one with the amount; a block holding an input, a label or
+   a textarea is never touched. */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup {
+    border: 0 !important; border-radius: 20px !important; overflow: hidden !important;
+    background: #FFFFFF !important; font-family: "Cairo", sans-serif !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header {
+    margin: 0 !important; padding: 16px 22px !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+    /*rtl:ignore*/direction: rtl !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header::before,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header::after { display: none !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header .modal-title {
+    margin: 0 !important; color: #FFFFFF !important; font-size: 20px !important; font-weight: 800 !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-body {
+    padding: 18px 22px !important; background: #F2F6FB !important; color: #17395F !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body .opening-notes-container { align-items: stretch !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body .form-label {
+    margin-block-end: 6px !important; color: #17395F !important; font-size: 15px !important; font-weight: 800 !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body input:not([type="checkbox"]) {
+    border: 2px solid #DCE3ED !important; border-radius: 12px !important; background: #FFFFFF !important;
+    box-shadow: none !important; color: #17395F !important;
+    font-family: "Cairo", sans-serif !important; font-size: 15px !important; font-weight: 700 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea:focus,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body input:focus { border-color: #2B5DA0 !important; box-shadow: 0 0 0 4px rgba(43,93,160,.12) !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea::placeholder { color: #9AAAC0 !important; font-weight: 600 !important; }
+/* «رصيد الافتتاح» card: keep the amount line, drop the explanation */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body > :not(.opening-notes-container):not(:has(input, textarea, label)) > :not(:first-child),
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body > :not(.opening-notes-container):not(:has(input, textarea, label)) .alert { display: none !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body > :not(.opening-notes-container):not(:has(input, textarea, label)) > :first-child { margin: 0 !important; }
+/* footer: buttons from the right */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-footer {
+    margin: 0 !important; padding: 14px 22px !important; gap: 10px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important; background: #FFFFFF !important;
+    /*rtl:ignore*/direction: rtl !important;
+    justify-content: flex-start !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn {
+    min-height: 52px !important; margin: 0 !important; padding: 0 22px !important; border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16px !important; font-weight: 800 !important; transform: none !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-primary {
+    min-width: 150px !important; border: 0 !important; color: #FFFFFF !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-primary:disabled { opacity: .45 !important; box-shadow: none !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-secondary {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+}
