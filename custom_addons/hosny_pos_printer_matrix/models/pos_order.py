@@ -50,6 +50,11 @@ class PosOrder(models.Model):
         # الجهاز القديم لا تمسحه.
         if "tracking_number" in vals and any(self.mapped("hosny_session_number")):
             vals.pop("tracking_number")
+        # وكذلك الاسم العائم الآلي للسفري (رقم الجهاز وقت الإنشاء): يبقى رقم الوردية.
+        floating = vals.get("floating_order_name")
+        if (floating and str(floating).strip().isdigit()
+                and all(self.mapped("hosny_session_number"))):
+            vals.pop("floating_order_name")
         # نقطة بيع لم يُعَد تحميلها بعد التحديث ترسل order_type_id = false لأنها
         # لا تعرف النوع؛ لا نسمح لها بمسح نوع مسجّل.
         stale_type = "order_type_id" in vals and not vals["order_type_id"]
@@ -150,7 +155,15 @@ class PosOrder(models.Model):
             number = order.session_id._hosny_next_order_number()
             # رقم الطلب الظاهر (tracking_number) هو رقم الوردية نفسه (2026-10-09):
             # 1، 2، 3… ويبدأ من 1 مع كل وردية، بدل عدّاد الجهاز في أودو (46010).
+            # والاسم العائم الآلي (أرقام فقط أو مرجع الطلب) يتبعه، حتى لا يظهر السفري
+            # في «الطلبات» برقم الجهاز (2026-10-10). الاسم المكتوب يدوياً يبقى.
             self.env.cr.execute(
-                "UPDATE pos_order SET hosny_session_number = %s, tracking_number = %s WHERE id = %s",
-                [number, str(number), order.id])
-        self.invalidate_recordset(["hosny_session_number", "tracking_number"])
+                """UPDATE pos_order
+                      SET hosny_session_number = %s,
+                          tracking_number = %s,
+                          floating_order_name = CASE
+                              WHEN floating_order_name ~ '^[0-9]+$' OR floating_order_name = pos_reference
+                              THEN %s ELSE floating_order_name END
+                    WHERE id = %s""",
+                [number, str(number), str(number), order.id])
+        self.invalidate_recordset(["hosny_session_number", "tracking_number", "floating_order_name"])

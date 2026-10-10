@@ -10,6 +10,7 @@
  *   • السفري لا يرجع لخريطة الطاولات: بعد «إرسال الطلب» يبقى على الشاشة، وبعد
  *     الدفع يفتح طلب سفري جديد.
  */
+import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
@@ -108,7 +109,9 @@ patch(PosStore.prototype, {
      */
     nameTakeawayOrder(order) {
         if (order && !order.finalized && !order.table_id && !order.floating_order_name && this.isTakeawayOrder(order)) {
-            order.floating_order_name = order.floatingOrderName || order.pos_reference || "";
+            order.floating_order_name = order.hosny_session_number
+                ? String(order.hosny_session_number)
+                : order.floatingOrderName || order.pos_reference || "";
         }
     },
 
@@ -246,5 +249,25 @@ patch(PosStore.prototype, {
             return;
         }
         return super.orderDone(...arguments);
+    },
+});
+
+/**
+ * اسم الطلب في «الطلبات» وكل مكان يستعمل getName(): رقم الوردية (1، 2، 3…).
+ * الاسم العائم للسفري يُعطى عند إنشاء الطلب على الجهاز، قبل أن يعطيه الخادم
+ * رقم الوردية، فكان يتجمّد على عدّاد الجهاز (9071). الاسم الآلي (أرقام فقط أو
+ * مرجع الطلب) يتبع رقم الوردية؛ الاسم الذي يكتبه الكاشير يبقى كما هو.
+ */
+export function hosnyIsAutoFloatingName(order) {
+    const name = `${order?.floating_order_name ?? ""}`.trim();
+    return !name || /^\d+$/.test(name) || name === order?.pos_reference;
+}
+
+patch(PosOrder.prototype, {
+    get floatingOrderName() {
+        if (this.hosny_session_number && hosnyIsAutoFloatingName(this)) {
+            return String(this.hosny_session_number);
+        }
+        return super.floatingOrderName;
     },
 });
