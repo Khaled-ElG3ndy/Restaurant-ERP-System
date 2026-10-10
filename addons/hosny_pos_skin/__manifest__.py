@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Skin',
-    'version': '19.0.46.5.0',
+    'version': '19.0.46.5.1',
     'category': 'Point of Sale',
     'summary': 'One coherent look for the POS — the branches\' own navy/blue/green, rebuilt',
     'description': """
