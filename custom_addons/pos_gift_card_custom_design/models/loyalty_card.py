@@ -5,6 +5,7 @@ from urllib.parse import quote
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 from reportlab.graphics.barcode import createBarcodeDrawing
+from reportlab.graphics.barcode.code128 import Code128
 
 from odoo import api, fields, models
 from odoo.tools.image import image_data_uri, image_process
@@ -17,6 +18,10 @@ from . import coupon_design
 # four weights is worth caching - they never change at runtime.
 _FONT_WEIGHTS = (400, 600, 700, 900)
 _FONT_FAMILY = "HosnyCoupon"
+# Old-style serif figures for the amount and the code, as on the approved design.
+_SERIF_WEIGHTS = (600, 700)
+_SERIF_FAMILY = "HosnyCouponSerif"
+_SERIF_STACK = "HosnyCouponSerif, 'Playfair Display', Georgia, serif"
 # Fallbacks only matter if the embedded face somehow fails to load.
 _FONT_STACK = "HosnyCoupon, Cairo, Tahoma, sans-serif"
 _font_css_cache = None
@@ -133,6 +138,21 @@ class LoyaltyCard(models.Model):
             return False
         return "data:image/png;base64,%s" % base64.b64encode(png).decode("ascii")
 
+    def _hosny_gc_barcode_pattern(self):
+        """Code128 bars of the code as reportlab's module string, drawn as
+        vector rects on the card so the print stays sharp at any size."""
+        self.ensure_one()
+        if not self.code:
+            return False
+        try:
+            barcode = Code128(self.code)
+            barcode.validate()
+            barcode.encode()
+            barcode.decompose()
+        except Exception:
+            return False
+        return barcode.decomposed or False
+
     def _hosny_gc_logo_src(self):
         self.ensure_one()
         # Prefer the full-size logo: logo_web is a 180px thumbnail, which comes
@@ -169,6 +189,18 @@ class LoyaltyCard(models.Model):
                     "@font-face{font-family:'%s';font-style:normal;font-weight:%s;"
                     "src:url(data:font/truetype;charset=utf-8;base64,%s) "
                     "format('truetype');}" % (_FONT_FAMILY, weight, payload)
+                )
+            for weight in _SERIF_WEIGHTS:
+                path = file_path(
+                    "pos_gift_card_custom_design/static/fonts/PlayfairDisplay-%s.ttf"
+                    % weight
+                )
+                with open(path, "rb") as fh:
+                    payload = base64.b64encode(fh.read()).decode("ascii")
+                faces.append(
+                    "@font-face{font-family:'%s';font-style:normal;font-weight:%s;"
+                    "src:url(data:font/truetype;charset=utf-8;base64,%s) "
+                    "format('truetype');}" % (_SERIF_FAMILY, weight, payload)
                 )
             _font_css_cache = "".join(faces)
         return _font_css_cache
@@ -214,7 +246,8 @@ class LoyaltyCard(models.Model):
             if part.strip()
         ]
         return {
-            "brand": company.name or "مطعم حسني",
+            # The brand is the chain (parent company), not "مطعم حسني - جدة".
+            "brand": (company.parent_id or company).name or "مطعم حسني",
             "tagline": "تجربة طعام لا تُنسى",
             "headline": "قسيمة خصم",
             "subtitle": "استمتع بمذاقنا ووفر أكثر",
@@ -232,8 +265,9 @@ class LoyaltyCard(models.Model):
             "phones": phones,
             "email": company.email or "hosnyrily@yahoo.com",
             "logo_src": self._hosny_gc_logo_src(),
-            "barcode_src": self._hosny_gc_barcode_src("Code128", 960, 210),
+            "barcode_pattern": self._hosny_gc_barcode_pattern(),
             "font_family": _FONT_STACK,
+            "serif_family": _SERIF_STACK,
         }
 
     def _hosny_gc_card_svg(self):

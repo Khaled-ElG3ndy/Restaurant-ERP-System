@@ -24,7 +24,11 @@ function getTableAmount(component, table) {
         return null;
     }
 
-    return component.env.utils.formatCurrency(total);
+    // 51.00 SR — الرمز بعد الرقم كبقية الشاشات، معزول LTR وإلا قلبته
+    // الشاشة العربية إلى SR 51.00.
+    const symbol = pos.currency?.symbol ?? pos.config?.currency_id?.symbol ?? "";
+    const number = component.env.utils.formatCurrency(total, false);
+    return symbol ? `\u2066${number}\u00a0${symbol}\u2069` : number;
 }
 
 patch(FloorScreen.prototype, {

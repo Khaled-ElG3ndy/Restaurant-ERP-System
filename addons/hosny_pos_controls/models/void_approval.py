@@ -23,10 +23,11 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     hosny_pos_void_approver = fields.Boolean(
-        "اعتماد إلغاء الأصناف المرسلة (نقاط البيع)",
+        "اعتماد الإلغاء والخصم (نقاط البيع)",
         groups="base.group_erp_manager",
         copy=False,
-        help="يظهر اسمه في نافذة الإلغاء بنقطة البيع، ويعتمد بكلمة سر الإلغاء الخاصة به.",
+        help="يظهر اسمه في نافذتي إلغاء الأصناف المرسلة واعتماد الخصم (أكثر من 5% و100%) "
+        "بنقطة البيع، ويعتمد بكلمة سر الإلغاء الخاصة به.",
     )
     hosny_pos_void_password = fields.Char(
         "كلمة سر الإلغاء",
@@ -93,21 +94,18 @@ class PosAuditLog(models.Model):
         return [{"id": u.id, "name": u.name} for u in users]
 
     @api.model
-    def hosny_approve_void(self, approver_id, password, details):
-        """يفحص كلمة سر الإلغاء ويكتب السجل. لا يرفع استثناء للكاشير: يرجع رسالة."""
-        details = details or {}
-        reason = (details.get("reason") or "").strip()
-        if not reason:
-            return {"ok": False, "error": _("اكتب سبب الإلغاء أولاً.")}
-
+    def _hosny_check_approver(self, approver_id, password):
+        """(approver, None) when the approval password is right, else
+        (approver, {"ok": False, "error": …}). Counts failures and locks the
+        account for LOCK_MINUTES after MAX_FAILURES, whatever is approved."""
         approver = self.env["res.users"].sudo().browse(int(approver_id or 0)).exists()
         if not approver or not approver.hosny_pos_void_approver or not approver.hosny_pos_void_password_hash:
-            return {"ok": False, "error": _("هذا الحساب غير مفعّل لاعتماد الإلغاء.")}
+            return approver, {"ok": False, "error": _("هذا الحساب غير مفعّل للاعتماد.")}
 
         now = fields.Datetime.now()
         if approver.hosny_pos_void_locked_until and approver.hosny_pos_void_locked_until > now:
             minutes = max(1, int((approver.hosny_pos_void_locked_until - now).total_seconds() // 60) + 1)
-            return {"ok": False, "error": _(
+            return approver, {"ok": False, "error": _(
                 "محاولات خاطئة كثيرة. الاعتماد بحساب %(name)s موقوف %(min)s دقيقة.",
                 name=approver.name, min=minutes,
             )}
@@ -126,14 +124,27 @@ class PosAuditLog(models.Model):
                 vals.update(hosny_pos_void_failures=0,
                             hosny_pos_void_locked_until=now + timedelta(minutes=LOCK_MINUTES))
             approver.write(vals)
-            _logger.warning("POS void approval: wrong password for %s by uid %s (%s)",
+            _logger.warning("POS approval: wrong password for %s by uid %s (%s)",
                             approver.login, self.env.uid, failures)
             if failures >= MAX_FAILURES:
-                return {"ok": False, "error": _(
+                return approver, {"ok": False, "error": _(
                     "كلمة السر غير صحيحة. أُوقف الاعتماد بهذا الحساب %(min)s دقائق.", min=LOCK_MINUTES)}
-            return {"ok": False, "error": _("كلمة السر غير صحيحة.")}
+            return approver, {"ok": False, "error": _("كلمة السر غير صحيحة.")}
 
         approver.write({"hosny_pos_void_failures": 0, "hosny_pos_void_locked_until": False})
+        return approver, None
+
+    @api.model
+    def hosny_approve_void(self, approver_id, password, details):
+        """يفحص كلمة سر الإلغاء ويكتب السجل. لا يرفع استثناء للكاشير: يرجع رسالة."""
+        details = details or {}
+        reason = (details.get("reason") or "").strip()
+        if not reason:
+            return {"ok": False, "error": _("اكتب سبب الإلغاء أولاً.")}
+
+        approver, error = self._hosny_check_approver(approver_id, password)
+        if error:
+            return error
 
         config = self.env["pos.config"].sudo().browse(int(details.get("config_id") or 0)).exists()
         session = self.env["pos.session"].sudo().browse(int(details.get("session_id") or 0)).exists()
@@ -169,6 +180,46 @@ class PosAuditLog(models.Model):
                 and _("حذف الطلب كاملاً بعد إرساله") or "",
             })
         return {"ok": True, "approver": approver.name, "log_ids": logs.ids}
+
+    @api.model
+    def hosny_approve_discount(self, approver_id, password, details):
+        """اعتماد خصم الفاتورة (أكثر من 5% و100%) بنفس حسابات وكلمة سر الاعتماد.
+
+        يرجع {"ok": True, "approver": الاسم} ويكتب سطراً في سجل المراجعة، أو
+        {"ok": False, "error": رسالة} — لا يرفع استثناء للكاشير.
+        """
+        details = details or {}
+        reason = (details.get("reason") or "").strip()
+        if not reason:
+            return {"ok": False, "error": _("اكتب سبب الخصم أولاً.")}
+        approver, error = self._hosny_check_approver(approver_id, password)
+        if error:
+            return error
+
+        config = self.env["pos.config"].sudo().browse(int(details.get("config_id") or 0)).exists()
+        session = self.env["pos.session"].sudo().browse(int(details.get("session_id") or 0)).exists()
+        order = self.env["pos.order"].sudo()
+        if isinstance(details.get("order_id"), int):
+            order = order.browse(details["order_id"]).exists()
+        if not order and details.get("order_uuid"):
+            order = order.search([("uuid", "=", details["order_uuid"])], limit=1)
+        percent = float(details.get("percent") or 0.0)
+        log = self.sudo().create({
+            "action": "discount",
+            "reason": reason,
+            "approved_by": approver.name,
+            "approved_by_user_id": approver.id,
+            "cashier": details.get("cashier") or self.env.user.name,
+            "pos_session_id": session.id or False,
+            "pos_config_id": config.id or session.config_id.id or False,
+            "pos_order_id": order.id or False,
+            "order_ref": details.get("order_ref") or order.pos_reference or order.name or "",
+            "order_uuid": details.get("order_uuid") or "",
+            "table_name": details.get("table") or "",
+            "amount": float(details.get("amount") or 0.0),
+            "notes": _("خصم %(pc)s%% على الفاتورة", pc=("%g" % percent)),
+        })
+        return {"ok": True, "approver": approver.name, "log_ids": log.ids}
 
     @api.model
     def log_action(self, *args, **kwargs):

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hosny_coupon_issue_form" model="ir.ui.view">
+        <field name="name">hosny.coupon.issue.form</field>
+        <field name="model">hosny.coupon.issue</field>
+        <field name="arch" type="xml">
+            <form string="إصدار كوبونات الخصم">
+                <header>
+                    <button name="action_issue" type="object" string="إصدار الكوبونات" class="btn-primary" invisible="state != 'draft'"
+                            confirm="سيتم إنشاء فاتورة العميل (وتسجيل الدفعة لو نقدي أو بنك) وإنشاء الكوبونات. متابعة؟"/>
+                    <button name="action_print" type="object" string="طباعة الكوبونات" invisible="state != 'issued'"/>
+                    <button name="action_cancel" type="object" string="إلغاء الإصدار" invisible="state != 'issued'"
+                            confirm="سيتم إلغاء الفاتورة والدفعة وإيقاف الكوبونات (مسموح فقط قبل استخدام أي كوبون). متابعة؟"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,issued"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="not invoice_id">
+                            <div class="o_stat_info"><span class="o_stat_text">الفاتورة</span><field name="payment_state" readonly="1"/></div>
+                        </button>
+                        <button name="action_view_cards" type="object" class="oe_stat_button" icon="fa-ticket" invisible="not card_count">
+                            <field name="card_count" widget="statinfo" string="كوبون"/>
+                        </button>
+                    </div>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group string="العميل والكوبونات">
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="pos_config_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="coupon_value" readonly="state != 'draft'"/>
+                            <field name="quantity" readonly="state != 'draft'"/>
+                            <field name="amount_total"/>
+                            <field name="expiration_date" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="الدفع">
+                            <field name="payment_mode" widget="radio" options="{'horizontal': true}" readonly="state != 'draft'"/>
+                            <field name="journal_id" invisible="payment_mode == 'later'" required="payment_mode != 'later'" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="program_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="analytic_account_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="invoice_id" readonly="1" invisible="not invoice_id"/>
+                            <field name="payment_ids" widget="many2many_tags" readonly="1" invisible="not payment_ids"/>
+                            <field name="used_amount" invisible="state == 'draft'"/>
+                            <field name="remaining_amount" invisible="state == 'draft'"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="note" placeholder="ملاحظات (مثلاً: كوبونات موظفي شركة ...)" readonly="state == 'cancelled'"/>
+                    <field name="card_ids" invisible="state == 'draft'" readonly="1">
+                        <list>
+                            <field name="hosny_code_display"/>
+                            <field name="hosny_initial_value"/>
+                            <field name="hosny_used_value"/>
+                            <field name="points" string="المتبقي"/>
+                            <field name="expiration_date"/>
+                            <field name="hosny_status" widget="badge" decoration-success="hosny_status == 'active'" decoration-muted="hosny_status in ('used', 'cancelled')" decoration-danger="hosny_status == 'expired'"/>
+                        </list>
+                    </field>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hosny_coupon_issue_list" model="ir.ui.view">
+        <field name="name">hosny.coupon.issue.list</field>
+        <field name="model">hosny.coupon.issue</field>
+        <field name="arch" type="xml">
+            <list string="إصدارات الكوبونات" decoration-muted="state == 'cancelled'" decoration-info="state == 'draft'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="pos_config_id"/>
+                <field name="quantity" sum="1"/>
+                <field name="coupon_value"/>
+                <field name="amount_total" sum="1"/>
+                <field name="payment_mode"/>
+                <field name="journal_id" optional="show"/>
+                <field name="payment_state" widget="badge" optional="show"/>
+                <field name="used_amount" sum="1"/>
+                <field name="remaining_amount" sum="1"/>
+                <field name="expiration_date" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'issued'" decoration-info="state == 'draft'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hosny_coupon_issue_search" model="ir.ui.view">
+        <field name="name">hosny.coupon.issue.search</field>
+        <field name="model">hosny.coupon.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="card_ids" string="كود الكوبون" filter_domain="[('card_ids.code', 'ilike', self)]"/>
+                <filter name="issued" string="صادر" domain="[('state', '=', 'issued')]"/>
+                <filter name="draft" string="مسودة" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="later" string="أجل" domain="[('payment_mode', '=', 'later')]"/>
+                <filter name="unpaid" string="غير مسدد" domain="[('payment_state', 'not in', ['paid', 'in_payment'])]"/>
+                <group>
+                    <filter name="group_partner" string="العميل" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_mode" string="طريقة الدفع" context="{'group_by': 'payment_mode'}"/>
+                    <filter name="group_branch" string="الفرع" context="{'group_by': 'pos_config_id'}"/>
+                    <filter name="group_month" string="الشهر" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hosny_coupon_issue" model="ir.actions.act_window">
+        <field name="name">إصدار كوبونات الخصم</field>
+        <field name="res_model">hosny.coupon.issue</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">إصدار كوبون خصم مدفوع لعميل</p>
+            <p>اختر العميل وقيمة الكوبون وعدده وطريقة الدفع (نقدي / بنك / أجل). الإصدار ينشئ الفاتورة والدفعة والكوبونات،
+               ويقيّد المبلغ على حساب «كوبونات» حتى يستخدمه العميل في المطعم.</p>
+        </field>
+    </record>
+</odoo>

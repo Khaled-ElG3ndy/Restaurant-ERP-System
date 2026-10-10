@@ -18,8 +18,9 @@ import { usePos } from "@point_of_sale/app/hooks/pos_hook";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { LoginScreen } from "@point_of_sale/app/screens/login_screen/login_screen";
 import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
+import { FloorScreen } from "@pos_restaurant/app/screens/floor_screen/floor_screen";
 import { handleSaleDetails } from "@point_of_sale/app/components/navbar/sale_details_button/sale_details_button";
-import { dineInFloors } from "@pos_entry_selector/js/entry_selector";
+import { dineInFloors, isTakeawayFloor } from "@pos_entry_selector/js/entry_selector";
 
 const HOME = "HosnyHomeScreen";
 const pad = (n) => String(n).padStart(2, "0");
@@ -37,6 +38,17 @@ function branchName(config) {
     return name.replace("مطعم حسني", "").replace("-", "").trim() || name;
 }
 
+/**
+ * 1,240.50 SR — الرمز بعد الرقم أياً كان موضعه في إعدادات العملة. معزول
+ * باتجاه LTR (LRI … PDI) وإلا قلبته الشاشة العربية إلى SR 1,240.50.
+ */
+function money(component, amount) {
+    const pos = component.pos;
+    const symbol = pos.currency?.symbol ?? pos.config.currency_id?.symbol ?? "";
+    const number = component.env.utils.formatCurrency(amount || 0, false);
+    return symbol ? `\u2066${number}\u00a0${symbol}\u2069` : number;
+}
+
 function formatDate(date, locale, options) {
     try {
         return new Intl.DateTimeFormat(locale, options).format(date);
@@ -45,43 +57,57 @@ function formatDate(date, locale, options) {
     }
 }
 
-/** «منذ ...» بالعربية مع صيغ المثنى والجمع. */
-function arabicSince(ms) {
-    const minutes = Math.max(0, Math.floor(ms / 60000));
-    const unit = (n, one, two, few, many) =>
-        n === 1 ? one : n === 2 ? two : n <= 10 ? `${n} ${few}` : `${n} ${many}`;
-    if (minutes < 60) {
-        return minutes < 1 ? "الآن" : unit(minutes, "دقيقة", "دقيقتين", "دقائق", "دقيقة");
-    }
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) {
-        return unit(hours, "ساعة", "ساعتين", "ساعات", "ساعة");
-    }
-    const days = Math.floor(hours / 24);
-    return unit(days, "يوم", "يومين", "أيام", "يوماً");
-}
-
+/**
+ * تقرير الوردية: أرقام هذه الوردية فقط من الخادم (pos.session.hosny_shift_report)
+ * — نفس طلبات ونقد «إغلاق الوردية» — ويُحمَّل عند فتح النافذة وبزر «تحديث».
+ */
 export class HosnyShiftReport extends Component {
     static template = "hosny_pos_home.ShiftReport";
     static components = { Dialog };
-    static props = { summary: Object, close: Function };
+    static props = { close: Function };
 
     setup() {
         this.pos = usePos();
         this.hardwareProxy = useService("hardware_proxy");
         this.dialog = useService("dialog");
+        this.state = useState({ data: null, loading: true, error: "", printing: false });
+        onMounted(() => this.load());
+    }
+    async load() {
+        this.state.loading = true;
+        this.state.error = "";
+        try {
+            this.state.data = await this.pos.data.call("pos.session", "hosny_shift_report", [
+                [this.pos.session.id],
+            ]);
+        } catch {
+            this.state.error = this.state.data
+                ? "تعذّر التحديث — الأرقام المعروضة من آخر تحميل."
+                : "تعذّر تحميل التقرير — تأكد من الاتصال ثم اضغط «تحديث».";
+        } finally {
+            this.state.loading = false;
+        }
+    }
+    get d() {
+        return this.state.data || {};
     }
     get canPrint() {
         return Boolean(this.hardwareProxy.printer);
     }
     fmt(amount) {
-        return this.env.utils.formatCurrency(amount || 0);
+        return money(this, amount);
     }
     qty(value) {
-        return Number.isInteger(value) ? value : Number(value || 0).toFixed(2);
+        const n = Number(value || 0);
+        return Number.isInteger(n) ? String(n) : String(parseFloat(n.toFixed(3)));
     }
     async print() {
-        await handleSaleDetails(this.pos, this.hardwareProxy, this.dialog);
+        this.state.printing = true;
+        try {
+            await handleSaleDetails(this.pos, this.hardwareProxy, this.dialog);
+        } finally {
+            this.state.printing = false;
+        }
     }
 }
 
@@ -93,7 +119,7 @@ export class HosnyHomeScreen extends Component {
     setup() {
         this.pos = usePos();
         this.dialog = useService("dialog");
-        this.state = useState({ now: new Date(), summary: null, loading: true, failed: false });
+        this.state = useState({ now: new Date(), summary: null, syncedAt: null, failed: false });
         this.logo = "/pos_modern_ui/static/src/img/logo.png";
         let clock, refresh;
         onMounted(() => {
@@ -113,37 +139,37 @@ export class HosnyHomeScreen extends Component {
             this.state.summary = await this.pos.data.call("pos.session", "hosny_home_summary", [
                 [this.pos.session.id],
             ]);
+            this.state.syncedAt = new Date();
             this.state.failed = false;
         } catch {
-            // بلا اتصال: تبقى الأرقام السابقة، وما يُحسب محلياً يبقى صحيحاً
+            // بلا اتصال: يبقى تقرير الوردية على آخر بيانات، و«آخر مزامنة» على آخر نجاح
             this.state.failed = true;
-        } finally {
-            this.state.loading = false;
         }
     }
 
-    // ── الرأس ───────────────────────────────────────────────────────────
+    // ── المربعات العلوية ────────────────────────────────────────────────
     get branch() {
         return branchName(this.pos.config);
     }
-    get branchInfo() {
-        const c = this.pos.config;
-        return {
-            address: c.hosny_receipt_address || "",
-            phone: c.hosny_receipt_phone || "",
-            vat: c.hosny_receipt_vat || "",
-        };
+    /** نفس عنوان الفاتورة: عنوان الفرع، وإلا عنوان الشركة، وإلا اسم المدينة. */
+    get branchAddress() {
+        const config = this.pos.config;
+        const company = config.company_id || this.pos.company;
+        return (
+            config.hosny_receipt_address ||
+            [company?.street, company?.street2, company?.city].filter(Boolean).join(" ") ||
+            this.branch
+        );
     }
+    /** 17:36 و 54 — الثواني تُعرض أخفت. */
     get time() {
         const d = this.state.now;
-        const h = d.getHours() % 12 || 12;
-        return { hm: `${pad(h)}:${pad(d.getMinutes())}`, s: pad(d.getSeconds()), ampm: d.getHours() < 12 ? "ص" : "م" };
+        return { hm: `${pad(d.getHours())}:${pad(d.getMinutes())}`, s: pad(d.getSeconds()) };
     }
-    get weekday() {
-        return formatDate(this.state.now, "ar-EG", { weekday: "long" });
-    }
-    get gregorian() {
-        return formatDate(this.state.now, "ar-EG-u-nu-latn", { day: "numeric", month: "long", year: "numeric" });
+    /** 05/10/2026 */
+    get date() {
+        const d = this.state.now;
+        return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
     }
     get hijri() {
         const text = formatDate(this.state.now, "ar-SA-u-ca-islamic-umalqura-nu-latn", {
@@ -153,148 +179,50 @@ export class HosnyHomeScreen extends Component {
         });
         return text.replace(/\s*هـ$/, "") + " هـ";
     }
-    get greeting() {
-        return this.state.now.getHours() < 12 ? "صباح الخير" : "مساء الخير";
+    get syncedAt() {
+        const d = this.state.syncedAt;
+        if (!d) {
+            return "…";
+        }
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} ${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
     }
     get cashierName() {
         return this.pos.cashier?.name || this.pos.user?.name || "";
     }
-    get cashierInitial() {
-        return (this.cashierName.trim()[0] || "ح").toUpperCase();
+    get isManager() {
+        return this.pos.cashier?._role === "manager";
     }
     get online() {
         return !this.pos.data.network?.offline;
     }
-
-    // ── الأرقام ─────────────────────────────────────────────────────────
-    fmt(amount) {
-        return this.env.utils.formatCurrency(amount || 0);
-    }
-    get summary() {
-        return this.state.summary || {};
-    }
-    get delta() {
-        const s = this.summary;
-        if (!s.yesterday_total) {
-            return null;
-        }
-        const pct = Math.round(((s.today_total - s.yesterday_total) / s.yesterday_total) * 100);
-        return { pct: Math.abs(pct), up: pct >= 0 };
-    }
-    get average() {
-        const s = this.summary;
-        return s.today_count ? s.today_total / s.today_count : 0;
-    }
     get openOrders() {
         return this.pos.getOpenOrders().filter((o) => !o.finalized && o.lines.length);
     }
-    get tables() {
-        const all = dineInFloors(this.pos).flatMap((f) => f.table_ids || []);
-        const busy = new Set(
-            this.openOrders.filter((o) => o.table_id).map((o) => (o.table_id.rootTable || o.table_id).id)
-        );
-        const count = all.filter((t) => busy.has(t.id)).length;
-        return { busy: count, total: all.length, pct: all.length ? Math.round((count * 100) / all.length) : 0 };
-    }
-    get shift() {
-        const s = this.summary;
-        const start = s.session_start ? new Date(s.session_start.replace(" ", "T")) : null;
-        return {
-            name: s.session_name || this.pos.session.name,
-            startText: start
-                ? `${formatDate(start, "ar-EG-u-nu-latn", { day: "numeric", month: "short" })} · ${pad(start.getHours())}:${pad(start.getMinutes())}`
-                : "",
-            since: start ? arabicSince(this.state.now - start) : "",
-        };
-    }
-    /** أعمدة المبيعات بالساعة: من أول ساعة فيها مبيعات (أو 8 ص) إلى الساعة الحالية. */
-    get hours() {
-        const s = this.summary;
-        const hourly = s.hourly || [];
-        if (!hourly.length) {
-            return [];
-        }
-        const now = s.current_hour ?? this.state.now.getHours();
-        const first = hourly.findIndex((v) => v);
-        const from = Math.max(0, Math.min(first === -1 ? 8 : first, now - 7, 8));
-        const slice = hourly.slice(from, now + 1);
-        const max = Math.max(...slice, 1);
-        return slice.map((amount, i) => {
-            const h = from + i;
-            return {
-                h,
-                label: `${h % 12 || 12} ${h < 12 ? "ص" : "م"}`,
-                amount,
-                pct: amount ? Math.max(6, Math.round((amount / max) * 100)) : 0,
-                tip: `${pad(h)}:00 — ${this.fmt(amount)}`,
-                now: h === now,
-            };
-        });
-    }
-    get payments() {
-        const list = this.summary.payments || [];
-        const max = Math.max(...list.map((p) => p.amount), 1);
-        return list.map((p) => ({ ...p, pct: Math.max(3, Math.round((p.amount / max) * 100)) }));
-    }
 
-    // ── الاختصارات ──────────────────────────────────────────────────────
+    // ── الأزرار ─────────────────────────────────────────────────────────
+    /** بترتيب القراءة من اليمين؛ خمسة في الصف، والباقي تحتها من اليمين. */
     get tiles() {
         const pos = this.pos;
-        const role = pos.cashier?._role;
         const tiles = [
-            {
-                key: "tables",
-                tone: "blue",
-                icon: "fa-cutlery",
-                title: "الطاولات",
-                sub: `${this.tables.busy} مشغولة من ${this.tables.total}`,
-                run: () => this.openTables(),
-            },
+            { key: "sell", tone: "green", icon: "fa-shopping-cart", title: "المبيعات", run: () => this.startSelling() },
+            { key: "tables", tone: "navy", icon: "fa-cutlery", title: "الطاولات", run: () => this.openTables() },
             {
                 key: "orders",
-                tone: "violet",
-                icon: "fa-file-text-o",
+                tone: "blue",
+                icon: "fa-list-alt",
                 title: "الطلبات والفواتير",
-                sub: `${this.openOrders.length} طلب مفتوح`,
+                badge: this.openOrders.length,
                 run: () => pos.navigate("TicketScreen"),
             },
         ];
-        if (pos.showCashMoveButton && role !== "minimal") {
-            tiles.push({
-                key: "cash",
-                tone: "amber",
-                icon: "fa-exchange",
-                title: "إيداع / سحب",
-                sub: "حركة نقدية في الدرج",
-                run: () => pos.cashMove(),
-            });
+        if (pos.showCashMoveButton && pos.cashier?._role !== "minimal") {
+            tiles.push({ key: "cash", tone: "amber", icon: "fa-exchange", title: "إيداع / سحب", run: () => pos.cashMove() });
         }
-        tiles.push({
-            key: "report",
-            tone: "magenta",
-            icon: "fa-bar-chart",
-            title: "تقرير الوردية",
-            sub: "المبيعات وطرق الدفع",
-            run: () => this.openReport(),
-        });
-        if (role === "manager") {
-            tiles.push({
-                key: "backend",
-                tone: "slate",
-                icon: "fa-cogs",
-                title: "لوحة التحكم",
-                sub: "الإعدادات والتقارير الكاملة",
-                run: () => pos.closePos(),
-            });
+        tiles.push({ key: "report", tone: "deep", icon: "fa-file-text", title: "تقرير الوردية", run: () => this.openReport() });
+        if (this.isManager) {
+            tiles.push({ key: "backend", tone: "slate", icon: "fa-cogs", title: "الإعدادات", run: () => this.openSettings() });
         }
-        tiles.push({
-            key: "close",
-            tone: "red",
-            icon: "fa-power-off",
-            title: "إغلاق الوردية",
-            sub: "جرد الصندوق وإقفال الجلسة",
-            run: () => pos.closeSession(),
-        });
+        tiles.push({ key: "close", tone: "red", icon: "fa-power-off", title: "إغلاق الوردية", run: () => pos.closeSession() });
         return tiles;
     }
 
@@ -306,9 +234,15 @@ export class HosnyHomeScreen extends Component {
         this.pos.currentFloor = dineInFloors(this.pos)[0] || this.pos.currentFloor;
         this.pos.navigate("FloorScreen");
     }
+    /**
+     * إعدادات نقطة البيع في تبويب جديد، على نقطة البيع هذه (انظر
+     * views/pos_settings_action.xml)؛ الكاشير يبقى مفتوحاً في تبويبه.
+     */
+    openSettings() {
+        window.open(`/odoo/${this.pos.config.id}/action-hosny_pos_home.action_pos_settings_current`, "_blank");
+    }
     async openReport() {
-        await this.loadSummary();
-        this.dialog.add(HosnyShiftReport, { summary: this.summary });
+        this.dialog.add(HosnyShiftReport, {});
     }
 }
 
@@ -369,5 +303,34 @@ patch(LoginScreen.prototype, {
 patch(Navbar.prototype, {
     get hosnyShowHomeButton() {
         return this.pos.hosnyHomeEnabled() && this.pos.router.state.current !== HOME;
+    },
+    /** شارة الطاولة: للطلب المحلي فقط، الطاولة والدور (لا «محلي» ولا «سفري»). */
+    get hosnyTableChip() {
+        if (this.pos.router.state.current !== "ProductScreen") {
+            return null;
+        }
+        const order = this.pos.getOrder();
+        const table = order?.table_id?.rootTable || order?.table_id;
+        if (!order || order.finalized || order.isRefund || !table || this.pos.isTakeawayOrder?.(order)) {
+            return null;
+        }
+        return { number: table.table_number ?? table.name ?? "", floor: table.floor_id?.name || "" };
+    },
+});
+
+/**
+ * طاولات «سفري …» وردية في أي دور (في دور VIP تجاورها الكبري والصغري و200
+ * بالتركوازي، كما في صور النظام السابق). انظر css/floor_screen.css.
+ */
+patch(FloorScreen.prototype, {
+    hosnyTableKind(table) {
+        // طاولات طابق «سفري» (طلبات الهاتف) وأي طاولة اسمها «سفري…»
+        if (isTakeawayFloor(table?.floor_id)) {
+            return "safari";
+        }
+        const label = String(
+            table?.getName?.() || table?.table_number || table?.name || ""
+        ).trim();
+        return label.startsWith("سفري") ? "safari" : "";
     },
 });

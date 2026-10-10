@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_config_view_form_hosny_safe" model="ir.ui.view">
+        <field name="name">pos.config.form.hosny.safe</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='configuration']/div[hasclass('o_settings_container')]" position="inside">
+                <setting string="خزنة الفرع (تبدأ كل وردية من صفر)"
+                         help="عند إغلاق الوردية تُسلَّم النقدية المعدودة كلها من الصندوق إلى هذا الحساب، فتبدأ الوردية التالية من صفر.">
+                    <field name="hosny_safe_account_id" options="{'no_create': True}"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -445,12 +445,15 @@ patch(FloorScreen.prototype, {
      * وإلا اختار الكاشير «طاولة سفري» لطلب محلي. يظهر فقط لو بقي عليه طلب
      * مفتوح (من نقطة بيع لم يُعَد تحميلها بعد التحديث) حتى لا يضيع.
      */
+    /**
+     * طابق «سفري» يظهر متى كانت عليه طاولات (2026-10-07): «سفري 1…15» لطلبات
+     * الهاتف تُتابَع حتى يصل العميل. السفري المباشر يبقى بلا طاولة.
+     */
     get hosnyFloorTabs() {
         return this.pos.config.floor_ids.filter(
             (floor) =>
                 floor.active &&
-                (!isTakeawayFloor(floor) ||
-                    floor.table_ids.some((table) => this.pos.getActiveOrdersOnTable(table).length))
+                (!isTakeawayFloor(floor) || floor.table_ids.some((table) => table.active !== false))
         );
     },
 

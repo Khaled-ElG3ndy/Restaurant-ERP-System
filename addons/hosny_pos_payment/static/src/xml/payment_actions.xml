@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- اختيار موظف: النادل / وجبة موظف -->
+    <t t-name="hosny_pos_payment.StaffPicker">
+        <Dialog title="props.title" size="'md'" contentClass="'hpa-dialog'" bodyClass="'hpa-body'">
+            <div class="hpa" dir="rtl">
+                <p t-if="props.subtitle" class="hpa-sub" t-esc="props.subtitle"/>
+                <label class="hpa-search">
+                    <i class="fa fa-search" aria-hidden="true"/>
+                    <input type="search" placeholder="ابحث بالاسم أو الوظيفة" t-model="state.search" autofocus="autofocus"/>
+                </label>
+                <div class="hpa-grid">
+                    <button t-foreach="list" t-as="employee" t-key="employee.id" type="button" class="hpa-person"
+                            t-att-class="{ 'is-on': employee.id === props.selectedId }" t-on-click="() => this.pick(employee)">
+                        <span class="hpa-avatar" t-esc="employee.name.slice(0, 1)"/>
+                        <span class="hpa-person-copy">
+                            <b t-esc="employee.name"/>
+                            <small t-if="employee.job" t-esc="employee.job"/>
+                        </span>
+                    </button>
+                    <div t-if="!list.length" class="hpa-empty">لا يوجد موظف بهذا البحث</div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hpa-footer">
+                    <button t-if="props.selectedId" class="hpa-btn is-clear" t-on-click="clear">
+                        <i class="fa fa-times-circle" aria-hidden="true"/> <t t-esc="props.clearLabel"/>
+                    </button>
+                    <button class="hpa-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <!-- نسبة الخصم -->
+    <t t-name="hosny_pos_payment.DiscountPopup">
+        <Dialog title="'الخصم'" size="'sm'" contentClass="'hpa-dialog is-small'" bodyClass="'hpa-body'">
+            <div class="hpa" dir="rtl">
+                <div class="hpa-pc">
+                    <input type="text" inputmode="decimal" class="hpa-pc-input" placeholder="0" autofocus="autofocus"
+                           t-att-value="state.value" t-on-input="onInput" t-on-focus="(ev) => ev.target.select()"/>
+                    <span class="hpa-pc-sign">%</span>
+                </div>
+                <div class="hpa-quick">
+                    <button t-foreach="quick" t-as="n" t-key="n" type="button" class="hpa-chip"
+                            t-att-class="{ 'is-on': pc === n }" t-on-click="() => this.set(n)"><bdi><t t-esc="n"/>%</bdi></button>
+                </div>
+                <div class="hpa-hint" t-att-class="{ 'is-lock': needsApproval }">
+                    <i t-attf-class="fa {{ needsApproval ? 'fa-lock' : 'fa-info-circle' }}" aria-hidden="true"/>
+                    <t t-if="needsApproval">أكثر من <bdi>5%</bdi> يحتاج اعتماد مسؤول</t>
+                    <t t-else="">الخصم على كل الأصناف — لا يشمل الخدمات والتوصيل</t>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hpa-footer">
+                    <button class="hpa-btn is-ok" t-att-disabled="pc &lt;= 0" t-on-click="confirm">
+                        <i class="fa fa-check-circle" aria-hidden="true"/> تطبيق الخصم
+                    </button>
+                    <button t-if="props.current" class="hpa-btn is-clear" t-on-click="remove">إلغاء الخصم</button>
+                    <button class="hpa-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <!-- اعتماد الخصم (أكثر من 5% و100%) -->
+    <t t-name="hosny_pos_payment.DiscountApproval">
+        <Dialog title="title" size="'md'" contentClass="'hpa-dialog hpa-approve'" bodyClass="'hpa-body'">
+            <div class="hpa" dir="rtl">
+                <div class="hpa-sum">
+                    <div class="hpa-sum-cell">
+                        <small>الإجمالي قبل الخصم</small>
+                        <b dir="ltr" t-esc="props.before"/>
+                    </div>
+                    <div class="hpa-sum-cell is-cut">
+                        <small>قيمة الخصم <bdi t-esc="props.pc + '%'"/></small>
+                        <b dir="ltr" t-esc="props.discount"/>
+                    </div>
+                    <div class="hpa-sum-cell is-after">
+                        <small>الإجمالي بعد الخصم</small>
+                        <b dir="ltr" t-esc="props.after"/>
+                    </div>
+                </div>
+
+                <div class="hpa-step">
+                    <span class="hpa-step-n">1</span>
+                    <span>سبب الخصم</span>
+                </div>
+                <div class="hpa-reasons">
+                    <button t-foreach="reasons" t-as="reason" t-key="reason_index" type="button" class="hpa-reason"
+                            t-att-class="{ 'is-on': state.reason === reason }" t-on-click="() => this.pickReason(reason)">
+                        <t t-esc="reason"/>
+                    </button>
+                </div>
+                <input t-ref="reason" type="text" class="hpa-text" dir="rtl" maxlength="200"
+                       placeholder="أو اكتب السبب…" t-model="state.reason"/>
+
+                <div class="hpa-step">
+                    <span class="hpa-step-n">2</span>
+                    <span>اعتماد المسؤول</span>
+                </div>
+                <div t-if="state.loading" class="hpa-muted"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/> جارٍ التحميل…</div>
+                <div t-elif="!state.approvers.length and !state.error" class="hpa-muted is-empty">
+                    لا يوجد حساب مفعّل للاعتماد. يفعّله مدير النظام من: الإعدادات ← المستخدمون ← «اعتماد الإلغاء والخصم (نقاط البيع)» مع كلمة سر الإلغاء.
+                </div>
+                <div t-else="" class="hpa-approvers">
+                    <button t-foreach="state.approvers" t-as="approver" t-key="approver.id" type="button" class="hpa-approver"
+                            t-att-class="{ 'is-on': state.approverId === approver.id }" t-on-click="() => this.selectApprover(approver.id)">
+                        <span class="hpa-avatar" t-esc="approver.name.slice(0, 1)"/>
+                        <b t-esc="approver.name"/>
+                    </button>
+                </div>
+                <input t-if="state.approvers.length" t-ref="password" type="password" class="hpa-text is-password"
+                       autocomplete="new-password" placeholder="كلمة سر الاعتماد"
+                       t-model="state.password" t-on-keydown="onPasswordKeydown"/>
+
+                <div t-if="state.error" class="hpa-error" role="alert">
+                    <i class="fa fa-times-circle" aria-hidden="true"/> <t t-esc="state.error"/>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <div class="hpa-footer">
+                    <button class="hpa-btn is-ok" t-att-disabled="!canSubmit" t-on-click="submit">
+                        <i t-if="state.busy" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/>
+                        <i t-else="" class="fa fa-check-circle" aria-hidden="true"/>
+                        اعتماد وتطبيق الخصم
+                    </button>
+                    <button class="hpa-btn is-close" t-on-click="props.close">إلغاء</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+</templates>

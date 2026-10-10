@@ -1,0 +1,101 @@
+/* =====================================================================
+   hosny_pos_controls — نافذة «عدد نسخ الفاتورة»
+   ---------------------------------------------------------------------
+   Short on purpose: a stepper and five quick counts instead of a 0-9
+   keypad. No light frame border (it drew a white line over the navy
+   header). Everything goes through three :not(#…) so the dialog rules
+   of the skin and controls.css (id weight + !important) cannot reach
+   in; +/− are drawn in CSS, logical properties only (rtlcss).
+   ===================================================================== */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-dialog:has(> .modal-content.hc-copies-dialog) {
+    inline-size: min(420px, calc(100vw - 32px)) !important;
+    max-inline-size: min(420px, calc(100vw - 32px)) !important;
+    margin-inline: auto !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog {
+    border: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    font-family: "Cairo", "IBM Plex Sans Arabic", sans-serif !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog > .modal-header {
+    min-height: 0 !important; margin: 0 !important;
+    padding: 14px 20px !important;
+    border: 0 !important; border-radius: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog > .modal-header::after { display: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog > .modal-header .modal-title {
+    margin: 0 !important; color: #FFFFFF !important; font-size: 18px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog > .modal-body {
+    padding: 20px 20px 18px !important; background: #FFFFFF !important;
+}
+.hc-copies { /*rtl:ignore*/direction: rtl; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.hc-copies-stepper { display: flex; align-items: center; gap: 14px; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog button {
+    margin: 0 !important; min-width: 0 !important; max-width: none !important;
+    white-space: nowrap !important; overflow-wrap: normal !important;
+    font-family: "Cairo", sans-serif !important; letter-spacing: 0 !important;
+    transform: none !important; cursor: pointer;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog button:active { filter: brightness(.94) !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog button:disabled { opacity: .4 !important; cursor: default !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm {
+    position: relative !important;
+    inline-size: 52px !important; block-size: 52px !important; padding: 0 !important;
+    border: 0 !important; border-radius: 50% !important;
+    box-shadow: none !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm.is-plus { /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0, #17395F) !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm.is-minus { background: #8FA4BF !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm::before,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm.is-plus::after {
+    content: "" !important; position: absolute !important; inset: 0 !important; margin: auto !important;
+    display: block !important; inline-size: 18px !important; block-size: 3px !important; border-radius: 2px !important;
+    background: #FFFFFF !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-pm.is-plus::after { transform: rotate(90deg) !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-input,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-input:focus {
+    inline-size: 110px !important; block-size: 64px !important; padding: 0 !important; margin: 0 !important;
+    border: 2px solid #DCE3ED !important; border-radius: 16px !important;
+    background: #F5F8FC !important; box-shadow: none !important; outline: 0 !important;
+    text-align: center !important;
+    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important; font-size: 34px !important; font-weight: 800 !important; color: #17395F !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-input:focus { border-color: #2B5DA0 !important; background: #FFFFFF !important; }
+.hc-copies-label { font-size: 15px; font-weight: 700; color: #637D99; }
+.hc-copies-quick { display: flex; gap: 8px; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-chip {
+    inline-size: 50px !important; block-size: 42px !important; padding: 0 !important;
+    border: 1px solid #DCE3ED !important; border-radius: 12px !important;
+    background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important; font-size: 17px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-chip.is-on {
+    border-color: #2E9D6A !important; background: #E6F4EC !important; color: #0F7A49 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .modal-content.hc-copies-dialog > .modal-footer {
+    margin: 0 !important; padding: 12px 20px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important;
+    background: #F5F8FC !important;
+}
+.hc-copies-footer { display: flex; gap: 10px; inline-size: 100%; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-btn {
+    flex: 1 1 0 !important;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+    min-height: 50px !important; padding: 0 16px !important;
+    border-radius: 14px !important; font-size: 17px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-btn.is-print {
+    border: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    color: #FFFFFF !important; box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-btn.is-cancel {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .hc-copies-dialog .hc-copies-btn .fa { font-family: "FontAwesome" !important; }

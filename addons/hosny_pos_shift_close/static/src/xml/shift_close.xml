@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- إغلاق الوردية: خانة الأجل، ملاحظة التسليم للخزنة، وملخص الوردية (shift_close.js) -->
+    <t t-name="hosny_pos_shift_close.ClosePosPopup" t-inherit="point_of_sale.ClosePosPopup" t-inherit-mode="extension">
+        <xpath expr="(//t[@t-set='_showDiff'])[1]" position="attributes">
+            <attribute name="t-value">(pm.type === 'bank' or pm.type === 'pay_later') and pm.number !== 0</attribute>
+        </xpath>
+        <xpath expr="(//t[@t-set='_showDiff'])[2]" position="attributes">
+            <attribute name="t-value">(pm.type === 'bank' or pm.type === 'pay_later') and pm.number !== 0</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('payment-methods-overview')]" position="after">
+            <div t-if="hosnySummary.data" class="hosny-shift-summary">
+                <t t-set="sum" t-value="hosnySummary.data"/>
+                <div class="hosny-shift-summary-title">ملخص الوردية</div>
+                <div class="hosny-shift-summary-grid">
+                    <div class="hosny-shift-cell">
+                        <span>الخصومات</span>
+                        <b t-esc="env.utils.formatCurrency(sum.discount_total)"/>
+                    </div>
+                    <div class="hosny-shift-cell">
+                        <span>الضيافة <small t-if="sum.hospitality_count">(<t t-esc="sum.hospitality_count"/> صنف)</small></span>
+                        <b t-esc="env.utils.formatCurrency(sum.hospitality_total)"/>
+                    </div>
+                    <div class="hosny-shift-cell">
+                        <span>كوبونات الخصم <small t-if="sum.coupon_count">(<t t-esc="sum.coupon_count"/> طلب)</small></span>
+                        <b t-esc="env.utils.formatCurrency(sum.coupon_total)"/>
+                    </div>
+                    <div class="hosny-shift-cell">
+                        <span>المرتجعات <small t-if="sum.refund_count">(<t t-esc="sum.refund_count"/>)</small></span>
+                        <b t-esc="env.utils.formatCurrency(sum.refund_total)"/>
+                    </div>
+                    <div class="hosny-shift-cell">
+                        <span>إلغاءات بعد الإرسال <small t-if="sum.void_count">(<t t-esc="sum.void_count"/>)</small></span>
+                        <b t-esc="env.utils.formatCurrency(sum.void_total)"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@t-if='pos.config.cash_control' and hasclass('mb-3') and not(hasclass('w-100'))]" position="inside">
+            <div t-if="hosnyZeroStart" class="hosny-shift-handover-note">
+                <i class="fa fa-lock" aria-hidden="true"/>
+                المبلغ المعدود يُسلَّم كله لخزنة الفرع<t t-if="pos.config.hosny_safe_account_name"> (<t t-esc="pos.config.hosny_safe_account_name"/>)</t>، والوردية الجاية تبدأ من صفر.
+            </div>
+        </xpath>
+    </t>
+
+    <!-- فتح الوردية: صفر دائماً حين تكون للفرع خزنة -->
+    <t t-name="hosny_pos_shift_close.OpeningControlPopup" t-inherit="point_of_sale.OpeningControlPopup" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('opening-cash-section')]" position="attributes">
+            <attribute name="t-if">this.cashMethodCount and !hosnyZeroStart</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('opening-cash-section')]" position="after">
+            <div t-if="this.cashMethodCount and hosnyZeroStart" class="hosny-shift-zero-open mb-3">
+                <div class="hosny-shift-zero-amount">رصيد الافتتاح: <b>0</b></div>
+                <div class="hosny-shift-zero-text">كل وردية تبدأ من صفر — نقدية الوردية السابقة اتسلّمت لخزنة الفرع عند إغلاقها.</div>
+            </div>
+        </xpath>
+    </t>
+</templates>

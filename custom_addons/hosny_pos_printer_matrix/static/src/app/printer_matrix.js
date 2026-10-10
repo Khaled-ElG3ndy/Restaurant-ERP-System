@@ -202,55 +202,10 @@ patch(PosStore.prototype, {
     },
 
     /**
-     * «سفري» وحده تخرج فاتورة عميله مع أول إرسال للطلب. تذاكر التحضير نفسها
-     * تُطبع عند «إرسال الطلب» للسفري والمحلي معاً.
+     * «إرسال الطلب» يطبع تذاكر الأقسام فقط، للسفري والمحلي معاً (2026-10-09).
+     * فاتورة العميل للسفري تخرج بعد الدفع، نسختين (takeaway_checkout.js).
      */
-    hosnyIsSafariOrder(order) {
-        return this.getEffectiveOrderType(order)?.code === "safari";
-    },
-
-    /**
-     * فاتورة العميل للسفري تخرج مرة واحدة مع أول إرسال للطلب. نميّز أول
-     * إرسال من آخر تغيير أُرسل للمطبخ، لا من رقم الفاتورة، لأن الرقم يُعطى
-     * للطلب قبل الطباعة كي يظهر على تذكرة التحضير.
-     */
-    hosnyNeedsTakeawayCustomerReceipt(order, opts = {}) {
-        if (
-            !order ||
-            order.finalized ||
-            opts.byPassPrint ||
-            opts.cancelled ||
-            opts.explicitReprint ||
-            !this.hosnyIsSafariOrder(order) ||
-            !order.lines?.length
-        ) {
-            return false;
-        }
-        return !Object.keys(order.last_order_preparation_change?.lines || {}).length;
-    },
-
-    async hosnyPrintTakeawayCustomerReceipt(order) {
-        try {
-            // هذا هو مسار فاتورة العميل العادي (طابعة الكاشير أو طباعة
-            // المتصفح عند عدم وجود جهاز)، وليس مسار طابعات التحضير.
-            // printBillActionTriggered يمنع أودو من كتابة nb_print بطلب
-            // مستقل؛ ذلك الطلب كان يتزامن مع sync_from_ui للطلب نفسه فيصطدم
-            // به («could not serialize»). نعدّ النسخة محلياً بعد المزامنة
-            // (أسفل sendOrderInPreparation).
-            const result = await this.printReceipt({ order, printBillActionTriggered: true });
-            if (result) {
-                order.uiState.hosnyReceiptPrinted = true;
-            }
-        } catch (error) {
-            // فشل الفاتورة لا يعطّل حفظ الطلب أو تذكرة المطبخ؛ خدمة الطباعة
-            // نفسها تعرض محاولة إعادة الطباعة للكاشير عند وجود طابعة فعلية.
-            console.warn("[Hosny] takeaway customer receipt failed", error);
-        }
-    },
-
     async sendOrderInPreparation(order, opts = {}) {
-        const shouldPrintCustomerReceipt = this.hosnyNeedsTakeawayCustomerReceipt(order, opts);
-
         if (
             order &&
             !opts.byPassPrint &&
@@ -273,23 +228,7 @@ patch(PosStore.prototype, {
             }
             return;
         }
-        // لا ننتظر شبكة طابعات المطبخ واحدةً تلو الأخرى قبل بدء فاتورة
-        // العميل. رقم الوردية جاهز هنا (تزامن kitchen_ticket سبقنا)، لذا
-        // تبدأ الفاتورة فوراً بالتوازي مع تذاكر التحضير ثم ننتظر المسارين
-        // قبل إنهاء الإرسال.
-        const customerReceiptJob = shouldPrintCustomerReceipt
-            ? this.hosnyPrintTakeawayCustomerReceipt(order)
-            : null;
-        const result = await super.sendOrderInPreparation(...arguments);
-        if (customerReceiptJob) {
-            await customerReceiptJob;
-            // بعد انتهاء المزامنة داخل super فقط: لو عدّلناه أثناءها يعيده رد
-            // الخادم صفراً. يصل للخادم مع المزامنة التالية (الدفع).
-            if (order.uiState.hosnyReceiptPrinted && !order.nb_print) {
-                order.nb_print = 1;
-            }
-        }
-        return result;
+        return await super.sendOrderInPreparation(...arguments);
     },
 
     /**

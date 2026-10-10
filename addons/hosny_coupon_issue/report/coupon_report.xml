@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_hosny_coupons" model="ir.actions.report">
+        <field name="name">كوبونات الخصم</field>
+        <field name="model">hosny.coupon.issue</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hosny_coupon_issue.report_hosny_coupons</field>
+        <field name="report_file">hosny_coupon_issue.report_hosny_coupons</field>
+        <field name="print_report_name">'كوبونات - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_hosny_coupon_issue"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_hosny_coupons">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="issue">
+                <t t-call="web.basic_layout">
+                    <div class="page" dir="rtl" style="font-family: 'Cairo', sans-serif;">
+                        <t t-foreach="issue.card_ids" t-as="card">
+                            <div style="border: 2px dashed #17395F; border-radius: 14px; padding: 14px 18px; margin-bottom: 14px; page-break-inside: avoid;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <div style="font-size: 20px; font-weight: 800; color: #17395F;" t-esc="issue.company_id.name"/>
+                                            <div style="font-size: 16px; font-weight: 700;">كوبون خصم</div>
+                                            <div style="font-size: 30px; font-weight: 800; color: #1E7B3C;">
+                                                <span t-esc="card.hosny_initial_value" t-options="{'widget': 'monetary', 'display_currency': issue.currency_id}"/>
+                                            </div>
+                                            <div>العميل: <b t-esc="issue.partner_id.name"/></div>
+                                            <div>رقم الإصدار: <span t-esc="issue.name"/></div>
+                                            <div t-if="card.expiration_date">صالح حتى: <b t-esc="card.expiration_date"/></div>
+                                            <div t-else="">بدون تاريخ انتهاء</div>
+                                        </td>
+                                        <td style="width: 45%; text-align: center; vertical-align: middle;">
+                                            <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', card.code, 600, 120)"
+                                                 style="width: 100%; max-height: 70px;"/>
+                                            <div style="font-size: 24px; font-weight: 800; letter-spacing: 2px; direction: ltr;" t-esc="card.hosny_code_display"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="font-size: 12px; color: #4A5D73; margin-top: 6px;">
+                                    يُستخدم في فروع المطعم بإدخال الكود عند الدفع، والمتبقي من الرصيد يبقى لمرة قادمة.
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

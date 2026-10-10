@@ -8,7 +8,6 @@ import { Orderline } from "@point_of_sale/app/components/orderline/orderline";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
-import OrderPaymentValidation from "@point_of_sale/app/utils/order_payment_validation";
 import { ReceiptScreen } from "@point_of_sale/app/screens/receipt_screen/receipt_screen";
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 import { TextInputPopup } from "@point_of_sale/app/components/popups/text_input_popup/text_input_popup";
@@ -162,10 +161,8 @@ patch(PaymentScreen.prototype, {
 });
 
 /*
- * فاتورة السفري تُطبع عند «إرسال الطلب»، أي قبل شاشة الدفع. لو أُضيفت
- * الملاحظة أو تغيّرت بعد تلك الطباعة (في شاشة الدفع أو تذكير الأجل)، تُطبع
- * الفاتورة مرة أخرى بعد الدفع ومعها الملاحظة. المحلي لا يحتاج هذا: بعد دفعه
- * تظهر شاشة الإيصال ويطبع الكاشير منها.
+ * آخر ملاحظة طُبعت مع الفاتورة. فاتورة السفري صارت تُطبع بعد الدفع فقط
+ * (takeaway_checkout)، فتخرج بالملاحظة النهائية ولا حاجة لإعادة طباعتها.
  */
 patch(PosStore.prototype, {
     async printReceipt(options = {}) {
@@ -173,27 +170,6 @@ patch(PosStore.prototype, {
         const result = await super.printReceipt(...arguments);
         if (result && order?.uiState && !options.basic) {
             order.uiState.hosnyNotePrinted = order.hosnyInvoiceNote;
-        }
-        return result;
-    },
-});
-
-patch(OrderPaymentValidation.prototype, {
-    async afterOrderValidation() {
-        const result = await super.afterOrderValidation(...arguments);
-        const order = this.order;
-        const printed = order?.uiState?.hosnyNotePrinted;
-        if (
-            order?.uiState?.hosnyTakeawayAutoNext &&
-            printed !== undefined &&
-            order.hosnyInvoiceNote &&
-            order.hosnyInvoiceNote !== printed
-        ) {
-            try {
-                await this.pos.printReceipt({ order });
-            } catch (error) {
-                console.warn("[Hosny] receipt reprint with the invoice note failed", error);
-            }
         }
         return result;
     },

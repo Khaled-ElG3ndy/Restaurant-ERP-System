@@ -140,6 +140,14 @@
     padding-inline-start: 150.8px; padding-inline-end: 0; text-align: center;
 }
 :is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-type .hfr-value > span { position: relative; top: -7px; transform: scaleX(1.250); /*rtl:ignore*/transform-origin: center; }
+/* «رقم الطاولة» (2026-10-09): same size and face as «نوع الفاتوره» above it */
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-table { min-height: 43.8px; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-table .hfr-label { top: 0px; transform: scaleX(1.069); /*rtl:ignore*/transform-origin: 100% 50%; }
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-table .hfr-value {
+    font-family: "Hosny Receipt Arabic Heavy", "Hosny Receipt Sans" !important; font-size: 24px; font-weight: 700; line-height: 40px;
+    padding-inline-start: 150.8px; padding-inline-end: 0; text-align: center;
+}
+:is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-table .hfr-value > span { position: relative; top: -7px; transform: scaleX(1.150); /*rtl:ignore*/transform-origin: center; }
 :is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment { min-height: 38.6px; }
 :is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment .hfr-label { top: 0px; transform: scaleX(1.136); /*rtl:ignore*/transform-origin: 100% 50%; }
 :is(#hosny-fr, .hosny-ferp-receipt) .hfr-meta .hfr-row-payment .hfr-value {

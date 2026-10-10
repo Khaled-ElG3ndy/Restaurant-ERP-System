@@ -184,3 +184,116 @@
     color: #8A99AB;
     font-size: 12px;
 }
+
+/* ── 2026-10-07: frame without the white line, text from the right ──
+   The 1px light dialog border drew a white line over the navy header
+   (as in hosny_pos_skin §43/44). The textarea was dir="auto", so while
+   empty it ran left-to-right and its placeholder sat on the left; it is
+   dir="rtl" now and pinned here too (rtl:ignore). Three :not(#…) put
+   these rules above the skin's and hosny_pos_controls' dialog rules. */
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content {
+    border: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-header {
+    min-height: 0 !important; margin: 0 !important; padding: 16px 22px !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-header::after { display: none !important; }
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-header .modal-title {
+    margin: 0 !important; color: #FFFFFF !important; font-size: 19px !important; font-weight: 800 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-body {
+    padding: 20px 24px !important; background: #FFFFFF !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-help {
+    margin: 0 !important; color: #637D99 !important; font-size: 14px !important; font-weight: 600 !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hints {
+    display: flex !important; flex-wrap: wrap !important; align-items: center !important; gap: 8px !important;
+    margin: 0 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hints-label {
+    color: #17395F !important; font-size: 14px !important; font-weight: 800 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hint {
+    display: inline-flex !important; align-items: center !important; gap: 8px !important;
+    min-height: 40px !important; margin: 0 !important; padding: 0 14px !important;
+    border: 1px solid #DCE3ED !important; border-radius: 999px !important;
+    background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+    font-family: "Cairo", sans-serif !important; font-size: 14px !important; font-weight: 800 !important;
+    white-space: nowrap !important; overflow-wrap: normal !important; transform: none !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hint:hover { border-color: #2E9D6A !important; background: #F3FAF6 !important; }
+/* «+» يُرسم بخطين في وسط الدائرة؛ رمز fa-plus لا يتوسّط بخط Cairo. */
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hint .fa {
+    position: relative !important; display: block !important; flex: 0 0 auto !important;
+    inline-size: 22px !important; block-size: 22px !important; border-radius: 50% !important;
+    background: #E6F4EC !important; font-size: 0 !important; color: transparent !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-hint .fa::before {
+    content: "" !important; position: absolute !important; inset: 0 !important; margin: auto !important;
+    inline-size: 10px !important; block-size: 10px !important;
+    background: linear-gradient(#0F7A49, #0F7A49) center / 10px 2px no-repeat,
+                linear-gradient(#0F7A49, #0F7A49) center / 2px 10px no-repeat !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-invoice-note-dialog { gap: 14px !important; }
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-customer { margin: 0 !important; }
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content textarea.hosny-ind-input {
+    display: block !important; inline-size: 100% !important; min-block-size: 130px !important;
+    margin: 0 !important; padding: 14px 16px !important;
+    border: 2px solid #DCE3ED !important; border-radius: 14px !important;
+    background: #F5F8FC !important; box-shadow: none !important; outline: 0 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+    color: #17395F !important; font-family: "Cairo", sans-serif !important;
+    font-size: 16px !important; font-weight: 700 !important; line-height: 1.7 !important; resize: none !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content textarea.hosny-ind-input:focus {
+    border-color: #2B5DA0 !important; background: #FFFFFF !important; box-shadow: 0 0 0 4px rgba(43,93,160,.12) !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content textarea.hosny-ind-input::placeholder {
+    /*rtl:ignore*/text-align: right !important; color: #9AAAC0 !important; font-weight: 600 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-foot {
+    display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 10px !important;
+    min-height: 0 !important; margin: -6px 0 0 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-count {
+    margin-inline-start: auto !important; color: #9AAAC0 !important; font-size: 12.5px !important; font-weight: 700 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .hosny-invoice-note-content .hosny-ind-clear {
+    margin: 0 !important; padding: 4px 12px !important; border: 0 !important; border-radius: 8px !important;
+    background: #FCEBEA !important; color: #D2544B !important; box-shadow: none !important;
+    font-size: 13px !important; font-weight: 800 !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer {
+    display: flex !important; flex-wrap: nowrap !important; justify-content: flex-start !important; gap: 10px !important;
+    margin: 0 !important; padding: 14px 22px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important; background: #F5F8FC !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer .btn {
+    flex: 0 1 auto !important; min-width: 150px !important; min-height: 52px !important;
+    margin: 0 !important; padding: 0 22px !important; border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16.5px !important; font-weight: 800 !important; line-height: 1 !important;
+    white-space: nowrap !important; transform: none !important; box-shadow: none !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer .btn-primary {
+    border: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    color: #FFFFFF !important; box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer .btn-secondary,
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer .btn-light {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important;
+}
+body:not(#hn-a):not(#hn-b):not(#hn-c) .o_dialog .modal-content.hosny-invoice-note-content > .modal-footer .hosny-ind-skip {
+    border-color: #F1C9C5 !important; background: #FCEBEA !important; color: #B23D35 !important;
+}

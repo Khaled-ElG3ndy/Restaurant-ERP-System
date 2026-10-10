@@ -1,6 +1,6 @@
 {
     'name': 'Hosny POS Controls',
-    'version': '19.0.1.16.0',
+    'version': '19.0.1.20.0',
     'category': 'Point of Sale',
     'summary': 'Zero-tolerance POS controls — audit log, reason codes',
     # pos_modern_ui owns the product card markup this module extends and styles,
@@ -40,7 +40,9 @@
             'hosny_pos_controls/static/src/xml/order_expand.xml',
             'hosny_pos_controls/static/src/xml/qty_entry.xml',
             'hosny_pos_controls/static/src/xml/void_approval.xml',
+            'hosny_pos_controls/static/src/xml/bill_copies.xml',
             'hosny_pos_controls/static/src/css/void_approval.css',
+            'hosny_pos_controls/static/src/css/bill_copies.css',
             'hosny_pos_controls/static/src/css/controls.css',
             'hosny_pos_controls/static/src/css/orderline_layout.css',
             'hosny_pos_controls/static/src/css/hospitality.css',

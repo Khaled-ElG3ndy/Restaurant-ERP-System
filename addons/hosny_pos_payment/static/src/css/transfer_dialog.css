@@ -1,0 +1,311 @@
+/* =====================================================================
+   hosny_pos_payment — «نقل الطلبات» وأزرار الإجراءات
+   ---------------------------------------------------------------------
+   Same rule as the customer picker: the skin paints every `.pos button`
+   sand-and-gold with !important, so everything goes through
+   `:is(#hs, body) .hx-dialog` with !important. Logical properties only.
+   ===================================================================== */
+
+/* ── «تحويل جزئي» و«دمج الطاولات» أُلغيا: «تحويل» يقوم بالاثنين ── */
+/* The skin shows these tiles with `display: inline-flex !important` at
+   id weight; three :not(#…) raise this rule above any of its selectors. */
+body:not(#hx-a):not(#hx-b):not(#hx-c) .partial-transfer-button.partial-transfer-button,
+body:not(#hx-a):not(#hx-b):not(#hx-c) .hosny-merge-button.hosny-merge-button { display: none !important; }
+/* ستة أزرار تبقى: ثلاثة أعمدة في صفين متساويين */
+:is(#hs,.pos) .product-screen .leftpane.hosny-order-panel .control-buttons.hosny-order-actions.hosny-order-actions,
+:is(#hs,.pos) .product-screen .hosny-order-actions.hosny-order-actions.hosny-order-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.hx-dialog {
+    --hx-navy-a: #2B5DA0;
+    --hx-navy-b: #17395F;
+    --hx-ink: #17395F;
+    --hx-text: #24374B;
+    --hx-muted: #637D99;
+    --hx-line: #DCE3ED;
+    --hx-soft: #F2F6FB;
+    --hx-mint-a: #2E9D6A;
+    --hx-mint-b: #0F7A49;
+    --hx-mint-soft: #E6F4EC;
+    --hx-amber: #E0912F;
+    --hx-amber-soft: #FDF1DF;
+    --hx-maroon: #8E3B46;
+    --hx-red: #D2544B;
+    --hx-font: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    --hx-num: "IBM Plex Sans Arabic", "Cairo", system-ui, sans-serif;
+}
+
+/* ── الإطار ── */
+:is(#hs, body) .modal-dialog:has(> .modal-content.hx-dialog) {
+    inline-size: min(1000px, calc(100vw - 32px)) !important;
+    max-inline-size: min(1000px, calc(100vw - 32px)) !important;
+    margin-inline: auto !important;
+}
+:is(#hs, body) .hx-dialog {
+    font-family: var(--hx-font) !important;
+    border: 0 !important; border-radius: 20px !important; overflow: hidden !important;
+    block-size: min(720px, calc(100vh - 40px)) !important;
+    display: flex !important; flex-direction: column !important;
+}
+:is(#hs, body) .hx-dialog .modal-header {
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hx-navy-a), var(--hx-navy-b)) !important;
+    color: #FFFFFF !important; border: 0 !important; padding: 14px 22px !important;
+}
+:is(#hs, body) .hx-dialog .modal-header .modal-title { color: #FFFFFF !important; font-weight: 800 !important; font-size: 19px !important; }
+:is(#hs, body) .hx-dialog .modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2) !important; opacity: .85 !important;
+    background-color: transparent !important; border: 0 !important; box-shadow: none !important; margin: 0 !important;
+}
+:is(#hs, body) .hx-dialog .modal-body.hx-body {
+    flex: 1 1 auto !important; min-block-size: 0 !important;
+    padding: 0 !important; background: #EEF2F8 !important; overflow: hidden !important;
+}
+:is(#hs, body) .hx-dialog .modal-footer {
+    background: #FFFFFF !important; border-top: 1px solid var(--hx-line) !important; padding: 12px 18px !important;
+}
+
+.hx {
+    /*rtl:ignore*/direction: rtl;
+    display: flex; flex-direction: column; gap: 12px;
+    block-size: 100%; padding: 14px;
+    color: var(--hx-text);
+}
+.hx * { box-sizing: border-box; }
+
+/* ── تصفير أزرار السكن ── */
+:is(#hs, body) .hx-dialog button {
+    margin: 0 !important; min-width: 0 !important; max-width: none !important;
+    white-space: nowrap !important; overflow-wrap: normal !important; word-break: keep-all !important;
+    font-family: var(--hx-font) !important; letter-spacing: 0 !important;
+    box-shadow: none !important; cursor: pointer;
+    transition: filter .12s, background-color .12s, border-color .12s, color .12s !important;
+}
+:is(#hs, body) .hx-dialog button:hover { transform: none !important; }
+:is(#hs, body) .hx-dialog button:active { filter: brightness(.94); }
+:is(#hs, body) .hx-dialog button:disabled { opacity: .45 !important; cursor: default !important; filter: none !important; }
+:is(#hs, body) .hx-dialog .fa { font-family: "FontAwesome" !important; }
+
+/* ── الخطوات ── */
+.hx-steps { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hx-from {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 12px;
+    background: #FFFFFF; border: 1px solid var(--hx-line);
+    font-size: 14px; font-weight: 700; color: var(--hx-muted);
+}
+.hx-from b { color: var(--hx-ink); font-weight: 800; }
+.hx-from .fa { color: var(--hx-navy-a); }
+.hx-stepper { display: flex; align-items: center; gap: 6px; margin-inline-start: auto; }
+:is(#hs, body) .hx-dialog .hx-step {
+    display: inline-flex !important; align-items: center !important; gap: 8px !important;
+    block-size: 40px !important; padding: 0 14px 0 16px !important;
+    border-radius: 999px !important; border: 1px solid var(--hx-line) !important;
+    background: #FFFFFF !important; color: var(--hx-muted) !important;
+    font-size: 14px !important; font-weight: 800 !important;
+}
+.hx-step-num {
+    display: grid; place-items: center; inline-size: 24px; block-size: 24px; border-radius: 50%;
+    background: #E4EAF2; color: var(--hx-muted); font-size: 13px; font-weight: 800;
+}
+:is(#hs, body) .hx-dialog .hx-step.is-on { background: var(--hx-ink) !important; border-color: var(--hx-ink) !important; color: #FFFFFF !important; }
+.hx-step.is-on .hx-step-num { background: #FFFFFF; color: var(--hx-ink); }
+:is(#hs, body) .hx-dialog .hx-step.is-done { color: var(--hx-mint-b) !important; border-color: #A9D8BE !important; background: var(--hx-mint-soft) !important; }
+.hx-step.is-done .hx-step-num { background: var(--hx-mint-a); color: #FFFFFF; }
+.hx-step-sep { color: #A9B7C8; font-size: 18px; }
+.hx-mode {
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 800;
+}
+.hx-mode.is-full { background: var(--hx-mint-soft); color: var(--hx-mint-b); }
+.hx-mode.is-part { background: var(--hx-amber-soft); color: #9A5A0E; }
+
+/* ── البطاقة ── */
+.hx-card {
+    flex: 1 1 auto; min-block-size: 0;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--hx-line); border-radius: 16px;
+    background: #FFFFFF; overflow: hidden;
+}
+
+/* ── جدول الأصناف ── */
+.hx-head, .hx-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 96px 190px;
+    align-items: center; column-gap: 10px;
+    padding-inline: 12px 16px;
+}
+.hx-head {
+    flex: none; min-block-size: 46px;
+    background: #F4F7FB; border-bottom: 1px solid var(--hx-line);
+    color: var(--hx-muted); font-size: 14px; font-weight: 800;
+}
+.is-check { display: grid; place-items: center; }
+.is-center { text-align: center; }
+.hx-list { flex: 1 1 auto; min-block-size: 0; overflow-y: auto; }
+.hx-row {
+    min-block-size: 64px;
+    border-bottom: 1px solid #EDF1F6;
+    border-inline-start: 4px solid transparent;
+    transition: background .1s;
+}
+.hx-row:nth-child(even) { background: #FAFCFE; }
+.hx-row.is-on { background: var(--hx-mint-soft); border-inline-start-color: var(--hx-mint-a); }
+.hx-row.is-part { background: var(--hx-amber-soft); border-inline-start-color: var(--hx-amber); }
+:is(#hs, body) .hx-dialog .hx-check {
+    inline-size: 30px !important; block-size: 30px !important; padding: 0 !important;
+    display: grid !important; place-items: center !important;
+    border-radius: 8px !important; border: 2px solid #B5C3D4 !important;
+    background: #FFFFFF !important; color: #FFFFFF !important; font-size: 14px !important;
+}
+:is(#hs, body) .hx-dialog .hx-check.is-on { background: var(--hx-mint-a) !important; border-color: var(--hx-mint-a) !important; }
+:is(#hs, body) .hx-dialog .hx-check.is-mixed { background: var(--hx-amber) !important; border-color: var(--hx-amber) !important; }
+/* Marks are drawn in CSS, not icon glyphs: the skin's icon sizes, margins
+   and line-heights pushed the glyphs off centre. */
+:is(#hs, body) .hx-dialog .hx-check,
+:is(#hs, body) .hx-dialog .hx-pm { position: relative !important; }
+:is(#hs, body) .hx-dialog .hx-check::after,
+:is(#hs, body) .hx-dialog .hx-pm::before,
+:is(#hs, body) .hx-dialog .hx-pm::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important; margin: auto !important; padding: 0 !important;
+    box-sizing: border-box !important;
+}
+/* ✓ : an SVG, not two borders of a turned box — rtlcss mirrors
+   `border-width: 0 3px 3px 0`, which turned the tick into a «<». */
+:is(#hs, body) .hx-dialog .hx-check.is-on::after {
+    inline-size: 16px !important; block-size: 16px !important;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px 16px no-repeat !important;
+    border: 0 !important;
+    transform: none !important;
+}
+/* − : one bar */
+:is(#hs, body) .hx-dialog .hx-check.is-mixed::after {
+    inline-size: 12px !important; block-size: 3px !important; border-radius: 2px !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+}
+:is(#hs, body) .hx-dialog .hx-pm::before,
+:is(#hs, body) .hx-dialog .hx-pm.is-plus::after {
+    inline-size: 14px !important; block-size: 3px !important; border-radius: 2px !important;
+    background: #FFFFFF !important;
+    transform: none !important;
+}
+:is(#hs, body) .hx-dialog .hx-pm.is-plus::after { transform: rotate(90deg) !important; }
+.hx-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; cursor: pointer; }
+.hx-name b { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 16px; font-weight: 800; color: var(--hx-ink); }
+.hx-name small { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12.5px; font-weight: 600; color: var(--hx-muted); }
+.hx-qty { text-align: center; font-family: var(--hx-num); font-size: 17px; font-weight: 800; color: var(--hx-text); }
+.hx-stepper-qty { display: flex; align-items: center; justify-content: center; gap: 8px; }
+:is(#hs, body) .hx-dialog .hx-pm {
+    flex: none !important;
+    inline-size: 40px !important; block-size: 40px !important; padding: 0 !important;
+    display: grid !important; place-items: center !important;
+    border-radius: 50% !important; border: 0 !important;
+    font-size: 14px !important; color: #FFFFFF !important;
+}
+:is(#hs, body) .hx-dialog .hx-pm.is-plus { /*rtl:ignore*/background: linear-gradient(135deg, var(--hx-navy-a), var(--hx-navy-b)) !important; }
+:is(#hs, body) .hx-dialog .hx-pm.is-minus { background: #8FA4BF !important; }
+:is(#hs, body) .hx-dialog .hx-qty-input,
+:is(#hs, body) .hx-dialog .hx-qty-input:focus {
+    inline-size: 72px !important; block-size: 40px !important; padding: 0 6px !important; margin: 0 !important;
+    border: 2px solid var(--hx-line) !important; border-radius: 12px !important;
+    background: #FFFFFF !important; box-shadow: none !important; outline: 0 !important;
+    text-align: center !important;
+    font-family: var(--hx-num) !important; font-size: 17px !important; font-weight: 800 !important; color: var(--hx-ink) !important;
+}
+:is(#hs, body) .hx-dialog .hx-qty-input:focus { border-color: var(--hx-navy-a) !important; }
+.hx-row.is-on .hx-qty-input { border-color: #A9D8BE !important; }
+
+/* ── الملخص ── */
+.hx-sum {
+    flex: none;
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    min-block-size: 50px; padding: 10px 16px;
+    border-top: 1px solid var(--hx-line); background: #FAFBFD;
+    font-size: 14px; font-weight: 700; color: var(--hx-muted);
+}
+.hx-sum b { color: var(--hx-ink); font-weight: 800; font-family: var(--hx-num); }
+.hx-sum .fa { color: var(--hx-mint-b); font-size: 17px; }
+.hx-sum.is-merge { background: var(--hx-amber-soft); color: #8A5A10; }
+.hx-sum.is-merge .fa { color: var(--hx-amber); }
+.hx-sum-hint { color: var(--hx-muted); font-weight: 600; }
+
+/* ── الطاولات ── */
+.hx-floors {
+    flex: none;
+    display: flex; gap: 8px; flex-wrap: wrap;
+    padding: 12px; border-bottom: 1px solid var(--hx-line); background: #F7F9FC;
+}
+:is(#hs, body) .hx-dialog .hx-floor {
+    display: inline-flex !important; align-items: center !important; gap: 8px !important;
+    block-size: 42px !important; padding: 0 16px !important;
+    border-radius: 12px !important; border: 1px solid var(--hx-line) !important;
+    background: #FFFFFF !important; color: var(--hx-ink) !important;
+    font-size: 15px !important; font-weight: 800 !important;
+}
+.hx-floor small { padding: 1px 8px; border-radius: 999px; background: #FBE7E9; color: var(--hx-maroon); font-size: 11.5px; font-weight: 800; }
+:is(#hs, body) .hx-dialog .hx-floor.is-on {
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hx-navy-a), var(--hx-navy-b)) !important;
+    border-color: transparent !important; color: #FFFFFF !important;
+}
+.hx-floor.is-on small { background: rgba(255,255,255,.2); color: #FFFFFF; }
+.hx-grid {
+    flex: 1 1 auto; min-block-size: 0; overflow-y: auto;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 12px;
+    align-content: start;
+    padding: 14px;
+}
+:is(#hs, body) .hx-dialog .hx-table {
+    display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
+    block-size: 96px !important; padding: 8px !important;
+    border-radius: 16px !important; border: 2px solid #CFE6D9 !important;
+    background: #F4FBF7 !important; color: var(--hx-mint-b) !important;
+}
+.hx-table b { font-family: var(--hx-num); font-size: 26px; font-weight: 800; line-height: 1; }
+.hx-table small { font-size: 12.5px; font-weight: 700; }
+:is(#hs, body) .hx-dialog .hx-table.is-busy { border-color: #E9C5CA !important; background: #FBF1F2 !important; color: var(--hx-maroon) !important; }
+:is(#hs, body) .hx-dialog .hx-table.is-source { border-style: dashed !important; border-color: #C5D0DD !important; background: #F2F5F9 !important; color: #8FA4BF !important; }
+:is(#hs, body) .hx-dialog .hx-table.is-picked {
+    border-color: var(--hx-navy-a) !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hx-navy-a), var(--hx-navy-b)) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 18px rgba(23,57,95,.28) !important;
+}
+.hx-empty { grid-column: 1 / -1; padding: 40px; text-align: center; color: var(--hx-muted); font-weight: 700; }
+
+.hx-error {
+    flex: none;
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border-radius: 12px;
+    background: #FCEBEA; border: 1px solid #F0C4C0; color: #A63A32;
+    font-size: 14px; font-weight: 700;
+}
+
+/* ── التذييل ── */
+.hx-footer { display: flex; align-items: center; gap: 10px; inline-size: 100%; }
+:is(#hs, body) .hx-dialog .hx-btn {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+    min-block-size: 48px !important; padding: 0 22px !important;
+    border-radius: 12px !important; border: 1px solid transparent !important;
+    font-size: 15.5px !important; font-weight: 800 !important; line-height: 1 !important;
+}
+:is(#hs, body) .hx-dialog .hx-btn.is-ok {
+    min-inline-size: 170px !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, var(--hx-mint-a), var(--hx-mint-b)) !important;
+    color: #FFFFFF !important; box-shadow: 0 6px 14px rgba(15,122,73,.25) !important;
+}
+:is(#hs, body) .hx-dialog .hx-btn.is-back { background: #EAF1FB !important; color: var(--hx-navy-a) !important; border-color: #C9DAF0 !important; }
+:is(#hs, body) .hx-dialog .hx-btn.is-close {
+    margin-inline-start: auto !important; min-inline-size: 110px !important;
+    background: var(--hx-soft) !important; color: var(--hx-ink) !important; border-color: var(--hx-line) !important;
+}
+
+@media (max-width: 760px) {
+    .hx-head, .hx-row { grid-template-columns: 44px minmax(0, 1fr) 56px 158px; padding-inline: 6px 10px; }
+    :is(#hs, body) .hx-dialog .hx-pm { inline-size: 34px !important; block-size: 34px !important; }
+    :is(#hs, body) .hx-dialog .hx-qty-input { inline-size: 58px !important; }
+    .hx-stepper { margin-inline-start: 0; }
+}

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- اختيار العميل: خانة بحث ذكية واحدة، والنتائج تظهر عند الكتابة فقط -->
+    <t t-name="hosny_pos_payment.PartnerList">
+        <Dialog title="'اختيار العميل'" size="'xl'" modalRef="modalRef"
+                contentClass="'hp-cust-dialog'" bodyClass="'hp-cust-body'">
+            <div class="hp-cust" dir="rtl">
+
+                <section class="hp-cust-main">
+                    <!-- البحث والأدوات -->
+                    <div class="hp-cust-bar">
+                        <label class="hp-cust-search" t-att-class="{ 'has-value': hpQuery }">
+                            <i t-attf-class="fa {{ state.loading ? 'fa-circle-o-notch fa-spin' : 'fa-search' }}" aria-hidden="true"/>
+                            <input type="search" autofocus="autofocus" autocomplete="off"
+                                   placeholder="ابحث بالاسم أو رقم الجوال أو الكود"
+                                   t-att-value="state.query"
+                                   t-on-input="hpType" t-on-keydown="hpKeydown"/>
+                            <span t-if="hpQuery" class="hp-cust-mode">
+                                <i t-attf-class="fa {{ hpIsNumber ? 'fa-phone' : 'fa-font' }}" aria-hidden="true"/>
+                                <t t-esc="hpIsNumber ? 'جوال / كود' : 'اسم / كود'"/>
+                            </span>
+                            <button t-if="hpQuery" type="button" class="hp-cust-clear" title="مسح البحث"
+                                    t-on-click.prevent="hpClear">
+                                <i class="fa fa-times" aria-hidden="true"/>
+                            </button>
+                        </label>
+                        <button t-if="hpCanEdit" class="hp-cust-btn is-new" t-on-click="() => this.editPartner()">
+                            <i class="fa fa-user-plus" aria-hidden="true"/> عميل جديد
+                        </button>
+                    </div>
+
+                    <!-- النتائج -->
+                    <div class="hp-cust-results">
+                        <div t-if="!hpQuery" class="hp-cust-empty is-start">
+                            <span class="hp-cust-empty-icon"><i class="fa fa-search" aria-hidden="true"/></span>
+                            <b>ابحث عن العميل</b>
+                            <span>اكتب جزءاً من الاسم أو رقم الجوال (بالصفر أو بدونه) أو كود العميل</span>
+                            <span class="hp-cust-keys">
+                                <kbd>↑</kbd><kbd>↓</kbd> للتنقل · <kbd>Enter</kbd> للاختيار
+                            </span>
+                        </div>
+                        <t t-elif="hpRows.length">
+                            <div class="hp-cust-head">
+                                <span>الاسم</span>
+                                <span>رقم الجوال</span>
+                                <span class="is-ops">العمليات</span>
+                            </div>
+                            <div class="hp-cust-list">
+                                <t t-foreach="hpRows" t-as="partner" t-key="partner.id">
+                                    <div class="hp-cust-row" t-att-class="{
+                                            'is-picked': hpIsPicked(partner),
+                                            'is-current': props.partner?.id === partner.id,
+                                            'is-open': state.hpExpanded[partner.id],
+                                         }"
+                                         t-on-click="() => this.hpPick(partner)"
+                                         t-on-dblclick="() => this.clickPartner(partner)">
+                                        <div class="hp-cust-who">
+                                            <button class="hp-cust-expand" t-on-click.stop="() => this.hpToggle(partner)"
+                                                    t-att-title="state.hpExpanded[partner.id] ? 'إخفاء التفاصيل' : 'عرض التفاصيل'">
+                                                <i t-attf-class="fa {{ state.hpExpanded[partner.id] ? 'fa-chevron-up' : 'fa-chevron-down' }}" aria-hidden="true"/>
+                                            </button>
+                                            <span class="hp-cust-name-wrap">
+                                                <span class="hp-cust-name" t-att-title="partner.name">
+                                                    <i t-if="hosnyIsFavoritePartner and hosnyIsFavoritePartner(partner)" class="fa fa-star hp-cust-fav" title="من المفضلة"/>
+                                                    <t t-esc="partner.name or ''"/>
+                                                </span>
+                                                <small class="hp-cust-sub" t-if="partner.parent_name or partner.pos_contact_address"
+                                                       t-esc="partner.parent_name or partner.pos_contact_address"/>
+                                            </span>
+                                            <span t-if="props.partner?.id === partner.id" class="hp-cust-tag">الحالي</span>
+                                        </div>
+                                        <div class="hp-cust-phone"><bdi t-esc="hpPhone(partner) or '—'"/></div>
+                                        <div class="hp-cust-ops">
+                                            <button t-if="hpCanEdit" class="hp-cust-op"
+                                                    t-att-title="partner.pos_contact_address ? 'تعديل العنوان' : 'إضافة عنوان'"
+                                                    t-on-click.stop="() => this.editPartner(partner)">
+                                                <i class="fa fa-map-marker" aria-hidden="true"/>
+                                            </button>
+                                            <button t-if="hosnyToggleFavoritePartner" class="hp-cust-op is-star"
+                                                    t-att-class="{ 'is-on': hosnyIsFavoritePartner(partner) }"
+                                                    t-att-title="hosnyIsFavoritePartner(partner) ? 'إزالة من المفضلة' : 'إضافة للمفضلة'"
+                                                    t-on-click.stop="() => this.hosnyToggleFavoritePartner(partner)">
+                                                <i t-attf-class="fa {{ hosnyIsFavoritePartner(partner) ? 'fa-star' : 'fa-star-o' }}" aria-hidden="true"/>
+                                            </button>
+                                            <button class="hp-cust-op is-pick" t-on-click.stop="() => this.clickPartner(partner)">
+                                                اختيار
+                                            </button>
+                                        </div>
+                                        <div t-if="state.hpExpanded[partner.id]" class="hp-cust-detail" t-on-click.stop="">
+                                            <div><span>العنوان</span><b t-esc="partner.pos_contact_address or 'لا يوجد عنوان'"/></div>
+                                            <div><span>البريد الإلكتروني</span><b><bdi t-esc="partner.email or '—'"/></b></div>
+                                            <div><span>الرقم الضريبي</span><b><bdi t-esc="partner.vat or '—'"/></b></div>
+                                            <div><span>الكود</span><b><bdi t-esc="partner.ref or partner.barcode or '—'"/></b></div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="hp-cust-count">
+                                <t t-esc="hpRows.length"/> نتيجة
+                                <t t-if="hpMoreCount"> · يوجد <t t-esc="hpMoreCount"/> غيرها، اكتب أكثر للتضييق</t>
+                                <t t-if="state.loading"> · جارٍ البحث في كل العملاء…</t>
+                                <t t-elif="hpShortQuery"> · اكتب حرفاً آخر للبحث في كل العملاء</t>
+                            </div>
+                        </t>
+                        <div t-else="" class="hp-cust-empty">
+                            <span class="hp-cust-empty-icon">
+                                <i t-attf-class="fa {{ state.loading ? 'fa-circle-o-notch fa-spin' : 'fa-user-times' }}" aria-hidden="true"/>
+                            </span>
+                            <t t-if="state.loading"><b>جارٍ البحث…</b></t>
+                            <t t-elif="hpShortQuery">
+                                <b>اكتب أكثر قليلاً</b>
+                                <span>من ثلاثة أحرف أو أرقام يتم البحث في كل العملاء</span>
+                            </t>
+                            <t t-else="">
+                                <b>لا يوجد عميل بهذا البحث</b>
+                                <span>تأكد من الاسم أو الرقم، أو أضفه كعميل جديد</span>
+                                <button t-if="hpCanEdit" class="hp-cust-btn is-new" t-on-click="() => this.editPartner()">
+                                    <i class="fa fa-user-plus" aria-hidden="true"/> إضافة عميل جديد
+                                </button>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- العميل المحدد والمفضلة -->
+                <aside class="hp-cust-side">
+                    <div class="hp-cust-card">
+                        <div class="hp-cust-card-head">
+                            <span class="hp-cust-avatar"><i class="fa fa-user" aria-hidden="true"/></span>
+                            <span>العميل المحدد</span>
+                        </div>
+                        <t t-if="state.hpPicked">
+                            <div class="hp-cust-kv"><span>الاسم</span><b t-esc="state.hpPicked.name"/></div>
+                            <div class="hp-cust-kv"><span>رقم الجوال</span><b><bdi t-esc="hpPhone(state.hpPicked) or '—'"/></b></div>
+                            <div class="hp-cust-kv"><span>العنوان</span><b t-esc="state.hpPicked.pos_contact_address or '—'"/></div>
+                            <div class="hp-cust-card-actions">
+                                <button class="hp-cust-btn is-soft" t-on-click="() => this.goToOrders(state.hpPicked)">
+                                    <i class="fa fa-list-alt" aria-hidden="true"/> الطلبات
+                                </button>
+                                <button t-if="hpCanEdit" class="hp-cust-btn is-soft" t-on-click="() => this.editPartner(state.hpPicked)">
+                                    <i class="fa fa-pencil" aria-hidden="true"/> تعديل
+                                </button>
+                            </div>
+                        </t>
+                        <div t-else="" class="hp-cust-none">لم يتم اختيار عميل بعد</div>
+                    </div>
+
+                    <div t-if="hosnyFavoritePartners and hosnyFavoritePartners.length" class="hp-cust-card">
+                        <div class="hp-cust-card-head">
+                            <span class="hp-cust-avatar is-gold"><i class="fa fa-star" aria-hidden="true"/></span>
+                            <span>العملاء المفضلون</span>
+                        </div>
+                        <div class="hp-cust-favs">
+                            <button t-foreach="hosnyFavoritePartners" t-as="favorite" t-key="favorite.id"
+                                    class="hp-cust-fav-chip" t-att-class="{ 'is-picked': hpIsPicked(favorite) }"
+                                    t-on-click="() => this.hpPick(favorite)" t-on-dblclick="() => this.clickPartner(favorite)">
+                                <span t-esc="favorite.name"/>
+                                <small><bdi t-esc="hpPhone(favorite)"/></small>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <t t-set-slot="footer">
+                <div class="hp-cust-footer">
+                    <button class="hp-cust-btn is-confirm" t-att-disabled="!state.hpPicked" t-on-click="() => this.hpConfirm()">
+                        <i class="fa fa-check-circle" aria-hidden="true"/> تأكيد
+                    </button>
+                    <button t-if="props.partner" class="hp-cust-btn is-unselect" t-on-click="() => this.clickPartner()">
+                        <i class="fa fa-user-times" aria-hidden="true"/> بدون عميل
+                    </button>
+                    <button class="hp-cust-btn is-close" t-on-click="() => this.clickPartner(this.props.partner)">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+</templates>

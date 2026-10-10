@@ -1,0 +1,21 @@
+/* «الطلبات والفواتير»: print button where the trash icon was (2026-10-09).
+   Three ids keep it above pos_modern_ui's .pos button rules. */
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print-col { inline-size: 64px; }
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print {
+    display: inline-grid !important; place-items: center !important;
+    inline-size: 44px !important; block-size: 44px !important; min-width: 0 !important;
+    margin: 0 !important; padding: 0 !important;
+    border: 1px solid #C9DAF0 !important; border-radius: 12px !important;
+    background: #EAF1FB !important; color: #2B5DA0 !important; box-shadow: none !important;
+    font-size: 18px !important; line-height: 1 !important; transform: none !important;
+}
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print:hover { background: #2B5DA0 !important; color: #FFFFFF !important; }
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print:disabled { opacity: .5 !important; }
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print-big {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+    flex: 0 0 auto !important; min-inline-size: 130px !important; margin: 0 !important; padding: 0 18px !important;
+    border: 1px solid #C9DAF0 !important; border-radius: 12px !important;
+    background: #FFFFFF !important; color: #2B5DA0 !important; box-shadow: none !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16px !important; font-weight: 800 !important; white-space: nowrap !important;
+}
+body:not(#ht-a):not(#ht-b):not(#ht-c) .ticket-screen .hosny-ticket-print-big:disabled { opacity: .5 !important; }

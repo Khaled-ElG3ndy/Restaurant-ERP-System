@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- «نقل الطلبات»: الأصناف ثم الطاولة -->
+    <t t-name="hosny_pos_payment.TransferDialog">
+        <Dialog title="'نقل الطلبات'" size="'xl'" contentClass="'hx-dialog'" bodyClass="'hx-body'">
+            <div class="hx" dir="rtl">
+                <t t-set="v" t-value="view"/>
+
+                <!-- الخطوات -->
+                <div class="hx-steps">
+                    <span class="hx-from"><i class="fa fa-cutlery" aria-hidden="true"/> من <b t-esc="sourceTitle"/></span>
+                    <div class="hx-stepper">
+                        <button class="hx-step" t-att-class="{ 'is-on': state.step === 1, 'is-done': state.step === 2 }" t-on-click="back">
+                            <span class="hx-step-num"><t t-if="state.step === 2"><i class="fa fa-check" aria-hidden="true"/></t><t t-else="">1</t></span>
+                            اختيار الأصناف
+                        </button>
+                        <i class="fa fa-angle-left hx-step-sep" aria-hidden="true"/>
+                        <button class="hx-step" t-att-class="{ 'is-on': state.step === 2 }" t-on-click="next">
+                            <span class="hx-step-num">2</span>
+                            اختيار الطاولة
+                        </button>
+                    </div>
+                    <span t-if="v.any" class="hx-mode" t-att-class="v.allFull ? 'is-full' : 'is-part'">
+                        <t t-esc="v.allFull ? 'تحويل كلي' : 'تحويل جزئي'"/>
+                    </span>
+                </div>
+
+                <!-- ١) الأصناف -->
+                <section t-if="state.step === 1" class="hx-card hx-items">
+                    <div class="hx-head">
+                        <span class="is-check">
+                            <button class="hx-check" t-att-class="{ 'is-on': v.allFull, 'is-mixed': v.any and !v.allFull }"
+                                    t-att-title="v.allFull ? 'إلغاء تحديد الكل' : 'تحديد الكل'" t-on-click="toggleAll"/>
+                        </span>
+                        <span>الاسم</span>
+                        <span class="is-center">الكمية</span>
+                        <span class="is-center">الكمية للنقل</span>
+                    </div>
+                    <div class="hx-list">
+                        <div t-foreach="rows" t-as="line" t-key="line.uuid" class="hx-row"
+                             t-att-class="{ 'is-on': selQty(line) > 0, 'is-part': selQty(line) > 0 and !isFull(line) }">
+                            <span class="is-check">
+                                <button class="hx-check" t-att-class="{ 'is-on': isFull(line), 'is-mixed': selQty(line) > 0 and !isFull(line) }"
+                                        t-att-aria-label="isFull(line) ? 'إلغاء التحديد' : 'تحديد'" t-on-click="() => this.toggleLine(line)"/>
+                            </span>
+                            <span class="hx-name" t-on-click="() => this.toggleLine(line)">
+                                <b t-esc="line.name"/>
+                                <small>
+                                    <t t-if="line.combo">وجبة · </t>
+                                    <t t-esc="money(line.unit)"/> للوحدة
+                                    <t t-if="line.note"> · <t t-esc="line.note"/></t>
+                                </small>
+                            </span>
+                            <span class="hx-qty"><bdi t-esc="qtyText(line.qty)"/></span>
+                            <span class="hx-stepper-qty">
+                                <button class="hx-pm is-minus" t-att-disabled="selQty(line) &lt;= 0" t-on-click="() => this.stepQty(line, -1)" aria-label="أقل"/>
+                                <input type="text" inputmode="decimal" class="hx-qty-input"
+                                       t-att-value="selQty(line) ? qtyText(selQty(line)) : ''" placeholder="0"
+                                       t-on-input="(ev) => this.typeQty(line, ev)" t-on-focus="(ev) => ev.target.select()"/>
+                                <button class="hx-pm is-plus" t-att-disabled="isFull(line)" t-on-click="() => this.stepQty(line, 1)" aria-label="أكثر"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="hx-sum">
+                        <t t-if="v.any">
+                            <span>محدد <b t-esc="v.items"/> من <b t-esc="rows.length"/></span>
+                            <span>الكمية <b><bdi t-esc="qtyText(v.pieces)"/></b></span>
+                            <span>القيمة <b t-esc="money(v.amount)"/></span>
+                        </t>
+                        <span t-else="" class="hx-sum-hint">
+                            علّم على الكل للتحويل الكلي، أو اختر بعض الأصناف وحدد الكمية للتحويل الجزئي
+                        </span>
+                    </div>
+                </section>
+
+                <!-- ٢) الطاولة -->
+                <section t-else="" class="hx-card hx-tables">
+                    <div class="hx-floors">
+                        <button t-foreach="floors" t-as="floor" t-key="floor.id" class="hx-floor"
+                                t-att-class="{ 'is-on': floor.id === state.floorId }" t-on-click="() => this.pickFloor(floor)">
+                            <span t-esc="floor.name"/>
+                            <small t-if="floor.busyCount"><t t-esc="floor.busyCount"/> مشغولة</small>
+                        </button>
+                    </div>
+                    <div class="hx-grid">
+                        <button t-foreach="floorTables" t-as="table" t-key="table.id" class="hx-table"
+                                t-att-class="{
+                                    'is-busy': table.busy,
+                                    'is-source': table.source,
+                                    'is-picked': table.id === state.tableId,
+                                }"
+                                t-att-disabled="table.source"
+                                t-on-click="() => this.pickTable(table)" t-on-dblclick="() => this.pickAndGo(table)">
+                            <b t-esc="table.label"/>
+                            <small t-if="table.source">الحالية</small>
+                            <small t-elif="table.busy" t-esc="money(table.amount)"/>
+                            <small t-else="">فارغة</small>
+                        </button>
+                        <div t-if="!floorTables.length" class="hx-empty">لا توجد طاولات في هذا الدور</div>
+                    </div>
+                    <t t-set="pt" t-value="pickedTable"/>
+                    <div class="hx-sum" t-att-class="{ 'is-merge': pt and pt.busy }">
+                        <t t-if="pt">
+                            <i t-attf-class="fa {{ pt.busy ? 'fa-object-group' : 'fa-arrow-left' }}" aria-hidden="true"/>
+                            <span>
+                                <t t-esc="v.allFull ? 'نقل الطلب كاملاً' : ('نقل ' + itemsText(v.items))"/>
+                                إلى <b>طاولة <t t-esc="pt.label"/></b>
+                                <t t-if="pt.busy"> — الطاولة مشغولة وستُضاف الأصناف إلى طلبها</t>
+                            </span>
+                        </t>
+                        <span t-else="" class="hx-sum-hint">اختر الطاولة التي تريد النقل إليها</span>
+                    </div>
+                </section>
+
+                <div t-if="state.error" class="hx-error">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"/> <t t-esc="state.error"/>
+                </div>
+            </div>
+
+            <t t-set-slot="footer">
+                <div class="hx-footer">
+                    <button t-if="state.step === 1" class="hx-btn is-ok" t-att-disabled="!view.any" t-on-click="next">
+                        موافق <i class="fa fa-arrow-left" aria-hidden="true"/>
+                    </button>
+                    <t t-else="">
+                        <button class="hx-btn is-ok" t-att-disabled="!pickedTable or state.busy" t-on-click="confirm">
+                            <i t-attf-class="fa {{ state.busy ? 'fa-circle-o-notch fa-spin' : 'fa-check-circle' }}" aria-hidden="true"/>
+                            <t t-if="pickedTable">نقل إلى طاولة <t t-esc="pickedTable.label"/></t>
+                            <t t-else="">تأكيد النقل</t>
+                        </button>
+                        <button class="hx-btn is-back" t-on-click="back">
+                            <i class="fa fa-arrow-right" aria-hidden="true"/> رجوع للأصناف
+                        </button>
+                    </t>
+                    <button class="hx-btn is-close" t-on-click="props.close">إغلاق</button>
+                </div>
+            </t>
+        </Dialog>
+    </t>
+
+    <!-- «تحويل» معطّل للسفري وللطلب الفارغ (الزر من hosny_pos_controls) -->
+    <t t-name="hosny_pos_payment.TransferButtonState" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('hosny-transfer-button')]" position="attributes">
+            <attribute name="t-att-disabled">!hpCanTransfer</attribute>
+            <attribute name="t-att-title">hpCanTransfer ? 'نقل الأصناف إلى طاولة أخرى' : 'التحويل لطلبات الطاولات فقط'</attribute>
+        </xpath>
+    </t>
+</templates>

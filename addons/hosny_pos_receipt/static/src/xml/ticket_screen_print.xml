@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- «الطلبات والفواتير»: طباعة بدل الحذف (2026-10-09) -->
+    <t t-name="hosny_pos_receipt.TicketScreenPrint" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//td[@name='delete-column']" position="replace">
+            <td class="text-end align-middle hosny-ticket-print-col" name="delete-column">
+                <button t-if="order.lines.length" type="button" class="hosny-ticket-print" title="طباعة الفاتورة"
+                        t-att-disabled="state.hosnyPrinting" t-on-click.stop="() => this.hosnyPrintOrder(order)">
+                    <i t-attf-class="fa {{ state.hosnyPrinting === order.uuid ? 'fa-circle-o-notch fa-spin' : 'fa-print' }}" aria-hidden="true"/>
+                </button>
+            </td>
+        </xpath>
+        <xpath expr="//div[@name='delete-column']" position="replace">
+            <div class="mx-2 d-flex align-items-center hosny-ticket-print-col" name="delete-column">
+                <button t-if="order.lines.length" type="button" class="hosny-ticket-print" title="طباعة الفاتورة"
+                        t-att-disabled="state.hosnyPrinting" t-on-click.stop="() => this.hosnyPrintOrder(order)">
+                    <i t-attf-class="fa {{ state.hosnyPrinting === order.uuid ? 'fa-circle-o-notch fa-spin' : 'fa-print' }}" aria-hidden="true"/>
+                </button>
+            </div>
+        </xpath>
+        <xpath expr="//button[hasclass('validation') and hasclass('load-order-button')]" position="before">
+            <button type="button" class="button btn btn-secondary btn-lg hosny-ticket-print-big"
+                    t-att-disabled="!_selectedSyncedOrder or state.hosnyPrinting"
+                    t-on-click="() => this.hosnyPrintOrder(_selectedSyncedOrder)">
+                <i t-attf-class="fa {{ state.hosnyPrinting ? 'fa-circle-o-notch fa-spin' : 'fa-print' }}" aria-hidden="true"/>
+                <span>طباعة</span>
+            </button>
+        </xpath>
+    </t>
+</templates>

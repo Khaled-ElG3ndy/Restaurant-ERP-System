@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- المتر: لا شريط سفري / محلي (الطاولة تُختار من الخريطة أو «تحويل»)،
+         ولا «الدفع» — «إرسال الطلب» وحده. -->
+    <t t-name="hosny_pos_waiter.ProductScreen"
+       t-inherit="point_of_sale.ProductScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//HosnyServiceBar" position="attributes">
+            <attribute name="t-if">pos.hosnyCashierFirst() and !pos.hosnyIsWaiter()</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('hosny-footer-actions')]" position="attributes">
+            <attribute name="t-att-class">{ 'hosny-waiter-footer': pos.hosnyIsWaiter() }</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('hosny-pay-action')]" position="attributes">
+            <attribute name="t-if">!pos.hosnyIsWaiter()</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('pay-button')]" position="attributes">
+            <attribute name="t-if">!pos.scanning and !pos.hosnyIsWaiter()</attribute>
+        </xpath>
+    </t>
+
+    <!-- لوحة الطلب: بلا استرداد ولا تقسيم ولا «تسديد الفواتير» -->
+    <t t-name="hosny_pos_waiter.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('hosny-refund-button')]" position="attributes">
+            <attribute name="t-if">!props.showRemainingButtons and !pos.hosnyIsWaiter()</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('hosny-split-button')]" position="attributes">
+            <attribute name="t-if">!props.showRemainingButtons and !pos.hosnyIsWaiter()</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('payment-orders-button')]" position="attributes">
+            <attribute name="t-if">!props.showRemainingButtons and !pos.hosnyIsWaiter()</attribute>
+        </xpath>
+    </t>
+
+    <!-- قائمة الشريط العلوي: بلا تقرير المبيعات وإغلاق الوردية.
+         («الطلبات» في يسار الشريط حذفها pos_modern_ui أصلاً.) -->
+    <t t-name="hosny_pos_waiter.Navbar"
+       t-inherit="point_of_sale.Navbar"
+       t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[@onSelected='() => this.showSaleDetails()']" position="attributes">
+            <attribute name="t-if">hardwareProxy.printer and !hosnyIsWaiter</attribute>
+        </xpath>
+        <xpath expr="//DropdownItem[contains(text(), 'Close Register')]" position="attributes">
+            <!-- شرط pos_hr نفسه (لهذا يعتمد الموديول عليه، ليُطبَّق بعده) + المتر -->
+            <attribute name="t-if">!hosnyIsWaiter and (!pos.config.module_pos_hr or pos.employeeIsAdmin or pos.getCashierUserId() === pos.session.user_id?.id)</attribute>
+        </xpath>
+    </t>
+
+</templates>

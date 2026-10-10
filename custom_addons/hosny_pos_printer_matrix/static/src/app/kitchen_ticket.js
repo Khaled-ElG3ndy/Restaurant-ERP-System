@@ -5,6 +5,7 @@
  * printer.printReceipt كأي تذكرة أخرى (html-to-image ثم ePOS). اختيار القالب
  * لكل طابعة × نوع فاتورة يبقى في printer_matrix.js (report_template).
  */
+import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
@@ -60,7 +61,74 @@ const splitNote = (note) =>
         .map((part) => part.trim())
         .filter(Boolean);
 
+/**
+ * السطر الأساسي لصنف ينزل تلقائياً معه (hosny_pos_meal_combo): الأصناف
+ * الجانبية («ملوخية بالدجاج» ← ملوخية سادة + أرز) ومكوّنات الوجبة
+ * («وجبة لمة حسني» ← أرز بسمتى + ملوخية سادة…).
+ */
+function addonParentUuid(line) {
+    if (line?.is_additional_final_product && line.additional_final_parent_uuid) {
+        return line.additional_final_parent_uuid;
+    }
+    if (line?.is_meal_component && line.meal_parent_uuid) {
+        return line.meal_parent_uuid;
+    }
+    return false;
+}
+
+patch(PosOrder.prototype, {
+    /**
+     * نحفظ مع كل سطر جانبي مُرسل للمطبخ سطره الأساسي، حتى تعرف تذكرة الإلغاء
+     * (بعد حذف السطر من الطلب) أنه تابع لصنف ولا تطبعه كصنف مستقل.
+     */
+    updateLastOrderChange() {
+        const result = super.updateLastOrderChange(...arguments);
+        const sent = this.last_order_preparation_change?.lines || {};
+        for (const line of this.lines) {
+            const resume = sent[line.preparationKey];
+            const parentUuid = addonParentUuid(line);
+            if (resume && parentUuid) {
+                resume.hosny_addon_parent_uuid = parentUuid;
+            }
+        }
+        return result;
+    },
+});
+
 patch(PosStore.prototype, {
+    /**
+     * رقم الطلب في الوردية يعطيه الخادم عند أول مزامنة. نزامن الطلب الجديد في
+     * الخلفية مع أول صنف يُضاف، فيظهر رقمه (1، 2، 3…) خلال لحظة بدل رقم الجهاز
+     * المؤقت، ويطابق رقم تذكرة المطبخ والفاتورة.
+     */
+    async addLineToOrder(vals, order, ...rest) {
+        const line = await super.addLineToOrder(vals, order, ...rest);
+        this.hosnyRequestOrderNumber(order || this.getOrder());
+        return line;
+    },
+
+    hosnyRequestOrderNumber(order) {
+        if (
+            !order ||
+            order.finalized ||
+            order.hosny_session_number ||
+            typeof order.id === "number" ||
+            !order.lines?.length ||
+            this.data.network.offline
+        ) {
+            return;
+        }
+        this._hosnyNumbering ??= new Set();
+        if (this._hosnyNumbering.has(order.uuid)) {
+            return;
+        }
+        this._hosnyNumbering.add(order.uuid);
+        Promise.resolve()
+            .then(() => this.syncAllOrders({ orders: [order] }))
+            .catch(() => {})
+            .finally(() => this._hosnyNumbering.delete(order.uuid));
+    },
+
     /** بيانات التذكرة التي لا يحملها getOrderData الأصلي. */
     getOrderData(order, reprint) {
         const data = super.getOrderData(order, reprint);
@@ -81,7 +149,38 @@ patch(PosStore.prototype, {
         data.hosny_printed_at = DateTime.now()
             .reconfigure({ locale: "en-US", numberingSystem: "latn", outputCalendar: "gregory" })
             .toFormat("M/d/yyyy h:mm:ss a");
+        data.hosny_addon_parents = this.hosnyAddonParents(order);
         return data;
+    },
+
+    /**
+     * الأصناف التي تنزل تلقائياً مع صنف أساسي (addonParentUuid) سطور حقيقية
+     * في الطلب، فتصل للتذكرة كأصناف منفصلة. نحفظ هنا لكل سطر جانبي سطره الأساسي واسمه،
+     * ومن ذاكرة آخر إرسال أيضاً لأن السطر الملغي لم يعد موجوداً في الطلب.
+     */
+    hosnyAddonParents(order) {
+        const parents = {};
+        for (const line of order?.lines || []) {
+            const parentUuid = addonParentUuid(line);
+            if (parentUuid) {
+                parents[line.uuid] = parentUuid;
+            }
+        }
+        const sent = order?.last_order_preparation_change?.lines || {};
+        for (const resume of Object.values(sent)) {
+            if (resume?.uuid && !parents[resume.uuid] && resume.hosny_addon_parent_uuid) {
+                parents[resume.uuid] = resume.hosny_addon_parent_uuid;
+            }
+        }
+        const nameOf = (uuid) =>
+            this.models["pos.order.line"].getBy("uuid", uuid)?.getFullProductName?.() ||
+            Object.values(sent).find((resume) => resume?.uuid === uuid)?.name ||
+            "";
+        const result = {};
+        for (const [uuid, parentUuid] of Object.entries(parents)) {
+            result[uuid] = { uuid: parentUuid, name: nameOf(parentUuid) };
+        }
+        return result;
     },
 
     /**
@@ -178,8 +277,22 @@ patch(PosStore.prototype, {
         const printerCategoryIds = new Set(idsOf(raw.product_categories_ids));
         const groups = new Map();
         const groupOfLine = new Map();
+        const lineOfUuid = new Map();
 
-        for (const change of data.changes?.data || []) {
+        // الصنف الجانبي الذي يطبع على نفس التذكرة مع صنفه الأساسي يُكتب
+        // تحت الأساسي («+ ملوخية سادة») لا في سطر مستقل. لو طُبع وحده في
+        // محطة أخرى يبقى سطراً وتحته «مع: <الصنف الأساسي>».
+        const addonParents = data.hosny_addon_parents || {};
+        const changes = data.changes?.data || [];
+        const uuidsOnTicket = new Set(changes.map((change) => change.uuid).filter(Boolean));
+        const addons = [];
+
+        for (const change of changes) {
+            const parent = change.uuid && addonParents[change.uuid];
+            if (parent && uuidsOnTicket.has(parent.uuid)) {
+                addons.push({ change, parentUuid: parent.uuid });
+                continue;
+            }
             // مكوّنات الكومبو تبقى تحت الكومبو نفسه
             let group = change.combo_parent_uuid && groupOfLine.get(change.combo_parent_uuid);
             if (!group) {
@@ -210,11 +323,46 @@ patch(PosStore.prototype, {
             if (lineNotes.length) {
                 details.push({ text: `ملاحظة: ${lineNotes.join("، ")}`, isNote: true });
             }
-            group.lines.push({
+            if (parent?.name) {
+                details.unshift({ text: `مع: ${parent.name}`, isNote: false });
+            }
+            const line = {
                 name: change.basic_name || change.name || change.display_name || "",
                 qty: formatKitchenQty(change.quantity),
+                quantity: change.quantity,
                 details,
                 comboChild: Boolean(change.combo_parent_uuid),
+            };
+            group.lines.push(line);
+            if (change.uuid) {
+                lineOfUuid.set(change.uuid, line);
+            }
+        }
+
+        // الجانبي تحت أساسيه، قبل ملاحظة الأساسي حتى تبقى الملاحظة آخر شيء.
+        // الكمية تُكتب فقط لو اختلفت عن كمية الأساسي (½ طبق محاشى مع وجبة).
+        for (const { change, parentUuid } of addons) {
+            const parentLine = lineOfUuid.get(parentUuid);
+            if (!parentLine) {
+                continue;
+            }
+            const name = change.basic_name || change.name || change.display_name || "";
+            const extras = [
+                ...(change.attribute_value_names || []),
+                ...splitNote(change.note),
+                ...splitNote(change.customer_note),
+            ];
+            let text = `+ ${name}`;
+            if (Math.abs(change.quantity) !== Math.abs(parentLine.quantity)) {
+                text += ` ×${formatKitchenQty(change.quantity)}`;
+            }
+            if (extras.length) {
+                text += ` (${extras.join("، ")})`;
+            }
+            const noteAt = parentLine.details.findIndex((detail) => detail.isNote);
+            parentLine.details.splice(noteAt === -1 ? parentLine.details.length : noteAt, 0, {
+                text,
+                isNote: false,
             });
         }
 

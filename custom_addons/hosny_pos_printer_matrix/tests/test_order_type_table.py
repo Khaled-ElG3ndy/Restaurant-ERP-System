@@ -24,6 +24,10 @@ class TestOrderTypeTable(TestPoSCommon):
             "table_number": 5, "floor_id": cls.floor.id, "seats": 4})
         cls.table_2 = cls.env["restaurant.table"].create({
             "table_number": 6, "floor_id": cls.floor.id, "seats": 4})
+        cls.takeaway_floor = cls.env["restaurant.floor"].create({
+            "name": "سفري", "pos_config_ids": [(4, cls.config.id)]})
+        cls.takeaway_table = cls.env["restaurant.table"].create({
+            "table_number": 3, "floor_id": cls.takeaway_floor.id, "seats": 1})
         cls.product = cls.create_product("أرز بسمتى", cls.categ_basic, 9.0)
 
     def setUp(self):
@@ -185,3 +189,39 @@ class TestOrderTypeTable(TestPoSCommon):
             [r["id"] for r in result["pos.order"] if r["id"] != order.id])
         self.assertTrue(refund.is_refund)
         self.assertEqual(refund.order_type_id, self.local)
+
+    # ── طاولات «سفري» (طلبات الهاتف) ─────────────────────────────────────
+
+    def test_takeaway_on_takeaway_table_keeps_the_table(self):
+        order, _ = self._sync(order_type_id=self.takeaway.id, table_id=self.takeaway_table.id,
+                              payments=[(self.cash_pm1, 18.0)])
+        self.assertEqual(order.order_type_id, self.takeaway)
+        self.assertEqual(order.table_id, self.takeaway_table)
+
+    def test_untyped_or_local_on_takeaway_table_is_takeaway(self):
+        untyped, _ = self._draft(order_type_id=False, table_id=self.takeaway_table.id)
+        self.assertEqual(untyped.order_type_id, self.takeaway)
+        self.assertEqual(untyped.table_id, self.takeaway_table)
+        local, _ = self._draft(order_type_id=self.local.id, table_id=self.takeaway_table.id)
+        self.assertEqual(local.order_type_id, self.takeaway)
+        self.assertEqual(local.table_id, self.takeaway_table)
+
+    def test_takeaway_table_draft_resynced_then_paid_keeps_table(self):
+        order, data = self._draft(order_type_id=self.takeaway.id, table_id=self.takeaway_table.id)
+        self._resync(data, state="paid", amount_paid=data["amount_total"],
+                     payment_ids=[(0, 0, {"amount": data["amount_total"], "name": "p",
+                                          "payment_method_id": self.cash_pm1.id})])
+        self.assertEqual(order.state, "paid")
+        self.assertEqual(order.order_type_id, self.takeaway)
+        self.assertEqual(order.table_id, self.takeaway_table)
+
+    def test_type_only_write_keeps_takeaway_table(self):
+        order, _ = self._draft(order_type_id=self.takeaway.id, table_id=self.takeaway_table.id)
+        order.write({"order_type_id": self.takeaway.id})
+        self.assertEqual(order.table_id, self.takeaway_table)
+
+    def test_moving_to_takeaway_table_makes_it_takeaway(self):
+        order, _ = self._draft(order_type_id=self.local.id, table_id=self.table.id)
+        order.write({"table_id": self.takeaway_table.id})
+        self.assertEqual(order.order_type_id, self.takeaway)
+        self.assertEqual(order.table_id, self.takeaway_table)

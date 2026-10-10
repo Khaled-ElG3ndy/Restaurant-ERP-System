@@ -1,0 +1,20 @@
+/* فتح وإغلاق الوردية (shift_close.xml). rtlcss يقلب الملف: اتجاهات منطقية فقط. */
+:is(#hs,body:has(.pos)) .hosny-shift-summary {
+    margin: 4px 0 12px; padding: 10px 12px; border-radius: 12px; background: #F5F8FC; border: 1px solid #DCE5F0;
+}
+:is(#hs,body:has(.pos)) .hosny-shift-summary-title { font-weight: 800; color: #17395F; font-size: 15px; margin-bottom: 8px; }
+:is(#hs,body:has(.pos)) .hosny-shift-summary-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px;
+}
+:is(#hs,body:has(.pos)) .hosny-shift-cell {
+    display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid #E3EAF3;
+}
+:is(#hs,body:has(.pos)) .hosny-shift-cell span { color: #4A5D73; font-weight: 700; font-size: 13px; }
+:is(#hs,body:has(.pos)) .hosny-shift-cell b { color: #17395F; font-weight: 800; font-size: 16px; }
+:is(#hs,body:has(.pos)) .hosny-shift-handover-note,
+:is(#hs,body:has(.pos)) .hosny-shift-zero-text {
+    margin-top: 8px; padding: 8px 12px; border-radius: 10px; background: #EAF1FA; color: #1F4E8C; font-weight: 700; font-size: 14px;
+}
+:is(#hs,body:has(.pos)) .hosny-shift-zero-open { padding: 10px 12px; border-radius: 12px; background: #F5F8FC; border: 1px solid #DCE5F0; }
+:is(#hs,body:has(.pos)) .hosny-shift-zero-amount { font-size: 18px; color: #17395F; font-weight: 700; }
+:is(#hs,body:has(.pos)) .hosny-shift-zero-amount b { font-size: 22px; }

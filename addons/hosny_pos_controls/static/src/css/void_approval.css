@@ -38,3 +38,49 @@
 :is(#hs,body:has(.pos)) .modal-content.hosny-void-content .hosny-void-submit:disabled {
     background: #E9B8B2 !important; border-color: #E9B8B2 !important; color: #fff !important; opacity: 1 !important;
 }
+/* الكمية الملغاة: الكل أو جزء (صنف واحد من سلة المهملات). */
+:is(#hs,body:has(.pos)) .hosny-void-qtybox {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px;
+    background: #F5F8FC; border: 1px solid #DCE5F0;
+}
+:is(#hs,body:has(.pos)) .hosny-void-qtylabel { font-weight: 800; color: #17395F; font-size: 15px; }
+:is(#hs,body:has(.pos)) .hosny-void-stepper { display: inline-flex; align-items: center; gap: 6px; }
+:is(#hs,body:has(.pos)) .hosny-void-step {
+    width: 44px !important; height: 44px !important; border-radius: 12px !important; border: 1px solid #B9C7D8 !important;
+    background: #fff !important; color: #17395F !important; font-size: 22px !important; font-weight: 800 !important; line-height: 1 !important;
+}
+:is(#hs,body:has(.pos)) .hosny-void-qtyinput {
+    width: 96px; height: 44px; text-align: center; font-size: 20px; font-weight: 800; border-radius: 12px;
+}
+:is(#hs,body:has(.pos)) .hosny-void-qtyof { color: #4A5D73; font-weight: 700; font-size: 14px; }
+:is(#hs,body:has(.pos)) .hosny-void-all {
+    min-height: 40px !important; padding: 5px 16px !important; border-radius: 999px !important; border: 1px solid #B9C7D8 !important;
+    background: #fff !important; color: #17395F !important; font-weight: 800 !important; font-size: 14px !important;
+}
+:is(#hs,body:has(.pos)) .hosny-void-all.is-selected { background: #17395F !important; border-color: #17395F !important; color: #fff !important; }
+/* «إلغاء أصناف الطلب» (OrderVoidDialog): قائمة الأصناف بالتحديد والكميات. */
+:is(#hs,body:has(.pos)) .hosny-ovoid-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-total { color: #B42318; font-weight: 800; font-size: 15px; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-items {
+    list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px;
+    max-height: 46vh; overflow-y: auto;
+}
+:is(#hs,body:has(.pos)) .hosny-ovoid-items li {
+    display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 10px;
+    background: #FFF6F5; border: 1px solid #F5C9C3;
+}
+:is(#hs,body:has(.pos)) .hosny-ovoid-items li.is-off { background: #F5F8FC; border-color: #DCE5F0; opacity: .75; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-items li.is-invalid { border-color: #B42318; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-check {
+    width: 40px !important; height: 40px !important; border: 0 !important; background: transparent !important;
+    color: #B42318 !important; font-size: 24px !important; padding: 0 !important;
+}
+:is(#hs,body:has(.pos)) .hosny-ovoid-items li.is-off .hosny-ovoid-check { color: #8A9AAE !important; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-product { flex: 1 1 auto; font-weight: 800; color: #17395F; font-size: 15px; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-sent {
+    margin-inline-start: 6px; padding: 1px 8px; border-radius: 999px; background: #FEE4E2; color: #B42318;
+    font-size: 12px; font-weight: 800;
+}
+:is(#hs,body:has(.pos)) .hosny-ovoid-items .hosny-void-step { width: 38px !important; height: 38px !important; }
+:is(#hs,body:has(.pos)) .hosny-ovoid-items .hosny-void-qtyinput { width: 80px; height: 38px; font-size: 18px; }
+:is(#hs,body:has(.pos)) .hosny-cancel-order-item { color: #B42318; font-weight: 800; }

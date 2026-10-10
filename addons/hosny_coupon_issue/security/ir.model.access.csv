@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hosny_coupon_issue_user,hosny.coupon.issue user,model_hosny_coupon_issue,sales_team.group_sale_salesman,1,1,1,0
+access_hosny_coupon_issue_manager,hosny.coupon.issue manager,model_hosny_coupon_issue,sales_team.group_sale_manager,1,1,1,1
+access_hosny_coupon_issue_account,hosny.coupon.issue account,model_hosny_coupon_issue,account.group_account_invoice,1,1,1,0

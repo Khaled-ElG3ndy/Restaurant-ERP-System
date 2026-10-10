@@ -58,11 +58,53 @@ function getComponentDisplayMode(parentLine) {
     return parentLine.product_id?.product_tmpl_id?.component_display_mode || "pos_receipt";
 }
 
+/** الكمية التي وصلت الأقسام من هذا السطر (0 لو لم يُرسل). */
+function getSentQuantity(line) {
+    const sent = line?.order_id?.last_order_preparation_change?.lines?.[line.preparationKey];
+    return Math.max(0, Number(sent?.quantity) || 0);
+}
+
+// صحيح أثناء إضافة صنف من الشاشة فقط؛ النقل والدمج بين الطاولات لا يمرّان من هنا.
+let addingProduct = false;
+
 patch(PosStore.prototype, {
+    /**
+     * ما أُرسل للأقسام لا يتكرر (طلب المسؤول 2026-10-09): لو طلب العميل نفس
+     * الصنف بعد «إرسال الطلب» تظهر الإضافة في سطر جديد، والسطر المرسل يبقى
+     * كما وصل المطبخ. قبل الإرسال يبقى الدمج كما هو.
+     */
+    tryMergeOrderline() {
+        addingProduct = true;
+        try {
+            return super.tryMergeOrderline(...arguments);
+        } finally {
+            addingProduct = false;
+        }
+    },
+
     async addLineToOrder(vals, order, opts = {}, configure = true) {
         const line = await super.addLineToOrder(...arguments);
         if (!line || opts.mealComponentCreation || opts.additionalFinalProductCreation) {
             return line;
+        }
+
+        // نفس الوجبة مرة ثانية ← تزيد كمية سطرها (2026-10-09). أودو لا يدمجها
+        // (سطر الوجبة له مكوّنات = combo)، فنزيد كمية الوجبة الموجودة —
+        // setQuantity يضاعف مكوّناتها والمنتجات النهائية الإضافية — ونحذف الجديد
+        // قبل أن تُبنى له مكوّنات. نفس شروط أودو للدمج: لا سعر صريح ولا merge:false.
+        const target =
+            opts.merge !== false && !("price_unit" in (vals || {}))
+                ? this._hosnyMergeableMealLine(order, line)
+                : null;
+        if (target) {
+            const newQty = target.getQuantity() + line.getQuantity();
+            // نختار السطر الباقي قبل حذف المكرر، فلا يبقى المحذوف هو المختار
+            this.selectOrderLine(order, target);
+            line.delete();
+            target.setQuantity(newQty, Boolean(target.combo_line_ids?.length));
+            target.setHasChange?.(true);
+            order.triggerRecomputeAllPrices?.();
+            return target;
         }
 
         const productTemplate = line.product_id?.product_tmpl_id;
@@ -73,6 +115,38 @@ patch(PosStore.prototype, {
         await this._createAdditionalFinalProductLines(order, line);
         this.selectOrderLine(order, line);
         return line;
+    },
+
+    /** سطر وجبة (أو صنف بمنتجات نهائية إضافية) مطابق للسطر الجديد في الطلب. */
+    _hosnyMergeableMealLine(order, line) {
+        const template = line.product_id?.product_tmpl_id;
+        const isMealProduct =
+            template?.is_meal_combo || getAdditionalFinalProductLines(this, template).length > 0;
+        if (!isMealProduct || !order || order.finalized || line.getQuantity() <= 0) {
+            return null;
+        }
+        const round = (value) => this.currency?.round?.(value || 0) ?? value;
+        return (
+            order.lines.find(
+                (other) =>
+                    other !== line &&
+                    other.uuid !== line.uuid &&
+                    other.product_id?.id === line.product_id?.id &&
+                    !other.is_meal_component &&
+                    !other.is_additional_final_product &&
+                    !other.combo_parent_id &&
+                    !other.refunded_orderline_id &&
+                    !line.refunded_orderline_id &&
+                    other.getQuantity() > 0 &&
+                    getSentQuantity(other) === 0 &&
+                    (other.getNote?.() || "") === (line.getNote?.() || "") &&
+                    (other.getCustomerNote?.() || "") === (line.getCustomerNote?.() || "") &&
+                    (other.getDiscount?.() || 0) === (line.getDiscount?.() || 0) &&
+                    other.price_type === line.price_type &&
+                    round(other.price_unit) === round(line.price_unit) &&
+                    (other.full_product_name || "") === (line.full_product_name || "")
+            ) || null
+        );
     },
 
     _createMealComponentLines(order, parentLine) {
@@ -235,6 +309,10 @@ patch(PosOrderline.prototype, {
         ) {
             return false;
         }
+        // this هو السطر الموجود في الطلب، و orderline الضغطة الجديدة
+        if (addingProduct && getSentQuantity(this) > 0) {
+            return false;
+        }
         return super.canBeMergedWith(...arguments);
     },
 
@@ -252,6 +330,26 @@ patch(PosOrderline.prototype, {
 });
 
 patch(PosOrder.prototype, {
+    /**
+     * مكوّنات الوجبة مربوطة بالوجبة كأسطر combo لكن بلا combo_item_id، وأودو
+     * يقرأ cLine.combo_item_id.combo_id عند إعادة تسعير الكومبو (setPricelist،
+     * مثلاً عند اختيار العميل في الدفع) فينهار بـ «reading 'combo_id'»
+     * (2026-10-09). نمرّر له أسطر الكومبو الحقيقية فقط؛ الوجبة بلا كومبو
+     * حقيقي ترجع قوائم فارغة.
+     */
+    getFreeAndExtraChildLines(pLine) {
+        const children = pLine?.combo_line_ids || [];
+        if (children.every((child) => child.combo_item_id)) {
+            return super.getFreeAndExtraChildLines(...arguments);
+        }
+        const realItems = children.filter((child) => child.combo_item_id);
+        if (!realItems.length) {
+            return { childLineFree: [], childLineExtra: [] };
+        }
+        const view = Object.create(pLine, { combo_line_ids: { value: realItems } });
+        return super.getFreeAndExtraChildLines(view);
+    },
+
     removeOrderline(line) {
         if (line?.is_additional_final_parent) {
             for (const childLine of getAdditionalFinalChildren(this, line)) {

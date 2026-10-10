@@ -8464,3 +8464,506 @@ body:has(.pos),
         transition: none !important;
     }
 }
+
+/* ══ 43  CONFIRMATION & ALERT POPUPS ════════════════════════════════
+   Khaled, 2026-10-07: «تحذير!» (لم يتم إرسال الطلب) showed a white line
+   above its navy header — the 1px light border every dialog gets in
+   section 9 / controls.css, drawn around a dark header. Odoo's
+   ConfirmationDialog and AlertDialog (body = one text paragraph) get
+   their own frame here: no border, a navy header with an amber «!»
+   badge, roomy text, and full-height footer buttons. Selector weight
+   (3,x,x) via :not(#…) outranks every dialog rule in the skin and
+   hosny_pos_controls. Marks are text/CSS, never icon glyphs. */
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) {
+    border: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-header {
+    display: flex !important; align-items: center !important; gap: 12px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 16px 22px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+    box-shadow: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-header::after { display: none !important; }
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-header::before {
+    content: "!" !important;
+    flex: none !important;
+    display: grid !important; place-items: center !important;
+    inline-size: 34px !important; block-size: 34px !important;
+    border-radius: 50% !important;
+    background: #E0912F !important;
+    color: #FFFFFF !important;
+    font-family: "Cairo", sans-serif !important; font-size: 20px !important; font-weight: 900 !important; line-height: 1 !important;
+    box-shadow: 0 0 0 4px rgba(224,145,47,.25) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-header .modal-title {
+    margin: 0 !important;
+    color: #FFFFFF !important;
+    font-size: 19px !important; font-weight: 800 !important; line-height: 1.3 !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-body {
+    padding: 26px 26px 24px !important;
+    background: #FFFFFF !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-body > p {
+    margin: 0 !important;
+    color: #24374B !important;
+    font-family: "Cairo", sans-serif !important; font-size: 17px !important; font-weight: 700 !important; line-height: 1.8 !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-footer {
+    display: flex !important; flex-wrap: nowrap !important; justify-content: flex-start !important; gap: 10px !important;
+    margin: 0 !important;
+    padding: 14px 22px !important;
+    border: 0 !important;
+    border-block-start: 1px solid #E3E9F1 !important;
+    background: #F5F8FC !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-footer .btn {
+    flex: 1 1 0 !important;
+    min-height: 52px !important; max-width: 220px !important;
+    margin: 0 !important; padding: 0 22px !important;
+    border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 17px !important; font-weight: 800 !important;
+    white-space: nowrap !important; overflow-wrap: normal !important;
+    transform: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-footer .btn:not(.btn-secondary) {
+    border: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-footer .btn-secondary {
+    border: 1px solid #D4DDE8 !important;
+    background: #FFFFFF !important;
+    color: #17395F !important;
+    box-shadow: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > p.text-prewrap:only-child) > .modal-footer .btn:active { filter: brightness(.94) !important; }
+
+/* ══ 44  TEXT INPUT POPUPS (كوبون، ملاحظات) ══════════════════════════
+   Khaled, 2026-10-07: «إدخال كود» had the same white line over the navy
+   header as section 43, and its text started on the left. Odoo's
+   TextInputPopup (body = optional chips + one textarea) gets the same
+   borderless frame; the textarea is pinned right-to-left with
+   rtl:ignore so the RTL bundle cannot turn it back. Also covers the
+   invoice-note popup, which is the same component. */
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) {
+    border: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-header {
+    display: flex !important; align-items: center !important; gap: 12px !important;
+    min-height: 0 !important; margin: 0 !important; padding: 16px 22px !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-header::after { display: none !important; }
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-header .modal-title {
+    margin: 0 !important; color: #FFFFFF !important;
+    font-size: 19px !important; font-weight: 800 !important; line-height: 1.3 !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-body {
+    padding: 22px 24px !important;
+    background: #FFFFFF !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-body > textarea.form-control {
+    display: block !important;
+    inline-size: 100% !important; min-block-size: 56px !important;
+    margin: 0 !important; padding: 14px 16px !important;
+    border: 2px solid #DCE3ED !important; border-radius: 14px !important;
+    background: #F5F8FC !important; box-shadow: none !important; outline: 0 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+    color: #17395F !important;
+    font-family: "Cairo", sans-serif !important; font-size: 17px !important; font-weight: 700 !important; line-height: 1.6 !important;
+    resize: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-body > textarea.form-control:focus {
+    border-color: #2B5DA0 !important; background: #FFFFFF !important;
+    box-shadow: 0 0 0 4px rgba(43,93,160,.12) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-body > textarea.form-control::placeholder {
+    /*rtl:ignore*/text-align: right !important;
+    color: #9AAAC0 !important; font-weight: 600 !important;
+}
+/* optional quick choices above the textarea */
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-body > .toggle-button {
+    margin: 0 0 10px 8px !important;
+    min-height: 40px !important; padding: 0 16px !important;
+    border: 1px solid #DCE3ED !important; border-radius: 12px !important;
+    background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+    font-family: "Cairo", sans-serif !important; font-size: 14.5px !important; font-weight: 800 !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-footer {
+    display: flex !important; flex-wrap: nowrap !important; justify-content: flex-start !important; gap: 10px !important;
+    margin: 0 !important; padding: 14px 22px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important;
+    background: #F5F8FC !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-footer .btn {
+    flex: 1 1 0 !important;
+    min-height: 52px !important; max-width: 220px !important;
+    margin: 0 !important; padding: 0 22px !important;
+    border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 17px !important; font-weight: 800 !important; line-height: 1 !important;
+    white-space: nowrap !important; transform: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-footer .btn-primary {
+    border: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-footer .btn-primary:disabled {
+    opacity: .45 !important; box-shadow: none !important;
+}
+body:not(#hd-a):not(#hd-b):not(#hd-c) .o_dialog .modal-content:has(> .modal-body > textarea.form-control) > .modal-footer .btn-secondary {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+}
+
+/* ══ 45  «إغلاق الوردية» (ClosePosPopup) ═════════════════════════════
+   Khaled (2026-10-07): the closing window needed clearer text and no
+   white line over the header. The 1px light dialog border drew that
+   line (as in §43); the frame is borderless with a full-bleed navy
+   header. Each payment method is a card; its rows read as dark label /
+   navy figure instead of Bootstrap's grey text-muted with a side rule,
+   and a non-zero «الفرق» is a red strip. Three ids keep this above
+   pos_modern_ui's .pos button and dialog rules. */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup {
+    border: 0 !important; border-radius: 20px !important; overflow: hidden !important;
+    background: #FFFFFF !important; font-family: "Cairo", sans-serif !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup > .modal-header {
+    margin: 0 !important; padding: 16px 22px !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup > .modal-header::after,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup > .modal-header::before { display: none !important; }
+.close-pos-popup .hs-close-head { display: flex; flex: 1 1 auto; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-title {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    margin: 0 !important; color: #FFFFFF !important; font-size: 20px !important; font-weight: 800 !important;
+}
+.close-pos-popup .hs-close-title .fa {
+    display: grid; place-items: center; inline-size: 34px; block-size: 34px; border-radius: 10px;
+    background: #EFCB7E; color: #17395F; font-size: 16px;
+}
+.close-pos-popup .hs-close-stats { display: flex; align-items: center; gap: 8px; margin: 0; }
+.close-pos-popup .hs-close-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 999px;
+    background: #FFFFFF; color: #17395F; font-size: 14px; font-weight: 800;
+}
+.close-pos-popup .hs-close-chip b { font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif; font-size: 16px; }
+.close-pos-popup .hs-close-chip.is-amount { background: #E6F4EC; color: #0F7A49; font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif; font-size: 16px; }
+
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup > .modal-body {
+    padding: 18px 22px !important; background: #F2F6FB !important; color: #17395F !important;
+    /*rtl:ignore*/direction: rtl !important;
+}
+/* payment methods: one card each, side by side */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview {
+    display: grid !important; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 12px !important; align-items: start !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div {
+    display: flex !important; flex-direction: column !important; gap: 2px !important;
+    inline-size: auto !important; margin: 0 !important; padding: 12px 14px !important;
+    border: 1px solid #DCE3ED !important; border-radius: 16px !important; background: #FFFFFF !important;
+    box-shadow: 0 6px 16px -14px rgba(23,57,95,.6) !important;
+}
+/* card head: method name + total */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .fs-3 {
+    margin-block-end: 6px !important; padding-block-end: 8px !important;
+    border-block-end: 1px dashed #DCE3ED !important;
+    font-size: 17px !important; font-weight: 800 !important; color: #17395F !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .fs-3 > span:last-child {
+    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important; font-size: 19px !important; color: #17395F !important;
+}
+/* detail rows */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview .text-muted.border-start {
+    margin: 0 !important; padding: 5px 2px !important; border: 0 !important;
+    color: #4B5E75 !important; font-size: 14px !important; font-weight: 700 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview .text-muted.border-start > span:last-child {
+    color: #17395F !important; font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important; font-weight: 800 !important;
+}
+/* «الفرق»: last row, a soft strip; red when there is a difference */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .border-start:last-child {
+    margin-block-start: 6px !important; padding: 7px 10px !important; border-radius: 10px !important;
+    background: #E6F4EC !important; color: #0F7A49 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .border-start:last-child > span:last-child { color: #0F7A49 !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .border-start.text-danger:last-child,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .border-start.text-danger:last-child > span {
+    background: #FCEBEA !important; color: #C0392B !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview > div > .border-start.text-danger:last-child > span { background: transparent !important; }
+/* «الإيرادات/النفقات» (cash in / out) accordion row */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview button {
+    inline-size: 100% !important; min-height: 34px !important; margin: 4px 0 !important; padding: 5px 10px !important;
+    border: 1px solid #F1E1BC !important; border-radius: 10px !important;
+    background: #FDF6E7 !important; color: #8A5A12 !important; box-shadow: none !important;
+    font-family: "Cairo", sans-serif !important; font-size: 14px !important; font-weight: 700 !important;
+    white-space: nowrap !important; transform: none !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview button * { color: #8A5A12 !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .payment-methods-overview .small.text-muted {
+    color: #4B5E75 !important; font-size: 13px !important; font-weight: 600 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > hr { margin: 16px 0 !important; border-color: #DCE3ED !important; opacity: 1 !important; }
+
+/* counting + notes */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body .form-label,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > div > span {
+    margin-block-end: 6px !important; color: #17395F !important; font-size: 15px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body input:not([type="checkbox"]),
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body textarea {
+    min-block-size: 50px !important; padding: 8px 14px !important;
+    border: 2px solid #DCE3ED !important; border-radius: 12px !important;
+    background: #FFFFFF !important; box-shadow: none !important; outline: 0 !important;
+    color: #17395F !important; font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important;
+    font-size: 18px !important; font-weight: 800 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body textarea {
+    min-block-size: 70px !important; font-family: "Cairo", sans-serif !important; font-size: 15px !important; font-weight: 700 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body input:focus,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body textarea:focus { border-color: #2B5DA0 !important; box-shadow: 0 0 0 4px rgba(43,93,160,.12) !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body textarea::placeholder { color: #9AAAC0 !important; font-weight: 600 !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body .btn.icon {
+    display: grid !important; place-items: center !important; flex: 0 0 50px !important;
+    inline-size: 50px !important; block-size: 50px !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important;
+    border: 1px solid #DCE3ED !important; border-radius: 12px !important;
+    background: #FFFFFF !important; color: #2B5DA0 !important; box-shadow: none !important; font-size: 18px !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body .btn.icon:hover { background: #EAF1FB !important; }
+
+/* footer */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-content.close-pos-popup > .modal-footer {
+    margin: 0 !important; padding: 14px 22px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important; background: #FFFFFF !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+    min-height: 52px !important; margin: 0 !important; padding: 0 20px !important;
+    border-radius: 14px !important; box-shadow: none !important; transform: none !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16px !important; font-weight: 800 !important; line-height: 1 !important;
+    white-space: nowrap !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-primary {
+    min-width: 170px !important; border: 0 !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    color: #FFFFFF !important; box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-primary:disabled { opacity: .45 !important; box-shadow: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary:hover { background: #F2F6FB !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-footer .btn-secondary .fa { color: #2B5DA0 !important; }
+
+/* ── 45b  two columns, less scrolling (2026-10-10) ──
+   Khaled: the closing window scrolled a lot. It is now wide (up to
+   1240px) and split: the method cards on the start side, a white
+   «التعداد» panel with the counting inputs and the closing note on the
+   other (skin.xml moves those nodes into .hs-close-grid). Inputs are
+   shorter and their labels tighter. Anything another module adds to
+   the body (the shift summary) stays below at full width. Under 992px
+   the columns stack. */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .o_dialog .modal-dialog:has(> .modal-content.close-pos-popup) {
+    max-width: min(1240px, calc(100vw - 32px)) !important; inline-size: 100% !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body { padding: 16px 20px !important; }
+.close-pos-popup .hs-close-grid {
+    display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(330px, 1fr);
+    gap: 16px; align-items: start;
+}
+.close-pos-popup .hs-close-col { min-inline-size: 0; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-figures .payment-methods-overview {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important; gap: 10px !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 14px; border: 1px solid #DCE3ED; border-radius: 16px; background: #FFFFFF;
+    box-shadow: 0 6px 16px -14px rgba(23,57,95,.6);
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-col-title {
+    display: flex !important; align-items: center !important; gap: 8px !important;
+    margin: 0 !important; padding-block-end: 8px !important; border-block-end: 1px dashed #DCE3ED !important;
+    color: #17395F !important; font-size: 17px !important; font-weight: 800 !important;
+}
+.close-pos-popup .hs-close-col-title .fa { color: #2B5DA0; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div { margin: 0 !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div:empty { display: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .form-label,
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div > span {
+    display: block !important; margin: 0 0 4px !important;
+    color: #17395F !important; font-size: 14px !important; font-weight: 800 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count > div > .d-flex { margin-block-start: 0 !important; gap: 8px !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count input:not([type="checkbox"]) {
+    min-block-size: 44px !important; block-size: 44px !important; padding: 6px 12px !important; font-size: 17px !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .btn.icon {
+    flex-basis: 44px !important; inline-size: 44px !important; block-size: 44px !important; font-size: 16px !important;
+}
+/* closing note: under the inputs, one short box */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count .notes-container {
+    flex-direction: column !important; gap: 8px !important; padding: 0 !important;
+}
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup .hs-close-count textarea {
+    min-block-size: 54px !important; block-size: 54px !important; padding: 8px 12px !important;
+}
+/* the old divider and whatever follows the grid */
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > hr { display: none !important; }
+body:not(#hc-a):not(#hc-b):not(#hc-c) .close-pos-popup > .modal-body > .hs-close-grid ~ * { margin-block-start: 14px !important; }
+@media (max-width: 991.98px) {
+    .close-pos-popup .hs-close-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ══ 46  table picker: «سفري» floor (2026-10-09) ══════════════════════
+   The «اختر الطاولة» picker now lists the «سفري» floor after the dining
+   floors. Its free tables are pink like on the floor map; busy and current
+   keep their red / blue. */
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway.is-active,
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway.is-active:hover {
+    border-color: #DD2765 !important;
+    background: #DD2765 !important;
+    color: #FFFFFF !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-floor.is-takeaway:not(.is-active) { color: #C21E5C !important; }
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current),
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current):hover {
+    border-color: transparent !important;
+    /*rtl:ignore*/background: linear-gradient(145deg, #EE447B 0%, #DD2765 100%) !important;
+    box-shadow: 0 6px 16px rgba(221, 39, 101, .28) !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current) .hs-tp-table-number,
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway:not(.is-busy):not(.is-current) .hs-tp-table-state {
+    color: #FFFFFF !important;
+}
+:is(#hs,body:has(.pos)) .hs-table-picker .hs-tp-table.is-takeaway .hs-tp-table-number { font-size: 24px !important; }
+
+/* ══ 47  notifications (toasts) — visible close mark (2026-10-09) ═════
+   The theme's button rules repaint every button (cream background, no
+   background-image), which wiped Bootstrap's .btn-close SVG: the close
+   button of «اختر منتجاً أولاً.» and every other toast showed as an empty
+   circle. The × is drawn with two CSS bars instead, and the toast gets the
+   till's font, right-aligned text and a clearer frame. */
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification {
+    overflow: hidden !important; border-radius: 14px !important;
+    box-shadow: 0 14px 30px -12px rgba(10,22,36,.45) !important;
+    font-family: "Cairo", sans-serif !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification > div {
+    padding-block: 12px !important; border-color: #E3E9F1 !important; background: #FFFFFF !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_content {
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+    color: #17395F !important; font-size: 15px !important; font-weight: 700 !important; line-height: 1.6 !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_bar { inline-size: 6px !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close {
+    position: absolute !important; inset-block-start: 8px !important; inset-inline-end: 8px !important;
+    display: block !important; inline-size: 30px !important; block-size: 30px !important;
+    min-width: 0 !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important;
+    border: 1px solid #DCE3ED !important; border-radius: 50% !important;
+    background: #F2F6FB none !important; box-shadow: none !important; opacity: 1 !important;
+    transform: none !important; filter: none !important; cursor: pointer !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::before,
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::after {
+    content: "" !important; position: absolute !important; inset: 0 !important; margin: auto !important;
+    inline-size: 13px !important; block-size: 2px !important; border-radius: 2px !important;
+    background: #17395F !important;
+}
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::before { transform: rotate(45deg) !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close::after { transform: rotate(-45deg) !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover { background: #FCEBEA !important; border-color: #F0C4C0 !important; }
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::before,
+body:not(#hn2-a):not(#hn2-b):not(#hn2-c) .o_notification .o_notification_close:hover::after { background: #D2544B !important; }
+
+/* ══ 48  «التحكم في الفتح» (OpeningControlPopup) (2026-10-10) ══════════
+   Khaled: drop the explanation under «رصيد الافتتاح», start everything
+   on the right, and no white line over the header. Same frame as §45:
+   borderless, full-bleed navy header. The body is pinned right-to-left.
+   The explanation is hosny_pos_shift_close's .hosny-shift-zero-text. */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup {
+    border: 0 !important; border-radius: 20px !important; overflow: hidden !important;
+    background: #FFFFFF !important; font-family: "Cairo", sans-serif !important;
+    box-shadow: 0 30px 70px -20px rgba(10,22,36,.55), 0 4px 14px rgba(10,22,36,.18) !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header {
+    margin: 0 !important; padding: 16px 22px !important;
+    border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2B5DA0 0%, #17395F 100%) !important;
+    /*rtl:ignore*/direction: rtl !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header::before,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header::after { display: none !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-header .modal-title {
+    margin: 0 !important; color: #FFFFFF !important; font-size: 20px !important; font-weight: 800 !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-body {
+    padding: 18px 22px !important; background: #F2F6FB !important; color: #17395F !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body .opening-notes-container { align-items: stretch !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body .form-label {
+    margin-block-end: 6px !important; color: #17395F !important; font-size: 15px !important; font-weight: 800 !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body input:not([type="checkbox"]) {
+    border: 2px solid #DCE3ED !important; border-radius: 12px !important; background: #FFFFFF !important;
+    box-shadow: none !important; color: #17395F !important;
+    font-family: "Cairo", sans-serif !important; font-size: 15px !important; font-weight: 700 !important;
+    /*rtl:ignore*/direction: rtl !important;
+    /*rtl:ignore*/text-align: right !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea:focus,
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body input:focus { border-color: #2B5DA0 !important; box-shadow: 0 0 0 4px rgba(43,93,160,.12) !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-body textarea::placeholder { color: #9AAAC0 !important; font-weight: 600 !important; }
+/* «رصيد الافتتاح» card (hosny_pos_shift_close): drop the explanation line */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hosny-shift-zero-text { display: none !important; }
+/* footer: buttons from the right */
+body:not(#ho-a):not(#ho-b):not(#ho-c) .o_dialog .modal-content.hs-open-popup > .modal-footer {
+    margin: 0 !important; padding: 14px 22px !important; gap: 10px !important;
+    border: 0 !important; border-block-start: 1px solid #E3E9F1 !important; background: #FFFFFF !important;
+    /*rtl:ignore*/direction: rtl !important;
+    justify-content: flex-start !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn {
+    min-height: 52px !important; margin: 0 !important; padding: 0 22px !important; border-radius: 14px !important;
+    font-family: "Cairo", sans-serif !important; font-size: 16px !important; font-weight: 800 !important; transform: none !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-primary {
+    min-width: 150px !important; border: 0 !important; color: #FFFFFF !important;
+    /*rtl:ignore*/background: linear-gradient(135deg, #2E9D6A 0%, #0F7A49 100%) !important;
+    box-shadow: 0 8px 18px -6px rgba(15,122,73,.55) !important;
+}
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-primary:disabled { opacity: .45 !important; box-shadow: none !important; }
+body:not(#ho-a):not(#ho-b):not(#ho-c) .hs-open-popup > .modal-footer .btn-secondary {
+    border: 1px solid #D4DDE8 !important; background: #FFFFFF !important; color: #17395F !important; box-shadow: none !important;
+}

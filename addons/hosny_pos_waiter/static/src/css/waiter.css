@@ -1,0 +1,15 @@
+/* المتر: «إرسال الطلب» وحده يملأ الشريط السفلي مكان «الدفع» */
+.hosny-footer-actions.hosny-waiter-footer {
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+
+/* الجوال (أجهزة المترات): زر «إرسال» في الشريط السفلي كان أبيض على شفاف —
+   لون «إرسال الطلب» نفسه. (#hs,.pos) + .switchpane يتقدّم على قواعد الثيم. */
+:is(#hs,.pos) .product-screen .switchpane .btn-switchpane.order-button {
+    background: var(--hs-g-navy, #1f3a6e) !important;
+    border: none !important;
+    color: #fff !important;
+}
+:is(#hs,.pos) .product-screen .switchpane .btn-switchpane.order-button:disabled {
+    opacity: .7 !important;
+}

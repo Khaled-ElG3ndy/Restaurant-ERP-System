@@ -8,8 +8,9 @@
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { ControlButtons } from "@point_of_sale/app/screens/product_screen/control_buttons/control_buttons";
 import { ReceiptScreen } from "@point_of_sale/app/screens/receipt_screen/receipt_screen";
-import { NumberPopup } from "@point_of_sale/app/components/popups/number_popup/number_popup";
-import { BACKSPACE, EMPTY, ZERO, getButtons } from "@point_of_sale/app/components/numpad/numpad";
+import { Component, useState } from "@odoo/owl";
+import { Dialog } from "@web/core/dialog/dialog";
+import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { ask, makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { useTrackedAsync } from "@point_of_sale/app/hooks/hooks";
 import { patch } from "@web/core/utils/patch";
@@ -19,6 +20,7 @@ import { patch } from "@web/core/utils/patch";
 const CONFIRM_COPIES_ABOVE = 20;
 
 const toCopies = (buffer) => (/^\d+$/.test(String(buffer)) ? parseInt(buffer, 10) : 0);
+const QUICK = [1, 2, 3, 4, 5];
 
 export function copiesLabel(count) {
     if (count === 1) {
@@ -33,17 +35,52 @@ export function copiesLabel(count) {
     return `${count} نسخة`;
 }
 
+/**
+ * نافذة عدد النسخ (2026-10-07): بدل لوحة الأرقام 0-9 — النسخ غالباً 1 إلى 3 —
+ * رقم كبير بين «−» و«+»، واختيارات سريعة 1…5، والكتابة من الكيبورد لأي رقم.
+ * Enter يطبع و Esc يلغي.
+ */
+export class HosnyCopiesPopup extends Component {
+    static template = "hosny_pos_controls.CopiesPopup";
+    static components = { Dialog };
+    static props = { getPayload: Function, close: Function };
+
+    setup() {
+        this.quick = QUICK;
+        this.state = useState({ value: "1" });
+        useHotkey("enter", () => this.confirm(), { bypassEditableProtection: true });
+    }
+    get copies() {
+        return toCopies(this.state.value);
+    }
+    get label() {
+        return this.copies >= 1 ? copiesLabel(this.copies) : "اكتب عدد النسخ";
+    }
+    set(n) {
+        this.state.value = String(Math.max(1, n));
+    }
+    step(direction) {
+        this.set((this.copies || 0) + direction);
+    }
+    onInput(ev) {
+        const digits = ev.target.value.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\D/g, "").slice(0, 3);
+        this.state.value = digits;
+        if (ev.target.value !== digits) {
+            ev.target.value = digits;
+        }
+    }
+    confirm() {
+        if (this.copies >= 1) {
+            this.props.getPayload(String(this.copies));
+            this.props.close();
+        }
+    }
+}
+
 patch(PosStore.prototype, {
     /** عدد النسخ الذي كتبه الكاشير، أو 0 لو ألغى. */
     async askReceiptCopies() {
-        const value = await makeAwaitable(this.dialog, NumberPopup, {
-            title: "عدد نسخ الفاتورة",
-            startingValue: "1",
-            buttons: getButtons([{ ...EMPTY, disabled: true }, ZERO, BACKSPACE]),
-            isValid: (buffer) => toCopies(buffer) >= 1,
-            feedback: (buffer) => (toCopies(buffer) >= 1 ? copiesLabel(toCopies(buffer)) : ""),
-            confirmButtonLabel: "طباعة",
-        });
+        const value = await makeAwaitable(this.dialog, HosnyCopiesPopup, {});
         const copies = toCopies(value);
         if (copies > CONFIRM_COPIES_ABOVE) {
             const confirmed = await ask(this.dialog, {

@@ -82,7 +82,7 @@
                 <textarea t-ref="noteInput"
                           class="form-control hosny-ind-input"
                           rows="5"
-                          dir="auto"
+                          dir="rtl"
                           t-att-maxlength="maxLength"
                           t-model="state.note"
                           t-on-keydown="onKeydown"
@@ -91,7 +91,7 @@
                     <button t-if="state.note" type="button" class="hosny-ind-clear" t-on-click="clear">
                         <i class="fa fa-eraser" aria-hidden="true"/> مسح الملاحظة
                     </button>
-                    <span class="hosny-ind-count"><t t-esc="state.note.length"/> / <t t-esc="maxLength"/></span>
+                    <span class="hosny-ind-count" dir="ltr"><t t-esc="state.note.length"/> / <t t-esc="maxLength"/></span>
                 </div>
             </div>
             <t t-set-slot="footer">

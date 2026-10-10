@@ -18,7 +18,7 @@ import { usePos } from "@point_of_sale/app/hooks/pos_hook";
 import { ask, makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { ProductScreen } from "@point_of_sale/app/screens/product_screen/product_screen";
-import { dineInFloors } from "@pos_entry_selector/js/entry_selector";
+import { dineInFloors, isTakeawayFloor } from "@pos_entry_selector/js/entry_selector";
 
 function tableTitle(table) {
     return table.floor_id?.name ? `${table.table_number} · ${table.floor_id.name}` : `${table.table_number}`;
@@ -39,8 +39,25 @@ export class HosnyTablePicker extends Component {
         this.pos.deviceSync?.readDataFromServer?.();
     }
 
+    /**
+     * طوابق الجلوس ثم طابق «سفري» متى كانت عليه طاولات (2026-10-09): طلب
+     * الهاتف يُجلس على «سفري 1…15» من هنا أيضاً، كما في خريطة الطاولات.
+     * الطلب على طاولة «سفري» يبقى سفري (order_type_rules).
+     */
     get floors() {
-        return dineInFloors(this.pos);
+        const takeaway = this.pos.config.floor_ids
+            .filter(
+                (floor) =>
+                    floor.active !== false &&
+                    isTakeawayFloor(floor) &&
+                    floor.table_ids.some((table) => table.active !== false)
+            )
+            .sort((a, b) => (a.sequence || 0) - (b.sequence || 0) || a.id - b.id);
+        return [...dineInFloors(this.pos), ...takeaway];
+    }
+
+    isTakeawayFloor(floor) {
+        return isTakeawayFloor(floor);
     }
 
     get floor() {

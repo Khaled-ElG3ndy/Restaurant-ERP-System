@@ -376,3 +376,32 @@ Object.defineProperty(PosStore.prototype, "ordersToUpdateSet", {
     },
     configurable: true,
 });
+
+/**
+ * سطر حُذف من طلبه (دمج صنف مكرر، أو حذف) قد يبقى مرسوماً لحظة؛ أودو يقرأ
+ * this.order_id.fiscal_position_id في taxGroupLabels فينهار الكاشير بـ
+ * «Cannot read properties of undefined (reading 'fiscal_position_id')».
+ * السطر بلا طلب ليس له تسمية ضريبة (2026-10-09).
+ */
+patch(PosOrderline.prototype, {
+    get taxGroupLabels() {
+        if (!this.order_id) {
+            return "";
+        }
+        return super.taxGroupLabels;
+    },
+});
+
+/**
+ * ونفس الشيء مع العملة: أودو يقرأ this.order_id.currency في getter السطر،
+ * فينهار بـ «Cannot read properties of undefined (reading 'currency')» لسطر
+ * حُذف ولا يزال مرسوماً. نرجع عملة نقطة البيع بدل الانهيار (2026-10-09).
+ */
+patch(PosOrderline.prototype, {
+    get currency() {
+        if (!this.order_id) {
+            return this.models?.["pos.config"]?.getFirst?.()?.currency_id;
+        }
+        return super.currency;
+    },
+});

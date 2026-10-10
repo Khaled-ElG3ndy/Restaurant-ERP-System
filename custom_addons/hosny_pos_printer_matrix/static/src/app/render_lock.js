@@ -3,6 +3,7 @@ import { ConnectionLostError } from "@web/core/network/rpc";
 import { htmlToCanvas } from "@point_of_sale/app/services/render_service";
 import { BasePrinter } from "@point_of_sale/app/utils/printer/base_printer";
 import { patch } from "@web/core/utils/patch";
+import { notePrintedCopy, remainingCopies, setRemainingCopies } from "./receipt_copies";
 
 /**
  * أودو يرسم كل تذكرة داخل `.render-container` بعد أن يحذف منه كل عنصر يحمل
@@ -20,7 +21,11 @@ function renderExclusive(job) {
 }
 
 patch(BasePrinter.prototype, {
-    /** نفس منطق الأصل حرفياً، عدا أن الرسم يمر عبر renderExclusive. */
+    /**
+     * نفس منطق الأصل حرفياً، عدا أن الرسم يمر عبر renderExclusive، وأن
+     * الفاتورة المطلوبة بأكثر من نسخة (receipt_copies.js) تُرسم مرة واحدة
+     * وتُرسل صورتها بعدد النسخ، ورا بعض على نفس الطابعة.
+     */
     async printReceipt(receipt) {
         if (receipt) {
             this.receiptQueue.push(receipt);
@@ -31,19 +36,25 @@ patch(BasePrinter.prototype, {
             image = await renderExclusive(async () =>
                 this.processCanvas(await htmlToCanvas(receipt, { addClass: "pos-receipt-print" }))
             );
-            try {
-                printResult = await this.sendPrintingJob(image);
-            } catch (error) {
-                this.receiptQueue.length = 0;
-                if (error instanceof ConnectionLostError) {
-                    return this.getOfflineError();
+            for (let left = remainingCopies(receipt); left > 0; left--) {
+                try {
+                    printResult = await this.sendPrintingJob(image);
+                } catch (error) {
+                    setRemainingCopies(receipt, left);
+                    this.receiptQueue.length = 0;
+                    if (error instanceof ConnectionLostError) {
+                        return this.getOfflineError();
+                    }
+                    return this.getActionError();
                 }
-                return this.getActionError();
+                if (!printResult || printResult.result === false) {
+                    setRemainingCopies(receipt, left);
+                    this.receiptQueue.length = 0;
+                    return this.getResultsError(printResult);
+                }
+                notePrintedCopy(receipt);
             }
-            if (!printResult || printResult.result === false) {
-                this.receiptQueue.length = 0;
-                return this.getResultsError(printResult);
-            }
+            setRemainingCopies(receipt, 0);
         }
         return {
             successful: true,

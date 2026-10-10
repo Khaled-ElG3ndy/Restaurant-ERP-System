@@ -1,6 +1,6 @@
 {
     "name": "Hosny POS Printer Matrix",
-    "version": "19.0.7.6.0",
+    "version": "19.0.7.9.1",
     "category": "Point of Sale",
     "summary": "Per-printer routing by order type, copy count, receipt template, chief printer",
     "description": """
@@ -9,6 +9,8 @@
   • عدد النسخ لكل نوع
   • اسم التقرير (قالب التذكرة) لكل نوع — الافتراضي «نسخة المطبخ» بتصميم FERP
   • Bundeled Receipt — تذكرة مجمّعة بكل المحطات
+  • «إرسال الطلب» يطبع تذاكر الأقسام فقط؛ فاتورة عميل السفري بعد الدفع نسختان
+    ورا بعض (تُرسم مرة وتُرسل مرتين)
   • Is Chief — طابعة رئيسية تستقبل كل الأقسام
   • نوع الفاتورة على الطلب: السفري بلا طاولة والطاولة تعني محلي (شاشة وخادم)
   • ملاحظات المطبخ: ملاحظة الصنف في مربع بارز، وملاحظة الطلب داخل تذكرة
@@ -30,6 +32,7 @@
         ],
         "point_of_sale._assets_pos": [
             "hosny_pos_printer_matrix/static/src/app/product_routing.js",
+            "hosny_pos_printer_matrix/static/src/app/receipt_copies.js",
             "hosny_pos_printer_matrix/static/src/app/render_lock.js",
             "hosny_pos_printer_matrix/static/src/app/printer_matrix.js",
             "hosny_pos_printer_matrix/static/src/app/order_type_rules.js",

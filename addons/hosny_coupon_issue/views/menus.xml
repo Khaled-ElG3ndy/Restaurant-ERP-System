@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hosny_coupons_root" name="كوبونات الخصم" parent="sale.sale_menu_root" sequence="4"/>
+    <menuitem id="menu_hosny_coupon_issue" name="إصدار الكوبونات" parent="menu_hosny_coupons_root"
+              action="action_hosny_coupon_issue" sequence="1"/>
+    <menuitem id="menu_hosny_coupon_cards" name="الكوبونات المصدرة" parent="menu_hosny_coupons_root"
+              action="action_hosny_coupon_cards" sequence="2"/>
+</odoo>

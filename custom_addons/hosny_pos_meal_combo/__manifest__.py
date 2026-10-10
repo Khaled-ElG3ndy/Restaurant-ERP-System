@@ -1,6 +1,6 @@
 {
     "name": "Hosny POS Meal Combo",
-    "version": "19.0.1.1.15",
+    "version": "19.0.1.1.18",
     "author": "Hosny",
     "category": "Point of Sale",
     "summary": "Restaurant meal bundles with parent revenue and component stock deduction",

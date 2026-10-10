@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_users_form_pos_waiter" model="ir.ui.view">
+        <field name="name">res.users.form.pos.waiter</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="hosny_pos_branch_access.view_users_form_branch_access"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_config_ids']" position="after">
+                <field name="hosny_pos_waiter"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

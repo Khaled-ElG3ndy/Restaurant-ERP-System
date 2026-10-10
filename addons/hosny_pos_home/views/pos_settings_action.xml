@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- إعدادات نقطة البيع مفتوحة على نقطة البيع الحالية.
+         زر «الإعدادات» في الشاشة الرئيسية يفتح /odoo/<config_id>/action-...:
+         رقم نقطة البيع يصل active_id، و active_model هنا يجعل
+         res.config.settings._default_pos_config يختارها بدل آخر نقطة بيع عُدّلت. -->
+    <record id="action_pos_settings_current" model="ir.actions.act_window">
+        <field name="name">إعدادات نقطة البيع</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'point_of_sale', 'bin_size': False, 'active_model': 'pos.config'}</field>
+    </record>
+</odoo>

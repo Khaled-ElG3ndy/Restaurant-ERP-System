@@ -11,8 +11,20 @@
           <span>هذا الصنف وصل المطبخ. الإلغاء يحتاج سبباً واعتماد مسؤول، ويُسجَّل للمراجعة.</span>
         </div>
 
+        <div t-if="props.adjust" class="hosny-void-qtybox">
+          <span class="hosny-void-qtylabel">الكمية المطلوب إلغاؤها</span>
+          <div class="hosny-void-stepper" dir="ltr">
+            <button type="button" class="hosny-void-step" aria-label="أقل" t-on-click="() => this.stepQty(-1)">−</button>
+            <input type="text" inputmode="decimal" class="form-control hosny-void-qtyinput"
+                   t-att-class="{ 'is-invalid': !qtyValid }" t-model="state.qtyText"/>
+            <button type="button" class="hosny-void-step" aria-label="أكثر" t-on-click="() => this.stepQty(1)">+</button>
+          </div>
+          <span class="hosny-void-qtyof">من <t t-esc="maxText"/></span>
+          <button type="button" class="hosny-void-all" t-att-class="{ 'is-selected': isAll }" t-on-click="setAll">الكل</button>
+        </div>
+
         <ul class="hosny-void-items">
-          <li t-foreach="props.summary" t-as="row" t-key="row_index">
+          <li t-foreach="view.summary" t-as="row" t-key="row_index">
             <span class="hosny-void-product" t-esc="row.product"/>
             <span class="hosny-void-qty" t-esc="row.text"/>
             <span class="hosny-void-amount" dir="ltr" t-esc="row.amount"/>
@@ -58,5 +70,99 @@
         <button class="btn btn-light btn-lg lh-lg hosny-void-cancel" t-on-click="props.close">تراجع</button>
       </t>
     </Dialog>
+  </t>
+
+  <!-- «إلغاء أصناف الطلب» من قائمة ☰ (HosnyOrderVoidDialog): كل الأصناف محددة بكمياتها. -->
+  <t t-name="hosny_pos_controls.OrderVoidDialog">
+    <Dialog title="props.title" size="'lg'" contentClass="'hosny-void-content hosny-ovoid-content'">
+      <t t-set="v" t-value="view"/>
+      <div class="hosny-void" dir="rtl">
+        <div t-if="needsApproval" class="hosny-void-warning">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"/>
+          <span>ما وصل المطبخ يحتاج سبباً واعتماد مسؤول، ويُسجَّل للمراجعة.</span>
+        </div>
+
+        <div class="hosny-ovoid-head">
+          <button type="button" class="hosny-void-all" t-att-class="{ 'is-selected': allPicked }" t-on-click="toggleAll">
+            <i t-attf-class="fa {{ allPicked ? 'fa-check-square' : 'fa-square-o' }}" aria-hidden="true"/> تحديد الكل
+          </button>
+          <span class="hosny-ovoid-total">
+            <t t-if="v.all">إلغاء الطلب كله</t>
+            <t t-else="">إلغاء <b t-esc="v.count"/> من <b t-esc="props.items.length"/> صنف</t>
+            · <b dir="ltr" t-esc="v.amount"/>
+          </span>
+        </div>
+
+        <ul class="hosny-ovoid-items">
+          <li t-foreach="props.items" t-as="item" t-key="item.uuid"
+              t-att-class="{ 'is-off': !picks[item.uuid].on, 'is-invalid': !itemValid(item) }">
+            <button type="button" class="hosny-ovoid-check" t-on-click="() => this.toggle(item)"
+                    t-att-aria-label="picks[item.uuid].on ? 'إلغاء التحديد' : 'تحديد'">
+              <i t-attf-class="fa {{ picks[item.uuid].on ? 'fa-check-square' : 'fa-square-o' }}" aria-hidden="true"/>
+            </button>
+            <span class="hosny-ovoid-product">
+              <t t-esc="item.product"/>
+              <small t-if="item.sent" class="hosny-ovoid-sent">وصل المطبخ</small>
+            </span>
+            <div class="hosny-void-stepper" dir="ltr">
+              <button type="button" class="hosny-void-step" aria-label="أقل" t-on-click="() => this.stepItem(item, -1)">−</button>
+              <input type="text" inputmode="decimal" class="form-control hosny-void-qtyinput"
+                     t-att-disabled="!picks[item.uuid].on" t-model="picks[item.uuid].qtyText"/>
+              <button type="button" class="hosny-void-step" aria-label="أكثر" t-on-click="() => this.stepItem(item, 1)">+</button>
+            </div>
+            <span class="hosny-void-qtyof">من <t t-esc="item.max"/></span>
+          </li>
+        </ul>
+
+        <t t-if="needsApproval">
+          <label class="hosny-void-label">١. سبب الإلغاء <small>(يكتبه الكاشير)</small></label>
+          <div class="hosny-void-chips">
+            <button t-foreach="reasons" t-as="reason" t-key="reason_index" type="button"
+                    class="hosny-void-chip" t-on-click="() => this.addReason(reason)">
+              <t t-esc="reason"/>
+            </button>
+          </div>
+          <textarea t-ref="reason" class="form-control hosny-void-reason" rows="2" dir="auto" maxlength="300"
+                    t-model="state.reason" placeholder="اكتب سبب الإلغاء…"/>
+
+          <label class="hosny-void-label">٢. اعتماد المسؤول</label>
+          <div t-if="state.loading" class="hosny-void-muted"><i class="fa fa-circle-o-notch fa-spin"/> جارٍ التحميل…</div>
+          <div t-elif="!state.approvers.length and !state.error" class="hosny-void-muted is-empty">
+            لا يوجد حساب مفعّل لاعتماد الإلغاء. يفعّله مدير النظام من: الإعدادات ← المستخدمون ← «إلغاء الأصناف (نقاط البيع)».
+          </div>
+          <div t-else="" class="hosny-void-approvers">
+            <button t-foreach="state.approvers" t-as="approver" t-key="approver.id" type="button"
+                    class="hosny-void-approver" t-att-class="{ 'is-selected': state.approverId === approver.id }"
+                    t-on-click="() => this.selectApprover(approver.id)">
+              <i class="fa fa-user-circle-o" aria-hidden="true"/>
+              <span t-esc="approver.name"/>
+            </button>
+          </div>
+          <input t-if="state.approvers.length" t-ref="password" type="password" class="form-control hosny-void-password"
+                 autocomplete="new-password" placeholder="كلمة سر الإلغاء"
+                 t-model="state.password" t-on-keydown="onPasswordKeydown"/>
+        </t>
+
+        <div t-if="state.error" class="hosny-void-error" role="alert">
+          <i class="fa fa-times-circle" aria-hidden="true"/> <t t-esc="state.error"/>
+        </div>
+      </div>
+      <t t-set-slot="footer">
+        <button class="btn btn-danger btn-lg lh-lg hosny-void-submit" t-att-disabled="!canSubmit" t-on-click="submit">
+          <i t-if="state.busy" class="fa fa-circle-o-notch fa-spin me-1"/>
+          <t t-if="needsApproval">اعتماد الإلغاء</t><t t-else="">حذف المحدد</t>
+        </button>
+        <button class="btn btn-light btn-lg lh-lg hosny-void-cancel" t-on-click="props.close">تراجع</button>
+      </t>
+    </Dialog>
+  </t>
+
+  <!-- قائمة ☰: «إلغاء أصناف الطلب» أول عنصر -->
+  <t t-name="hosny_pos_controls.NavbarCancelOrder" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+    <xpath expr="//div[hasclass('pos-burger-menu-items')]/DropdownItem[1]" position="before">
+      <DropdownItem t-if="hosnyCanCancelOrder" onSelected="() => this.pos.hosnyCancelOrderItems()">
+        <span class="hosny-cancel-order-item"><i class="fa fa-ban" aria-hidden="true"/> إلغاء أصناف الطلب</span>
+      </DropdownItem>
+    </xpath>
   </t>
 </templates>

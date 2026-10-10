@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- فلاتر «الطلبات» وطريقة الدفع على كل طلب (order_filters.js) -->
+    <!-- البحث «أي شيء» أثناء الكتابة (onHosnyInput في order_filters.js) -->
+    <t t-name="hosny_pos_order_filters.SearchBar" t-inherit="point_of_sale.SearchBar" t-inherit-mode="extension">
+        <xpath expr="//input[@t-model='state.searchInput']" position="attributes">
+            <attribute name="t-on-input">onHosnyInput</attribute>
+        </xpath>
+    </t>
+
+    <t t-name="hosny_pos_order_filters.TicketScreen" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
+        <xpath expr="//SearchBar" position="attributes">
+            <attribute name="placeholder.translate">ابحث بأي شيء: رقم الطلب، العميل، الجوال، الطاولة، الصنف، الموظف، المبلغ…</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('controls')]" position="after">
+            <div class="hosny-order-filters" dir="rtl">
+                <div class="hof-row">
+                    <button t-foreach="hosnyDatePresets" t-as="preset" t-key="preset[0]" type="button"
+                            class="hof-chip" t-att-class="{ 'is-on': hosnyFilters.date === preset[0] }"
+                            t-on-click="() => this.hosnySet('date', preset[0])" t-esc="preset[1]"/>
+                    <t t-if="hosnyFilters.date === 'custom'">
+                        <label class="hof-range">من
+                            <input type="date" class="form-control hof-date" t-att-value="hosnyFilters.from"
+                                   t-on-change="(ev) => this.hosnySet('from', ev.target.value)"/>
+                        </label>
+                        <label class="hof-range">إلى
+                            <input type="date" class="form-control hof-date" t-att-value="hosnyFilters.to"
+                                   t-on-change="(ev) => this.hosnySet('to', ev.target.value)"/>
+                        </label>
+                    </t>
+                </div>
+                <div class="hof-row">
+                    <select class="form-select hof-select hof-session" t-on-change="(ev) => this.hosnySet('session', ev.target.value)">
+                        <option value="" t-att-selected="!hosnyFilters.session">كل الورديات</option>
+                        <option t-foreach="hosnyOptions.sessions" t-as="session" t-key="session.id" t-att-value="session.id"
+                                t-att-selected="hosnyFilters.session == session.id" t-esc="hosnySessionLabel(session)"/>
+                    </select>
+                    <select class="form-select hof-select hof-payment" t-on-change="(ev) => this.hosnySet('payment', ev.target.value)">
+                        <option value="" t-att-selected="!hosnyFilters.payment">كل طرق الدفع</option>
+                        <option t-foreach="hosnyOptions.payment_methods" t-as="method" t-key="method.id" t-att-value="method.id"
+                                t-att-selected="hosnyFilters.payment == method.id" t-esc="method.name"/>
+                        <option value="unpaid" t-att-selected="hosnyFilters.payment === 'unpaid'">غير مدفوع</option>
+                    </select>
+                    <select class="form-select hof-select hof-type" t-on-change="(ev) => this.hosnySet('type', ev.target.value)">
+                        <option value="" t-att-selected="!hosnyFilters.type">كل الأنواع</option>
+                        <option t-foreach="hosnyOptions.order_types" t-as="orderType" t-key="orderType.id" t-att-value="orderType.id"
+                                t-att-selected="hosnyFilters.type == orderType.id" t-esc="orderType.name"/>
+                    </select>
+                    <select class="form-select hof-select hof-user" t-on-change="(ev) => this.hosnySet('user', ev.target.value)">
+                        <option value="" t-att-selected="!hosnyFilters.user">كل الموظفين</option>
+                        <option t-foreach="hosnyOptions.users" t-as="user" t-key="user.id" t-att-value="user.id"
+                                t-att-selected="hosnyFilters.user == user.id" t-esc="user.name"/>
+                    </select>
+                    <button t-if="hosnyHasFilters" type="button" class="hof-clear" t-on-click="hosnyClear">
+                        <i class="fa fa-times" aria-hidden="true"/> مسح الفلاتر
+                    </button>
+                </div>
+                <t t-set="hosnySum" t-value="hosnySummaryView"/>
+                <div t-if="hosnySum" class="hof-summary">
+                    <span class="hof-sum-item">عدد الطلبات <b t-esc="hosnySum.count"/></span>
+                    <span class="hof-sum-item">الإجمالي <b dir="ltr" t-esc="hosnySum.total"/></span>
+                    <span t-foreach="hosnySum.methods" t-as="method" t-key="method.key" class="hof-sum-item hof-sum-method">
+                        <t t-esc="method.name"/> <b dir="ltr" t-esc="method.amount"/>
+                    </span>
+                    <i t-if="hosnySummary.loading" class="fa fa-circle-o-notch fa-spin hof-sum-loading" aria-hidden="true"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//table//td[div/t[@t-esc='getTotal(order)']]" position="before">
+            <td class="align-middle hosny-order-pay">
+                <span t-foreach="hosnyPaymentChips(order)" t-as="chip" t-key="chip.key"
+                      t-attf-class="hof-pay hof-pay-{{ chip.tone }}">
+                    <t t-esc="chip.name"/><t t-if="chip.amount"> <b dir="ltr" t-esc="chip.amount"/></t>
+                </span>
+            </td>
+        </xpath>
+        <xpath expr="//div[hasclass('mobileOrderList')]//div[t[@t-esc='getTotal(order)']]" position="after">
+            <div class="hosny-order-pay">
+                <span t-foreach="hosnyPaymentChips(order)" t-as="chip" t-key="chip.key"
+                      t-attf-class="hof-pay hof-pay-{{ chip.tone }}">
+                    <t t-esc="chip.name"/><t t-if="chip.amount"> <b dir="ltr" t-esc="chip.amount"/></t>
+                </span>
+            </div>
+        </xpath>
+    </t>
+</templates>

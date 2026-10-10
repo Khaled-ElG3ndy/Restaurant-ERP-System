@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_hosny_coupon_issue" model="ir.sequence">
+        <field name="name">إصدار كوبونات الخصم</field>
+        <field name="code">hosny.coupon.issue</field>
+        <field name="prefix">CPN/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
