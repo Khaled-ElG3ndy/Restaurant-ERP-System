@@ -405,3 +405,42 @@ patch(PosOrderline.prototype, {
         return super.currency;
     },
 });
+
+/**
+ * ونفس الشيء مع أسعار السطر: prices / unitPrices تقرأ this.order_id.prices
+ * وبيانات السطر داخلها، ودوال المبالغ تقرأ order_id.orderSign. سطر انفصل عن
+ * طلبه (أو لم يدخل حساب الطلب بعد) كان يُسقط الكاشير بـ «reading 'prices'».
+ * يُعرض بأصفار للحظة حتى يختفي من الشاشة (2026-10-10).
+ */
+const HOSNY_ZERO_TAX_DETAILS = new Proxy(
+    { taxes_data: [] },
+    { get: (target, key) => (key in target ? target[key] : typeof key === "string" ? 0 : undefined) }
+);
+
+function hosnyLineDetached(line, key) {
+    return !line.order_id || !line.order_id[key]?.baseLineByLineUuids?.[line.uuid];
+}
+
+patch(PosOrderline.prototype, {
+    get prices() {
+        return hosnyLineDetached(this, "prices") ? HOSNY_ZERO_TAX_DETAILS : super.prices;
+    },
+    get unitPrices() {
+        return hosnyLineDetached(this, "unitPrices") ? HOSNY_ZERO_TAX_DETAILS : super.unitPrices;
+    },
+    get priceIncl() {
+        return this.order_id ? super.priceIncl : 0;
+    },
+    get priceExcl() {
+        return this.order_id ? super.priceExcl : 0;
+    },
+    get priceUnitInclNoDiscount() {
+        return this.order_id ? super.priceUnitInclNoDiscount : 0;
+    },
+    get priceInclNoDiscount() {
+        return this.order_id ? super.priceInclNoDiscount : 0;
+    },
+    get priceExclNoDiscount() {
+        return this.order_id ? super.priceExclNoDiscount : 0;
+    },
+});
